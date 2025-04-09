@@ -1,9 +1,9 @@
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
-import FeaturesSection from '@/components/FeaturesSection';
 import ServicesSection from '@/components/ServicesSection';
-import ProcessSection from '@/components/ProcessSection';
-import PortfolioSection from '@/components/PortfolioSection';
+import CaseStudiesSection from '@/components/CaseStudiesSection';
+import TechStackSection from '@/components/TechStackSection';
+import ContactSection from '@/components/ContactSection';
 
 export default function Home() {
   return (
@@ -13,17 +13,17 @@ export default function Home() {
         {/* Hero Section */}
         <HeroSection />
 
-        {/* Features Section */}
-        <FeaturesSection />
-
         {/* Services Section */}
         <ServicesSection />
 
-        {/* Process Section */}
-        <ProcessSection />
+        {/* Case Studies Section */}
+        <CaseStudiesSection />
 
-        {/* Portfolio Section */}
-        <PortfolioSection />
+        {/* Tech Stack Section */}
+        <TechStackSection />
+
+        {/* Contact Section */}
+        <ContactSection />
 
         {/* Footer */}
         <footer className="bg-gray-900 text-white py-12">

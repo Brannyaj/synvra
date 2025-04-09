@@ -1,0 +1,110 @@
+export interface CaseStudy {
+  id: number;
+  title: string;
+  client: string;
+  industry: string;
+  challenge: string;
+  solution: string;
+  results: {
+    metric: string;
+    value: string;
+  }[];
+  technologies: string[];
+  testimonial?: {
+    quote: string;
+    author: string;
+    position: string;
+  };
+  duration: string;
+  imageUrl: string;
+}
+
+export const caseStudies: CaseStudy[] = [
+  {
+    id: 1,
+    title: "AI-Powered Financial Analytics Platform",
+    client: "Global Investment Bank",
+    industry: "Financial Services",
+    challenge: "Legacy systems were unable to process and analyze vast amounts of market data in real-time, causing delays in decision-making and missed opportunities.",
+    solution: "Developed a cutting-edge AI-powered analytics platform using deep learning models and real-time data processing. Implemented microservices architecture with cloud-native solutions for scalability.",
+    results: [
+      { metric: "Data Processing Speed", value: "100x faster" },
+      { metric: "Decision Making Time", value: "Reduced by 80%" },
+      { metric: "Cost Savings", value: "$15M annually" },
+      { metric: "System Accuracy", value: "99.99%" }
+    ],
+    technologies: [
+      "TensorFlow",
+      "Apache Kafka",
+      "Kubernetes",
+      "AWS",
+      "Python",
+      "React"
+    ],
+    testimonial: {
+      quote: "Synvra transformed our data analytics capabilities. We're now able to make informed decisions in real-time, giving us a significant competitive advantage.",
+      author: "Sarah Chen",
+      position: "Chief Technology Officer"
+    },
+    duration: "8 months",
+    imageUrl: "/case-studies/fintech-analytics.jpg"
+  },
+  {
+    id: 2,
+    title: "Smart City Infrastructure Management",
+    client: "Metropolitan Government",
+    industry: "Public Sector",
+    challenge: "Inefficient urban resource management leading to high operational costs and poor citizen services.",
+    solution: "Implemented an IoT-based smart city platform with real-time monitoring and AI-driven predictive maintenance. Integrated multiple city services into a unified dashboard.",
+    results: [
+      { metric: "Energy Consumption", value: "Reduced by 35%" },
+      { metric: "Maintenance Costs", value: "Reduced by 50%" },
+      { metric: "Service Response Time", value: "Improved by 75%" },
+      { metric: "Citizen Satisfaction", value: "Increased by 60%" }
+    ],
+    technologies: [
+      "IoT Core",
+      "Azure",
+      "Node.js",
+      "MongoDB",
+      "React Native",
+      "TensorFlow"
+    ],
+    testimonial: {
+      quote: "The smart city solution has revolutionized how we manage urban services. The impact on both operational efficiency and citizen satisfaction has been remarkable.",
+      author: "Michael Rodriguez",
+      position: "City Innovation Director"
+    },
+    duration: "18 months",
+    imageUrl: "/case-studies/smart-city.jpg"
+  },
+  {
+    id: 3,
+    title: "E-commerce Platform Transformation",
+    client: "Leading Retail Chain",
+    industry: "Retail",
+    challenge: "Outdated e-commerce platform struggling with scalability during peak seasons and poor user experience.",
+    solution: "Built a modern, cloud-native e-commerce platform with microservices architecture, real-time inventory management, and AI-powered recommendations.",
+    results: [
+      { metric: "Platform Performance", value: "10x faster" },
+      { metric: "Sales Conversion", value: "Increased by 45%" },
+      { metric: "Peak Load Handling", value: "5M concurrent users" },
+      { metric: "Customer Satisfaction", value: "95% positive" }
+    ],
+    technologies: [
+      "Next.js",
+      "GraphQL",
+      "PostgreSQL",
+      "Redis",
+      "AWS",
+      "Elasticsearch"
+    ],
+    testimonial: {
+      quote: "Our new e-commerce platform has completely transformed our digital presence. The scalability and performance improvements have directly impacted our bottom line.",
+      author: "Emily Thompson",
+      position: "Digital Transformation Director"
+    },
+    duration: "12 months",
+    imageUrl: "/case-studies/ecommerce.jpg"
+  }
+];
