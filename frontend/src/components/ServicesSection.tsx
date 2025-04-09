@@ -12,6 +12,7 @@ import {
   ChartBarIcon
 } from '@heroicons/react/24/outline';
 import type { ReactElement } from 'react';
+import { trackServiceClick } from '@/utils/analytics';
 
 interface Service {
   id: number;
@@ -290,6 +291,7 @@ export default function ServicesSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleServiceClick = (service: Service) => {
+    trackServiceClick(service.title);
     setSelectedService(service);
     setIsModalOpen(true);
   };

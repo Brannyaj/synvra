@@ -10,6 +10,22 @@ declare global {
   }
 }
 
+export const EventCategory = {
+  FORM: 'form',
+  NAVIGATION: 'navigation',
+  SERVICE: 'service',
+  CONTACT: 'contact',
+  ENGAGEMENT: 'engagement'
+} as const;
+
+export const EventAction = {
+  SUBMIT: 'submit',
+  CLICK: 'click',
+  VIEW: 'view',
+  SCROLL: 'scroll',
+  CONTACT: 'contact'
+} as const;
+
 export const pageview = (url: string) => {
   if (typeof window === 'undefined' || !window.gtag) return;
   
@@ -37,6 +53,39 @@ export const event = ({
     event_category: category,
     event_label: label,
     value: value,
+  });
+};
+
+// Specific event tracking functions
+export const trackFormSubmission = (formName: string, success: boolean) => {
+  event({
+    action: EventAction.SUBMIT,
+    category: EventCategory.FORM,
+    label: `${formName}:${success ? 'success' : 'error'}`,
+  });
+};
+
+export const trackServiceClick = (serviceName: string) => {
+  event({
+    action: EventAction.CLICK,
+    category: EventCategory.SERVICE,
+    label: serviceName,
+  });
+};
+
+export const trackContactClick = (source: string) => {
+  event({
+    action: EventAction.CONTACT,
+    category: EventCategory.CONTACT,
+    label: source,
+  });
+};
+
+export const trackEngagement = (action: string, label: string) => {
+  event({
+    action,
+    category: EventCategory.ENGAGEMENT,
+    label,
   });
 };
 
