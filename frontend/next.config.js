@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    NEXT_PUBLIC_DOMAIN: 'www.synvra.com',
+    NEXT_PUBLIC_DOMAIN: 'www.synvra.com'
+  },
+  images: {
+    domains: ['synvra.com', 'www.synvra.com'],
   },
   async headers() {
     return [
@@ -9,38 +12,20 @@ const nextConfig = {
         source: '/:path*',
         headers: [
           {
-            key: 'Content-Security-Policy',
-            value: `
-              default-src 'self';
-              script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com;
-              style-src 'self' 'unsafe-inline';
-              img-src 'self' data: https:;
-              font-src 'self';
-              connect-src 'self' https://www.google-analytics.com;
-            `.replace(/\s+/g, ' ').trim()
-          },
-          {
             key: 'X-Frame-Options',
-            value: 'DENY'
+            value: 'DENY',
           },
           {
             key: 'X-Content-Type-Options',
-            value: 'nosniff'
+            value: 'nosniff',
           },
           {
             key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin'
+            value: 'strict-origin-when-cross-origin',
           },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=()'
-          }
-        ]
-      }
-    ];
-  },
-  images: {
-    domains: ['www.synvra.com'],
+        ],
+      },
+    ]
   },
   async rewrites() {
     return [
