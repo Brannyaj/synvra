@@ -1,10 +1,14 @@
 export const config = {
-  domain: 'www.synvra.com',
-  baseUrl: 'https://www.synvra.com',
-  api: {
-    baseUrl: 'https://api.synvra.com',
-  },
+  domain: process.env.NEXT_PUBLIC_DOMAIN || 'www.synvra.com',
   analytics: {
-    measurementId: process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX',
+    measurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-CD8S6EHSRZ',
   },
-} as const;
+  api: {
+    baseUrl: process.env.NEXT_PUBLIC_API_URL || 'https://api.synvra.com',
+  },
+  cookie: {
+    domain: process.env.NEXT_PUBLIC_DOMAIN || 'www.synvra.com',
+    secure: true,
+    sameSite: 'Lax' as const,
+  }
+};

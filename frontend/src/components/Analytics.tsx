@@ -11,9 +11,17 @@ export default function Analytics() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const url = pathname + searchParams.toString();
-    analytics.pageview(url);
+    // Only track pageview if user has consented
+    const hasConsent = localStorage.getItem('cookieConsent') === 'true';
+    if (hasConsent) {
+      const url = pathname + searchParams.toString();
+      analytics.pageview(url);
+    }
   }, [pathname, searchParams]);
+
+  if (typeof window !== 'undefined' && localStorage.getItem('cookieConsent') !== 'true') {
+    return null;
+  }
 
   return (
     <>
@@ -31,8 +39,8 @@ export default function Analytics() {
             gtag('js', new Date());
             gtag('config', '${config.analytics.measurementId}', {
               page_path: window.location.pathname,
-              cookie_domain: '${config.domain}',
-              cookie_flags: 'SameSite=None;Secure'
+              cookie_domain: '${config.cookie.domain}',
+              cookie_flags: 'SameSite=${config.cookie.sameSite};Secure'
             });
           `,
         }}

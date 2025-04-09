@@ -5,6 +5,7 @@
 
 [build.environment]
   NEXT_PUBLIC_DOMAIN = "www.synvra.com"
+  NEXT_PUBLIC_GA_MEASUREMENT_ID = "G-CD8S6EHSRZ"
   NODE_VERSION = "18"
 
 [[plugins]]

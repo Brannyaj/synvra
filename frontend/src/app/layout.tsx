@@ -1,14 +1,14 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import CookieConsent from '@/components/CookieConsent';
 import Analytics from '@/components/Analytics';
+import CookieConsent from '@/components/CookieConsent';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Synvra - Modern Software Development Solutions',
-  description: 'Professional software development services including custom software, mobile apps, cloud solutions, AI & ML, cybersecurity, and data analytics.',
+  title: 'Synvra - Software Development Services',
+  description: 'Professional software development services for modern businesses.',
 };
 
 export default function RootLayout({
@@ -19,8 +19,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Analytics />
         {children}
+        <Analytics />
         <CookieConsent />
       </body>
     </html>
