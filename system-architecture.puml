@@ -1,0 +1,133 @@
+@startuml Synvra System Architecture
+
+!define RECTANGLE class
+!define DATABASE database
+
+skinparam componentStyle uml2
+skinparam linetype ortho
+skinparam backgroundColor white
+skinparam useBetaStyle true
+
+' Synvra brand colors
+!define SYNVRA_BLUE #0047BB
+!define SYNVRA_BLACK #000000
+!define SYNVRA_WHITE #FFFFFF
+
+' Color definitions based on brand
+!define PRIMARY_COLOR SYNVRA_BLUE
+!define SECONDARY_COLOR SYNVRA_BLACK
+!define BG_COLOR SYNVRA_WHITE
+
+skinparam {
+    DefaultFontColor SYNVRA_BLACK
+    ArrowColor SYNVRA_BLUE
+    BorderColor SYNVRA_BLACK
+    
+    PackageBackgroundColor BG_COLOR
+    PackageBorderColor SYNVRA_BLUE
+    
+    ComponentBackgroundColor BG_COLOR
+    ComponentBorderColor SYNVRA_BLUE
+    
+    DatabaseBackgroundColor BG_COLOR
+    DatabaseBorderColor SYNVRA_BLUE
+}
+
+package "Frontend" {
+    [Client Browser] as client #PRIMARY_COLOR;text:white
+    [React App] as frontend #PRIMARY_COLOR;text:white
+    
+    package "Frontend Components" {
+        [Authentication Portal] as auth #SECONDARY_COLOR;text:white
+        [Client Dashboard] as dashboard #SECONDARY_COLOR;text:white
+        [Project Dashboard] as projectDash #SECONDARY_COLOR;text:white
+        [Billing Dashboard] as billingDash #SECONDARY_COLOR;text:white
+        [Notification Center] as notifyCenter #SECONDARY_COLOR;text:white
+    }
+}
+
+package "Backend Services" {
+    [Node.js/Express API] as backend #PRIMARY_COLOR;text:white
+    
+    package "Core Services" {
+        [User Service] as userService #SECONDARY_COLOR;text:white
+        [Project Service] as projectService #SECONDARY_COLOR;text:white
+        [Billing Service] as billingService #SECONDARY_COLOR;text:white
+        [Notification Service] as notificationService #SECONDARY_COLOR;text:white
+    }
+}
+
+package "Notification Channels" {
+    [Email Service] as emailService #PRIMARY_COLOR;text:white
+    [SMS Gateway] as smsService #PRIMARY_COLOR;text:white
+    [Push Notifications] as pushService #PRIMARY_COLOR;text:white
+    [Webhook Service] as webhookService #PRIMARY_COLOR;text:white
+}
+
+package "External Services" {
+    [Stripe API] as stripe #SECONDARY_COLOR;text:white
+    [SendGrid] as sendgrid #SECONDARY_COLOR;text:white
+    [Twilio] as twilio #SECONDARY_COLOR;text:white
+    [Firebase Cloud Messaging] as fcm #SECONDARY_COLOR;text:white
+}
+
+package "Databases" {
+    database "MongoDB" as mongodb #PRIMARY_COLOR;text:white {
+        [User Data] as userData #SECONDARY_COLOR;text:white
+        [Project Data] as projectData #SECONDARY_COLOR;text:white
+        [Billing Data] as billingData #SECONDARY_COLOR;text:white
+    }
+    database "Notification Store" as notificationDB #PRIMARY_COLOR;text:white {
+        [Templates] #SECONDARY_COLOR;text:white
+        [Delivery Status] #SECONDARY_COLOR;text:white
+        [User Preferences] #SECONDARY_COLOR;text:white
+    }
+}
+
+' Frontend Connections
+client --> frontend
+frontend --> auth
+frontend --> dashboard
+frontend --> projectDash
+frontend --> billingDash
+frontend --> notifyCenter
+
+' Backend Connections
+auth --> backend
+dashboard --> backend
+projectDash --> backend
+billingDash --> backend
+notifyCenter --> backend
+
+' Service Connections
+backend --> userService
+backend --> projectService
+backend --> billingService
+backend --> notificationService
+
+' Notification Service Connections
+notificationService --> emailService
+notificationService --> smsService
+notificationService --> pushService
+notificationService --> webhookService
+
+' External Service Connections
+emailService --> sendgrid
+smsService --> twilio
+pushService --> fcm
+billingService --> stripe
+
+' Database Connections
+userService --> mongodb
+projectService --> mongodb
+billingService --> mongodb
+notificationService --> notificationDB
+
+' Legend
+legend right
+    |Color|Type|
+    |<#0047BB>|Primary Components|
+    |<#000000>|Secondary Components|
+endlegend
+
+@enduml
