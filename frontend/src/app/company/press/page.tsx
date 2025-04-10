@@ -1,278 +1,115 @@
 'use client';
 
 import { Suspense } from 'react';
-import { motion } from 'framer-motion';
 import Navigation from '@/components/Navigation';
 import PageWrapper from '@/components/PageWrapper';
+
+function PressPage() {
+  return (
+    <PageWrapper>
+      <Suspense fallback={<div>Loading...</div>}>
+        <PressContent />
+      </Suspense>
+    </PageWrapper>
+  );
+}
 
 function PressContent() {
   return (
     <main className="min-h-screen bg-gray-50">
       <Navigation />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="text-center mb-16">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Press & Media</h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Latest news, announcements, and media resources
+      
+      <div className="py-24 bg-gray-900 sm:py-32">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">Press & Media</h2>
+            <p className="mt-6 text-lg leading-8 text-gray-300">
+              Stay updated with our latest news, press releases, and media coverage.
             </p>
           </div>
+        </div>
+      </div>
 
-          {/* Latest Press Release */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="bg-white rounded-2xl shadow-xl overflow-hidden mb-16"
-          >
-            <div className="p-8 lg:p-12">
-              <div className="text-blue-600 font-semibold mb-4">Latest Press Release</div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Synvra Announces Revolutionary AI-Powered Development Platform
-              </h2>
-              <p className="text-gray-600 mb-6">
-                Leading tech company unveils new platform that promises to transform software development with advanced AI capabilities
-              </p>
-              <div className="flex items-center mb-8">
-                <div>
-                  <p className="text-sm text-gray-500">April 10, 2025</p>
-                  <p className="text-sm text-gray-500">San Francisco, CA</p>
+      <div className="bg-white py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Latest Press Releases</h2>
+            <div className="mt-10 space-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16">
+              {/* Press Release Items */}
+              <article className="flex max-w-xl flex-col items-start">
+                <div className="flex items-center gap-x-4 text-xs">
+                  <time dateTime="2025-04-10" className="text-gray-500">Apr 10, 2025</time>
+                  <span className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
+                    Company News
+                  </span>
                 </div>
-              </div>
-              <a
-                href="/press/synvra-ai-platform-announcement"
-                className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-700"
-              >
-                Read Full Release
-                <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </a>
-            </div>
-          </motion.div>
+                <div className="group relative">
+                  <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                    <span className="absolute inset-0"></span>
+                    Synvra Launches Revolutionary AI-Powered Healthcare Solutions
+                  </h3>
+                  <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
+                    Synvra announces the launch of its groundbreaking AI-powered healthcare solutions, 
+                    designed to transform patient care and medical diagnostics through advanced technology.
+                  </p>
+                </div>
+              </article>
 
-          {/* Press Releases Grid */}
-          <div className="mb-16">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">Recent Press Releases</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                {
-                  title: "Synvra Expands Global Operations",
-                  excerpt: "Company announces new offices in Europe and Asia to better serve international clients",
-                  date: "April 5, 2025",
-                  location: "London, UK"
-                },
-                {
-                  title: "Q1 2025 Financial Results",
-                  excerpt: "Record-breaking quarter with 200% year-over-year growth in enterprise customers",
-                  date: "April 1, 2025",
-                  location: "San Francisco, CA"
-                },
-                {
-                  title: "New Strategic Partnership",
-                  excerpt: "Synvra partners with leading cloud provider to enhance service offerings",
-                  date: "March 28, 2025",
-                  location: "Seattle, WA"
-                },
-                {
-                  title: "Innovation Award Winner",
-                  excerpt: "Synvra recognized for breakthrough achievements in AI development",
-                  date: "March 15, 2025",
-                  location: "New York, NY"
-                },
-                {
-                  title: "Sustainability Initiative",
-                  excerpt: "Company commits to carbon-neutral operations by 2026",
-                  date: "March 10, 2025",
-                  location: "San Francisco, CA"
-                },
-                {
-                  title: "Tech Education Program",
-                  excerpt: "Launch of new program to support next generation of developers",
-                  date: "March 1, 2025",
-                  location: "Boston, MA"
-                }
-              ].map((release, index) => (
-                <motion.div
-                  key={release.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden"
-                >
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{release.title}</h3>
-                    <p className="text-gray-600 mb-4">{release.excerpt}</p>
-                    <div className="text-sm text-gray-500 mb-4">
-                      <p>{release.date}</p>
-                      <p>{release.location}</p>
-                    </div>
-                    <a
-                      href={`/press/${release.title.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="text-blue-600 font-semibold text-sm hover:text-blue-700"
-                    >
-                      Read More →
-                    </a>
-                  </div>
-                </motion.div>
-              ))}
+              <article className="flex max-w-xl flex-col items-start">
+                <div className="flex items-center gap-x-4 text-xs">
+                  <time dateTime="2025-03-15" className="text-gray-500">Mar 15, 2025</time>
+                  <span className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
+                    Partnership
+                  </span>
+                </div>
+                <div className="group relative">
+                  <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                    <span className="absolute inset-0"></span>
+                    Synvra Partners with Leading Healthcare Providers
+                  </h3>
+                  <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
+                    Synvra announces strategic partnerships with leading healthcare providers to implement 
+                    its AI solutions across major medical facilities nationwide.
+                  </p>
+                </div>
+              </article>
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Media Resources */}
-          <div className="mb-16">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">Media Resources</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                className="bg-white p-6 rounded-xl shadow-lg"
-              >
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Brand Assets</h3>
-                <p className="text-gray-600 mb-6">
-                  Download our logo, brand guidelines, and other visual assets
-                </p>
-                <a
-                  href="/media-kit.zip"
-                  className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-700"
-                >
-                  Download Media Kit
-                  <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+      <div className="bg-gray-50 py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Media Contact</h2>
+            <p className="mt-6 text-lg leading-8 text-gray-600">
+              For press inquiries, please contact our media relations team:
+            </p>
+            <dl className="mt-10 space-y-4 text-base leading-7 text-gray-600">
+              <div className="flex gap-x-4">
+                <dt className="flex-none">
+                  <span className="sr-only">Email</span>
+                  <svg className="h-7 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                   </svg>
-                </a>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                className="bg-white p-6 rounded-xl shadow-lg"
-              >
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Media Contact</h3>
-                <div className="space-y-4">
-                  <p className="text-gray-600">For press inquiries, please contact:</p>
-                  <div>
-                    <p className="font-medium text-gray-900">Sarah Johnson</p>
-                    <p className="text-gray-600">Head of Communications</p>
-                    <p className="text-gray-600">press@synvra.com</p>
-                    <p className="text-gray-600">+1 (555) 123-4567</p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
+                </dt>
+                <dd><a className="hover:text-gray-900" href="mailto:press@synvra.com">press@synvra.com</a></dd>
+              </div>
+              <div className="flex gap-x-4">
+                <dt className="flex-none">
+                  <span className="sr-only">Phone</span>
+                  <svg className="h-7 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                  </svg>
+                </dt>
+                <dd><a className="hover:text-gray-900" href="tel:+1 (555) 234-5678">+1 (555) 234-5678</a></dd>
+              </div>
+            </dl>
           </div>
-
-          {/* In the News */}
-          <div className="mb-16">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">In the News</h2>
-            <div className="grid grid-cols-1 gap-6">
-              {[
-                {
-                  source: "TechCrunch",
-                  title: "Synvra's AI Platform Could Revolutionize Software Development",
-                  date: "April 8, 2025",
-                  url: "https://techcrunch.com"
-                },
-                {
-                  source: "Forbes",
-                  title: "The Rise of Synvra: Silicon Valley's Latest Unicorn",
-                  date: "April 3, 2025",
-                  url: "https://forbes.com"
-                },
-                {
-                  source: "Bloomberg",
-                  title: "Synvra Secures $200M Series C Funding",
-                  date: "March 25, 2025",
-                  url: "https://bloomberg.com"
-                }
-              ].map((article, index) => (
-                <motion.div
-                  key={article.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-white p-6 rounded-xl shadow-lg"
-                >
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <p className="text-blue-600 font-semibold mb-2">{article.source}</p>
-                      <h3 className="text-lg font-bold text-gray-900 mb-2">{article.title}</h3>
-                      <p className="text-sm text-gray-500">{article.date}</p>
-                    </div>
-                    <a
-                      href={article.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-700"
-                    >
-                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Social Media */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center"
-          >
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">Follow Us</h2>
-            <div className="flex justify-center space-x-6">
-              {[
-                {
-                  name: "Twitter",
-                  url: "https://twitter.com/synvra",
-                  icon: (
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                    </svg>
-                  )
-                },
-                {
-                  name: "LinkedIn",
-                  url: "https://linkedin.com/company/synvra",
-                  icon: (
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                    </svg>
-                  )
-                }
-              ].map((social) => (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-gray-500"
-                >
-                  <span className="sr-only">{social.name}</span>
-                  {social.icon}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        </motion.div>
+        </div>
       </div>
     </main>
   );
 }
 
-export default function Press() {
-  return (
-    <PageWrapper>
-      <PressContent />
-    </PageWrapper>
-  );
-}
+export default PressPage;
