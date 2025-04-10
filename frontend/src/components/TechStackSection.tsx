@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const technologies = {
   frontend: [
@@ -77,10 +78,12 @@ export default function TechStackSection() {
                     className="flex flex-col items-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
                   >
                     <div className="w-16 h-16 relative mb-4">
-                      <img
+                      <Image
                         src={tech.icon}
                         alt={tech.name}
-                        className="w-full h-full object-contain"
+                        width={64}
+                        height={64}
+                        className="object-contain"
                       />
                     </div>
                     <h4 className="text-gray-900 font-medium">{tech.name}</h4>

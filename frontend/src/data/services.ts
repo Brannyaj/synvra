@@ -1,312 +1,370 @@
 import { ReactNode } from 'react';
 import {
-  CloudArrowUpIcon,
-  CogIcon,
-  DevicePhoneMobileIcon,
-  ShieldCheckIcon,
-  CircleStackIcon,
-  CpuChipIcon,
-  ArrowPathIcon,
-  ChartBarIcon,
-} from '@heroicons/react/24/outline';
+  CustomSoftwareIcon,
+  MobileAppIcon,
+  CloudSolutionsIcon,
+  AIMLIcon,
+  CybersecurityIcon,
+  DataEngineeringIcon,
+  BlockchainIcon,
+  IoTIcon,
+  ARVRIcon,
+  DevOpsIcon,
+} from '@/components/icons/ServiceIcons';
+
+export interface CaseStudy {
+  title: string;
+  description: string;
+  results: string[];
+}
 
 export interface Service {
   id: number;
   title: string;
   description: string;
-  icon: ReactNode;
+  icon: () => ReactNode;
   features: string[];
   technologies: string[];
-  processSteps: {
-    title: string;
-    description: string;
-  }[];
-  caseStudies: {
-    title: string;
-    description: string;
-    results: string[];
-  }[];
+  process: string[];
+  caseStudies?: CaseStudy[];
 }
 
 export const services: Service[] = [
   {
     id: 1,
-    title: "Enterprise Software Development",
-    description: "Custom enterprise-grade software solutions that drive digital transformation and operational excellence.",
-    icon: <CogIcon className="w-6 h-6" />,
+    title: 'Custom Software Development',
+    description: 'Tailored software solutions designed to meet your specific business needs.',
+    icon: CustomSoftwareIcon,
     features: [
-      "Microservices Architecture",
-      "Cloud-Native Applications",
-      "Enterprise Resource Planning (ERP)",
-      "Customer Relationship Management (CRM)",
-      "Business Process Automation",
-      "Legacy System Modernization"
+      'Enterprise Software Solutions',
+      'Custom CRM & ERP Systems',
+      'Legacy System Modernization',
+      'API Development & Integration'
     ],
     technologies: [
-      "Java Spring Boot",
-      "Node.js",
-      "React/Next.js",
-      "PostgreSQL",
-      "Docker",
-      "Kubernetes"
+      'React', 'Node.js', 'Python',
+      'Java', 'PostgreSQL', 'MongoDB',
+      'Docker', 'Kubernetes'
     ],
-    processSteps: [
-      {
-        title: "Discovery & Analysis",
-        description: "Deep dive into your business processes and requirements"
-      },
-      {
-        title: "Architecture Design",
-        description: "Creating scalable and maintainable system architecture"
-      },
-      {
-        title: "Agile Development",
-        description: "Iterative development with continuous feedback"
-      }
+    process: [
+      'Requirements Analysis',
+      'Architecture Design',
+      'Development',
+      'Testing & QA'
     ],
     caseStudies: [
       {
-        title: "Global Logistics Transformation",
-        description: "Modernized legacy systems for a Fortune 500 logistics company",
+        title: 'Enterprise Resource Planning System',
+        description: 'Developed a custom ERP system for a manufacturing company, streamlining their operations and improving efficiency.',
         results: [
-          "40% reduction in processing time",
-          "99.99% system uptime",
-          "60% cost reduction in maintenance"
+          '40% reduction in processing time',
+          'Improved inventory accuracy by 95%',
+          'Increased employee productivity by 30%'
         ]
       }
     ]
   },
   {
     id: 2,
-    title: "AI & Machine Learning Solutions",
-    description: "Cutting-edge AI solutions that transform data into actionable insights and intelligent automation.",
-    icon: <CpuChipIcon className="w-6 h-6" />,
+    title: 'Blockchain Development',
+    description: 'Build secure and scalable blockchain solutions, from smart contracts to complete Web3 applications.',
+    icon: BlockchainIcon,
     features: [
-      "Predictive Analytics",
-      "Natural Language Processing",
-      "Computer Vision",
-      "Recommendation Systems",
-      "Automated Decision Making",
-      "Deep Learning Models"
+      'Smart Contract Development',
+      'DeFi Applications',
+      'NFT Platforms',
+      'Crypto Wallet Integration'
     ],
     technologies: [
-      "TensorFlow",
-      "PyTorch",
-      "OpenAI GPT",
-      "Azure ML",
-      "AWS SageMaker",
-      "NVIDIA CUDA"
+      'Solidity', 'Web3.js', 'Ethereum',
+      'Hardhat', 'OpenZeppelin', 'IPFS',
+      'MetaMask', 'Truffle'
     ],
-    processSteps: [
-      {
-        title: "Data Assessment",
-        description: "Evaluating data quality and requirements"
-      },
-      {
-        title: "Model Development",
-        description: "Creating and training custom AI models"
-      },
-      {
-        title: "Integration & Deployment",
-        description: "Seamless integration with existing systems"
-      }
+    process: [
+      'Security Assessment',
+      'Smart Contract Design',
+      'Development & Testing',
+      'Audit & Deployment'
     ],
     caseStudies: [
       {
-        title: "Retail Intelligence Platform",
-        description: "AI-powered inventory and customer behavior analysis",
+        title: 'DeFi Trading Platform',
+        description: 'Developed a decentralized exchange with advanced trading features and liquidity pools.',
         results: [
-          "25% increase in sales",
-          "30% reduction in inventory costs",
-          "95% prediction accuracy"
+          '$10M+ Total Value Locked (TVL)',
+          '100K+ monthly active users',
+          'Successfully audited by CertiK'
         ]
       }
     ]
   },
   {
     id: 3,
-    title: "Cloud & DevOps Excellence",
-    description: "Comprehensive cloud solutions and DevOps practices for scalable, reliable, and secure operations.",
-    icon: <CloudArrowUpIcon className="w-6 h-6" />,
+    title: 'Mobile App Development',
+    description: 'Native and cross-platform mobile applications that deliver exceptional user experiences.',
+    icon: MobileAppIcon,
     features: [
-      "Cloud Migration",
-      "Infrastructure as Code",
-      "CI/CD Pipeline Implementation",
-      "Container Orchestration",
-      "Serverless Architecture",
-      "Cloud Cost Optimization"
+      'iOS & Android Development',
+      'Cross-platform Solutions',
+      'Progressive Web Apps',
+      'Mobile UI/UX Design'
     ],
     technologies: [
-      "AWS",
-      "Azure",
-      "Google Cloud",
-      "Terraform",
-      "Jenkins",
-      "GitLab CI"
+      'React Native', 'Flutter',
+      'Swift', 'Kotlin',
+      'Firebase', 'AWS Amplify'
     ],
-    processSteps: [
-      {
-        title: "Cloud Strategy",
-        description: "Developing optimal cloud adoption roadmap"
-      },
-      {
-        title: "Migration Planning",
-        description: "Detailed migration strategy and execution plan"
-      },
-      {
-        title: "DevOps Implementation",
-        description: "Setting up automated workflows and monitoring"
-      }
+    process: [
+      'UI/UX Design',
+      'Development',
+      'Testing',
+      'App Store Launch'
     ],
     caseStudies: [
       {
-        title: "Financial Services Migration",
-        description: "Cloud migration for a major financial institution",
+        title: 'E-commerce Mobile App',
+        description: 'Built a cross-platform mobile app for a retail chain, enabling seamless shopping experiences.',
         results: [
-          "50% reduction in infrastructure costs",
-          "90% faster deployment time",
-          "Zero downtime migration"
+          '200% increase in mobile sales',
+          '4.8/5 average user rating',
+          '50% reduction in cart abandonment'
         ]
       }
     ]
   },
   {
     id: 4,
-    title: "Cybersecurity & Compliance",
-    description: "Enterprise-grade security solutions and compliance frameworks for robust digital protection.",
-    icon: <ShieldCheckIcon className="w-6 h-6" />,
+    title: 'IoT Solutions',
+    description: 'Connect and manage smart devices with secure, scalable IoT infrastructure and applications.',
+    icon: IoTIcon,
     features: [
-      "Security Assessment",
-      "Penetration Testing",
-      "Compliance Auditing",
-      "Zero Trust Architecture",
-      "Security Operations Center",
-      "Incident Response"
+      'IoT Platform Development',
+      'Device Management',
+      'Real-time Analytics',
+      'Edge Computing Solutions'
     ],
     technologies: [
-      "AWS Security Hub",
-      "Azure Sentinel",
-      "HashiCorp Vault",
-      "Snyk",
-      "SonarQube",
-      "Splunk"
+      'AWS IoT', 'Azure IoT',
+      'MQTT', 'Node-RED',
+      'TensorFlow Lite', 'Docker'
     ],
-    processSteps: [
-      {
-        title: "Security Assessment",
-        description: "Comprehensive security audit and gap analysis"
-      },
-      {
-        title: "Implementation",
-        description: "Deploying security measures and controls"
-      },
-      {
-        title: "Continuous Monitoring",
-        description: "24/7 security monitoring and threat detection"
-      }
+    process: [
+      'IoT Architecture Design',
+      'Device Integration',
+      'Platform Development',
+      'Security Implementation'
     ],
     caseStudies: [
       {
-        title: "Healthcare Security Transformation",
-        description: "HIPAA-compliant security implementation",
+        title: 'Smart Manufacturing System',
+        description: 'Implemented an IoT solution for real-time monitoring and predictive maintenance in a manufacturing plant.',
         results: [
-          "100% compliance achievement",
-          "Zero security breaches",
-          "45% reduction in security incidents"
+          '35% reduction in downtime',
+          '25% energy cost savings',
+          'Real-time monitoring of 1000+ sensors'
         ]
       }
     ]
   },
   {
     id: 5,
-    title: "Data Engineering & Analytics",
-    description: "End-to-end data solutions that transform raw data into valuable business insights.",
-    icon: <CircleStackIcon className="w-6 h-6" />,
+    title: 'AR/VR Development',
+    description: 'Create immersive experiences with cutting-edge augmented and virtual reality technologies.',
+    icon: ARVRIcon,
     features: [
-      "Data Warehouse Design",
-      "ETL Pipeline Development",
-      "Real-time Analytics",
-      "Big Data Processing",
-      "Data Lake Implementation",
-      "BI Dashboard Development"
+      'AR/VR Applications',
+      '3D Visualization',
+      'Virtual Training',
+      'Interactive Experiences'
     ],
     technologies: [
-      "Apache Spark",
-      "Snowflake",
-      "Databricks",
-      "Apache Kafka",
-      "Power BI",
-      "Tableau"
+      'Unity', 'Unreal Engine',
+      'ARKit', 'ARCore',
+      'WebXR', 'Three.js'
     ],
-    processSteps: [
-      {
-        title: "Data Architecture",
-        description: "Designing scalable data infrastructure"
-      },
-      {
-        title: "Pipeline Development",
-        description: "Building robust data processing pipelines"
-      },
-      {
-        title: "Analytics Implementation",
-        description: "Creating actionable insights and visualizations"
-      }
+    process: [
+      '3D Modeling',
+      'Experience Design',
+      'Development',
+      'Performance Optimization'
     ],
     caseStudies: [
       {
-        title: "E-commerce Analytics Platform",
-        description: "Real-time analytics for major e-commerce platform",
+        title: 'Virtual Training Platform',
+        description: 'Developed a VR-based training solution for a manufacturing company.',
         results: [
-          "Real-time insights for 1M+ daily transactions",
-          "85% faster reporting",
-          "200% ROI in first year"
+          '60% reduction in training time',
+          '45% cost savings in training',
+          '90% trainee satisfaction rate'
         ]
       }
     ]
   },
   {
     id: 6,
-    title: "Digital Innovation Lab",
-    description: "Cutting-edge R&D in emerging technologies to drive future innovation.",
-    icon: <ArrowPathIcon className="w-6 h-6" />,
+    title: 'Cloud Solutions',
+    description: 'Scalable cloud infrastructure and services that optimize performance and security.',
+    icon: CloudSolutionsIcon,
     features: [
-      "Blockchain Solutions",
-      "IoT Integration",
-      "AR/VR Development",
-      "Quantum Computing",
-      "Edge Computing",
-      "5G Applications"
+      'Cloud Migration',
+      'AWS & Azure Services',
+      'Serverless Architecture',
+      'Cloud-Native Development'
     ],
     technologies: [
-      "Ethereum",
-      "IoT Core",
-      "Unity 3D",
-      "IBM Quantum",
-      "Edge ML",
-      "5G Networks"
+      'AWS', 'Azure', 'Google Cloud',
+      'Terraform', 'Docker', 'Kubernetes'
     ],
-    processSteps: [
-      {
-        title: "Innovation Assessment",
-        description: "Evaluating emerging technology opportunities"
-      },
-      {
-        title: "Proof of Concept",
-        description: "Rapid prototyping and validation"
-      },
-      {
-        title: "Scale & Integration",
-        description: "Enterprise-wide implementation"
-      }
+    process: [
+      'Cloud Assessment',
+      'Migration Planning',
+      'Implementation',
+      'Optimization'
     ],
     caseStudies: [
       {
-        title: "Smart City Implementation",
-        description: "IoT-based urban management system",
+        title: 'Cloud Migration Project',
+        description: 'Successfully migrated a legacy system to AWS, improving scalability and reducing costs.',
         results: [
-          "30% reduction in energy consumption",
-          "40% improvement in traffic flow",
-          "Smart services for 1M+ citizens"
+          '60% reduction in infrastructure costs',
+          '99.99% uptime achieved',
+          'Zero data loss during migration'
+        ]
+      }
+    ]
+  },
+  {
+    id: 7,
+    title: 'DevOps & CI/CD',
+    description: 'Streamline your development and deployment processes with modern DevOps practices.',
+    icon: DevOpsIcon,
+    features: [
+      'CI/CD Pipeline Setup',
+      'Infrastructure as Code',
+      'Container Orchestration',
+      'Monitoring & Logging'
+    ],
+    technologies: [
+      'Jenkins', 'GitLab CI',
+      'Terraform', 'Ansible',
+      'Prometheus', 'ELK Stack'
+    ],
+    process: [
+      'DevOps Assessment',
+      'Pipeline Design',
+      'Implementation',
+      'Team Training'
+    ],
+    caseStudies: [
+      {
+        title: 'DevOps Transformation',
+        description: 'Implemented complete DevOps pipeline for a fintech company.',
+        results: [
+          '80% faster deployment time',
+          '65% reduction in bugs',
+          '99.9% pipeline reliability'
+        ]
+      }
+    ]
+  },
+  {
+    id: 8,
+    title: 'AI & Machine Learning',
+    description: 'Intelligent solutions that leverage cutting-edge AI and ML technologies.',
+    icon: AIMLIcon,
+    features: [
+      'Predictive Analytics',
+      'Natural Language Processing',
+      'Computer Vision',
+      'Machine Learning Models'
+    ],
+    technologies: [
+      'TensorFlow', 'PyTorch',
+      'scikit-learn', 'OpenCV',
+      'BERT', 'GPT'
+    ],
+    process: [
+      'Data Collection',
+      'Model Development',
+      'Training & Testing',
+      'Deployment'
+    ],
+    caseStudies: [
+      {
+        title: 'Predictive Maintenance System',
+        description: 'Implemented an AI-powered system for predicting equipment failures in a manufacturing plant.',
+        results: [
+          '85% accuracy in failure prediction',
+          '50% reduction in maintenance costs',
+          '30% decrease in downtime'
+        ]
+      }
+    ]
+  },
+  {
+    id: 9,
+    title: 'Cybersecurity',
+    description: 'Comprehensive security solutions to protect your digital assets.',
+    icon: CybersecurityIcon,
+    features: [
+      'Security Audits',
+      'Penetration Testing',
+      'Compliance Solutions',
+      'Security Architecture'
+    ],
+    technologies: [
+      'SIEM Tools', 'WAF',
+      'IDS/IPS', 'Zero Trust',
+      'Encryption', 'PKI'
+    ],
+    process: [
+      'Security Assessment',
+      'Threat Modeling',
+      'Implementation',
+      'Monitoring'
+    ],
+    caseStudies: [
+      {
+        title: 'Enterprise Security Enhancement',
+        description: 'Implemented comprehensive security measures for a financial institution.',
+        results: [
+          'Zero security breaches post-implementation',
+          'Achieved SOC 2 compliance',
+          '100% employee security training completion'
+        ]
+      }
+    ]
+  },
+  {
+    id: 10,
+    title: 'Data Engineering',
+    description: 'Transform your data into actionable insights with advanced analytics.',
+    icon: DataEngineeringIcon,
+    features: [
+      'Data Pipeline Development',
+      'ETL Solutions',
+      'Data Warehousing',
+      'Real-time Analytics'
+    ],
+    technologies: [
+      'Apache Spark', 'Kafka',
+      'Airflow', 'Snowflake',
+      'dbt', 'Tableau'
+    ],
+    process: [
+      'Data Assessment',
+      'Architecture Design',
+      'Implementation',
+      'Optimization'
+    ],
+    caseStudies: [
+      {
+        title: 'Data Pipeline Modernization',
+        description: 'Rebuilt data infrastructure for a large e-commerce platform, enabling real-time analytics.',
+        results: [
+          '90% reduction in data processing time',
+          'Real-time insights for 1M+ daily transactions',
+          '100% data accuracy achieved'
         ]
       }
     ]

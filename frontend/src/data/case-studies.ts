@@ -47,7 +47,7 @@ export const caseStudies: CaseStudy[] = [
       position: "Chief Technology Officer"
     },
     duration: "8 months",
-    imageUrl: "/case-studies/fintech-analytics.jpg"
+    imageUrl: "/images/case-studies/fintech-analytics.jpg"
   },
   {
     id: 2,
@@ -76,7 +76,7 @@ export const caseStudies: CaseStudy[] = [
       position: "City Innovation Director"
     },
     duration: "18 months",
-    imageUrl: "/case-studies/smart-city.jpg"
+    imageUrl: "/images/case-studies/smart-city.jpg"
   },
   {
     id: 3,
@@ -100,11 +100,11 @@ export const caseStudies: CaseStudy[] = [
       "Elasticsearch"
     ],
     testimonial: {
-      quote: "Our new e-commerce platform has completely transformed our digital presence. The scalability and performance improvements have directly impacted our bottom line.",
-      author: "Emily Thompson",
+      quote: "The new platform has transformed our digital presence. We can now handle peak season traffic with ease, and our customers love the improved experience.",
+      author: "Jennifer Park",
       position: "Digital Transformation Director"
     },
     duration: "12 months",
-    imageUrl: "/case-studies/ecommerce.jpg"
+    imageUrl: "/images/case-studies/ecommerce-platform.jpg"
   }
 ];

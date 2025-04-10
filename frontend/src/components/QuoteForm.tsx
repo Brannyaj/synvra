@@ -10,25 +10,47 @@ export default function QuoteForm() {
     company: '',
     description: '',
     budget: '',
+    exactBudget: '',
     deadline: ''
   });
 
   const [submitStatus, setSubmitStatus] = useState('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const budgetRanges = [
+    'Select Budget Range',
+    '$5,000 - $10,000',
+    '$10,000 - $25,000',
+    '$25,000 - $50,000',
+    '$50,000 - $100,000',
+    '$100,000 - $250,000',
+    '$250,000 - $500,000',
+    '$500,000 - $1 Million',
+    '$1 Million - $5 Million',
+    '$5 Million+'
+  ];
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    console.log('Form change:', name, value); // Debug log
+    
+    setFormData(prev => {
+      const newData = {
+        ...prev,
+        [name]: value
+      };
+      console.log('New form data:', newData); // Debug log
+      return newData;
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitStatus('submitting');
+    setErrorMessage('');
 
     try {
-      const response = await fetch('http://localhost:3002/api/quotes', {
+      const response = await fetch('/api/quotes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,8 +58,10 @@ export default function QuoteForm() {
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Failed to submit quote');
+        throw new Error(data.message || 'Failed to submit quote');
       }
 
       setSubmitStatus('success');
@@ -48,10 +72,12 @@ export default function QuoteForm() {
         company: '',
         description: '',
         budget: '',
+        exactBudget: '',
         deadline: ''
       });
     } catch (error) {
       console.error('Error submitting quote:', error);
+      setErrorMessage(error.message || 'An unexpected error occurred. Please try again.');
       setSubmitStatus('error');
     }
   };
@@ -71,7 +97,7 @@ export default function QuoteForm() {
             required
             value={formData.name}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
           />
         </div>
 
@@ -87,14 +113,14 @@ export default function QuoteForm() {
             required
             value={formData.email}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
           />
         </div>
 
         {/* Phone Field */}
         <div>
           <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-            Phone
+            Phone *
           </label>
           <input
             type="tel"
@@ -102,8 +128,14 @@ export default function QuoteForm() {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            required
+            pattern="[0-9\+\-\(\)\s]+"
+            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
+            placeholder="e.g., +1 (555) 123-4567"
           />
+          <p className="mt-1 text-sm text-gray-500">
+            Please include country code (e.g., +1 for US/Canada)
+          </p>
         </div>
 
         {/* Company Field */}
@@ -117,14 +149,14 @@ export default function QuoteForm() {
             name="company"
             value={formData.company}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
           />
         </div>
 
         {/* Project Description Field */}
         <div>
           <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-            Project Description *
+            Project Description * (100-15,000 characters)
           </label>
           <textarea
             id="description"
@@ -133,25 +165,72 @@ export default function QuoteForm() {
             rows={4}
             value={formData.description}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-            minLength={10}
+            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
+            minLength={100}
+            maxLength={15000}
           />
+          <div className="mt-1 flex justify-between text-sm text-gray-500">
+            <span>{formData.description.length} characters</span>
+            <span>{15000 - formData.description.length} characters remaining</span>
+          </div>
+          {formData.description.length < 100 && (
+            <p className="mt-1 text-sm text-red-600">
+              Please enter at least {100 - formData.description.length} more characters
+            </p>
+          )}
         </div>
 
-        {/* Budget Field */}
-        <div>
-          <label htmlFor="budget" className="block text-sm font-medium text-gray-700">
-            Budget Range
-          </label>
-          <input
-            type="text"
-            id="budget"
-            name="budget"
-            value={formData.budget}
-            onChange={handleChange}
-            placeholder="e.g., $5,000 - $10,000"
-            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-          />
+        {/* Budget Section */}
+        <div className="space-y-4">
+          {/* Budget Range */}
+          <div>
+            <label htmlFor="budget" className="block text-sm font-medium text-gray-700">
+              Budget Range *
+            </label>
+            <select
+              id="budget"
+              name="budget"
+              value={formData.budget}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
+            >
+              <option value="">Select Budget Range</option>
+              {budgetRanges.slice(1).map((range) => (
+                <option key={range} value={range}>
+                  {range}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Always show exact budget field for testing */}
+          <div>
+            <label htmlFor="exactBudget" className="block text-sm font-medium text-gray-700">
+              Exact Budget Amount (Optional)
+            </label>
+            <div className="relative mt-1 rounded-md shadow-sm">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <span className="text-gray-500 sm:text-sm">$</span>
+              </div>
+              <input
+                type="number"
+                name="exactBudget"
+                id="exactBudget"
+                value={formData.exactBudget}
+                onChange={handleChange}
+                placeholder="Enter exact amount"
+                min="0"
+                step="1000"
+                className="block w-full rounded-md border border-gray-300 py-2 pl-7 pr-3 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
+              />
+            </div>
+            {formData.budget && (
+              <p className="mt-1 text-sm text-gray-500">
+                Please enter an amount within your selected range: {formData.budget}
+              </p>
+            )}
+          </div>
         </div>
 
         {/* Deadline Field */}
@@ -165,7 +244,7 @@ export default function QuoteForm() {
             name="deadline"
             value={formData.deadline}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
           />
         </div>
 
@@ -210,7 +289,7 @@ export default function QuoteForm() {
               </div>
               <div className="ml-3">
                 <p className="text-sm font-medium text-red-800">
-                  Error submitting quote request. Please try again.
+                  {errorMessage}
                 </p>
               </div>
             </div>

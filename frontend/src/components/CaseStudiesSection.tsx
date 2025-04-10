@@ -41,6 +41,7 @@ export default function CaseStudiesSection() {
                   src={activeStudy.imageUrl}
                   alt={activeStudy.title}
                   fill
+                  priority
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent" />

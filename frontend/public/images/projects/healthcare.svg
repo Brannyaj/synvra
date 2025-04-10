@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="healthGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#059669;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0D9488;stop-opacity:1" />
+    </linearGradient>
+    <filter id="healthGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="450" fill="url(#healthGrad)"/>
+  
+  <!-- Heart Rate Monitor -->
+  <g transform="translate(100,150)" filter="url(#healthGlow)">
+    <path d="M0,75 L100,75 L130,20 L160,130 L190,75 L220,75 L250,40 L280,110 L310,75 L340,75 L370,50 L400,100 L430,75 L460,75 L490,30 L520,120 L550,75 L600,75"
+          fill="none" stroke="white" stroke-width="3" opacity="0.9"/>
+  </g>
+  
+  <!-- Medical Cross -->
+  <g transform="translate(350,100)" filter="url(#healthGlow)">
+    <rect x="-15" y="-40" width="30" height="80" fill="white" opacity="0.9"/>
+    <rect x="-40" y="-15" width="80" height="30" fill="white" opacity="0.9"/>
+  </g>
+  
+  <!-- DNA Helix -->
+  <g transform="translate(600,100)" filter="url(#healthGlow)">
+    <path d="M0,0 C30,-20 70,20 100,0 C130,-20 170,20 200,0" 
+          fill="none" stroke="white" stroke-width="2" opacity="0.6"/>
+    <path d="M0,50 C30,30 70,70 100,50 C130,30 170,70 200,50" 
+          fill="none" stroke="white" stroke-width="2" opacity="0.6"/>
+    
+    <!-- Connecting Lines -->
+    <line x1="0" y1="0" x2="0" y2="50" stroke="white" stroke-width="2" opacity="0.6"/>
+    <line x1="50" y1="0" x2="50" y2="50" stroke="white" stroke-width="2" opacity="0.6"/>
+    <line x1="100" y1="0" x2="100" y2="50" stroke="white" stroke-width="2" opacity="0.6"/>
+    <line x1="150" y1="0" x2="150" y2="50" stroke="white" stroke-width="2" opacity="0.6"/>
+    <line x1="200" y1="0" x2="200" y2="50" stroke="white" stroke-width="2" opacity="0.6"/>
+  </g>
+  
+  <!-- Stats -->
+  <g transform="translate(50,350)" fill="white" opacity="0.9">
+    <text x="0" y="0" font-family="Arial" font-size="24" font-weight="bold">100+</text>
+    <text x="0" y="30" font-family="Arial" font-size="16" opacity="0.7">Hospitals</text>
+  </g>
+  
+  <g transform="translate(350,350)" fill="white" opacity="0.9">
+    <text x="0" y="0" font-family="Arial" font-size="24" font-weight="bold">1M+</text>
+    <text x="0" y="30" font-family="Arial" font-size="16" opacity="0.7">Patients</text>
+  </g>
+  
+  <g transform="translate(650,350)" fill="white" opacity="0.9">
+    <text x="0" y="0" font-family="Arial" font-size="24" font-weight="bold">99.9%</text>
+    <text x="0" y="30" font-family="Arial" font-size="16" opacity="0.7">Uptime</text>
+  </g>
+  
+  <!-- Floating Elements -->
+  <g fill="white" opacity="0.2">
+    <circle cx="100" cy="100" r="3"/>
+    <circle cx="700" cy="350" r="2"/>
+    <circle cx="200" cy="400" r="4"/>
+    <circle cx="600" cy="150" r="3"/>
+    <circle cx="400" cy="50" r="2"/>
+  </g>
+</svg>

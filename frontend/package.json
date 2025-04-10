@@ -9,12 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.1",
     "@heroicons/react": "^2.2.0",
     "@netlify/plugin-nextjs": "^5.10.4",
     "framer-motion": "^12.6.3",
     "next": "15.2.5",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "resend": "^4.2.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

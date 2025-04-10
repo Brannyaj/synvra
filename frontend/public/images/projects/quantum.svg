@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="quantumGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9333EA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6366F1;stop-opacity:1" />
+    </linearGradient>
+    <filter id="quantumGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="450" fill="url(#quantumGrad)"/>
+  
+  <!-- Quantum Circuit -->
+  <g transform="translate(200,100)" filter="url(#quantumGlow)">
+    <!-- Quantum Gates -->
+    <g fill="white" opacity="0.9">
+      <rect x="0" y="0" width="40" height="40" rx="5"/>
+      <rect x="100" y="0" width="40" height="40" rx="5"/>
+      <rect x="200" y="0" width="40" height="40" rx="5"/>
+      <rect x="300" y="0" width="40" height="40" rx="5"/>
+      
+      <rect x="0" y="100" width="40" height="40" rx="5"/>
+      <rect x="100" y="100" width="40" height="40" rx="5"/>
+      <rect x="200" y="100" width="40" height="40" rx="5"/>
+      <rect x="300" y="100" width="40" height="40" rx="5"/>
+    </g>
+    
+    <!-- Quantum Lines -->
+    <g stroke="white" stroke-width="2" opacity="0.6">
+      <line x1="0" y1="20" x2="340" y2="20"/>
+      <line x1="0" y1="120" x2="340" y2="120"/>
+      
+      <!-- Entanglement Lines -->
+      <path d="M20,40 C20,70 120,70 120,100" fill="none"/>
+      <path d="M220,40 C220,70 320,70 320,100" fill="none"/>
+    </g>
+    
+    <!-- Gate Labels -->
+    <g fill="url(#quantumGrad)" font-family="Arial" font-size="16" font-weight="bold">
+      <text x="15" y="25">H</text>
+      <text x="115" y="25">X</text>
+      <text x="215" y="25">Y</text>
+      <text x="315" y="25">Z</text>
+      
+      <text x="15" y="125">X</text>
+      <text x="115" y="125">Y</text>
+      <text x="215" y="125">Z</text>
+      <text x="315" y="125">H</text>
+    </g>
+  </g>
+  
+  <!-- Orbital Particles -->
+  <g transform="translate(400,225)">
+    <g filter="url(#quantumGlow)">
+      <circle cx="0" cy="0" r="8" fill="white" opacity="0.9"/>
+      
+      <!-- Electron Orbits -->
+      <g stroke="white" stroke-width="1" opacity="0.4" fill="none">
+        <ellipse rx="100" ry="30"/>
+        <ellipse rx="100" ry="30" transform="rotate(60)"/>
+        <ellipse rx="100" ry="30" transform="rotate(120)"/>
+      </g>
+      
+      <!-- Electrons -->
+      <circle cx="100" cy="0" r="4" fill="white" opacity="0.9"/>
+      <circle cx="-50" cy="86.6" r="4" fill="white" opacity="0.9"/>
+      <circle cx="-50" cy="-86.6" r="4" fill="white" opacity="0.9"/>
+    </g>
+  </g>
+  
+  <!-- Stats -->
+  <g transform="translate(50,350)" fill="white" opacity="0.9">
+    <text x="0" y="0" font-family="Arial" font-size="24" font-weight="bold">100+</text>
+    <text x="0" y="30" font-family="Arial" font-size="16" opacity="0.7">Research Papers</text>
+  </g>
+  
+  <g transform="translate(350,350)" fill="white" opacity="0.9">
+    <text x="0" y="0" font-family="Arial" font-size="24" font-weight="bold">50+</text>
+    <text x="0" y="30" font-family="Arial" font-size="16" opacity="0.7">Patents</text>
+  </g>
+  
+  <g transform="translate(650,350)" fill="white" opacity="0.9">
+    <text x="0" y="0" font-family="Arial" font-size="24" font-weight="bold">10x</text>
+    <text x="0" y="30" font-family="Arial" font-size="16" opacity="0.7">Performance</text>
+  </g>
+  
+  <!-- Floating Elements -->
+  <g fill="white" opacity="0.2">
+    <circle cx="100" cy="100" r="3"/>
+    <circle cx="700" cy="350" r="2"/>
+    <circle cx="200" cy="400" r="4"/>
+    <circle cx="600" cy="150" r="3"/>
+    <circle cx="400" cy="50" r="2"/>
+  </g>
+</svg>

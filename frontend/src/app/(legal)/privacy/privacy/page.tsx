@@ -1,5 +1,6 @@
 import Navigation from '@/components/Navigation';
 
+// Moving this file to the legal directory structure
 export default function PrivacyPolicy() {
   return (
     <main className="min-h-screen bg-gray-50">

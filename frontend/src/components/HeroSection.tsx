@@ -1,116 +1,177 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { trackContactClick } from '@/utils/analytics';
+import { useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 export default function HeroSection() {
-  const handleContactClick = () => {
-    trackContactClick('hero_section');
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 500], [0, 200]);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  const gradientStyle = {
+    background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.2) 0%, rgba(0, 0, 0, 0) 50%)`,
   };
 
   return (
-    <div className="relative bg-gray-900 overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
-      
-      <div className="relative pt-6 pb-16 sm:pb-24">
-        <main className="mt-16 sm:mt-24">
-          <div className="mx-auto max-w-7xl">
-            <div className="lg:grid lg:grid-cols-12 lg:gap-8">
-              <motion.div 
-                className="px-4 sm:px-6 sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left lg:flex lg:items-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-              >
-                <div>
-                  <div className="inline-flex items-center text-white bg-gray-800 rounded-full p-1 pr-2 sm:text-base lg:text-sm xl:text-base hover:text-gray-200">
-                    <span className="px-3 py-0.5 text-white text-xs font-semibold leading-5 uppercase tracking-wide bg-blue-500 rounded-full">
-                      What's New
-                    </span>
-                    <span className="ml-4 text-sm">
-                      Introducing AI-Powered Development
-                    </span>
-                    <svg className="ml-2 w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <h1 className="mt-4 text-4xl tracking-tight font-extrabold text-white sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl">
-                    <span className="block">Transform Your</span>
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 pb-3">
-                      Digital Vision
-                    </span>
-                  </h1>
-                  <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                    We craft exceptional software solutions that drive innovation and business growth. From AI-powered applications to enterprise systems, we're your partner in digital excellence.
-                  </p>
-                  <div className="mt-10 sm:mt-12">
-                    <div className="sm:flex sm:justify-center lg:justify-start">
-                      <div className="rounded-md shadow">
-                        <Link
-                          href="/contact"
-                          onClick={handleContactClick}
-                          className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
-                        >
-                          Start Your Project
-                        </Link>
-                      </div>
-                      <div className="mt-3 sm:mt-0 sm:ml-3">
-                        <Link
-                          href="/case-studies"
-                          className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-blue-100 hover:bg-blue-200 md:py-4 md:text-lg md:px-10"
-                        >
-                          View Case Studies
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-              <motion.div 
-                className="mt-16 sm:mt-24 lg:mt-0 lg:col-span-6"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              >
-                <div className="bg-gray-800 sm:max-w-md sm:w-full sm:mx-auto sm:rounded-lg sm:overflow-hidden">
-                  <div className="px-4 py-8 sm:px-10">
-                    <div className="space-y-6">
-                      <div className="text-center text-xl text-white font-semibold">
-                        Our Impact
-                      </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="text-center">
-                          <div className="text-3xl font-bold text-blue-500">500+</div>
-                          <div className="text-sm text-gray-300">Projects Delivered</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-3xl font-bold text-purple-500">98%</div>
-                          <div className="text-sm text-gray-300">Client Satisfaction</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-3xl font-bold text-green-500">45+</div>
-                          <div className="text-sm text-gray-300">Countries Served</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-3xl font-bold text-yellow-500">24/7</div>
-                          <div className="text-sm text-gray-300">Support</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="px-4 py-6 bg-gray-700 sm:px-10">
-                    <p className="text-xs leading-5 text-gray-300">
-                      Trusted by Fortune 500 companies and innovative startups worldwide
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gray-900">
+      {/* Interactive Background */}
+      <div
+        className="absolute inset-0 transition-opacity duration-300"
+        style={gradientStyle}
+      />
+
+      {/* Animated Particles */}
+      <div className="absolute inset-0">
+        <div className="relative h-full">
+          {[...Array(50)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-blue-500 rounded-full opacity-20"
+              animate={{
+                x: [
+                  Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
+                  Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
+                ],
+                y: [
+                  Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1000),
+                  Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1000),
+                ],
+              }}
+              transition={{
+                duration: Math.random() * 10 + 20,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="relative z-10 max-w-5xl mx-auto text-center">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6"
+        >
+          Transforming Ideas into 
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600"> Digital Excellence</span>
+        </motion.h1>
+        
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto"
+        >
+          Delivering game-changing software solutions that drive measurable business growth. 
+          Join industry leaders who trust us to transform their vision into market-leading products.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          <a
+            href="/quote"
+            className="px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors duration-200 flex items-center group"
+          >
+            Get Started
+            <svg
+              className="ml-2 -mr-1 w-5 h-5 transform transition-transform duration-200 group-hover:translate-x-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              />
+            </svg>
+          </a>
+          <a
+            href="#featured-projects"
+            className="px-8 py-4 bg-gray-800 text-white rounded-lg font-semibold text-lg hover:bg-gray-700 transition-colors duration-200"
+          >
+            View Our Work
+          </a>
+        </motion.div>
+
+        {/* Trust Badges */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mt-12 flex flex-wrap justify-center items-center gap-8"
+        >
+          <div className="flex items-center space-x-2">
+            <div className="w-12 h-12 bg-blue-600/10 rounded-full flex items-center justify-center">
+              <svg className="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <div className="text-left">
+              <div className="text-white font-semibold">500+</div>
+              <div className="text-gray-400 text-sm">Enterprise Clients</div>
             </div>
           </div>
-        </main>
+          <div className="flex items-center space-x-2">
+            <div className="w-12 h-12 bg-blue-600/10 rounded-full flex items-center justify-center">
+              <svg className="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+            <div className="text-left">
+              <div className="text-white font-semibold">99.9%</div>
+              <div className="text-gray-400 text-sm">Success Rate</div>
+            </div>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-12 h-12 bg-blue-600/10 rounded-full flex items-center justify-center">
+              <svg className="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <div className="text-left">
+              <div className="text-white font-semibold">2x Faster</div>
+              <div className="text-gray-400 text-sm">Development</div>
+            </div>
+          </div>
+        </motion.div>
+
       </div>
-    </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        style={{ y }}
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+      >
+        <div className="w-6 h-10 border-2 border-blue-500 rounded-full p-1">
+          <motion.div
+            animate={{
+              y: [0, 12, 0],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+            className="w-2 h-2 bg-blue-500 rounded-full mx-auto"
+          />
+        </div>
+      </motion.div>
+    </section>
   );
 }
