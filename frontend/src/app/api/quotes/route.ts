@@ -1,19 +1,23 @@
-import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { NextResponse } from 'next/server';
 
-// Initialize Resend with API key
-const resendApiKey = process.env.RESEND_API_KEY;
-console.log('API Key exists:', !!resendApiKey); // Debug log
-
-if (!resendApiKey) {
-  console.error('RESEND_API_KEY is not set in environment variables');
-}
-const resend = new Resend(resendApiKey);
+export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
   try {
+    const resendApiKey = process.env.RESEND_API_KEY;
+    
+    // Check if API key exists
+    if (!resendApiKey) {
+      console.log('RESEND_API_KEY not found in environment variables');
+      return NextResponse.json(
+        { error: 'Email service not configured' },
+        { status: 503 }
+      );
+    }
+
+    const resend = new Resend(resendApiKey);
     const formData = await request.json();
-    console.log('Received form data:', formData); // Debug log
 
     // Validate required fields
     if (!formData.email || !formData.name) {
