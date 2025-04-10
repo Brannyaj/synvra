@@ -58,12 +58,12 @@ export default function Navigation() {
                 {item.label}
               </Link>
             ))}
-            <a 
-              href={`/quote?service=${service}`}
+            <Link 
+              href="/quote"
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               Get Started
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -113,13 +113,13 @@ export default function Navigation() {
                   {item.label}
                 </Link>
               ))}
-              <a 
-                href={`/quote?service=${service}`}
+              <Link 
+                href="/quote"
                 className="block w-full text-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Get Started
-              </a>
+              </Link>
             </div>
           </motion.div>
         )}
