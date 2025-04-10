@@ -3,8 +3,9 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
-export default function QuantumResearch() {
+function QuantumResearchContent() {
   return (
     <main className="min-h-screen bg-gray-900">
       {/* Hero Section */}
@@ -159,5 +160,13 @@ export default function QuantumResearch() {
         </motion.section>
       </div>
     </main>
+  );
+}
+
+export default function QuantumResearch() {
+  return (
+    <Suspense fallback={<div>Loading quantum research project...</div>}>
+      <QuantumResearchContent />
+    </Suspense>
   );
 }

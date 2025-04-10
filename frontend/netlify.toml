@@ -1,10 +1,10 @@
 [build]
-  base = "frontend"
+  base = "."
   command = "npm run build"
   publish = ".next"
 
 [build.environment]
-  NEXT_PUBLIC_DOMAIN = "www.synvra.com"
+  NEXT_PUBLIC_DOMAIN = "synvra.com"
   NEXT_PUBLIC_GA_MEASUREMENT_ID = "G-CD8S6EHSRZ"
   NODE_VERSION = "18"
 
@@ -22,12 +22,18 @@
 
 [[redirects]]
   from = "http://synvra.com/*"
-  to = "https://www.synvra.com/:splat"
+  to = "https://synvra.com/:splat"
   status = 301
   force = true
 
 [[redirects]]
-  from = "https://synvra.com/*"
-  to = "https://www.synvra.com/:splat"
+  from = "http://www.synvra.com/*"
+  to = "https://synvra.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.synvra.com/*"
+  to = "https://synvra.com/:splat"
   status = 301
   force = true

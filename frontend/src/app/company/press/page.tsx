@@ -1,10 +1,14 @@
 'use client';
 
+import { Suspense } from 'react';
 import { motion } from 'framer-motion';
+import Navigation from '@/components/Navigation';
+import PageWrapper from '@/components/PageWrapper';
 
-export default function Press() {
+function PressContent() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gray-50">
+      <Navigation />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -261,6 +265,14 @@ export default function Press() {
           </motion.div>
         </motion.div>
       </div>
-    </div>
+    </main>
+  );
+}
+
+export default function Press() {
+  return (
+    <PageWrapper>
+      <PressContent />
+    </PageWrapper>
   );
 }

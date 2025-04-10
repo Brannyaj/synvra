@@ -1,12 +1,15 @@
 'use client';
 
+import { Suspense } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import Navigation from '@/components/Navigation';
 
-export default function TradingPlatform() {
+function TradingPlatformContent() {
   return (
     <main className="min-h-screen bg-gray-900">
+      <Navigation />
       {/* Hero Section */}
       <div className="relative h-[60vh] bg-gradient-to-r from-blue-600 to-blue-800">
         <div className="absolute inset-0 bg-black/50" />
@@ -158,5 +161,15 @@ export default function TradingPlatform() {
         </motion.section>
       </div>
     </main>
+  );
+}
+
+export default function TradingPlatformPage() {
+  return (
+    <Suspense fallback={<div>Loading trading platform...</div>}>
+      <div className="min-h-screen bg-gray-50 py-12">
+        <TradingPlatformContent />
+      </div>
+    </Suspense>
   );
 }

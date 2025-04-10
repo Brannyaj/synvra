@@ -1,8 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function QuoteForm() {
+interface QuoteFormProps {
+  initialService?: string;
+}
+
+export default function QuoteForm({ initialService }: QuoteFormProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -29,6 +33,16 @@ export default function QuoteForm() {
     '$1 Million - $5 Million',
     '$5 Million+'
   ];
+
+  useEffect(() => {
+    if (initialService) {
+      const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
+      if (descriptionInput) {
+        descriptionInput.value = `I'm interested in your ${initialService} service. Specifically, I need help with...`;
+        descriptionInput.focus();
+      }
+    }
+  }, [initialService]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
