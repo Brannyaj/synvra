@@ -1,10 +1,19 @@
 'use client';
 
+import { Suspense } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function HealthcareAnalytics() {
+function HealthcarePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HealthcareContent />
+    </Suspense>
+  );
+}
+
+function HealthcareContent() {
   return (
     <main className="min-h-screen bg-gray-900">
       {/* Hero Section */}
@@ -160,3 +169,5 @@ export default function HealthcareAnalytics() {
     </main>
   );
 }
+
+export default HealthcarePage;
