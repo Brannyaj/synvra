@@ -1,4 +1,5 @@
 [build]
+  base = "frontend"
   command = "npm ci && npm run build"
   publish = "out"
 
@@ -6,6 +7,7 @@
   NEXT_PUBLIC_DOMAIN = "synvra.com"
   NEXT_PUBLIC_GA_MEASUREMENT_ID = "G-CD8S6EHSRZ"
   NODE_VERSION = "18"
+  PYTHON_VERSION = "3.8"
   NEXT_USE_NETLIFY = "true"
 
 [[redirects]]
