@@ -125,15 +125,21 @@ export default function QuotePage() {
     email: '',
     company: '',
     phone: '',
-    projectCategory: Object.keys(PROJECT_TYPES)[0],
-    projectType: PROJECT_TYPES[Object.keys(PROJECT_TYPES)[0]][0],
-    budget: 'not-specified',
-    timeline: 'flexible',
+    projectCategory: '',
+    projectType: '',
+    budget: '',
+    timeline: '',
     message: ''
   });
 
+  const [messageLength, setMessageLength] = useState(0);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (messageLength < 100) {
+      alert('Please provide a more detailed project description (minimum 100 characters)');
+      return;
+    }
     // Handle form submission
   };
 
@@ -235,10 +241,11 @@ export default function QuotePage() {
                       setFormData({
                         ...formData,
                         projectCategory: category,
-                        projectType: PROJECT_TYPES[category][0]
+                        projectType: category ? PROJECT_TYPES[category][0] : ''
                       });
                     }}
                   >
+                    <option value="">Select Service Category *</option>
                     {Object.keys(PROJECT_TYPES).map((category) => (
                       <option key={category} value={category}>
                         {category}
@@ -258,8 +265,10 @@ export default function QuotePage() {
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-gray-900"
                     value={formData.projectType}
                     onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
+                    disabled={!formData.projectCategory}
                   >
-                    {PROJECT_TYPES[formData.projectCategory].map((type) => (
+                    <option value="">Select Specific Service *</option>
+                    {formData.projectCategory && PROJECT_TYPES[formData.projectCategory].map((type) => (
                       <option key={type} value={type}>
                         {type}
                       </option>
@@ -271,16 +280,17 @@ export default function QuotePage() {
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div>
                   <label htmlFor="budget" className="block text-sm font-medium text-gray-700">
-                    Budget Range
+                    Budget Range *
                   </label>
                   <select
                     id="budget"
                     name="budget"
+                    required
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-gray-900"
                     value={formData.budget}
                     onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                   >
-                    <option value="not-specified">Not Specified</option>
+                    <option value="">Select Budget Range *</option>
                     <option value="5k-10k">$5,000 - $10,000</option>
                     <option value="10k-25k">$10,000 - $25,000</option>
                     <option value="25k-50k">$25,000 - $50,000</option>
@@ -298,38 +308,52 @@ export default function QuotePage() {
 
                 <div>
                   <label htmlFor="timeline" className="block text-sm font-medium text-gray-700">
-                    Project Timeline
+                    Project Timeline *
                   </label>
                   <select
                     id="timeline"
                     name="timeline"
+                    required
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-gray-900"
                     value={formData.timeline}
                     onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
                   >
-                    <option value="flexible">Flexible</option>
+                    <option value="">Select Project Timeline *</option>
                     <option value="less-than-1-month">Less than 1 month</option>
                     <option value="1-3-months">1-3 months</option>
                     <option value="3-6-months">3-6 months</option>
-                    <option value="more-than-6-months">More than 6 months</option>
+                    <option value="6-12-months">6-12 months</option>
+                    <option value="more-than-12-months">More than 12 months</option>
                   </select>
                 </div>
               </div>
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700">
-                  Project Details *
+                  Project Details * <span className="text-sm text-gray-500">(min 100 characters, max 50,000 characters)</span>
                 </label>
                 <textarea
                   id="message"
                   name="message"
                   rows={6}
                   required
+                  minLength={100}
+                  maxLength={50000}
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-gray-900"
-                  placeholder="Please describe your project, including any specific requirements or challenges..."
+                  placeholder="Please provide a detailed description of your project (minimum 100 characters). Include specific requirements, challenges, goals, and any relevant technical details..."
                   value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  onChange={(e) => {
+                    const newValue = e.target.value;
+                    setFormData({ ...formData, message: newValue });
+                    setMessageLength(newValue.length);
+                    // Update character count display
+                    const charCount = document.getElementById('charCount');
+                    if (charCount) {
+                      charCount.textContent = `${newValue.length} characters (minimum 100 required)`;
+                    }
+                  }}
                 />
+                <p id="charCount" className="mt-1 text-sm text-gray-500">0 characters (minimum 100 required)</p>
               </div>
 
               <div className="flex items-center justify-between">
