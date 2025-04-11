@@ -1,0 +1,67 @@
+{
+  "header": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login",
+    "signup": "Sign Up"
+  },
+  "hero": {
+    "title": "Innovative Digital Solutions",
+    "subtitle": "We help businesses thrive in the digital world",
+    "cta": "Get Started"
+  },
+  "services": {
+    "title": "Our Services",
+    "webDev": "Web Development",
+    "mobileDev": "Mobile Development",
+    "cloud": "Cloud Solutions",
+    "ai": "AI & Machine Learning",
+    "cyber": "Cybersecurity"
+  },
+  "about": {
+    "title": "About Us",
+    "description": "We are a team of passionate developers and designers creating innovative solutions for businesses worldwide.",
+    "mission": "Our mission is to transform ideas into powerful digital solutions.",
+    "values": "Our Values",
+    "innovation": "Innovation",
+    "quality": "Quality",
+    "integrity": "Integrity"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send Message",
+    "success": "Message sent successfully!",
+    "error": "Error sending message. Please try again."
+  },
+  "footer": {
+    "solutions": "Solutions",
+    "webDevelopment": "Web Development",
+    "mobileApps": "Mobile Apps",
+    "cloudSolutions": "Cloud Solutions",
+    "aiMl": "AI & Machine Learning",
+    "cybersecurity": "Cybersecurity",
+    "company": "Company",
+    "aboutUs": "About Us",
+    "careers": "Careers",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "press": "Press",
+    "resources": "Resources",
+    "documentation": "Documentation",
+    "apiReference": "API Reference",
+    "supportCenter": "Support Center",
+    "systemStatus": "System Status",
+    "legal": "Legal",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "security": "Security",
+    "compliance": "Compliance",
+    "allRightsReserved": "All rights reserved",
+    "companyDescription": "Creating innovative digital solutions that help businesses thrive in the modern world."
+  }
+}
