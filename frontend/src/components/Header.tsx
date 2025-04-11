@@ -2,93 +2,119 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useTranslation } from 'next-i18next';
+import { usePathname } from 'next/navigation';
 
-interface HeaderProps {
-  lng: string;
-}
-
-export default function Header({ lng }: HeaderProps) {
+export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { t } = useTranslation('common');
+  const pathname = usePathname();
+
+  const navigation = [
+    {
+      name: 'Services',
+      href: '/services',
+      submenu: [
+        { name: 'Web Development', href: '/services/web-development' },
+        { name: 'Mobile Apps', href: '/services/mobile-apps' },
+        { name: 'Cloud Solutions', href: '/services/cloud-solutions' },
+        { name: 'Cybersecurity', href: '/services/cybersecurity' },
+        { name: 'AI & ML', href: '/services/ai-ml' },
+      ],
+    },
+    {
+      name: 'Company',
+      href: '/company',
+      submenu: [
+        { name: 'About', href: '/company/about' },
+        { name: 'Careers', href: '/company/careers' },
+        { name: 'Blog', href: '/company/blog' },
+        { name: 'Press', href: '/company/press' },
+        { name: 'Case Studies', href: '/company/case-studies' },
+      ],
+    },
+    {
+      name: 'Resources',
+      href: '/resources',
+      submenu: [
+        { name: 'Documentation', href: '/resources/documentation' },
+        { name: 'API Reference', href: '/resources/api-reference' },
+        { name: 'Support Center', href: '/resources/support-center' },
+        { name: 'System Status', href: '/resources/system-status' },
+      ],
+    },
+  ];
 
   return (
-    <header className="bg-gray-900 text-white">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href={`/${lng}`} className="text-2xl font-bold text-blue-500">
-            Synvra
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link href={`/${lng}`} className="text-gray-300 hover:text-white transition-colors">
-              {t('header.home')}
+    <header className="bg-white shadow-sm">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Top">
+        <div className="w-full py-6 flex items-center justify-between border-b border-gray-200 lg:border-none">
+          <div className="flex items-center">
+            <Link href="/" className="text-2xl font-bold text-blue-600">
+              Synvra
             </Link>
-            <Link href={`/${lng}/services`} className="text-gray-300 hover:text-white transition-colors">
-              {t('header.services')}
-            </Link>
-            <Link href={`/${lng}/about`} className="text-gray-300 hover:text-white transition-colors">
-              {t('header.about')}
-            </Link>
-            <Link href={`/${lng}/contact`} className="text-gray-300 hover:text-white transition-colors">
-              {t('header.contact')}
-            </Link>
-            <Link href={`/${lng}/login`} className="text-gray-300 hover:text-white transition-colors">
-              {t('header.login')}
-            </Link>
-            <Link 
-              href={`/${lng}/signup`}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-            >
-              {t('header.signup')}
-            </Link>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-md hover:bg-gray-800 focus:outline-none"
-          >
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              {isMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4">
-            <div className="flex flex-col space-y-4">
-              <Link href={`/${lng}`} className="text-gray-300 hover:text-white transition-colors">
-                {t('header.home')}
-              </Link>
-              <Link href={`/${lng}/services`} className="text-gray-300 hover:text-white transition-colors">
-                {t('header.services')}
-              </Link>
-              <Link href={`/${lng}/about`} className="text-gray-300 hover:text-white transition-colors">
-                {t('header.about')}
-              </Link>
-              <Link href={`/${lng}/contact`} className="text-gray-300 hover:text-white transition-colors">
-                {t('header.contact')}
-              </Link>
-              <Link href={`/${lng}/login`} className="text-gray-300 hover:text-white transition-colors">
-                {t('header.login')}
-              </Link>
-              <Link 
-                href={`/${lng}/signup`}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors inline-block text-center"
-              >
-                {t('header.signup')}
-              </Link>
+            <div className="hidden ml-10 space-x-8 lg:flex">
+              {navigation.map((item) => (
+                <div key={item.name} className="relative group">
+                  <Link
+                    href={item.href}
+                    className={`text-base font-medium ${
+                      pathname?.startsWith(item.href)
+                        ? 'text-blue-600'
+                        : 'text-gray-700 hover:text-blue-600'
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                  {item.submenu && (
+                    <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                      {item.submenu.map((subitem) => (
+                        <Link
+                          key={subitem.name}
+                          href={subitem.href}
+                          className={`block px-4 py-2 text-sm ${
+                            pathname === subitem.href
+                              ? 'text-blue-600 bg-gray-50'
+                              : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
+                          }`}
+                        >
+                          {subitem.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
-        )}
+          <div className="ml-10 space-x-4">
+            <Link
+              href="/contact"
+              className="inline-block bg-white py-2 px-4 border border-blue-600 rounded-md text-base font-medium text-blue-600 hover:bg-blue-50"
+            >
+              Contact
+            </Link>
+            <Link
+              href="/quote"
+              className="inline-block bg-blue-600 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-blue-700"
+            >
+              Get Quote
+            </Link>
+          </div>
+        </div>
+        <div className="py-4 flex flex-wrap justify-center space-x-6 lg:hidden">
+          {navigation.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className={`text-base font-medium ${
+                pathname?.startsWith(item.href)
+                  ? 'text-blue-600'
+                  : 'text-gray-700 hover:text-blue-600'
+              }`}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </div>
       </nav>
     </header>
   );

@@ -1,17 +1,17 @@
 'use client';
 
+import { ReactNode } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 
-interface ClientLayoutProps {
-  children: React.ReactNode;
-  lng: string;
+interface Props {
+  children: ReactNode;
 }
 
-export default function ClientLayout({ children, lng }: ClientLayoutProps) {
+export default function ClientLayout({ children }: Props) {
   return (
     <>
-      <Header lng={lng} />
+      <Header />
       <div className="min-h-screen">
         {children}
       </div>

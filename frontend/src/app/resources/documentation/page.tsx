@@ -4,7 +4,10 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 
 export default function Documentation() {
-  const [selectedCategory, setSelectedCategory] = useState('getting-started');
+  const CATEGORIES = ['getting-started', 'api-reference', 'tutorials', 'best-practices'] as const;
+  type DocCategory = typeof CATEGORIES[number];
+
+  const [selectedCategory, setSelectedCategory] = useState<DocCategory>('getting-started');
 
   const categories = [
     { id: 'getting-started', name: 'Getting Started' },
@@ -13,7 +16,7 @@ export default function Documentation() {
     { id: 'best-practices', name: 'Best Practices' },
   ];
 
-  const docs = {
+  const docs: Record<DocCategory, Array<{ title: string; description: string; icon: string }>> = {
     'getting-started': [
       {
         title: 'Quick Start Guide',
@@ -104,7 +107,7 @@ export default function Documentation() {
             {categories.map((category) => (
               <button
                 key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
+                onClick={() => setSelectedCategory(category.id as DocCategory)}
                 className={`px-6 py-3 rounded-full text-sm font-medium transition-colors ${
                   selectedCategory === category.id
                     ? 'bg-blue-600 text-white'

@@ -5,7 +5,22 @@ import Navigation from '@/components/Navigation';
 import { useRouter } from 'next/navigation';
 import { FaRocket, FaCheckCircle, FaClock, FaHandshake } from 'react-icons/fa';
 
-const PROJECT_TYPES = {
+const PROJECT_CATEGORIES = [
+  'Web Development',
+  'Mobile Development',
+  'Blockchain & Crypto',
+  'Cloud Solutions',
+  'AI & Machine Learning',
+  'Cybersecurity',
+  'Enterprise Solutions',
+  'UI/UX Design',
+  'DevOps Services',
+  'Quality Assurance'
+] as const;
+
+type ProjectCategory = typeof PROJECT_CATEGORIES[number];
+
+const PROJECT_TYPES: Record<ProjectCategory, string[]> = {
   'Web Development': [
     'Custom Web Applications',
     'E-commerce Solutions',
@@ -345,13 +360,13 @@ export default function QuotePage() {
                         const category = e.target.value;
                         setFormData({
                           ...formData,
-                          projectCategory: category,
-                          projectType: category ? PROJECT_TYPES[category][0] : ''
+                          projectCategory: category as ProjectCategory,
+                          projectType: category ? PROJECT_TYPES[category as ProjectCategory][0] : ''
                         });
                       }}
                     >
                       <option value="">Select Service Category *</option>
-                      {Object.keys(PROJECT_TYPES).map((category) => (
+                      {PROJECT_CATEGORIES.map((category) => (
                         <option key={category} value={category}>
                           {category}
                         </option>
@@ -373,7 +388,7 @@ export default function QuotePage() {
                       disabled={!formData.projectCategory}
                     >
                       <option value="">Select Specific Service *</option>
-                      {formData.projectCategory && PROJECT_TYPES[formData.projectCategory].map((type) => (
+                      {formData.projectCategory && PROJECT_TYPES[formData.projectCategory as ProjectCategory].map((type) => (
                         <option key={type} value={type}>
                           {type}
                         </option>

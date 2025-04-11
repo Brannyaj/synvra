@@ -296,7 +296,7 @@ export async function POST(request: Request) {
         `,
       });
       console.log('Client confirmation email sent:', clientEmail); // Debug log
-    } catch (emailError) {
+    } catch (emailError: any) {
       console.error('Error sending client confirmation email:', emailError);
       throw new Error(`Failed to send client confirmation email: ${emailError.message}`);
     }
@@ -367,7 +367,7 @@ export async function POST(request: Request) {
         `,
       });
       console.log('Admin notification email sent:', adminEmail); // Debug log
-    } catch (emailError) {
+    } catch (emailError: any) {
       console.error('Error sending admin notification:', emailError);
       throw new Error(`Failed to send admin notification: ${emailError.message}`);
     }
@@ -376,7 +376,7 @@ export async function POST(request: Request) {
       success: true, 
       message: 'Quote request submitted successfully' 
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error processing quote request:', error);
     return NextResponse.json(
       { 
