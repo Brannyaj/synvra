@@ -8,6 +8,9 @@ const nextConfig = {
   basePath: '',
   typescript: {
     ignoreBuildErrors: true // Temporarily ignore TS errors for deployment
+  },
+  experimental: {
+    optimizeCss: true
   }
 }
 
