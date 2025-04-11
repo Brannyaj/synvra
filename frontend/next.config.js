@@ -24,6 +24,10 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_DOMAIN: 'www.synvra.com',
     NEXT_PUBLIC_VERSION: '1.0.1'
+  },
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['@heroicons/react', '@headlessui/react', 'framer-motion']
   }
 }
 
