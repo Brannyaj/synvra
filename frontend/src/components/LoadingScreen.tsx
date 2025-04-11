@@ -23,36 +23,36 @@ export default function LoadingScreen() {
     };
   }, [isLoading]);
 
-  // Create arrays for each side
+  // Create arrays for the + shape
   const positions = [
-    // Top dots (0-3)
-    ...Array.from({ length: 4 }).map((_, i) => ({ 
+    // Top dot
+    { 
       left: '50%', 
-      top: 0,
-      transform: `translateX(${(i - 1.5) * 10}px)`,
-      delay: i * 0.1
-    })),
-    // Right dots (4-7)
-    ...Array.from({ length: 4 }).map((_, i) => ({ 
-      right: 0,
+      top: '-8px',
+      transform: 'translateX(-50%)',
+      delay: 0
+    },
+    // Right dot
+    { 
+      right: '-8px',
       top: '50%',
-      transform: `translateY(${(i - 1.5) * 10}px)`,
-      delay: (i + 4) * 0.1
-    })),
-    // Bottom dots (8-11)
-    ...Array.from({ length: 4 }).map((_, i) => ({ 
+      transform: 'translateY(-50%)',
+      delay: 0.1
+    },
+    // Bottom dot
+    { 
       left: '50%',
-      bottom: 0,
-      transform: `translateX(${(1.5 - i) * 10}px)`,
-      delay: (i + 8) * 0.1
-    })),
-    // Left dots (12-15)
-    ...Array.from({ length: 4 }).map((_, i) => ({ 
-      left: 0,
+      bottom: '-8px',
+      transform: 'translateX(-50%)',
+      delay: 0.2
+    },
+    // Left dot
+    { 
+      left: '-8px',
       top: '50%',
-      transform: `translateY(${(1.5 - i) * 10}px)`,
-      delay: (i + 12) * 0.1
-    }))
+      transform: 'translateY(-50%)',
+      delay: 0.3
+    }
   ];
 
   return (
@@ -63,17 +63,17 @@ export default function LoadingScreen() {
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#1a1d21]"
         >
-          <div className="relative w-20 h-20">
+          <div className="relative w-8 h-8">
             {positions.map((pos, index) => (
               <motion.div
                 key={index}
-                className={`absolute ${index >= 4 && index < 12 ? 'w-1.5 h-2.5' : 'w-2.5 h-1.5'} bg-blue-500`}
+                className={`absolute ${index % 2 === 0 ? 'w-2.5 h-1.5' : 'w-1.5 h-2.5'} bg-blue-500`}
                 style={pos}
                 animate={{
                   opacity: [0.2, 1, 0.2]
                 }}
                 transition={{
-                  duration: 1.6,
+                  duration: 1.2,
                   repeat: Infinity,
                   delay: pos.delay,
                   ease: "linear"
@@ -87,7 +87,7 @@ export default function LoadingScreen() {
               initial={{ opacity: 0.8 }}
               animate={{ opacity: 0.8 }}
             >
-              <span className="text-2xl font-bold text-blue-500 font-mono">S</span>
+              <span className="text-lg font-bold text-blue-500 font-mono">S</span>
             </motion.div>
           </div>
         </motion.div>
