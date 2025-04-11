@@ -10,6 +10,76 @@ function CaseStudyContent() {
 
   return (
     <div className="mt-16 lg:mt-20">
+      {/* Success Metrics Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16"
+      >
+        <div className="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-transform duration-300">
+          <div className="text-4xl font-bold text-blue-600 mb-2">100x</div>
+          <div className="text-gray-600 font-medium">Faster</div>
+          <div className="text-sm text-gray-500">Data Processing Speed</div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-transform duration-300">
+          <div className="text-4xl font-bold text-blue-600 mb-2">80%</div>
+          <div className="text-gray-600 font-medium">Reduced</div>
+          <div className="text-sm text-gray-500">Decision Making Time</div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-transform duration-300">
+          <div className="text-4xl font-bold text-blue-600 mb-2">$15M</div>
+          <div className="text-gray-600 font-medium">Annually</div>
+          <div className="text-sm text-gray-500">Cost Savings</div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-transform duration-300">
+          <div className="text-4xl font-bold text-blue-600 mb-2">99.99%</div>
+          <div className="text-gray-600 font-medium">Accuracy</div>
+          <div className="text-sm text-gray-500">System Performance</div>
+        </div>
+      </motion.div>
+
+      {/* Featured Success Story */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="bg-white rounded-2xl shadow-xl p-8 mb-16"
+      >
+        <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="md:w-2/3">
+            <blockquote className="text-xl text-gray-700 italic mb-6">
+              "Synvra transformed our data analytics capabilities. We're now able to make more informed decisions in real-time with a significant competitive advantage."
+            </blockquote>
+            <div className="flex items-center">
+              <div className="mr-4">
+                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl font-semibold">
+                  SC
+                </div>
+              </div>
+              <div>
+                <div className="font-semibold text-gray-900">Sarah Chen</div>
+                <div className="text-gray-600">Chief Technology Officer</div>
+              </div>
+            </div>
+          </div>
+          <div className="md:w-1/3 flex justify-center">
+            <Image
+              src="/images/success-story.svg"
+              alt="Success Story"
+              width={200}
+              height={200}
+              className="rounded-lg"
+            />
+          </div>
+        </div>
+      </motion.div>
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Main Case Study Display */}
         <motion.div
