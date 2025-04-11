@@ -4,6 +4,57 @@ import { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import { useRouter } from 'next/navigation';
 
+const PROJECT_TYPES = {
+  'Web Development': [
+    'Custom Web Applications',
+    'E-commerce Solutions',
+    'Progressive Web Apps (PWA)',
+    'Content Management Systems (CMS)',
+    'Web Portal Development',
+    'API Development & Integration'
+  ],
+  'Mobile Development': [
+    'iOS App Development',
+    'Android App Development',
+    'Cross-platform Mobile Apps',
+    'Mobile App UI/UX Design',
+    'App Maintenance & Support',
+    'Mobile App Testing'
+  ],
+  'Cloud Solutions': [
+    'Cloud Migration',
+    'Cloud Infrastructure Setup',
+    'Cloud Security Solutions',
+    'DevOps Implementation',
+    'Serverless Architecture',
+    'Cloud Optimization'
+  ],
+  'AI & Machine Learning': [
+    'AI Application Development',
+    'Machine Learning Models',
+    'Natural Language Processing',
+    'Computer Vision Solutions',
+    'Predictive Analytics',
+    'AI Model Training & Deployment'
+  ],
+  'Cybersecurity': [
+    'Security Assessment',
+    'Penetration Testing',
+    'Security Monitoring',
+    'Incident Response',
+    'Compliance Implementation',
+    'Security Training'
+  ],
+  'Enterprise Solutions': [
+    'ERP Systems',
+    'CRM Development',
+    'Business Process Automation',
+    'Enterprise Integration',
+    'Data Analytics Solutions',
+    'Legacy System Modernization'
+  ]
+};
+
 export default function QuotePage() {
   const router = useRouter();
 
@@ -12,7 +63,8 @@ export default function QuotePage() {
     email: '',
     company: '',
     phone: '',
-    projectType: 'web-development',
+    projectCategory: Object.keys(PROJECT_TYPES)[0],
+    projectType: PROJECT_TYPES[Object.keys(PROJECT_TYPES)[0]][0],
     budget: 'not-specified',
     timeline: 'flexible',
     message: ''
@@ -22,19 +74,6 @@ export default function QuotePage() {
     e.preventDefault();
     // Handle form submission
   };
-
-  // Force a full page reload when navigating to this page
-  // useEffect(() => {
-  //   const url = new URL(window.location.href);
-  //   const service = url.searchParams.get('service');
-  //   if (service) {
-  //     const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
-  //     if (descriptionInput) {
-  //       descriptionInput.value = `I'm interested in your ${service} service. Specifically, I need help with...`;
-  //       descriptionInput.focus();
-  //     }
-  //   }
-  // }, []);
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -118,10 +157,37 @@ export default function QuotePage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="projectCategory" className="block text-sm font-medium text-gray-700">
+                    Service Category *
+                  </label>
+                  <select
+                    id="projectCategory"
+                    name="projectCategory"
+                    required
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    value={formData.projectCategory}
+                    onChange={(e) => {
+                      const category = e.target.value;
+                      setFormData({
+                        ...formData,
+                        projectCategory: category,
+                        projectType: PROJECT_TYPES[category][0]
+                      });
+                    }}
+                  >
+                    {Object.keys(PROJECT_TYPES).map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
                 <div>
                   <label htmlFor="projectType" className="block text-sm font-medium text-gray-700">
-                    Project Type *
+                    Specific Service *
                   </label>
                   <select
                     id="projectType"
@@ -131,15 +197,16 @@ export default function QuotePage() {
                     value={formData.projectType}
                     onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
                   >
-                    <option value="web-development">Web Development</option>
-                    <option value="mobile-app">Mobile App</option>
-                    <option value="cloud-solutions">Cloud Solutions</option>
-                    <option value="ai-ml">AI/ML Development</option>
-                    <option value="cybersecurity">Cybersecurity</option>
-                    <option value="other">Other</option>
+                    {PROJECT_TYPES[formData.projectCategory].map((type) => (
+                      <option key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
                   </select>
                 </div>
+              </div>
 
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div>
                   <label htmlFor="budget" className="block text-sm font-medium text-gray-700">
                     Budget Range
