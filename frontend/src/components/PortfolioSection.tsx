@@ -63,6 +63,7 @@ const categories = [
 
 export default function PortfolioSection() {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedProject, setSelectedProject] = useState(null);
 
   const filteredProjects = projects.filter(
     project => selectedCategory === 'all' || project.category === selectedCategory
@@ -114,7 +115,8 @@ export default function PortfolioSection() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.5 }}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+                onClick={() => setSelectedProject(project)}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer transform hover:scale-105 transition-transform duration-300"
               >
                 <div className="aspect-w-16 aspect-h-9 bg-gray-200">
                   <div 
@@ -145,6 +147,65 @@ export default function PortfolioSection() {
             ))}
           </AnimatePresence>
         </div>
+
+        {/* Project Modal */}
+        <AnimatePresence>
+          {selectedProject && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setSelectedProject(null)}
+                className="fixed inset-0 bg-black bg-opacity-50 z-40"
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              >
+                <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                  <div className="relative">
+                    <button
+                      onClick={() => setSelectedProject(null)}
+                      className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                    <div 
+                      className="w-full h-64 bg-cover bg-center"
+                      style={{ 
+                        backgroundImage: `url(${selectedProject.image})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
+                      }}
+                    />
+                    <div className="p-8">
+                      <h2 className="text-3xl font-bold text-gray-900 mb-4">{selectedProject.title}</h2>
+                      <p className="text-lg text-gray-600 mb-6">{selectedProject.description}</p>
+                      <div className="space-y-4">
+                        <h3 className="text-xl font-semibold text-gray-900">Technologies Used</h3>
+                        <div className="flex flex-wrap gap-3">
+                          {selectedProject.tech.map((tech) => (
+                            <span
+                              key={tech}
+                              className="px-4 py-2 rounded-full bg-blue-50 text-blue-600 text-sm font-medium"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
