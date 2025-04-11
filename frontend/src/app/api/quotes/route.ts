@@ -298,7 +298,11 @@ export async function POST(request: Request) {
       console.log('Client confirmation email sent:', clientEmail); // Debug log
     } catch (emailError) {
       console.error('Error sending client confirmation email:', emailError);
-      throw new Error(`Failed to send client confirmation email: ${emailError.message}`);
+      if (emailError instanceof Error) {
+        throw new Error(`Failed to send client confirmation email: ${emailError.message}`);
+      } else {
+        throw new Error('Failed to send client confirmation email: Unknown error');
+      }
     }
 
     console.log('Attempting to send admin notification...'); // Debug log
@@ -369,7 +373,11 @@ export async function POST(request: Request) {
       console.log('Admin notification email sent:', adminEmail); // Debug log
     } catch (emailError) {
       console.error('Error sending admin notification:', emailError);
-      throw new Error(`Failed to send admin notification: ${emailError.message}`);
+      if (emailError instanceof Error) {
+        throw new Error(`Failed to send admin notification: ${emailError.message}`);
+      } else {
+        throw new Error('Failed to send admin notification: Unknown error');
+      }
     }
 
     return NextResponse.json({ 
@@ -378,12 +386,22 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error('Error processing quote request:', error);
-    return NextResponse.json(
-      { 
-        success: false, 
-        message: `Failed to process quote request: ${error.message}` 
-      },
-      { status: 500 }
-    );
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          message: `Failed to process quote request: ${error.message}` 
+        },
+        { status: 500 }
+      );
+    } else {
+      return NextResponse.json(
+        { 
+          success: false, 
+          message: 'Failed to process quote request: Unknown error' 
+        },
+        { status: 500 }
+      );
+    }
   }
 }

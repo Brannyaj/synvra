@@ -1,5 +1,6 @@
 import { languages } from '../i18n/settings'
 import LanguageSwitcher from '../components/LanguageSwitcher'
+import Head from 'next/head'
 
 export function generateStaticParams() {
   return languages.map((lng) => ({ lng }))
@@ -14,12 +15,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang={lng}>
-      <head>
+      <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Synvra - Digital Solutions" />
         <title>Synvra</title>
-      </head>
+      </Head>
       <body>
         <div className="min-h-screen flex flex-col">
           {children}
