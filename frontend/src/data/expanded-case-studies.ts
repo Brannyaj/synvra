@@ -58,7 +58,27 @@ const uniqueTestimonials = [
   
   "We were generating terabytes of IoT data with no way to process it. Synvra's edge computing solution now analyzes everything in real-time. We've prevented $42M in equipment failures this quarter alone.",
   
-  "Traditional fraud detection caught 85% of attempts. Not good enough in finance. Synvra's neural network spots 99.997% of fraudulent transactions before they complete. The system spotted a new fraud pattern our entire industry missed."
+  "Traditional fraud detection caught 85% of attempts. Not good enough in finance. Synvra's neural network spots 99.997% of fraudulent transactions before they complete. The system spotted a new fraud pattern our entire industry missed.",
+  
+  "Aerospace manufacturing tolerances leave zero room for error. Synvra's quantum measurement system achieved picometer-level precision. We're now manufacturing parts that were theoretically impossible last year.",
+  
+  "Seven-figure ad spend used to be a gamble. Synvra's predictive AI changed that completely. We now forecast campaign performance with 96% accuracy before spending a dime. Marketing is finally a science.",
+  
+  "Drug discovery typically takes 7 years. Synvra's molecular simulation platform identified three viable candidates in 9 weeks. The implications for pharmaceutical research are staggering.",
+  
+  "My team laughed when I suggested automating creative work. Then Synvra's AI generated 10,000 unique design variants, each respecting our brand guidelines. The creative director stopped laughing and started hiring data scientists.",
+  
+  "Coordinating 1,000 autonomous robots in a warehouse? Impossible, they said. Synvra's swarm intelligence platform makes it look easy. Order fulfillment time dropped from hours to minutes, with zero collisions.",
+  
+  "Deep sea operations are notoriously risky. Synvra's autonomous underwater system mapped 50 square kilometers of seabed with millimeter precision. No human divers needed - a world first in marine exploration.",
+  
+  "Speech recognition in stadium environments was a pipe dream. Synvra's acoustic AI cuts through 100,000 screaming fans to capture whispered commands. Sports broadcasting will never be the same.",
+  
+  "Climate modeling at city-block resolution? Please. Then Synvra's neural weather engine predicted microclimate changes down to individual streets. Urban planners worldwide are banging on our door.",
+  
+  "Semiconductor yields above 90% were fantasy in quantum chip production. Synvra's manufacturing AI pushed us to 97.3%. The entire industry is rewriting their playbooks.",
+  
+  "Real-time translation for 95 languages with cultural context adaptation? Synvra delivered it in a 3MB mobile app. United Nations interpreters use our system as backup - that's the gold standard."
 ];
 
 // Generate 600 case studies
