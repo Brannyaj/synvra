@@ -2,7 +2,9 @@
   base = "frontend"
   command = """
     npm ci
+    npm install tailwindcss postcss autoprefixer --save-dev
     npm run build
+    mkdir -p out
     touch out/.nojekyll
   """
   publish = "out"
@@ -12,7 +14,6 @@
   NEXT_PUBLIC_GA_MEASUREMENT_ID = "G-CD8S6EHSRZ"
   NODE_VERSION = "18"
   PYTHON_VERSION = "3.8"
-  NEXT_USE_NETLIFY = "true"
 
 [[redirects]]
   from = "/*"
