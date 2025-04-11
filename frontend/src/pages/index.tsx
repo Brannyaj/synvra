@@ -4,12 +4,15 @@ import './HomePage.css';
 
 const HomePage = () => {
   useEffect(() => {
+    console.log('Initializing Three.js scene');
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
+    console.log('Adding cube to the scene');
     const geometry = new THREE.BoxGeometry();
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     const cube = new THREE.Mesh(geometry, material);
@@ -26,9 +29,11 @@ const HomePage = () => {
       renderer.render(scene, camera);
     };
 
+    console.log('Starting animation loop');
     animate();
 
     // Particle effect
+    console.log('Creating particle effect');
     const particlesGeometry = new THREE.BufferGeometry();
     const particlesCount = 5000;
     const posArray = new Float32Array(particlesCount * 3);
