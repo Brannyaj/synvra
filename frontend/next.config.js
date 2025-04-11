@@ -13,9 +13,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.synvra.com',
       },
-    ],
-    loader: 'custom',
-    loaderFile: './src/utils/imageLoader.ts',
+    ]
   },
   eslint: {
     ignoreDuringBuilds: true

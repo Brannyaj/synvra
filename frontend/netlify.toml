@@ -1,6 +1,10 @@
 [build]
   base = "frontend"
-  command = "npm ci && npm run build"
+  command = """
+    npm ci
+    npm run build
+    touch out/.nojekyll
+  """
   publish = "out"
 
 [build.environment]
