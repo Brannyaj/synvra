@@ -4,12 +4,11 @@
   publish = "out"
 
 [build.environment]
+  NEXT_PUBLIC_DOMAIN = "synvra.com"
+  NEXT_PUBLIC_GA_MEASUREMENT_ID = "G-CD8S6EHSRZ"
+  NODE_VERSION = "18"
+  PYTHON_VERSION = "3.8"
   NEXT_STATIC_BUILD = "true"
-  NODE_VERSION = "18.20.8"
-  NEXT_USE_NETLIFY_EDGE = "true"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
 
 [[headers]]
   for = "/*"
@@ -18,19 +17,10 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-
-[[headers]]
-  for = "/_next/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[redirects]]
-  from = "/"
-  to = "/en"
-  status = 302
-  force = true
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    Cache-Control = "public, max-age=31536000"
 
 [[redirects]]
   from = "/*"
-  to = "/404.html"
-  status = 404
+  to = "/index.html"
+  status = 200
