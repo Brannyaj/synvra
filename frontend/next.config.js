@@ -2,23 +2,14 @@
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
-  i18n: {
-    locales: ['en', 'es', 'fr', 'de', 'ja', 'zh'],
-    defaultLocale: 'en',
-    localeDetection: true
-  },
   images: {
     unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'synvra.com',
+        hostname: '**',
       },
-      {
-        protocol: 'https',
-        hostname: 'www.synvra.com',
-      },
-    ]
+    ],
   },
   eslint: {
     ignoreDuringBuilds: true
