@@ -1,10 +1,17 @@
-'use client'
-
+import { languages } from '../i18n/settings'
 import { useTranslation } from '../i18n'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
-export default async function Page({ params: { lng } }: { params: { lng: string } }) {
+export async function generateStaticParams() {
+  return languages.map((lng) => ({ lng }))
+}
+
+export default async function Page({
+  params: { lng }
+}: {
+  params: { lng: string }
+}) {
   const { t } = await useTranslation(lng)
 
   return (
