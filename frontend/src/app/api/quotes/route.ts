@@ -1,7 +1,15 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-static';
+
+export async function GET() {
+  return new Response(JSON.stringify({
+    message: "This is a static site. For dynamic quote requests, please visit www.synvra.com"
+  }), {
+    headers: { 'content-type': 'application/json' }
+  });
+}
 
 export async function POST(request: Request) {
   try {

@@ -36,39 +36,49 @@ function CaseStudyContent() {
           </div>
           <div className="p-6">
             <div className="prose prose-lg max-w-none">
-              <p>{activeStudy.description}</p>
+              <h4 className="text-lg font-semibold mt-6 mb-4">Challenge:</h4>
+              <p>{activeStudy.challenge}</p>
+              
+              <h4 className="text-lg font-semibold mt-6 mb-4">Solution:</h4>
+              <p>{activeStudy.solution}</p>
+              
               <h4 className="text-lg font-semibold mt-6 mb-4">Key Results:</h4>
-              <ul>
+              <div className="grid grid-cols-2 gap-4">
                 {activeStudy.results.map((result, index) => (
-                  <li key={index}>{result}</li>
+                  <div key={index} className="bg-gray-50 p-4 rounded-lg">
+                    <p className="text-xl font-bold text-blue-600">{result.value}</p>
+                    <p className="text-sm text-gray-600">{result.metric}</p>
+                  </div>
                 ))}
-              </ul>
-            </div>
-            <div className="mt-8">
-              <a
-                href={`/case-studies/${activeStudy.slug}`}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
-              >
-                Read Full Case Study
-                <svg
-                  className="ml-2 -mr-1 w-4 h-4"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </a>
+              </div>
+
+              {activeStudy.testimonial && (
+                <div className="mt-8 bg-blue-50 p-6 rounded-xl">
+                  <blockquote className="text-gray-700">{activeStudy.testimonial.quote}</blockquote>
+                  <div className="mt-4">
+                    <p className="font-semibold text-gray-900">{activeStudy.testimonial.author}</p>
+                    <p className="text-sm text-gray-600">{activeStudy.testimonial.position}</p>
+                  </div>
+                </div>
+              )}
+
+              <h4 className="text-lg font-semibold mt-6 mb-4">Technologies:</h4>
+              <div className="flex flex-wrap gap-2">
+                {activeStudy.technologies.map((tech, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </motion.div>
 
         {/* Case Study List */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="lg:col-span-4 space-y-4">
           {caseStudies.map((study, index) => (
             <motion.button
               key={study.id}
@@ -90,6 +100,7 @@ function CaseStudyContent() {
                 {study.title}
               </h3>
               <p className="mt-1 text-gray-600">{study.client}</p>
+              <p className="mt-2 text-sm text-gray-500">Duration: {study.duration}</p>
             </motion.button>
           ))}
         </div>

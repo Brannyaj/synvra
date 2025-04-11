@@ -1,9 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
+  trailingSlash: true,
   images: {
     unoptimized: true,
     domains: ['synvra.com', 'www.synvra.com'],
+    loader: 'custom',
+    loaderFile: './src/utils/imageLoader.ts',
   },
   eslint: {
     ignoreDuringBuilds: true
@@ -14,9 +17,6 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_DOMAIN: 'www.synvra.com',
     NEXT_PUBLIC_VERSION: '1.0.1'
-  },
-  experimental: {
-    appDir: true
   }
 }
 

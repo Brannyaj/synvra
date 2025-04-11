@@ -1,5 +1,5 @@
 [build]
-  command = "npm install && npm run build"
+  command = "npm ci && npm run build"
   publish = "out"
 
 [build.environment]
@@ -7,6 +7,11 @@
   NEXT_PUBLIC_GA_MEASUREMENT_ID = "G-CD8S6EHSRZ"
   NODE_VERSION = "18"
   NEXT_USE_NETLIFY = "true"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
 
 [[headers]]
   for = "/*"
