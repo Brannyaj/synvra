@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChatMessage, faqMessages } from '@/data/faq-chat';
+import Link from 'next/link';
 
 export default function ChatBox() {
   const [isOpen, setIsOpen] = useState(false);
@@ -155,7 +156,15 @@ export default function ChatBox() {
 
               {/* Footer */}
               <div className="p-4 border-t text-center text-sm text-gray-500">
-                Can't find what you're looking for? Contact us directly.
+                Can't find what you're looking for?{' '}
+                <Link 
+                  href="/contact" 
+                  onClick={() => setIsOpen(false)}
+                  className="text-blue-600 hover:text-blue-700 hover:underline"
+                >
+                  Contact us directly
+                </Link>
+                .
               </div>
             </motion.div>
           </motion.div>
