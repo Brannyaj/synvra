@@ -1,19 +1,19 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useState, Suspense } from 'react';
-import { expandedCaseStudies } from '@/data/expanded-case-studies';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { expandedPortfolio } from '@/data/expanded-portfolio';
 import Image from 'next/image';
 
 function CaseStudyContent() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [activeStudy, setActiveStudy] = useState(expandedCaseStudies[0]);
+  const [activeStudy, setActiveStudy] = useState(expandedPortfolio[0]);
   const itemsPerPage = 10;
 
-  const totalPages = Math.ceil(expandedCaseStudies.length / itemsPerPage);
+  const totalPages = Math.ceil(expandedPortfolio.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentCaseStudies = expandedCaseStudies.slice(startIndex, endIndex);
+  const currentCaseStudies = expandedPortfolio.slice(startIndex, endIndex);
 
   return (
     <div className="mt-16 lg:mt-20">

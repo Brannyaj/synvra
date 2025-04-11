@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import PortfolioSection from '@/components/PortfolioSection';
-import { ndaDisclaimer } from '@/data/expanded-portfolio';
+import { ndaDisclaimer } from '@/data/portfolio/expanded-portfolio';
 
 export default function PortfolioPage() {
   return (

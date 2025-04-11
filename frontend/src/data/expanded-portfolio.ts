@@ -90,7 +90,7 @@ const uniqueTestimonials = [
   
   "Our customer service wait times averaged 23 minutes. Synvra's AI chatbot now handles 92% of queries instantly, with higher satisfaction scores than our human agents. The ROI? Beyond calculation.",
   
-  "We were generating terabytes of IoT data with no way to process it. Synvra's edge computing solution now analyzes everything in real-time. We've prevented $42M in equipment failures this quarter alone.",
+  "We were generating terabytes of IoT data with no way to process it. Synvra's edge computing solution now analyzes everything in real-time. We've prevented $42M in equipment failures this quarter.",
   
   "Traditional fraud detection caught 85% of attempts. Not good enough in finance. Synvra's neural network spots 99.997% of fraudulent transactions before they complete. The system spotted a new fraud pattern our entire industry missed.",
   
@@ -210,7 +210,7 @@ const uniqueTestimonials = [
 ];
 
 // Generate 600 case studies
-export const expandedCaseStudies: CaseStudy[] = Array.from({ length: 600 }, (_, index) => {
+export const expandedPortfolio: CaseStudy[] = Array.from({ length: 600 }, (_, index) => {
   const industries = [
     'AI & Machine Learning',
     'FinTech',
