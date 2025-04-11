@@ -1,25 +1,40 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useState } from 'react';
 import Navigation from '@/components/Navigation';
-import QuoteForm from '@/components/QuoteForm';
 import { useRouter } from 'next/navigation';
 
 export default function QuotePage() {
   const router = useRouter();
 
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    company: '',
+    phone: '',
+    projectType: 'web-development',
+    budget: 'not-specified',
+    timeline: 'flexible',
+    message: ''
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission
+  };
+
   // Force a full page reload when navigating to this page
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    const service = url.searchParams.get('service');
-    if (service) {
-      const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
-      if (descriptionInput) {
-        descriptionInput.value = `I'm interested in your ${service} service. Specifically, I need help with...`;
-        descriptionInput.focus();
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   const url = new URL(window.location.href);
+  //   const service = url.searchParams.get('service');
+  //   if (service) {
+  //     const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
+  //     if (descriptionInput) {
+  //       descriptionInput.value = `I'm interested in your ${service} service. Specifically, I need help with...`;
+  //       descriptionInput.focus();
+  //     }
+  //   }
+  // }, []);
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -32,7 +47,166 @@ export default function QuotePage() {
           </p>
         </div>
         <div className="max-w-3xl mx-auto">
-          <QuoteForm />
+          <div className="bg-white shadow-xl rounded-lg p-8">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Get a Quote</h1>
+              <p className="text-lg text-gray-600">
+                Tell us about your project and we'll get back to you within 24 hours with a detailed proposal.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-6" data-netlify="true" name="quote-form" method="POST">
+              <input type="hidden" name="form-name" value="quote-form" />
+              
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    name="fullName"
+                    id="fullName"
+                    required
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    value={formData.fullName}
+                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    required
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="company" className="block text-sm font-medium text-gray-700">
+                    Company Name
+                  </label>
+                  <input
+                    type="text"
+                    name="company"
+                    id="company"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    value={formData.company}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    id="phone"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+                <div>
+                  <label htmlFor="projectType" className="block text-sm font-medium text-gray-700">
+                    Project Type *
+                  </label>
+                  <select
+                    id="projectType"
+                    name="projectType"
+                    required
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    value={formData.projectType}
+                    onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
+                  >
+                    <option value="web-development">Web Development</option>
+                    <option value="mobile-app">Mobile App</option>
+                    <option value="cloud-solutions">Cloud Solutions</option>
+                    <option value="ai-ml">AI/ML Development</option>
+                    <option value="cybersecurity">Cybersecurity</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="budget" className="block text-sm font-medium text-gray-700">
+                    Budget Range
+                  </label>
+                  <select
+                    id="budget"
+                    name="budget"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    value={formData.budget}
+                    onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                  >
+                    <option value="not-specified">Not Specified</option>
+                    <option value="less-than-10k">Less than $10,000</option>
+                    <option value="10k-25k">$10,000 - $25,000</option>
+                    <option value="25k-50k">$25,000 - $50,000</option>
+                    <option value="50k-100k">$50,000 - $100,000</option>
+                    <option value="more-than-100k">More than $100,000</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="timeline" className="block text-sm font-medium text-gray-700">
+                    Project Timeline
+                  </label>
+                  <select
+                    id="timeline"
+                    name="timeline"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    value={formData.timeline}
+                    onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
+                  >
+                    <option value="flexible">Flexible</option>
+                    <option value="less-than-1-month">Less than 1 month</option>
+                    <option value="1-3-months">1-3 months</option>
+                    <option value="3-6-months">3-6 months</option>
+                    <option value="more-than-6-months">More than 6 months</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+                  Project Details *
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={6}
+                  required
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  placeholder="Please describe your project, including any specific requirements or challenges..."
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                />
+              </div>
+
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-500">* Required fields</p>
+                <button
+                  type="submit"
+                  className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-3 px-6 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                >
+                  Request Quote
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </main>
