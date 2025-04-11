@@ -7,7 +7,6 @@ export default function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Prevent scrolling while loading
     if (isLoading) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -16,7 +15,7 @@ export default function LoadingScreen() {
 
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 10000); // 10 seconds
+    }, 10000);
 
     return () => {
       clearTimeout(timer);
@@ -24,7 +23,6 @@ export default function LoadingScreen() {
     };
   }, [isLoading]);
 
-  // Create an array of 4 dots for each side
   const dots = Array.from({ length: 4 });
 
   return (
@@ -47,13 +45,14 @@ export default function LoadingScreen() {
                   transform: `translateX(${(index - 1.5) * 10}px)`,
                 }}
                 animate={{
-                  opacity: [0.3, 1, 0.3],
+                  opacity: [0.2, 1, 0.2],
+                  scale: [1, 1.2, 1],
                 }}
                 transition={{
-                  duration: 1.2,
+                  duration: 0.8,
                   repeat: Infinity,
-                  delay: index * 0.15,
-                  ease: "easeInOut"
+                  delay: index * 0.1,
+                  ease: "circOut"
                 }}
               />
             ))}
@@ -69,13 +68,14 @@ export default function LoadingScreen() {
                   transform: `translateX(${(index - 1.5) * 10}px)`,
                 }}
                 animate={{
-                  opacity: [0.3, 1, 0.3],
+                  opacity: [0.2, 1, 0.2],
+                  scale: [1, 1.2, 1],
                 }}
                 transition={{
-                  duration: 1.2,
+                  duration: 0.8,
                   repeat: Infinity,
-                  delay: index * 0.15,
-                  ease: "easeInOut"
+                  delay: (index * 0.1) + 0.4,
+                  ease: "circOut"
                 }}
               />
             ))}
@@ -91,13 +91,14 @@ export default function LoadingScreen() {
                   transform: `translateY(${(index - 1.5) * 10}px)`,
                 }}
                 animate={{
-                  opacity: [0.3, 1, 0.3],
+                  opacity: [0.2, 1, 0.2],
+                  scale: [1, 1.2, 1],
                 }}
                 transition={{
-                  duration: 1.2,
+                  duration: 0.8,
                   repeat: Infinity,
-                  delay: index * 0.15,
-                  ease: "easeInOut"
+                  delay: (index * 0.1) + 0.2,
+                  ease: "circOut"
                 }}
               />
             ))}
@@ -113,13 +114,14 @@ export default function LoadingScreen() {
                   transform: `translateY(${(index - 1.5) * 10}px)`,
                 }}
                 animate={{
-                  opacity: [0.3, 1, 0.3],
+                  opacity: [0.2, 1, 0.2],
+                  scale: [1, 1.2, 1],
                 }}
                 transition={{
-                  duration: 1.2,
+                  duration: 0.8,
                   repeat: Infinity,
-                  delay: index * 0.15,
-                  ease: "easeInOut"
+                  delay: (index * 0.1) + 0.6,
+                  ease: "circOut"
                 }}
               />
             ))}
@@ -127,9 +129,15 @@ export default function LoadingScreen() {
             {/* "S" Logo */}
             <motion.div 
               className="absolute inset-0 flex items-center justify-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
+              animate={{ 
+                scale: [1, 1.1, 1],
+                opacity: [0.8, 1, 0.8],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
             >
               <span className="text-2xl font-bold text-blue-500 font-mono">S</span>
             </motion.div>
