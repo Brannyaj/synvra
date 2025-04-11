@@ -5,6 +5,7 @@ import HeroSection from '@/components/HeroSection';
 import FeaturedProjects from '@/components/FeaturedProjects';
 import ServicesSection from '@/components/ServicesSection';
 import TechStackVisualizer from '@/components/TechStackVisualizer';
+import CaseStudiesSection from '@/components/CaseStudiesSection';
 import ContactSection from '@/components/ContactSection';
 import ChatBox from '@/components/ChatBox';
 import NextGenTechnology from '@/components/NextGenTechnology';
@@ -149,6 +150,7 @@ export default function Home() {
 
         <TechStackVisualizer />
         <ServicesSection />
+        <CaseStudiesSection />
         <ContactSection />
         <ChatBox />
       </main>
