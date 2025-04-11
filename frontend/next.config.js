@@ -26,8 +26,7 @@ const nextConfig = {
     NEXT_PUBLIC_VERSION: '1.0.1'
   },
   experimental: {
-    optimizeCss: true,
-    optimizePackageImports: ['@heroicons/react', '@headlessui/react', 'framer-motion']
+    optimizeCss: false // Disable CSS optimization since we're using static export
   }
 }
 

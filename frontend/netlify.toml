@@ -1,12 +1,6 @@
 [build]
   base = "frontend"
-  command = """
-    npm ci
-    npm install tailwindcss postcss autoprefixer --save-dev
-    npm run build
-    mkdir -p out
-    touch out/.nojekyll
-  """
+  command = "npm ci && npm run build"
   publish = "out"
 
 [build.environment]
