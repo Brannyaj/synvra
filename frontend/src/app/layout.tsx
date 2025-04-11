@@ -5,6 +5,7 @@ import Analytics from '@/components/Analytics';
 import CookieConsent from '@/components/CookieConsent';
 import NavigationTracker from '@/components/NavigationTracker';
 import Footer from '@/components/Footer';
+import LoadingScreen from '@/components/LoadingScreen';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <LoadingScreen />
         {children}
         <Analytics />
         <CookieConsent />
