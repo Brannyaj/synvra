@@ -20,135 +20,45 @@ const generateId = (index: number) => `project-${index + 1}`;
 
 // Define unique testimonials for each project
 const uniqueTestimonials = [
-  "I was skeptical at first, but Synvra's solution left me speechless. They built an AI system that could predict market trends with 98% accuracy. Our trading profits increased by 300% in just 3 months. Absolutely mind-blowing!",
+  "Within six months of deploying Synvra's AI solution, our market prediction accuracy jumped from 65% to 98%. The system paid for itself twenty times over - numbers that seemed impossible before we started this journey.",
   
-  "What sets Synvra apart is their attention to detail. The security platform they developed caught a major breach attempt that our previous system would have missed. They literally saved us millions in potential damages.",
+  "Nobody believed we could automate our quality control process until Synvra stepped in. Their computer vision system now catches defects our best inspectors missed for years. Last quarter's defect rate? Zero.",
   
-  "We had tried 4 different companies before Synvra. None could handle the scale we needed. Synvra's team not only solved our scaling issues but also cut our cloud costs by 70%. Their engineering talent is on another level.",
+  "Partnering with Synvra changed the game entirely. Their blockchain platform slashed our settlement times from 72 hours to 3 seconds flat. Our competitors are still stuck in the dark ages.",
   
-  "The machine learning pipeline Synvra built changed everything for us. It reduced our data processing time from 2 weeks to 30 minutes. I still remember the moment they showed us the first demo - our entire team was stunned.",
+  "Picture processing 500,000 transactions per second without a hiccup. That's what Synvra delivered. Our previous system crashed at 50,000. The performance boost literally opened new markets for us.",
   
-  "I've worked with many tech companies, but Synvra's approach is unique. They didn't just deliver a product; they became true partners in our success. The IoT solution they built now manages over 100,000 devices with zero downtime.",
+  "Starting up, we dreamed big but lacked the technical foundation. Synvra built us a scalable infrastructure that grew from handling 100 users to 2 million daily active users. No downtime, no drama.",
   
-  "Our legacy system was a nightmare, held together with duct tape and prayers. Synvra came in and rebuilt everything from scratch. Now we process 10x more transactions with 1/5th of the servers. Simply incredible.",
+  "Synvra didn't just upgrade our security - they revolutionized it. Their quantum-resistant encryption made us unhackable. Three state-sponsored attacks later, we're still impenetrable.",
   
-  "The level of innovation Synvra brought to our project was extraordinary. Their blockchain solution reduced settlement times from days to seconds. Our competitors are still trying to figure out how we did it.",
+  "Most vendors promise the moon but deliver a rock. Synvra promised us autonomous warehouse operations and delivered something straight out of science fiction. Productivity up 300%, accidents down to zero.",
   
-  "We had a crazy idea that everyone said was impossible. Synvra's team not only made it possible but delivered it under budget. Their AI-powered diagnostic tool is now saving lives in 12 countries.",
+  "For years we accepted that real-time personalization at our scale was fantasy. Then Synvra's team engineered a solution that personalizes experiences for 50 million users in milliseconds. Pure wizardry.",
   
-  "Synvra's team thinks differently. While other vendors proposed band-aid solutions, they rebuilt our entire data architecture. Now our real-time analytics platform handles 1 million queries per second without breaking a sweat.",
+  "Our data lake was more like a data swamp until Synvra architected a solution. Now we extract actionable insights from petabytes of data in seconds. It's like having a crystal ball for business decisions.",
   
-  "I was impressed by how quickly Synvra grasped our complex requirements. The automation system they developed eliminated 90% of our manual processes. Our efficiency gains were beyond what we thought possible.",
+  "When Synvra said they could cut our cloud costs by 80% while improving performance, we were skeptical. Six months later, the numbers speak for themselves. Their edge computing solution delivered exactly that.",
   
-  "Working with Synvra was a game-changer for our startup. Their cloud-native platform scaled seamlessly from 100 to 1 million users. We couldn't have achieved our IPO without their technical excellence.",
+  "Imagine processing a million legal documents in the time it takes to drink a coffee. That's what Synvra's NLP system achieved. Manual review time dropped from 6 months to 4 hours. Our legal team still can't believe it.",
   
-  "Synvra's expertise in quantum computing is unmatched. They developed an optimization algorithm that solved in minutes what used to take weeks. It's not just a technological advancement; it's a paradigm shift.",
+  "In the healthcare industry, 99% accuracy isn't good enough. Synvra's diagnostic AI achieved 99.99% accuracy across 50,000 cases. We're talking about saving lives here, and they delivered perfection.",
   
-  "The mobile platform Synvra built handles $2 billion in transactions daily without a single point of failure. Their architecture and code quality set new standards in our industry.",
+  "Four competing firms said our supply chain was too complex to digitize. Synvra's blockchain solution traced 10,000 products from source to shelf in real-time. Last year's logistics losses? Completely eliminated.",
   
-  "We came to Synvra with a complex supply chain problem. Their solution using AI and IoT sensors reduced inventory costs by 40% and eliminated stockouts completely. The ROI was evident within weeks.",
+  "Let me put it this way: Synvra's cybersecurity platform detected and neutralized a zero-day threat that wasn't publicly discovered until three months later. That's not just ahead of the curve - it's defining the curve.",
   
-  "Synvra's team built a fraud detection system that's so accurate, several major banks have now adopted it. It's saving the industry billions while processing transactions in milliseconds.",
+  "The day we switched on Synvra's smart grid system, our city's power consumption dropped by 35%. Three other major cities have already licensed the technology. This is what environmental impact at scale looks like.",
   
-  "The natural language processing engine Synvra developed understands context better than anything we've seen. It's processing customer inquiries in 95 languages with human-level accuracy.",
+  "Before Synvra, our VR training platform was clunky and unrealistic. Now? Trainees can't tell the difference from real-world operations. Training accidents dropped 98%, certification time cut in half.",
   
-  "Our previous vendor said real-time personalization at our scale was impossible. Synvra proved them wrong. Their system handles 50 million users with sub-10ms response times. Absolutely remarkable.",
+  "Quantum computing was just buzzwords until Synvra showed up. Their algorithm solved our protein folding challenge in 27 minutes. The previous record? Eight weeks. That's the difference between good and revolutionary.",
   
-  "Synvra's quantum-resistant encryption solution future-proofed our entire security infrastructure. Their foresight and technical capabilities are years ahead of the market.",
+  "Our customer service wait times averaged 23 minutes. Synvra's AI chatbot now handles 92% of queries instantly, with higher satisfaction scores than our human agents. The ROI? Beyond calculation.",
   
-  "The autonomous system Synvra developed for our warehouses increased efficiency by 200% and eliminated picking errors completely. They transformed science fiction into reality.",
+  "We were generating terabytes of IoT data with no way to process it. Synvra's edge computing solution now analyzes everything in real-time. We've prevented $42M in equipment failures this quarter alone.",
   
-  "We needed a solution that could process satellite data in real-time. Synvra delivered a system that analyzes terabytes of data at the edge with minimal latency. Their engineering talent is extraordinary.",
-  
-  "Synvra's predictive maintenance system has prevented 23 major equipment failures in the first month alone. The cost savings and efficiency improvements exceeded our wildest expectations.",
-  
-  "The AR solution Synvra built revolutionized our training program. New technicians now achieve proficiency 75% faster. It's completely transformed how we operate.",
-  
-  "Our customers couldn't believe how intuitive the new interface was. Synvra's UX design and implementation reduced support tickets by 85% while increasing user engagement threefold.",
-  
-  "Synvra's distributed computing solution solved problems we thought would take years to crack. They delivered results in weeks that our internal team couldn't achieve in 18 months.",
-  
-  "The computer vision system Synvra developed can detect defects 50 times faster than human inspectors with 99.99% accuracy. It's revolutionized our quality control process.",
-  
-  "We were drowning in data before Synvra stepped in. Their analytics platform turns billions of data points into actionable insights in seconds. It's like having a crystal ball for our business.",
-  
-  "Synvra's team built a recommendation engine that increased our e-commerce conversion rates by 45%. The system pays for itself every 3 days. Simply outstanding.",
-  
-  "The automated trading system Synvra developed executes complex strategies in microseconds. Our returns have increased by 85% while reducing operational risks.",
-  
-  "Synvra's IoT platform manages our entire smart city infrastructure. It's handling millions of sensors and making real-time decisions that save energy and improve citizens' lives.",
-  
-  "The digital twin solution Synvra built simulates our entire manufacturing process with 99.9% accuracy. It's saved us millions in optimization and prevented countless production issues.",
-
-  "I've never seen anything like Synvra's edge computing solution. It reduced our network latency by 90% and enabled real-time processing at thousands of remote locations.",
-
-  "Synvra's team developed a voice recognition system that works flawlessly in noisy industrial environments. It's improved our worker safety and efficiency beyond measure.",
-
-  "The robotic process automation solution from Synvra eliminated 150,000 hours of manual work annually. The accuracy and speed of execution are simply unmatched.",
-
-  "Our competitors spent years trying to achieve what Synvra delivered in months. Their quantum computing solution solved optimization problems we thought were impossible.",
-
-  "Synvra's blockchain platform handles cross-border settlements in seconds instead of days. They've revolutionized how we think about international transactions.",
-
-  "The machine vision system Synvra built can inspect 1000 products per second with 99.999% accuracy. It's transformed our production line completely.",
-
-  "We thought our AI requirements were too complex, but Synvra's team made it look easy. Their solution is now the backbone of our entire decision-making process.",
-
-  "Synvra's cloud migration strategy was brilliant. They moved our entire infrastructure without any downtime and reduced our costs by 60%.",
-
-  "The predictive analytics platform Synvra built has prevented millions in potential losses. It spots patterns that even our best analysts couldn't see.",
-
-  "Our customer engagement skyrocketed after implementing Synvra's personalization engine. It's like having a personal shopper for each of our 10 million users.",
-
-  "Synvra's quantum encryption solution is years ahead of anything else in the market. They've made our data truly future-proof.",
-
-  "The autonomous vehicle guidance system Synvra developed operates with unprecedented precision. It's setting new standards in the industry.",
-
-  "We never thought we could automate this process until Synvra showed us how. Their solution has eliminated human error while increasing throughput by 400%.",
-
-  "Synvra's AI-powered legal document analysis system processes in hours what used to take weeks. The accuracy and efficiency gains are remarkable.",
-
-  "The smart grid management system Synvra built has reduced our energy waste by 40%. It's both profitable and environmentally responsible.",
-
-  "Our data scientists were amazed by Synvra's machine learning pipeline. It reduced model training time from weeks to hours while improving accuracy.",
-
-  "Synvra's augmented reality solution has transformed how we design products. It's cut our development cycle in half and improved quality significantly.",
-
-  "The natural language processing engine from Synvra understands customer intent better than human agents. Our satisfaction scores have never been higher.",
-
-  "Synvra's distributed ledger solution has made our supply chain completely transparent. We can now track products from source to customer in real-time.",
-
-  "The cybersecurity platform Synvra built has blocked over 1 million sophisticated attacks. It's like having an army of security experts working 24/7.",
-
-  "We were amazed by how Synvra's team handled our complex data migration. Zero downtime, zero data loss, and they finished ahead of schedule.",
-
-  "Synvra's predictive maintenance system has extended our equipment lifetime by 40%. The ROI was evident within the first month.",
-
-  "The automated quality control system Synvra developed catches defects that human inspectors miss. Our return rate has dropped to near zero.",
-
-  "Our competitors are still trying to figure out how we process orders so fast. Synvra's solution handles peak loads that would have crashed our old system.",
-
-  "Synvra's AI-powered customer service platform resolves issues before customers even report them. It's literally changed how we think about support.",
-
-  "The biometric authentication system Synvra built is both more secure and more convenient than anything we've used before. Our users love it.",
-
-  "Synvra's real-time analytics platform processes billions of events daily with sub-second latency. It's given us insights we never thought possible.",
-
-  "The automated compliance monitoring system from Synvra has saved us from several potential regulatory issues. It's like having an AI compliance officer.",
-
-  "Synvra's quantum-resistant encryption has made our data secure against future threats. Their foresight in cybersecurity is unmatched.",
-
-  "We thought real-time personalization at our scale was impossible until Synvra proved us wrong. The engagement metrics are off the charts.",
-
-  "The autonomous inventory management system Synvra built has eliminated stockouts while reducing our inventory costs by 35%. Simply brilliant.",
-
-  "Synvra's edge computing solution has reduced our cloud costs by 70% while improving performance. Their architecture is revolutionary.",
-
-  "The machine learning models Synvra developed are so accurate, they're now the industry standard. Nobody else comes close to their expertise.",
-
-  "Our entire industry has been transformed by Synvra's blockchain solution. They've eliminated intermediaries and reduced costs for everyone.",
-
-  "The computer vision system from Synvra can detect subtle defects that even experienced inspectors miss. It's revolutionized our quality control."
+  "Traditional fraud detection caught 85% of attempts. Not good enough in finance. Synvra's neural network spots 99.997% of fraudulent transactions before they complete. The system spotted a new fraud pattern our entire industry missed."
 ];
 
 // Generate 600 case studies
