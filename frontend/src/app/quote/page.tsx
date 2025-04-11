@@ -11,7 +11,10 @@ const PROJECT_TYPES = {
     'Progressive Web Apps (PWA)',
     'Content Management Systems (CMS)',
     'Web Portal Development',
-    'API Development & Integration'
+    'API Development & Integration',
+    'Frontend Development',
+    'Backend Development',
+    'Full Stack Development'
   ],
   'Mobile Development': [
     'iOS App Development',
@@ -19,7 +22,21 @@ const PROJECT_TYPES = {
     'Cross-platform Mobile Apps',
     'Mobile App UI/UX Design',
     'App Maintenance & Support',
-    'Mobile App Testing'
+    'Mobile App Testing',
+    'React Native Development',
+    'Flutter Development',
+    'Mobile App Optimization'
+  ],
+  'Blockchain & Crypto': [
+    'Smart Contract Development',
+    'DeFi Applications',
+    'NFT Marketplace Development',
+    'Cryptocurrency Exchange Development',
+    'Blockchain Integration',
+    'Web3 Development',
+    'Token Development',
+    'Blockchain Consulting',
+    'Crypto Wallet Development'
   ],
   'Cloud Solutions': [
     'Cloud Migration',
@@ -27,7 +44,10 @@ const PROJECT_TYPES = {
     'Cloud Security Solutions',
     'DevOps Implementation',
     'Serverless Architecture',
-    'Cloud Optimization'
+    'Cloud Optimization',
+    'AWS Solutions',
+    'Azure Solutions',
+    'Google Cloud Solutions'
   ],
   'AI & Machine Learning': [
     'AI Application Development',
@@ -35,7 +55,10 @@ const PROJECT_TYPES = {
     'Natural Language Processing',
     'Computer Vision Solutions',
     'Predictive Analytics',
-    'AI Model Training & Deployment'
+    'AI Model Training & Deployment',
+    'Deep Learning Solutions',
+    'AI Chatbots',
+    'Data Science Solutions'
   ],
   'Cybersecurity': [
     'Security Assessment',
@@ -43,7 +66,10 @@ const PROJECT_TYPES = {
     'Security Monitoring',
     'Incident Response',
     'Compliance Implementation',
-    'Security Training'
+    'Security Training',
+    'Network Security',
+    'Application Security',
+    'Cloud Security'
   ],
   'Enterprise Solutions': [
     'ERP Systems',
@@ -51,7 +77,43 @@ const PROJECT_TYPES = {
     'Business Process Automation',
     'Enterprise Integration',
     'Data Analytics Solutions',
-    'Legacy System Modernization'
+    'Legacy System Modernization',
+    'Supply Chain Solutions',
+    'Business Intelligence',
+    'Digital Transformation'
+  ],
+  'UI/UX Design': [
+    'User Interface Design',
+    'User Experience Design',
+    'Mobile App Design',
+    'Web Design',
+    'Design Systems',
+    'Responsive Design',
+    'Prototyping',
+    'Wireframing',
+    'Interactive Design'
+  ],
+  'DevOps Services': [
+    'CI/CD Implementation',
+    'Infrastructure as Code',
+    'Container Orchestration',
+    'Microservices Architecture',
+    'Performance Optimization',
+    'Monitoring & Logging',
+    'DevSecOps Integration',
+    'Automated Testing',
+    'Configuration Management'
+  ],
+  'Quality Assurance': [
+    'Manual Testing',
+    'Automated Testing',
+    'Performance Testing',
+    'Security Testing',
+    'Mobile App Testing',
+    'API Testing',
+    'Test Automation Framework',
+    'Load Testing',
+    'Integration Testing'
   ]
 };
 
