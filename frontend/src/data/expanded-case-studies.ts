@@ -136,7 +136,7 @@ export const expandedCaseStudies: CaseStudy[] = Array.from({ length: 600 }, (_, 
     },
     technologies: getRandomItems(technologies, 5),
     duration: `${Math.floor(Math.random() * 12 + 3)} months`,
-    imageUrl: `/images/projects/project-${(index % 15) + 1}.svg`
+    imageUrl: `/images/projects/project-${index + 1}.png`
   };
 });
 
