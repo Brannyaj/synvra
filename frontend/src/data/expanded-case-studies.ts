@@ -84,7 +84,7 @@ const uniqueTestimonials = [
   
   "Gaming latency above 20ms ruins immersion. Our previous provider couldn't crack 50ms. Synvra's network optimization got us to 8ms globally. Player retention jumped 312% in the first month.",
   
-  "Agricultural yield prediction was more art than science. Synvra's satellite imaging AI changed that. We now forecast yields 9 months ahead with 94% accuracy. Global food distributors are revolutionizing their futures trading.",
+  "Agricultural yield prediction was more art than science. Synvra's satellite imaging AI changed that. Our 9-month forecasts achieve 94% accuracy. Global food distributors are building their futures trading around our platform.",
   
   "DNA sequencing used to take weeks per sample. Synvra's quantum-based analysis pipeline processes 500 genomes simultaneously in under an hour. We're discovering new genetic markers daily.",
   
@@ -108,7 +108,7 @@ const uniqueTestimonials = [
   
   "Wind farm efficiency plateaued years ago. Synvra's turbine swarm AI coordinates 300 turbines as one organism. Power output up 86%, maintenance costs down 62%. The green energy sector is watching.",
   
-  "Teaching AI to paint like Van Gogh? Laughable. Then Synvra's neural artist created works that fooled 94% of master curators. Christie's auctioned one piece for $12.9 million.",
+  "Teaching AI to paint like Van Gogh? Laughable. Then Synvra's neural artist shattered that belief. Its works fooled 94% of master curators in blind tests. A single piece fetched $12.9 million at Christie's.",
   
   "Modeling quantum materials required supercomputers. Synvra's room-temperature quantum simulator does it on a laptop. We discovered 17 new superconductors in three weeks.",
   
@@ -142,7 +142,7 @@ const uniqueTestimonials = [
   
   "Desert reforestation failed for centuries. Synvra's biomimetic water harvesting system pulls 200 liters daily from thin air, per unit. We've greened 70,000 hectares of Sahara in eight months.",
   
-  "Quantum teleportation maxed out at 100 kilometers. Synvra's entanglement network achieved instant state transfer across 12,000 km. DARPA's quantum internet is built on our backbone.",
+  "Quantum teleportation maxed out at 100 kilometers. Not anymore. Synvra's entanglement network spans 12,000 km with instant state transfer. DARPA built their quantum internet on our breakthrough.",
   
   "Construction robots couldn't handle unstructured environments. Synvra's swarm builders completed a 12-story building in 49 days. No human workers above ground level, project costs slashed 61%.",
   
@@ -158,7 +158,21 @@ const uniqueTestimonials = [
   
   "Battery recycling recovered only 50% of materials. Synvra's plasma extraction system achieves 99.9% recovery rate. The electric vehicle industry is racing to adopt our process.",
   
-  "Autonomous ships couldn't handle rogue waves. Synvra's predictive navigation system spots dangerous patterns 20 minutes ahead. Zero cargo losses across 17,000 Pacific crossings."
+  "Autonomous ships couldn't handle rogue waves. Synvra's predictive navigation system spots dangerous patterns 20 minutes ahead. Zero cargo losses across 17,000 Pacific crossings.",
+  
+  "The quest for stable fusion power stumped physicists for decades. Synvra's quantum controller executes a million plasma adjustments per microsecond. Result? Seven minutes of sustained fusion. The energy sector just witnessed history.",
+  
+  "Legacy fraud detection was always a step behind. Synvra's neural network flipped the script. It spots 99.997% of fraudulent transactions in real-time and identified attack patterns that shocked our entire industry.",
+  
+  "Deep sea mining seemed impossible beyond two-hour intervals. Synvra's autonomous system works continuously at 4,000-meter depths. First-year results: 317 tons of rare earth minerals, zero safety incidents.",
+  
+  "Vaccine research meant years of trial and error. Synvra's protein folding AI simulated millions of molecular interactions daily. Three months later, we had viable candidates. Pharmaceutical development will never be the same.",
+  
+  "Coordinating 1,000 autonomous robots in a warehouse? Impossible, they said. Synvra's swarm intelligence platform makes it look easy. Order fulfillment time dropped from hours to minutes, with zero collisions.",
+  
+  "Our smart grid deployment faced skepticism. The results silenced critics: 35% drop in city power consumption on day one. Three major cities licensed our technology within a week. This redefines urban energy efficiency.",
+  
+  "Traditional security solutions react to threats. Synvra's cybersecurity platform anticipates them. It caught a zero-day exploit three months before its public discovery. That's next-generation protection."
 ];
 
 // Generate 600 case studies
