@@ -1,5 +1,3 @@
-'use client'
-
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { dir } from 'i18next'
@@ -11,13 +9,17 @@ export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }))
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
     <html>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Synvra</title>
+      </head>
       <body className={inter.className}>
         {children}
       </body>
