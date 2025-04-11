@@ -23,35 +23,79 @@ export default function LoadingScreen() {
     };
   }, [isLoading]);
 
-  // Create arrays for the + shape
+  // Create array for the 8 segments in a star pattern
   const positions = [
-    // Top dot
+    // Top
     { 
-      left: '50%', 
+      left: '50%',
       top: '-8px',
       transform: 'translateX(-50%)',
-      delay: 0
+      width: '2px',
+      height: '8px',
+      rotate: '0deg'
     },
-    // Right dot
-    { 
+    // Top Right (angled)
+    {
+      right: '-2px',
+      top: '2px',
+      width: '8px',
+      height: '2px',
+      rotate: '-45deg',
+      transformOrigin: '0 50%'
+    },
+    // Right
+    {
       right: '-8px',
       top: '50%',
+      width: '8px',
+      height: '2px',
       transform: 'translateY(-50%)',
-      delay: 0.1
+      rotate: '0deg'
     },
-    // Bottom dot
-    { 
+    // Bottom Right (angled)
+    {
+      right: '-2px',
+      bottom: '2px',
+      width: '8px',
+      height: '2px',
+      rotate: '45deg',
+      transformOrigin: '0 50%'
+    },
+    // Bottom
+    {
       left: '50%',
       bottom: '-8px',
       transform: 'translateX(-50%)',
-      delay: 0.2
+      width: '2px',
+      height: '8px',
+      rotate: '0deg'
     },
-    // Left dot
-    { 
+    // Bottom Left (angled)
+    {
+      left: '-2px',
+      bottom: '2px',
+      width: '8px',
+      height: '2px',
+      rotate: '-45deg',
+      transformOrigin: '100% 50%'
+    },
+    // Left
+    {
       left: '-8px',
       top: '50%',
+      width: '8px',
+      height: '2px',
       transform: 'translateY(-50%)',
-      delay: 0.3
+      rotate: '0deg'
+    },
+    // Top Left (angled)
+    {
+      left: '-2px',
+      top: '2px',
+      width: '8px',
+      height: '2px',
+      rotate: '45deg',
+      transformOrigin: '100% 50%'
     }
   ];
 
@@ -63,19 +107,21 @@ export default function LoadingScreen() {
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#1a1d21]"
         >
-          <div className="relative w-8 h-8">
+          <div className="relative w-16 h-16">
             {positions.map((pos, index) => (
               <motion.div
                 key={index}
-                className={`absolute ${index % 2 === 0 ? 'w-2.5 h-1.5' : 'w-1.5 h-2.5'} bg-blue-500`}
-                style={pos}
+                className="absolute bg-[#00ffff]"
+                style={{
+                  ...pos,
+                }}
                 animate={{
                   opacity: [0.2, 1, 0.2]
                 }}
                 transition={{
-                  duration: 1.2,
+                  duration: 0.8,
                   repeat: Infinity,
-                  delay: pos.delay,
+                  delay: index * 0.1,
                   ease: "linear"
                 }}
               />
@@ -84,10 +130,8 @@ export default function LoadingScreen() {
             {/* "S" Logo */}
             <motion.div 
               className="absolute inset-0 flex items-center justify-center"
-              initial={{ opacity: 0.8 }}
-              animate={{ opacity: 0.8 }}
             >
-              <span className="text-lg font-bold text-blue-500 font-mono">S</span>
+              <span className="text-3xl font-bold text-white font-mono">S</span>
             </motion.div>
           </div>
         </motion.div>
