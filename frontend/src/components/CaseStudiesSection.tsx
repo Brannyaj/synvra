@@ -111,24 +111,31 @@ function CaseStudyContent() {
 
 export default function CaseStudiesSection() {
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center"
+          className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+          <span className="inline-block px-4 py-1 mb-4 text-sm font-semibold text-blue-600 bg-blue-50 rounded-full">
             Success Stories
+          </span>
+          <h2 className="text-4xl font-bold text-gray-900 sm:text-5xl mb-4">
+            Transforming Ideas into Reality
           </h2>
           <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
             Discover how we've helped leading organizations achieve digital excellence through innovative solutions and strategic implementation.
           </p>
         </motion.div>
 
-        <Suspense fallback={<div>Loading case studies...</div>}>
+        <Suspense fallback={
+          <div className="flex justify-center items-center min-h-[400px]">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          </div>
+        }>
           <CaseStudyContent />
         </Suspense>
       </div>

@@ -64,9 +64,25 @@ export default function FeaturedProjects() {
           <h2 className="text-4xl font-bold text-white mb-4">
             Featured Projects
           </h2>
-          <p className="text-xl text-gray-400">
+          <p className="text-xl text-gray-400 mb-8">
             Explore our most innovative and impactful solutions
           </p>
+          <motion.button
+            onClick={() => router.push('/case-studies')}
+            className="inline-flex items-center px-8 py-4 rounded-lg bg-blue-600 text-white font-semibold text-lg hover:bg-blue-700 transition-colors duration-200 group"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            View Our Work
+            <svg 
+              className="ml-2 -mr-1 w-5 h-5 transform transition-transform duration-200 group-hover:translate-x-1" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </motion.button>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
