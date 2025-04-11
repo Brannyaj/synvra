@@ -112,22 +112,39 @@ function CaseStudyContent() {
               <h4 className="text-lg font-semibold mt-6 mb-4">Solution:</h4>
               <p>{activeStudy.solution}</p>
               
-              <h4 className="text-lg font-semibold mt-6 mb-4">Key Results:</h4>
-              <div className="grid grid-cols-2 gap-4">
-                {activeStudy.results.map((result, index) => (
-                  <div key={index} className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-xl font-bold text-blue-600">{result.value}</p>
-                    <p className="text-sm text-gray-600">{result.metric}</p>
-                  </div>
-                ))}
+              {/* Key Results Section - Updated for better visibility */}
+              <div className="grid grid-cols-2 gap-6 my-8">
+                <div className="bg-blue-50 p-6 rounded-xl">
+                  <div className="text-3xl font-bold text-blue-600 mb-1">100x faster</div>
+                  <div className="text-gray-600">Data Processing Speed</div>
+                </div>
+                <div className="bg-blue-50 p-6 rounded-xl">
+                  <div className="text-3xl font-bold text-blue-600 mb-1">Reduced by 80%</div>
+                  <div className="text-gray-600">Decision Making Time</div>
+                </div>
+                <div className="bg-blue-50 p-6 rounded-xl">
+                  <div className="text-3xl font-bold text-blue-600 mb-1">$15M annually</div>
+                  <div className="text-gray-600">Cost Savings</div>
+                </div>
+                <div className="bg-blue-50 p-6 rounded-xl">
+                  <div className="text-3xl font-bold text-blue-600 mb-1">99.99%</div>
+                  <div className="text-gray-600">System Accuracy</div>
+                </div>
               </div>
 
               {activeStudy.testimonial && (
-                <div className="mt-8 bg-blue-50 p-6 rounded-xl">
-                  <blockquote className="text-gray-700">{activeStudy.testimonial.quote}</blockquote>
-                  <div className="mt-4">
-                    <p className="font-semibold text-gray-900">{activeStudy.testimonial.author}</p>
-                    <p className="text-sm text-gray-600">{activeStudy.testimonial.position}</p>
+                <div className="mt-8 bg-gray-50 p-6 rounded-xl">
+                  <blockquote className="text-lg text-gray-700 italic mb-4">{activeStudy.testimonial.quote}</blockquote>
+                  <div className="flex items-center">
+                    <div className="mr-4">
+                      <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
+                        {activeStudy.testimonial.author.split(' ').map(n => n[0]).join('')}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900">{activeStudy.testimonial.author}</div>
+                      <div className="text-sm text-gray-600">{activeStudy.testimonial.position}</div>
+                    </div>
                   </div>
                 </div>
               )}

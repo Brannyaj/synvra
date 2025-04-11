@@ -21,33 +21,26 @@ export interface CaseStudy {
 
 export const caseStudies: CaseStudy[] = [
   {
-    id: 1,
-    title: "AI-Powered Financial Analytics Platform",
-    client: "Global Investment Bank",
-    industry: "Financial Services",
-    challenge: "Legacy systems were unable to process and analyze vast amounts of market data in real-time, causing delays in decision-making and missed opportunities.",
-    solution: "Developed a cutting-edge AI-powered analytics platform using deep learning models and real-time data processing. Implemented microservices architecture with cloud-native solutions for scalability.",
+    id: 'financial-analytics',
+    title: 'AI-Powered Financial Analytics Platform',
+    client: 'Global Investment Bank',
+    industry: 'Financial Services',
+    imageUrl: '/images/projects/trading-platform.svg',
+    challenge: 'Legacy systems were unable to process and analyze vast amounts of market data in real-time, causing delays in decision-making and missed opportunities.',
+    solution: 'Developed a cutting-edge AI-powered analytics platform using deep learning models and real-time data processing. Implemented microservices architecture with cloud-native solutions for scalability.',
     results: [
-      { metric: "Data Processing Speed", value: "100x faster" },
-      { metric: "Decision Making Time", value: "Reduced by 80%" },
-      { metric: "Cost Savings", value: "$15M annually" },
-      { metric: "System Accuracy", value: "99.99%" }
-    ],
-    technologies: [
-      "TensorFlow",
-      "Apache Kafka",
-      "Kubernetes",
-      "AWS",
-      "Python",
-      "React"
+      { value: '100x faster', metric: 'Data Processing Speed' },
+      { value: 'Reduced by 80%', metric: 'Decision Making Time' },
+      { value: '$15M annually', metric: 'Cost Savings' },
+      { value: '99.99%', metric: 'System Accuracy' }
     ],
     testimonial: {
-      quote: "Synvra transformed our data analytics capabilities. We're now able to make informed decisions in real-time, giving us a significant competitive advantage.",
-      author: "Sarah Chen",
-      position: "Chief Technology Officer"
+      quote: 'Synvra transformed our data analytics capabilities. We\'re now able to make informed decisions in real-time, giving us a significant competitive advantage.',
+      author: 'Sarah Chen',
+      position: 'Chief Technology Officer'
     },
-    duration: "8 months",
-    imageUrl: "/images/case-studies/fintech-analytics.jpg"
+    technologies: ['Python', 'TensorFlow', 'React', 'AWS Lambda', 'Apache Kafka'],
+    duration: '8 months'
   },
   {
     id: 2,
