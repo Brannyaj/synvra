@@ -51,6 +51,10 @@ export default function FeaturedProjects() {
   const [activeProject, setActiveProject] = useState(projects[0]);
   const router = useRouter();
 
+  const handleViewWork = () => {
+    router.push('/case-studies');
+  };
+
   return (
     <section className="py-24 bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -68,8 +72,8 @@ export default function FeaturedProjects() {
             Explore our most innovative and impactful solutions
           </p>
           <motion.button
-            onClick={() => router.push('/case-studies')}
-            className="inline-flex items-center px-8 py-4 rounded-lg bg-blue-600 text-white font-semibold text-lg hover:bg-blue-700 transition-colors duration-200 group"
+            onClick={handleViewWork}
+            className="inline-flex items-center px-8 py-4 rounded-lg bg-blue-600 text-white font-semibold text-lg hover:bg-blue-700 transition-all duration-200 group"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -167,7 +171,7 @@ export default function FeaturedProjects() {
                     activeProject.id === project.id ? 'rotate-90' : 'group-hover:translate-x-2'
                   }`}>
                     <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7m0 0l-5 5m5-5H6" />
                     </svg>
                   </div>
                 </div>
