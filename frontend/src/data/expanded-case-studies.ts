@@ -138,7 +138,27 @@ const uniqueTestimonials = [
   
   "Hypersonic flight control was mathematically impossible at Mach 7. Synvra's predictive aerodynamics engine makes it look easy. Beijing to New York in 89 minutes, commercial service starts next month.",
   
-  "Memory implants were pure sci-fi until Synvra unveiled their neural bridge. Alzheimer's patients now retain new memories with 87% success rate. The implications for neuroscience are staggering."
+  "Memory implants were pure sci-fi until Synvra unveiled their neural bridge. Alzheimer's patients now retain new memories with 87% success rate. The implications for neuroscience are staggering.",
+  
+  "Desert reforestation failed for centuries. Synvra's biomimetic water harvesting system pulls 200 liters daily from thin air, per unit. We've greened 70,000 hectares of Sahara in eight months.",
+  
+  "Quantum teleportation maxed out at 100 kilometers. Synvra's entanglement network achieved instant state transfer across 12,000 km. DARPA's quantum internet is built on our backbone.",
+  
+  "Construction robots couldn't handle unstructured environments. Synvra's swarm builders completed a 12-story building in 49 days. No human workers above ground level, project costs slashed 61%.",
+  
+  "Nano-manufacturing yields were microscopic. Synvra's molecular assembly line produces 900 billion precise structures per minute. We're printing quantum computers at the atomic scale.",
+  
+  "Coral reef restoration took decades. Synvra's bioprinting system creates living reef structures that grow 50 times faster than nature. The Great Barrier Reef recovery project starts next week.",
+  
+  "Thought-to-text was a distant dream. Synvra's neural decoder transcribes internal monologue at 170 words per minute. ALS patients are writing novels through thought alone.",
+  
+  "Mars dust storms killed every solar farm design. Synvra's self-cleaning panels maintain 97% efficiency in global dust storms. NASA just ordered 10,000 units for the first Mars colony.",
+  
+  "Protein misfolding caused untreatable diseases. Synvra's molecular chaperone AI identifies correction pathways in minutes. Five 'incurable' conditions now have treatment protocols.",
+  
+  "Battery recycling recovered only 50% of materials. Synvra's plasma extraction system achieves 99.9% recovery rate. The electric vehicle industry is racing to adopt our process.",
+  
+  "Autonomous ships couldn't handle rogue waves. Synvra's predictive navigation system spots dangerous patterns 20 minutes ahead. Zero cargo losses across 17,000 Pacific crossings."
 ];
 
 // Generate 600 case studies
