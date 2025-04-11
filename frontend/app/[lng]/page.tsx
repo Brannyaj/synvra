@@ -1,5 +1,3 @@
-'use client';
-
 import { languages } from '../i18n/settings'
 
 export function generateStaticParams() {
