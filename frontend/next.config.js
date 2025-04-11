@@ -4,7 +4,16 @@ const nextConfig = {
   trailingSlash: true,
   images: {
     unoptimized: true,
-    domains: ['synvra.com', 'www.synvra.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'synvra.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.synvra.com',
+      },
+    ],
     loader: 'custom',
     loaderFile: './src/utils/imageLoader.ts',
   },
