@@ -1,17 +1,17 @@
 import { languages } from '../i18n/settings'
-import { useTranslation } from '../i18n'
+import { useTranslation } from 'next-i18next'
 import ClientLayout from '@/components/ClientLayout'
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }))
 }
 
-export default async function Page({
+export default function Page({
   params: { lng }
 }: {
   params: { lng: string }
 }) {
-  const { t } = await useTranslation(lng, 'common')
+  const { t } = useTranslation()
 
   return (
     <ClientLayout lng={lng}>

@@ -2,6 +2,11 @@
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
+  i18n: {
+    locales: ['en', 'es', 'fr', 'de', 'ja', 'zh'],
+    defaultLocale: 'en',
+    localeDetection: true
+  },
   images: {
     unoptimized: true,
     remotePatterns: [

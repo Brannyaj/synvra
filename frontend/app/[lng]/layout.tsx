@@ -1,24 +1,28 @@
+import { dir } from 'i18next'
 import { languages } from '../i18n/settings'
-import ClientRootLayout from '@/components/ClientRootLayout'
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }))
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
-  params: {
-    lng
-  }
+  params: { lng }
 }: {
   children: React.ReactNode
-  params: {
-    lng: string
-  }
+  params: { lng: string }
 }) {
   return (
-    <ClientRootLayout lng={lng}>
-      {children}
-    </ClientRootLayout>
+    <html lang={lng} dir={dir(lng)}>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Synvra - Digital Solutions" />
+        <title>Synvra</title>
+      </head>
+      <body>
+        {children}
+      </body>
+    </html>
   )
 }
