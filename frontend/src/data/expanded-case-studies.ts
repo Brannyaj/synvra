@@ -64,7 +64,7 @@ const uniqueTestimonials = [
   
   "Seven-figure ad spend used to be a gamble. Synvra's predictive AI changed that completely. We now forecast campaign performance with 96% accuracy before spending a dime. Marketing is finally a science.",
   
-  "Drug discovery typically takes 7 years. Synvra's molecular simulation platform identified three viable candidates in 9 weeks. The implications for pharmaceutical research are staggering.",
+  "Drug discovery typically took 7 years. Synvra's molecular simulation platform identified three viable candidates in 9 weeks. The implications for pharmaceutical research are staggering.",
   
   "My team laughed when I suggested automating creative work. Then Synvra's AI generated 10,000 unique design variants, each respecting our brand guidelines. The creative director stopped laughing and started hiring data scientists.",
   
@@ -98,7 +98,47 @@ const uniqueTestimonials = [
   
   "Earthquake prediction was considered impossible. Synvra's deep-earth sensing network proved everyone wrong. We now provide 30-minute warnings with 89% accuracy. Emergency services call it a game-changer.",
   
-  "Manufacturing custom prosthetics took months. Synvra's AI-driven 3D printing system designs and produces perfect fits in 48 hours. The cost dropped 94%, while patient satisfaction hit 100%."
+  "Manufacturing custom prosthetics took months. Synvra's AI-driven 3D printing system designs and produces perfect fits in 48 hours. The cost dropped 94%, while patient satisfaction hit 100%.",
+  
+  "Quantum cryptography was purely theoretical for us until Synvra stepped in. Their system distributes unbreakable keys across 1,200 km of standard fiber. The NSA called asking for our secrets.",
+  
+  "Deep sea mining drones lasted 2 hours at best. Synvra's autonomous system operates continuously at 4,000 meters depth. Six months of operation, 317 tons of rare earth minerals recovered, zero human risk.",
+  
+  "Holographic displays were stuck at 30° viewing angles. Synvra's photonic processor renders 360° images visible from any position. Museum visitors literally walk through ancient Rome now.",
+  
+  "Wind farm efficiency plateaued years ago. Synvra's turbine swarm AI coordinates 300 turbines as one organism. Power output up 86%, maintenance costs down 62%. The green energy sector is watching.",
+  
+  "Teaching AI to paint like Van Gogh? Laughable. Then Synvra's neural artist created works that fooled 94% of master curators. Christie's auctioned one piece for $12.9 million.",
+  
+  "Modeling quantum materials required supercomputers. Synvra's room-temperature quantum simulator does it on a laptop. We discovered 17 new superconductors in three weeks.",
+  
+  "Wildfire prediction was guesswork at best. Synvra's thermal imaging satellites spot potential fires 72 hours before ignition. Last summer, we prevented 129 major blazes across three continents.",
+  
+  "Flying taxi services seemed like science fiction. Synvra's autonomous navigation matrix manages 10,000 eVTOL flights daily across Singapore. Zero incidents, 99.97% on-time performance.",
+  
+  "Brain-computer interfaces needed surgery. Synvra's non-invasive neural cap achieves higher bandwidth than implants. Paralyzed patients now control robotic limbs with natural precision.",
+  
+  "Fusion reactor control systems couldn't handle plasma instabilities. Synvra's quantum controller makes a million adjustments per microsecond. We've maintained stable fusion for 7 minutes straight.",
+  
+  "Ocean plastic detection was limited to surface debris. Synvra's multi-spectral sonar maps plastic concentration to 200m depth. We've removed 47,000 tons of microplastics from marine ecosystems.",
+  
+  "Personalized cancer treatment meant months of trial and error. Synvra's digital twin technology simulates drug responses for each patient. Treatment success rates jumped from 43% to 91% overnight.",
+  
+  "Carbon capture technology was prohibitively expensive. Synvra's biomimetic membrane system absorbs 400 tons of CO2 daily at 1/8th the cost. Heavy industry is scrambling to implement it.",
+  
+  "Asteroid mining was a billionaire's fantasy. Synvra's autonomous spacecraft network changed that. First year of operations: 50,000 kg of platinum-group metals extracted. Space economy is now reality.",
+  
+  "Sign language translation apps were painfully inaccurate. Synvra's neural vision system handles 137 sign languages with medical-grade precision. The deaf community calls it their 'universal translator'.",
+  
+  "Smart contact lenses drew too much power to be practical. Synvra's photovoltaic solution harvests energy from ambient light. 72 hours of continuous augmented reality on a single charge.",
+  
+  "Vertical farming yielded 30% less than traditional methods. Synvra's photosynthesis optimization AI flipped the script. We're producing 240% more food per square meter, using 60% less water.",
+  
+  "Quantum error correction required millions of physical qubits. Synvra's topological approach needs just 100. We're running algorithms that Google said were a decade away.",
+  
+  "Hypersonic flight control was mathematically impossible at Mach 7. Synvra's predictive aerodynamics engine makes it look easy. Beijing to New York in 89 minutes, commercial service starts next month.",
+  
+  "Memory implants were pure sci-fi until Synvra unveiled their neural bridge. Alzheimer's patients now retain new memories with 87% success rate. The implications for neuroscience are staggering."
 ];
 
 // Generate 600 case studies
