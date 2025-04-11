@@ -1,0 +1,82 @@
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+.hero-section {
+  background: url('https://example.com/background.jpg') no-repeat center center/cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.nav-link {
+  margin: 0 15px;
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #FFD700;
+}
+
+.hero-title {
+  font-size: 4em;
+  margin-bottom: 20px;
+  animation: fadeIn 2s ease-in;
+}
+
+.hero-subtitle {
+  font-size: 1.5em;
+  margin-bottom: 40px;
+  animation: fadeIn 3s ease-in;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.cta-button {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button.primary {
+  background-color: #007BFF;
+  color: #FFFFFF;
+}
+
+.cta-button.secondary {
+  background-color: #28A745;
+  color: #FFFFFF;
+}
+
+.cta-button:hover {
+  background-color: #0056b3;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+} 
