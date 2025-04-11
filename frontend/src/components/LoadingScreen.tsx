@@ -23,7 +23,37 @@ export default function LoadingScreen() {
     };
   }, [isLoading]);
 
-  const dots = Array.from({ length: 4 });
+  // Create arrays for each side
+  const positions = [
+    // Top dots (0-3)
+    ...Array.from({ length: 4 }).map((_, i) => ({ 
+      left: '50%', 
+      top: 0,
+      transform: `translateX(${(i - 1.5) * 10}px)`,
+      delay: i * 0.1
+    })),
+    // Right dots (4-7)
+    ...Array.from({ length: 4 }).map((_, i) => ({ 
+      right: 0,
+      top: '50%',
+      transform: `translateY(${(i - 1.5) * 10}px)`,
+      delay: (i + 4) * 0.1
+    })),
+    // Bottom dots (8-11)
+    ...Array.from({ length: 4 }).map((_, i) => ({ 
+      left: '50%',
+      bottom: 0,
+      transform: `translateX(${(1.5 - i) * 10}px)`,
+      delay: (i + 8) * 0.1
+    })),
+    // Left dots (12-15)
+    ...Array.from({ length: 4 }).map((_, i) => ({ 
+      left: 0,
+      top: '50%',
+      transform: `translateY(${(1.5 - i) * 10}px)`,
+      delay: (i + 12) * 0.1
+    }))
+  ];
 
   return (
     <AnimatePresence>
@@ -34,94 +64,19 @@ export default function LoadingScreen() {
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#1a1d21]"
         >
           <div className="relative w-20 h-20">
-            {/* Top dots */}
-            {dots.map((_, index) => (
+            {positions.map((pos, index) => (
               <motion.div
-                key={`top-${index}`}
-                className="absolute w-2.5 h-1.5 bg-blue-500"
-                style={{
-                  left: '50%',
-                  top: 0,
-                  transform: `translateX(${(index - 1.5) * 10}px)`,
-                }}
+                key={index}
+                className={`absolute ${index >= 4 && index < 12 ? 'w-1.5 h-2.5' : 'w-2.5 h-1.5'} bg-blue-500`}
+                style={pos}
                 animate={{
-                  opacity: [0.2, 1, 0.2],
-                  scale: [1, 1.2, 1],
+                  opacity: [0.2, 1, 0.2]
                 }}
                 transition={{
-                  duration: 0.8,
+                  duration: 1.6,
                   repeat: Infinity,
-                  delay: index * 0.1,
-                  ease: "circOut"
-                }}
-              />
-            ))}
-
-            {/* Bottom dots */}
-            {dots.map((_, index) => (
-              <motion.div
-                key={`bottom-${index}`}
-                className="absolute w-2.5 h-1.5 bg-blue-500"
-                style={{
-                  left: '50%',
-                  bottom: 0,
-                  transform: `translateX(${(index - 1.5) * 10}px)`,
-                }}
-                animate={{
-                  opacity: [0.2, 1, 0.2],
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{
-                  duration: 0.8,
-                  repeat: Infinity,
-                  delay: (index * 0.1) + 0.4,
-                  ease: "circOut"
-                }}
-              />
-            ))}
-
-            {/* Left dots */}
-            {dots.map((_, index) => (
-              <motion.div
-                key={`left-${index}`}
-                className="absolute w-1.5 h-2.5 bg-blue-500"
-                style={{
-                  left: 0,
-                  top: '50%',
-                  transform: `translateY(${(index - 1.5) * 10}px)`,
-                }}
-                animate={{
-                  opacity: [0.2, 1, 0.2],
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{
-                  duration: 0.8,
-                  repeat: Infinity,
-                  delay: (index * 0.1) + 0.2,
-                  ease: "circOut"
-                }}
-              />
-            ))}
-
-            {/* Right dots */}
-            {dots.map((_, index) => (
-              <motion.div
-                key={`right-${index}`}
-                className="absolute w-1.5 h-2.5 bg-blue-500"
-                style={{
-                  right: 0,
-                  top: '50%',
-                  transform: `translateY(${(index - 1.5) * 10}px)`,
-                }}
-                animate={{
-                  opacity: [0.2, 1, 0.2],
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{
-                  duration: 0.8,
-                  repeat: Infinity,
-                  delay: (index * 0.1) + 0.6,
-                  ease: "circOut"
+                  delay: pos.delay,
+                  ease: "linear"
                 }}
               />
             ))}
@@ -129,15 +84,8 @@ export default function LoadingScreen() {
             {/* "S" Logo */}
             <motion.div 
               className="absolute inset-0 flex items-center justify-center"
-              animate={{ 
-                scale: [1, 1.1, 1],
-                opacity: [0.8, 1, 0.8],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
+              initial={{ opacity: 0.8 }}
+              animate={{ opacity: 0.8 }}
             >
               <span className="text-2xl font-bold text-blue-500 font-mono">S</span>
             </motion.div>
