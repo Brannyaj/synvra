@@ -52,7 +52,7 @@ export default function FeaturedProjects() {
   const router = useRouter();
 
   const handleViewWork = () => {
-    router.push('/case-studies');
+    router.push('/portfolio');
   };
 
   return (

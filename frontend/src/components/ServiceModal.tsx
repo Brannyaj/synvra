@@ -125,7 +125,7 @@ export default function ServiceModal({ isOpen, onClose, service }: ServiceModalP
 
                 {service.caseStudies && service.caseStudies.length > 0 && (
                   <div className="mt-8">
-                    <h4 className="text-lg font-semibold text-gray-900 mb-4">Case Studies</h4>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-4">Success Stories</h4>
                     <div className="space-y-4">
                       {service.caseStudies.map((study, index) => (
                         <motion.div

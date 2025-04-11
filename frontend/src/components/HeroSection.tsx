@@ -103,8 +103,8 @@ export default function HeroSection() {
               />
             </svg>
           </a>
-          <button
-            onClick={() => router.push('/case-studies')}
+          <motion.button
+            onClick={() => router.push('/portfolio')}
             className="px-8 py-4 bg-gray-800 text-white rounded-lg font-semibold text-lg hover:bg-gray-700 transition-colors duration-200 flex items-center group"
           >
             View Our Work
@@ -121,7 +121,7 @@ export default function HeroSection() {
                 d="M13 7l5 5m0 0l-5 5m5-5H6"
               />
             </svg>
-          </button>
+          </motion.button>
         </motion.div>
 
         {/* Trust Badges */}
