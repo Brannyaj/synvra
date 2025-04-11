@@ -2,11 +2,18 @@
 
 import { motion } from 'framer-motion';
 import { useState, Suspense } from 'react';
-import { caseStudies } from '@/data/case-studies';
+import { expandedCaseStudies } from '@/data/expanded-case-studies';
 import Image from 'next/image';
 
 function CaseStudyContent() {
-  const [activeStudy, setActiveStudy] = useState(caseStudies[0]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [activeStudy, setActiveStudy] = useState(expandedCaseStudies[0]);
+  const itemsPerPage = 10;
+
+  const totalPages = Math.ceil(expandedCaseStudies.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentCaseStudies = expandedCaseStudies.slice(startIndex, endIndex);
 
   return (
     <div className="mt-16 lg:mt-20">
@@ -31,7 +38,6 @@ function CaseStudyContent() {
             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
               <p className="text-sm font-semibold text-blue-400">{activeStudy.industry}</p>
               <h3 className="mt-2 text-2xl font-bold">{activeStudy.title}</h3>
-              <p className="mt-2 text-gray-300">{activeStudy.client}</p>
             </div>
           </div>
 
@@ -47,22 +53,12 @@ function CaseStudyContent() {
 
               <h4 className="text-xl font-bold text-gray-900 mt-8 mb-6">Key Results:</h4>
               <div className="grid grid-cols-2 gap-6 my-8">
-                <div className="bg-blue-50 p-6 rounded-xl">
-                  <div className="text-3xl font-bold text-blue-600 mb-1">100x faster</div>
-                  <div className="text-gray-600">Data Processing Speed</div>
-                </div>
-                <div className="bg-blue-50 p-6 rounded-xl">
-                  <div className="text-3xl font-bold text-blue-600 mb-1">Reduced by 80%</div>
-                  <div className="text-gray-600">Decision Making Time</div>
-                </div>
-                <div className="bg-blue-50 p-6 rounded-xl">
-                  <div className="text-3xl font-bold text-blue-600 mb-1">$15M annually</div>
-                  <div className="text-gray-600">Cost Savings</div>
-                </div>
-                <div className="bg-blue-50 p-6 rounded-xl">
-                  <div className="text-3xl font-bold text-blue-600 mb-1">99.99%</div>
-                  <div className="text-gray-600">System Accuracy</div>
-                </div>
+                {activeStudy.results.map((result, index) => (
+                  <div key={index} className="bg-blue-50 p-6 rounded-xl">
+                    <div className="text-3xl font-bold text-blue-600 mb-1">{result.value}</div>
+                    <div className="text-gray-600">{result.metric}</div>
+                  </div>
+                ))}
               </div>
 
               {activeStudy.testimonial && (
@@ -98,31 +94,53 @@ function CaseStudyContent() {
         </motion.div>
 
         {/* Case Study List */}
-        <div className="lg:col-span-4 space-y-4">
-          {caseStudies.map((study, index) => (
-            <motion.button
-              key={study.id}
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-              onClick={() => setActiveStudy(study)}
-              className={`w-full text-left p-6 rounded-xl transition-all duration-200 ${
-                activeStudy.id === study.id
-                  ? 'bg-white shadow-xl scale-[1.02]'
-                  : 'bg-gray-100 hover:bg-white hover:shadow-lg'
-              }`}
+        <div className="lg:col-span-4">
+          <div className="space-y-4 mb-8">
+            {currentCaseStudies.map((study, index) => (
+              <motion.button
+                key={study.id}
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+                onClick={() => setActiveStudy(study)}
+                className={`w-full text-left p-6 rounded-xl transition-all duration-200 ${
+                  activeStudy.id === study.id
+                    ? 'bg-white shadow-xl scale-[1.02]'
+                    : 'bg-gray-100 hover:bg-white hover:shadow-lg'
+                }`}
+              >
+                <p className="text-sm font-semibold text-blue-600">
+                  {study.industry}
+                </p>
+                <h3 className="mt-2 text-lg font-semibold text-gray-900">
+                  {study.title}
+                </h3>
+                <p className="mt-2 text-sm text-gray-500">Duration: {study.duration}</p>
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Pagination */}
+          <div className="flex justify-center items-center gap-2">
+            <button
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <p className="text-sm font-semibold text-blue-600">
-                {study.industry}
-              </p>
-              <h3 className="mt-2 text-lg font-semibold text-gray-900">
-                {study.title}
-              </h3>
-              <p className="mt-1 text-gray-600">{study.client}</p>
-              <p className="mt-2 text-sm text-gray-500">Duration: {study.duration}</p>
-            </motion.button>
-          ))}
+              Previous
+            </button>
+            <span className="text-gray-600">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>
