@@ -22,9 +22,43 @@ const generateId = (index: number) => `project-${index + 1}`;
 const uniqueTestimonials = [
   "Within six months of deploying Synvra's AI solution, our market prediction accuracy jumped from 65% to 98%. The system paid for itself twenty times over - numbers that seemed impossible before we started this journey.",
   
-  "Nobody believed we could automate our quality control process until Synvra stepped in. Their computer vision system now catches defects our best inspectors missed for years. Last quarter's defect rate? Zero.",
+  "Imagine inspecting a million products per day with perfect accuracy. Fantasy? Not since Synvra's computer vision system joined our production line. Final quarter results: zero defects, zero recalls, zero compromises.",
   
-  "Partnering with Synvra changed the game entirely. Their blockchain platform slashed our settlement times from 72 hours to 3 seconds flat. Our competitors are still stuck in the dark ages.",
+  "$50 million in blockchain settlements used to take three days to clear. Synvra's distributed ledger platform processes the same volume in 3.2 seconds. Our competitors' jaws are still on the floor.",
+  
+  "Load testing was our nightmare - systems crashed at 50K transactions. Synvra's architecture handles 500K per second without breaking a sweat. We've expanded into markets we never dreamed of touching.",
+  
+  "From 100 beta users to 2 million active accounts - that's our growth story. Synvra's infrastructure scaled flawlessly through every surge. The platform runs so smooth, our monitoring team gets bored.",
+  
+  "Three state-sponsored hacking attempts hit our network last month. Synvra's quantum-resistant encryption turned them all into amusing anecdotes. Our security team actually looks forward to audit meetings now.",
+  
+  "Warehouse automation meant compromise - either speed or safety, never both. Synvra's robotic fleet rewrote the rules: 300% productivity boost, injury rate at absolute zero. The logistics industry has a new gold standard.",
+  
+  "50 million users, each expecting personal treatment? Impossible math, until Synvra's real-time engine started serving microsecond-level customization. Our engagement metrics went through the stratosphere.",
+  
+  "Big data was our biggest headache. Petabytes of information, minimal insight. Synvra's analytics engine distills actionable intelligence in milliseconds. We're making decisions faster than our competitors can gather data.",
+  
+  "Our cloud infrastructure costs were spiraling out of control. Synvra's edge computing mesh slashed expenses by 80% while doubling performance. The CFO's skepticism turned into a standing ovation.",
+  
+  "Legal document review meant endless billable hours. Synvra's NLP system processes contract volumes in coffee-break timeframes. Our attorneys now focus on strategy instead of scanning paperwork.",
+  
+  "Healthcare AI needed 99.99% accuracy to be viable. Synvra's diagnostic platform achieved 99.9999% precision across 50,000 cases. Medical boards worldwide are rewriting their guidelines.",
+  
+  "Supply chain visibility stopped at tier-one suppliers. Synvra's blockchain network illuminates every step from raw material to retail shelf. Last year's mystery losses? This year's optimization opportunities.",
+  
+  "Conventional security tools chase yesterday's threats. Synvra's predictive platform neutralized an attack vector that wouldn't be discovered for another quarter. We're not just ahead of threats - we're ahead of their invention.",
+  
+  "City power grids wasted energy by the megawatt. Synvra's smart distribution system cut consumption by 35% overnight. Three neighboring cities have already signed contracts.",
+  
+  "Virtual reality training used to mean motion sickness and confusion. Synvra's neural-calibrated simulations feel more real than reality. Training accidents dropped to zero, certification time halved.",
+  
+  "Protein folding algorithms ran for weeks on supercomputers. Synvra's quantum solution delivers results in 27 minutes. We've revolutionized drug discovery timelines.",
+  
+  "Customer support meant endless hold times and frustrated users. Synvra's AI assistant handles 92% of inquiries instantly. The satisfaction scores? Better than our best human agents ever achieved.",
+  
+  "IoT sensors generated data faster than we could process it. Synvra's edge computing network turns that firehose into actionable insights. Equipment failures dropped by $42M this quarter.",
+  
+  "Banks lost billions to sophisticated fraud schemes. Synvra's neural detection system spots suspicious patterns before transactions complete. We've identified attack methods that hadn't even been documented.",
   
   "Picture processing 500,000 transactions per second without a hiccup. That's what Synvra delivered. Our previous system crashed at 50,000. The performance boost literally opened new markets for us.",
   
