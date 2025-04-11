@@ -11,75 +11,74 @@ export default function Home() {
       </div>
 
       <div className="relative flex place-items-center">
-        <Image
+        <img
           src="/logo.png"
           alt="Synvra Logo"
           width={180}
           height={37}
-          priority
         />
       </div>
 
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <Link
+        <a
           href="/services"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
+          <h2 className="mb-3 text-2xl font-semibold">
             Services{' '}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+          <p className="m-0 max-w-[30ch] text-sm opacity-50">
             Explore our comprehensive digital solutions and services.
           </p>
-        </Link>
+        </a>
 
-        <Link
+        <a
           href="/about"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
+          <h2 className="mb-3 text-2xl font-semibold">
             About{' '}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+          <p className="m-0 max-w-[30ch] text-sm opacity-50">
             Learn about our company and our mission.
           </p>
-        </Link>
+        </a>
 
-        <Link
+        <a
           href="/portfolio"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
+          <h2 className="mb-3 text-2xl font-semibold">
             Portfolio{' '}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+          <p className="m-0 max-w-[30ch] text-sm opacity-50">
             View our past projects and success stories.
           </p>
-        </Link>
+        </a>
 
-        <Link
+        <a
           href="/contact"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
+          <h2 className="mb-3 text-2xl font-semibold">
             Contact{' '}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+          <p className="m-0 max-w-[30ch] text-sm opacity-50">
             Get in touch with us for your next project.
           </p>
-        </Link>
+        </a>
       </div>
     </main>
   )

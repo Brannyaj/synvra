@@ -16,10 +16,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Synvra - Digital Solutions" />
+      </head>
       <body className={inter.className}>
-        <div className="min-h-screen flex flex-col">
-          {children}
-        </div>
+        {children}
       </body>
     </html>
   )
