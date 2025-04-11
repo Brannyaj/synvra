@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { expandedPortfolio } from '@/data/expanded-portfolio';
 import Image from 'next/image';

@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import FeaturedProjects from '@/components/FeaturedProjects';

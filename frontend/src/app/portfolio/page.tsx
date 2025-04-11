@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { motion } from 'framer-motion';
 import PortfolioSection from '@/components/PortfolioSection';
 import { ndaDisclaimer } from '@/data/expanded-portfolio';
