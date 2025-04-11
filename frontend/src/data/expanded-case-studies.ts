@@ -78,7 +78,27 @@ const uniqueTestimonials = [
   
   "Semiconductor yields above 90% were fantasy in quantum chip production. Synvra's manufacturing AI pushed us to 97.3%. The entire industry is rewriting their playbooks.",
   
-  "Real-time translation for 95 languages with cultural context adaptation? Synvra delivered it in a 3MB mobile app. United Nations interpreters use our system as backup - that's the gold standard."
+  "Real-time translation for 95 languages with cultural context adaptation? Synvra delivered it in a 3MB mobile app. United Nations interpreters use our system as backup - that's the gold standard.",
+  
+  "Neurosurgeons said remote operations were decades away. Synvra's haptic feedback system changed that overnight. We've performed 122 successful surgeries across three continents with 0.1mm precision.",
+  
+  "Gaming latency above 20ms ruins immersion. Our previous provider couldn't crack 50ms. Synvra's network optimization got us to 8ms globally. Player retention jumped 312% in the first month.",
+  
+  "Agricultural yield prediction was more art than science. Synvra's satellite imaging AI changed that. We now forecast yields 9 months ahead with 94% accuracy. Global food distributors are revolutionizing their futures trading.",
+  
+  "DNA sequencing used to take weeks per sample. Synvra's quantum-based analysis pipeline processes 500 genomes simultaneously in under an hour. We're discovering new genetic markers daily.",
+  
+  "Traffic management in megacities? A nightmare. Until Synvra's neural grid optimized 25,000 traffic signals in real-time. Average commute times dropped 47% citywide. Three million happy drivers.",
+  
+  "Space debris tracking was a shot in the dark. Synvra's multi-spectrum radar network now tracks objects down to 1cm at 35,000 km altitude. We've prevented four potential satellite collisions this year.",
+  
+  "Vaccine development historically took a decade. Synvra's protein folding AI simulated 3.7 million molecular interactions daily. We identified viable candidates in 3 months. This is the future of drug discovery.",
+  
+  "Concert acoustics varied wildly across venues. Synvra's adaptive sound system uses 1,500 real-time acoustic measurements to adjust each speaker individually. Every seat now has perfect audio. Artists are amazed.",
+  
+  "Earthquake prediction was considered impossible. Synvra's deep-earth sensing network proved everyone wrong. We now provide 30-minute warnings with 89% accuracy. Emergency services call it a game-changer.",
+  
+  "Manufacturing custom prosthetics took months. Synvra's AI-driven 3D printing system designs and produces perfect fits in 48 hours. The cost dropped 94%, while patient satisfaction hit 100%."
 ];
 
 // Generate 600 case studies
