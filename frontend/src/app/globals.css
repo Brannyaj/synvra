@@ -3,22 +3,29 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
   --input-text: #1f2937;
   --input-placeholder: #9ca3af;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
   }
 }
 
 @layer base {
   body {
-    @apply bg-background text-foreground font-sans;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #0a192f;
+    color: #ffffff;
+    @apply font-sans;
   }
 
   input[type="text"],
@@ -47,10 +54,14 @@
 }
 
 @layer utilities {
-  .bg-background {
-    background-color: var(--background);
+  .gradient-text {
+    background: linear-gradient(45deg, #60a5fa, #3b82f6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
-  .text-foreground {
-    color: var(--foreground);
+
+  .hero-gradient {
+    background: radial-gradient(circle at center, rgba(59, 130, 246, 0.15), transparent 60%);
   }
 }
