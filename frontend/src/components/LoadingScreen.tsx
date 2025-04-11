@@ -23,80 +23,23 @@ export default function LoadingScreen() {
     };
   }, [isLoading]);
 
-  // Create array for the 8 segments in a star pattern
-  const positions = [
+  const segments = [
     // Top
-    { 
-      left: '50%',
-      top: '-8px',
-      transform: 'translateX(-50%)',
-      width: '2px',
-      height: '8px',
-      rotate: '0deg'
-    },
-    // Top Right (angled)
-    {
-      right: '-2px',
-      top: '2px',
-      width: '8px',
-      height: '2px',
-      rotate: '-45deg',
-      transformOrigin: '0 50%'
-    },
+    { transform: 'translate(-50%, -100%) rotate(0deg)', top: '0', left: '50%' },
+    // Top Right
+    { transform: 'translate(50%, -50%) rotate(45deg)', top: '0', right: '0' },
     // Right
-    {
-      right: '-8px',
-      top: '50%',
-      width: '8px',
-      height: '2px',
-      transform: 'translateY(-50%)',
-      rotate: '0deg'
-    },
-    // Bottom Right (angled)
-    {
-      right: '-2px',
-      bottom: '2px',
-      width: '8px',
-      height: '2px',
-      rotate: '45deg',
-      transformOrigin: '0 50%'
-    },
+    { transform: 'translate(100%, -50%) rotate(90deg)', top: '50%', right: '0' },
+    // Bottom Right
+    { transform: 'translate(50%, 50%) rotate(135deg)', bottom: '0', right: '0' },
     // Bottom
-    {
-      left: '50%',
-      bottom: '-8px',
-      transform: 'translateX(-50%)',
-      width: '2px',
-      height: '8px',
-      rotate: '0deg'
-    },
-    // Bottom Left (angled)
-    {
-      left: '-2px',
-      bottom: '2px',
-      width: '8px',
-      height: '2px',
-      rotate: '-45deg',
-      transformOrigin: '100% 50%'
-    },
+    { transform: 'translate(-50%, 100%) rotate(180deg)', bottom: '0', left: '50%' },
+    // Bottom Left
+    { transform: 'translate(-50%, 50%) rotate(225deg)', bottom: '0', left: '0' },
     // Left
-    {
-      left: '-8px',
-      top: '50%',
-      width: '8px',
-      height: '2px',
-      transform: 'translateY(-50%)',
-      rotate: '0deg'
-    },
-    // Top Left (angled)
-    {
-      left: '-2px',
-      top: '2px',
-      width: '8px',
-      height: '2px',
-      rotate: '45deg',
-      transformOrigin: '100% 50%'
-    }
+    { transform: 'translate(-100%, -50%) rotate(270deg)', top: '50%', left: '0' },
+    // Top Left
+    { transform: 'translate(-50%, -50%) rotate(315deg)', top: '0', left: '0' }
   ];
 
   return (
@@ -107,14 +50,12 @@ export default function LoadingScreen() {
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#1a1d21]"
         >
-          <div className="relative w-16 h-16">
-            {positions.map((pos, index) => (
+          <div className="relative w-24 h-24">
+            {segments.map((segment, index) => (
               <motion.div
                 key={index}
-                className="absolute bg-[#00ffff]"
-                style={{
-                  ...pos,
-                }}
+                className="absolute w-4 h-1.5 bg-[#00ffff] origin-center"
+                style={segment}
                 animate={{
                   opacity: [0.2, 1, 0.2]
                 }}
@@ -127,11 +68,10 @@ export default function LoadingScreen() {
               />
             ))}
             
-            {/* "S" Logo */}
             <motion.div 
               className="absolute inset-0 flex items-center justify-center"
             >
-              <span className="text-3xl font-bold text-white font-mono">S</span>
+              <span className="text-3xl font-bold text-white">S</span>
             </motion.div>
           </div>
         </motion.div>
