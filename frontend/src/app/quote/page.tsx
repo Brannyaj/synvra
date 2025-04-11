@@ -281,11 +281,18 @@ export default function QuotePage() {
                     onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                   >
                     <option value="not-specified">Not Specified</option>
-                    <option value="less-than-10k">Less than $10,000</option>
+                    <option value="5k-10k">$5,000 - $10,000</option>
                     <option value="10k-25k">$10,000 - $25,000</option>
                     <option value="25k-50k">$25,000 - $50,000</option>
                     <option value="50k-100k">$50,000 - $100,000</option>
-                    <option value="more-than-100k">More than $100,000</option>
+                    <option value="100k-250k">$100,000 - $250,000</option>
+                    <option value="250k-500k">$250,000 - $500,000</option>
+                    <option value="500k-1m">$500,000 - $1 million</option>
+                    <option value="1m-5m">$1 million - $5 million</option>
+                    <option value="5m-10m">$5 million - $10 million</option>
+                    <option value="10m-50m">$10 million - $50 million</option>
+                    <option value="50m-100m">$50 million - $100 million</option>
+                    <option value="more-than-100m">More than $100 million</option>
                   </select>
                 </div>
 
