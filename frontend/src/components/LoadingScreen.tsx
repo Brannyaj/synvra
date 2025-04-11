@@ -7,12 +7,22 @@ export default function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Prevent scrolling while loading
+    if (isLoading) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 10000); // 10 seconds
 
-    return () => clearTimeout(timer);
-  }, []);
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isLoading]);
 
   // Create an array of 4 dots for each side
   const dots = Array.from({ length: 4 });
@@ -23,14 +33,14 @@ export default function LoadingScreen() {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#1a1d21]"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#1a1d21]"
         >
           <div className="relative w-20 h-20">
             {/* Top dots */}
             {dots.map((_, index) => (
               <motion.div
                 key={`top-${index}`}
-                className="absolute w-2.5 h-1.5 bg-[#00ffff]"
+                className="absolute w-2.5 h-1.5 bg-blue-500"
                 style={{
                   left: '50%',
                   top: 0,
@@ -52,7 +62,7 @@ export default function LoadingScreen() {
             {dots.map((_, index) => (
               <motion.div
                 key={`bottom-${index}`}
-                className="absolute w-2.5 h-1.5 bg-[#00ffff]"
+                className="absolute w-2.5 h-1.5 bg-blue-500"
                 style={{
                   left: '50%',
                   bottom: 0,
@@ -74,7 +84,7 @@ export default function LoadingScreen() {
             {dots.map((_, index) => (
               <motion.div
                 key={`left-${index}`}
-                className="absolute w-1.5 h-2.5 bg-[#00ffff]"
+                className="absolute w-1.5 h-2.5 bg-blue-500"
                 style={{
                   left: 0,
                   top: '50%',
@@ -96,7 +106,7 @@ export default function LoadingScreen() {
             {dots.map((_, index) => (
               <motion.div
                 key={`right-${index}`}
-                className="absolute w-1.5 h-2.5 bg-[#00ffff]"
+                className="absolute w-1.5 h-2.5 bg-blue-500"
                 style={{
                   right: 0,
                   top: '50%',
@@ -121,7 +131,7 @@ export default function LoadingScreen() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             >
-              <span className="text-2xl font-bold text-[#00ffff] font-mono">S</span>
+              <span className="text-2xl font-bold text-blue-500 font-mono">S</span>
             </motion.div>
           </div>
         </motion.div>
