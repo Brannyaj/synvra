@@ -4,7 +4,7 @@ import i18next from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import resourcesToBackend from 'i18next-resources-to-backend'
 import LanguageDetector from 'i18next-browser-languagedetector'
-import { getOptions } from './settings'
+import { getOptions, languages } from './settings'
 
 i18next
   .use(initReactI18next)
@@ -14,9 +14,10 @@ i18next
   }))
   .init({
     ...getOptions(),
+    supportedLngs: languages,
     detection: {
-      order: ['cookie', 'localStorage', 'navigator', 'htmlTag'],
-      caches: ['cookie', 'localStorage']
+      order: ['path', 'htmlTag'],
+      lookupFromPathIndex: 0
     }
   })
 

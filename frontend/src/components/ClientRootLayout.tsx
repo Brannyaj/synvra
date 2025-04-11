@@ -2,6 +2,7 @@
 
 import { dir } from 'i18next';
 import { useEffect } from 'react';
+import i18next from '../../app/i18n/client';
 import { useTranslation } from 'react-i18next';
 
 interface ClientRootLayoutProps {
