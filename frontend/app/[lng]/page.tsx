@@ -1,5 +1,9 @@
+'use client';
+
 import { languages } from '../i18n/settings'
-import { useTranslation } from 'next-i18next'
+import { useEffect } from 'react';
+import i18next from '../i18n/client';
+import { useTranslation } from 'react-i18next';
 import ClientLayout from '@/components/ClientLayout'
 
 export async function generateStaticParams() {
@@ -12,6 +16,10 @@ export default function Page({
   params: { lng: string }
 }) {
   const { t } = useTranslation()
+
+  useEffect(() => {
+    i18next.changeLanguage(lng);
+  }, [lng]);
 
   return (
     <ClientLayout lng={lng}>
