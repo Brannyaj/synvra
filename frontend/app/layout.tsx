@@ -1,7 +1,5 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { dir } from 'i18next'
-import { languages } from './i18n/settings'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -10,11 +8,7 @@ export const metadata = {
   description: 'Digital Solutions',
 }
 
-export async function generateStaticParams() {
-  return languages.map((lng) => ({ lng }))
-}
-
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
