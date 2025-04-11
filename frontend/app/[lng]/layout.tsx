@@ -9,7 +9,7 @@ export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }))
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params: {
     lng
@@ -34,7 +34,9 @@ export default function RootLayout({
         <title>Synvra</title>
       </head>
       <body>
-        {children}
+        <div lang={lng}>
+          {children}
+        </div>
       </body>
     </html>
   )
