@@ -15,7 +15,7 @@ export default function LoadingScreen() {
 
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 10000);
+    }, 5000); // 5 seconds
 
     return () => {
       clearTimeout(timer);
@@ -54,7 +54,7 @@ export default function LoadingScreen() {
             {segments.map((segment, index) => (
               <motion.div
                 key={index}
-                className="absolute w-4 h-1.5 bg-[#00ffff] origin-center"
+                className="absolute w-4 h-1.5 bg-blue-500 origin-center"
                 style={segment}
                 animate={{
                   opacity: [0.2, 1, 0.2]
