@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Synvra - Software Development & Technology Solutions",
-  description: "Creating innovative digital solutions that help businesses thrive in the modern world.",
+  title: "Synvra - Digital Excellence",
+  description: "Transforming ideas into digital excellence with cutting-edge software solutions.",
 };
 
 export default function RootLayout({
@@ -15,8 +15,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className="dark">
+      <body className={`${inter.className} bg-black text-white min-h-screen`}>
+        {children}
+      </body>
     </html>
   );
 }
