@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 import { Redis } from '@upstash/redis';
 
+// Make route dynamic
+export const dynamic = 'force-dynamic';
+
 // Initialize Redis client
 const redis = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
   ? new Redis({
