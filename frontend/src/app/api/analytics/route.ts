@@ -3,13 +3,20 @@ import { headers } from 'next/headers';
 import { Redis } from '@upstash/redis';
 
 // Initialize Redis client
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL || '',
-  token: process.env.UPSTASH_REDIS_REST_TOKEN || ''
-});
+const redis = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
+  ? new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN
+    })
+  : null;
 
 export async function POST(request: Request) {
   try {
+    if (!redis) {
+      console.warn('Redis not configured - skipping analytics');
+      return NextResponse.json({ success: true, message: 'Analytics disabled' });
+    }
+
     const headersList = headers();
     const date = new Date();
     const dayKey = `visits:${date.toISOString().split('T')[0]}`;
@@ -24,8 +31,11 @@ export async function POST(request: Request) {
     await redis.expire(pathKey, 60 * 60 * 24 * 365);
 
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Analytics error:', error);
-    return NextResponse.json({ success: false });
+    return NextResponse.json({ 
+      success: false, 
+      error: error?.message || 'Unknown error' 
+    });
   }
 } 
