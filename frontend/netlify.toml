@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  publish = "out"
+  publish = ".next"
   base = "frontend"
 
 [context.production]
@@ -9,17 +9,30 @@
 [context.development]
   command = "npm run build"
 
+[build.environment]
+  NEXT_PUBLIC_API_URL = "https://synvra.com"
+  NODE_VERSION = "18"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
 [[redirects]]
-  from = "/*"
-  to = "/404.html"
-  status = 404
+  from = "www.synvra.com/*"
+  to = "https://synvra.com/:splat"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 200
-
-[build.environment]
-  NEXT_PUBLIC_API_URL = "https://dev.synvra.com"
-  NODE_VERSION = "18"
-  NEXT_TELEMETRY_DISABLED = "1" 
+  status = 200 
