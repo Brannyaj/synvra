@@ -1,0 +1,35 @@
+# Allow Google crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Mobile
+Allow: /
+
+# Block other crawlers
+User-agent: *
+Disallow: /
+Allow: /$
+Allow: /about$
+Allow: /contact$
+Allow: /services$
+Allow: /work$
+
+# Block common scraping tools
+User-agent: HTTrack
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: wget
+Disallow: /
+
+User-agent: curl
+Disallow: /
+
+# Block archive.org
+User-agent: ia_archiver
+Disallow: / 
