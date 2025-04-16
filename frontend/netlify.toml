@@ -1,7 +1,7 @@
 [build]
+  base = "frontend"
   command = "npm run build"
   publish = ".next"
-  base = "frontend"
 
 [context.production]
   command = "npm run build"
@@ -11,7 +11,8 @@
 
 [build.environment]
   NEXT_PUBLIC_API_URL = "https://synvra.com"
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
+  NPM_VERSION = "10"
   NEXT_TELEMETRY_DISABLED = "1"
   NEXT_SHARP_PATH = "/tmp/node_modules/sharp"
 
