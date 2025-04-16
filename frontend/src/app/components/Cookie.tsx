@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 declare global {
   interface Window {
     gtag: (...args: any[]) => void;
+    updateAnalyticsConsent?: (granted: boolean) => void;
   }
 }
 
@@ -12,27 +13,52 @@ export default function Cookie() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    // Track visit (cookie-less analytics)
-    fetch('/api/analytics', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).catch(console.error);
+    // Track visit (cookie-less analytics) with retry
+    const trackVisit = async (retries = 3) => {
+      try {
+        const response = await fetch('/api/analytics', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Analytics request failed with status ${response.status}`);
+        }
+        
+        const data = await response.json();
+        if (!data.success) {
+          throw new Error('Analytics request was not successful');
+        }
+      } catch (error) {
+        console.warn('Analytics error:', error);
+        if (retries > 0) {
+          // Wait for 1 second before retrying
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          return trackVisit(retries - 1);
+        }
+      }
+    };
+
+    trackVisit();
 
     // Check if user has already seen the notice
     const hasSeenNotice = localStorage.getItem('hasSeenNotice');
+    const cookieConsent = localStorage.getItem('cookieConsent');
+    
+    if (cookieConsent === 'accepted') {
+      enableAnalytics();
+    }
+    
     if (!hasSeenNotice) {
       setShowBanner(true);
     }
   }, []);
 
   const enableAnalytics = () => {
-    // Update Google Analytics consent
-    window.gtag?.('consent', 'update', {
-      'analytics_storage': 'granted',
-      'ad_storage': 'granted'
-    });
+    // Update Google Analytics consent using the global function
+    window.updateAnalyticsConsent?.(true);
     console.log('Analytics enabled');
   };
 
@@ -45,11 +71,8 @@ export default function Cookie() {
   const declineCookies = () => {
     localStorage.setItem('cookieConsent', 'declined');
     setShowBanner(false);
-    // Ensure analytics remain disabled
-    window.gtag?.('consent', 'update', {
-      'analytics_storage': 'denied',
-      'ad_storage': 'denied'
-    });
+    // Ensure analytics remain disabled using the global function
+    window.updateAnalyticsConsent?.(false);
     console.log('Cookies declined - analytics disabled');
   };
 
