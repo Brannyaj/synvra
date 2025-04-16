@@ -18,15 +18,6 @@ export function QuoteFormProvider({ children }: QuoteFormProviderProps) {
   const [showQuoteForm, setShowQuoteForm] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  // Handle hydration
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
-
   const handleSetShowQuoteForm = useCallback((show: boolean) => {
     console.log('Setting quote form visibility to:', show);
     setShowQuoteForm(show);
@@ -36,6 +27,15 @@ export function QuoteFormProvider({ children }: QuoteFormProviderProps) {
     console.log('Closing quote form');
     setShowQuoteForm(false);
   }, []);
+
+  // Handle hydration
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   const value = {
     showQuoteForm,
