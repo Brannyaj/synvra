@@ -4,8 +4,8 @@ import { headers } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
 
-// Initialize Redis client only if configuration is available
-const redis = process.env.UPSTASH_REDIS_REST_URL?.startsWith('https://') && process.env.UPSTASH_REDIS_REST_TOKEN
+// Initialize Redis client with the new configuration
+const redis = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
   ? new Redis({
       url: process.env.UPSTASH_REDIS_REST_URL,
       token: process.env.UPSTASH_REDIS_REST_TOKEN
@@ -18,7 +18,7 @@ export async function GET(request: Request) {
       console.warn('Redis not configured or invalid URL - skipping analytics stats');
       return NextResponse.json({ 
         success: true, 
-        message: 'Analytics disabled',
+        message: 'Analytics temporarily disabled',
         stats: {
           totalVisits: 0,
           pathStats: []
