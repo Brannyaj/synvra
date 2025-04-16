@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode, useCallback } from 'react';
+import { createContext, useContext, useState, ReactNode, useCallback, useEffect } from 'react';
 import QuoteForm from './QuoteForm';
 
 interface QuoteFormContextType {
@@ -8,7 +8,7 @@ interface QuoteFormContextType {
   setShowQuoteForm: (show: boolean) => void;
 }
 
-const QuoteFormContext = createContext<QuoteFormContextType | null>(null);
+const QuoteFormContext = createContext<QuoteFormContextType | undefined>(undefined);
 
 interface QuoteFormProviderProps {
   children: ReactNode;
@@ -16,6 +16,16 @@ interface QuoteFormProviderProps {
 
 export function QuoteFormProvider({ children }: QuoteFormProviderProps) {
   const [showQuoteForm, setShowQuoteForm] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  // Handle hydration
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   const handleSetShowQuoteForm = useCallback((show: boolean) => {
     console.log('Setting quote form visibility to:', show);
@@ -49,7 +59,7 @@ export function QuoteFormProvider({ children }: QuoteFormProviderProps) {
 
 export function useQuoteForm() {
   const context = useContext(QuoteFormContext);
-  if (context === null) {
+  if (context === undefined) {
     throw new Error('useQuoteForm must be used within a QuoteFormProvider');
   }
   return context;
