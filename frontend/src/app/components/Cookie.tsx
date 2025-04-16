@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 declare global {
   interface Window {
@@ -43,15 +44,9 @@ export default function Cookie() {
 
     trackVisit();
 
-    // Check if user has already seen the notice
-    const hasSeenNotice = localStorage.getItem('hasSeenNotice');
-    const cookieConsent = localStorage.getItem('cookieConsent');
-    
-    if (cookieConsent === 'accepted') {
-      enableAnalytics();
-    }
-    
-    if (!hasSeenNotice) {
+    // Check if user has already made a choice
+    const consent = localStorage.getItem('cookie-consent');
+    if (!consent) {
       setShowBanner(true);
     }
   }, []);
@@ -63,54 +58,42 @@ export default function Cookie() {
   };
 
   const acceptCookies = () => {
-    localStorage.setItem('cookieConsent', 'accepted');
+    localStorage.setItem('cookie-consent', 'accepted');
     setShowBanner(false);
     enableAnalytics();
   };
 
   const declineCookies = () => {
-    localStorage.setItem('cookieConsent', 'declined');
+    localStorage.setItem('cookie-consent', 'declined');
     setShowBanner(false);
     // Ensure analytics remain disabled using the global function
     window.updateAnalyticsConsent?.(false);
     console.log('Cookies declined - analytics disabled');
   };
 
-  const acknowledgeBanner = () => {
-    localStorage.setItem('hasSeenNotice', 'true');
-    setShowBanner(false);
-  };
-
   if (!showBanner) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-[#0A0F1C] p-4 shadow-lg z-50">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="text-white text-sm flex-1">
-          <p>
-            We use cookies and analytics to improve your browsing experience and help us understand how you use our website. 
-            By continuing to browse, you agree to our use of these tools. 
-            View our <a href="/privacy-policy" className="underline hover:text-synvra-blue">Privacy Policy</a> for more information.
-          </p>
+    <div className="fixed bottom-0 left-0 right-0 bg-[#0A0F1C] border-t border-synvra-white/10 p-4 md:p-6 z-50">
+      <div className="container mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="text-synvra-gray-300 text-sm md:text-base">
+          We use cookies to improve your browsing experience and help us understand how you use our website.{' '}
+          <Link href="/cookies" className="text-synvra-blue hover:text-synvra-blue/80">
+            Learn more
+          </Link>
         </div>
         <div className="flex gap-4">
           <button
             onClick={declineCookies}
-            className="px-4 py-2 text-sm text-white hover:text-synvra-blue transition-colors"
+            className="px-4 py-2 text-sm text-synvra-gray-300 hover:text-synvra-white transition-colors"
           >
             Decline
           </button>
           <button
             onClick={acceptCookies}
-            className="px-4 py-2 text-sm bg-synvra-blue text-white rounded hover:bg-opacity-90 transition-colors"
+            className="px-4 py-2 text-sm bg-synvra-blue text-white rounded hover:bg-synvra-blue/90 transition-colors"
           >
             Accept
-          </button>
-          <button
-            onClick={acknowledgeBanner}
-            className="px-4 py-2 text-sm bg-synvra-blue text-white rounded hover:bg-opacity-90 transition-colors"
-          >
-            Got it
           </button>
         </div>
       </div>
