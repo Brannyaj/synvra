@@ -5,8 +5,8 @@ import { Redis } from '@upstash/redis';
 // Make route dynamic
 export const dynamic = 'force-dynamic';
 
-// Initialize Redis client
-const redis = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
+// Initialize Redis client only if configuration is available
+const redis = process.env.UPSTASH_REDIS_REST_URL?.startsWith('https://') && process.env.UPSTASH_REDIS_REST_TOKEN
   ? new Redis({
       url: process.env.UPSTASH_REDIS_REST_URL,
       token: process.env.UPSTASH_REDIS_REST_TOKEN
@@ -16,7 +16,7 @@ const redis = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_RE
 export async function POST(request: Request) {
   try {
     if (!redis) {
-      console.warn('Redis not configured - skipping analytics');
+      console.warn('Redis not configured or invalid URL - skipping analytics');
       return NextResponse.json({ success: true, message: 'Analytics disabled' });
     }
 
