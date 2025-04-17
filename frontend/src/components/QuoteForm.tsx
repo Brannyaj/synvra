@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
-import { useQuoteForm } from './QuoteFormProvider';
+import { useState } from 'react';
 
 interface QuoteFormProps {
   onClose: () => void;
@@ -24,7 +23,7 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus('submitting');
     setErrorMessage('');
@@ -46,33 +45,31 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
 
       setStatus('success');
       setFormData(initialFormData);
-
-      // Close the form after 2 seconds on success
       setTimeout(onClose, 2000);
     } catch (error) {
       setStatus('error');
       setErrorMessage(error instanceof Error ? error.message : 'Failed to send quote request');
     }
-  }, [formData, onClose]);
+  }
 
-  const handleChange = useCallback((
+  function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
+  ) {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value,
     }));
-  }, []);
+  }
 
-  const handleServiceToggle = useCallback((service: string) => {
+  function handleServiceToggle(service: string) {
     setFormData(prev => ({
       ...prev,
       services: prev.services.includes(service)
         ? prev.services.filter(s => s !== service)
         : [...prev.services, service],
     }));
-  }, []);
+  }
 
   const services = [
     'Web Development',
