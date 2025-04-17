@@ -12,7 +12,16 @@ const nextConfig = {
     ]
   },
   trailingSlash: true,
-  distDir: 'out'
+  distDir: 'out',
+  // Ensure static files are copied
+  async rewrites() {
+    return [
+      {
+        source: '/zoho-domain-verification.html',
+        destination: '/zoho-domain-verification.html',
+      },
+    ];
+  },
 }
 
 module.exports = nextConfig
