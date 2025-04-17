@@ -6,8 +6,13 @@ const nextConfig = {
     domains: ['synvra.com'],
     unoptimized: true,
   },
+  basePath: '',
+  assetPrefix: '',
   distDir: '.next',
-  trailingSlash: true
+  trailingSlash: true,
+  env: {
+    NEXT_PUBLIC_URL: 'https://synvra.com'
+  }
 }
 
 module.exports = nextConfig

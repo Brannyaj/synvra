@@ -8,6 +8,7 @@
   NODE_VERSION = "18"
   NPM_VERSION = "10"
   NEXT_TELEMETRY_DISABLED = "1"
+  NEXT_PUBLIC_URL = "https://synvra.com"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
@@ -18,4 +19,9 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "frame-ancestors 'none'" 
+    Content-Security-Policy = "frame-ancestors 'none'"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200 
