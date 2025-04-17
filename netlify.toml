@@ -13,12 +13,23 @@
   package = "@netlify/plugin-nextjs"
 
 [[headers]]
+  for = "/zohoverify/*"
+  [headers.values]
+    Content-Type = "text/plain"
+    Cache-Control = "no-store"
+
+[[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://synvra.com;"
+
+[[redirects]]
+  from = "/zohoverify/*"
+  to = "/zohoverify/:splat"
+  status = 200
 
 [[redirects]]
   from = "/*"
