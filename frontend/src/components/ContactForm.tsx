@@ -19,7 +19,7 @@ export default function ContactForm() {
     setErrorMessage('');
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('/.netlify/functions/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -145,15 +145,16 @@ export default function ContactForm() {
           onChange={handleChange}
           rows={6}
           className="w-full px-4 py-2 bg-synvra-black/50 border border-synvra-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-synvra-blue text-white resize-none"
-          placeholder="Tell us about your project or inquiry"
+          placeholder="How can we help you?"
         />
       </div>
 
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className={`w-full px-8 py-4 bg-synvra-blue text-white rounded-lg font-medium transition-all duration-200
-          ${status === 'submitting' ? 'opacity-50 cursor-not-allowed' : 'hover:bg-opacity-90'}`}
+        className={`w-full button-primary py-3 ${
+          status === 'submitting' ? 'opacity-50 cursor-not-allowed' : ''
+        }`}
       >
         {status === 'submitting' ? 'Sending...' : 'Send Message'}
       </button>
