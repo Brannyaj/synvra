@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { QuoteFormProvider } from './QuoteFormProvider';
 import dynamic from 'next/dynamic';
 
@@ -17,11 +17,21 @@ interface ClientLayoutProps {
 }
 
 export default function ClientLayout({ children }: ClientLayoutProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <QuoteFormProvider>
       {children}
-      <ChatButton />
-      <Cookie />
+      {mounted && (
+        <>
+          <ChatButton />
+          <Cookie />
+        </>
+      )}
     </QuoteFormProvider>
   );
 } 
