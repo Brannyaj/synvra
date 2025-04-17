@@ -1,7 +1,11 @@
 'use client';
 
 import { createContext, useContext, useState, ReactNode, useCallback, useEffect } from 'react';
-import QuoteForm from './QuoteForm';
+import dynamic from 'next/dynamic';
+
+const QuoteForm = dynamic(() => import('./QuoteForm'), {
+  ssr: false,
+});
 
 interface QuoteFormContextType {
   showQuoteForm: boolean;
@@ -18,32 +22,28 @@ export function QuoteFormProvider({ children }: QuoteFormProviderProps) {
   const [showQuoteForm, setShowQuoteForm] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  const handleSetShowQuoteForm = useCallback((show: boolean) => {
-    console.log('Setting quote form visibility to:', show);
-    setShowQuoteForm(show);
-  }, []);
-
-  const handleClose = useCallback(() => {
-    console.log('Closing quote form');
-    setShowQuoteForm(false);
-  }, []);
-
-  // Handle hydration
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  const handleSetShowQuoteForm = useCallback((show: boolean) => {
+    if (mounted) {
+      setShowQuoteForm(show);
+    }
+  }, [mounted]);
+
+  const handleClose = useCallback(() => {
+    if (mounted) {
+      setShowQuoteForm(false);
+    }
+  }, [mounted]);
+
   if (!mounted) {
-    return null;
+    return <>{children}</>;
   }
 
-  const value = {
-    showQuoteForm,
-    setShowQuoteForm: handleSetShowQuoteForm
-  };
-
   return (
-    <QuoteFormContext.Provider value={value}>
+    <QuoteFormContext.Provider value={{ showQuoteForm, setShowQuoteForm: handleSetShowQuoteForm }}>
       {children}
       {showQuoteForm && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center">
