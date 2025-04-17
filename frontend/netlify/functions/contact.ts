@@ -9,6 +9,8 @@ const emailTemplates = {
   WELCOME_EMAIL: parseInt(process.env.BREVO_WELCOME_TEMPLATE_ID || '2')
 };
 
+const COMPANY_EMAIL = 'raphael@synvra.com'; // Update this to your Zoho email
+
 const sendTemplateEmail = async ({
   templateId,
   to,
@@ -23,6 +25,12 @@ const sendTemplateEmail = async ({
     sendSmtpEmail.templateId = templateId;
     sendSmtpEmail.to = [to];
     sendSmtpEmail.params = params;
+
+    // Set the sender email
+    sendSmtpEmail.sender = {
+      name: 'Synvra',
+      email: COMPANY_EMAIL
+    };
 
     const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
     return { success: true, data };
@@ -65,7 +73,7 @@ export const handler: Handler = async (event) => {
     // Send notification to company
     await sendTemplateEmail({
       templateId: emailTemplates.WELCOME_EMAIL,
-      to: { email: 'support@synvra.com', name: 'Synvra Support' },
+      to: { email: COMPANY_EMAIL, name: 'Synvra Team' },
       params: {
         name,
         email,
