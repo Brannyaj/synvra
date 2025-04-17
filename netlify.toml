@@ -1,14 +1,13 @@
 [build]
   base = "frontend"
   command = "npm run build"
-  publish = ".next"
+  publish = "out"
 
 [build.environment]
   NEXT_PUBLIC_API_URL = "https://synvra.com"
   NODE_VERSION = "18"
   NPM_VERSION = "10"
   NEXT_TELEMETRY_DISABLED = "1"
-  NEXT_PUBLIC_URL = "https://synvra.com"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
@@ -19,7 +18,7 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "frame-ancestors 'none'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://synvra.com;"
 
 [[redirects]]
   from = "/*"
