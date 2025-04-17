@@ -6,9 +6,8 @@ const nextConfig = {
     domains: ['synvra.com'],
     unoptimized: true,
   },
-  distDir: 'out',
-  trailingSlash: true,
-  skipTrailingSlashRedirect: true
+  distDir: '.next',
+  trailingSlash: true
 }
 
 module.exports = nextConfig

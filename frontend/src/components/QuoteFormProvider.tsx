@@ -19,21 +19,30 @@ const QuoteFormContext = createContext<QuoteFormContextType>({
 });
 
 export function QuoteFormProvider({ children }: { children: ReactNode }) {
-  const [showQuoteForm, setShowQuoteForm] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const [state, setState] = useState({
+    showQuoteForm: false,
+    isMounted: false
+  });
 
   useEffect(() => {
-    setIsMounted(true);
+    setState(prev => ({ ...prev, isMounted: true }));
   }, []);
 
-  if (!isMounted) {
-    return null;
+  const setShowQuoteForm = (show: boolean) => {
+    setState(prev => ({ ...prev, showQuoteForm: show }));
+  };
+
+  if (!state.isMounted) {
+    return <>{children}</>;
   }
 
   return (
-    <QuoteFormContext.Provider value={{ showQuoteForm, setShowQuoteForm }}>
+    <QuoteFormContext.Provider value={{ 
+      showQuoteForm: state.showQuoteForm, 
+      setShowQuoteForm 
+    }}>
       {children}
-      {showQuoteForm && (
+      {state.showQuoteForm && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center">
           <div 
             className="absolute inset-0 bg-black/50 backdrop-blur-sm" 
