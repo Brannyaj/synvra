@@ -1,29 +1,30 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useQuoteForm } from './QuoteFormProvider';
 
 interface QuoteFormProps {
   onClose: () => void;
 }
 
-export default function QuoteForm({ onClose }: QuoteFormProps) {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    phone: '',
-    projectType: '',
-    budget: '',
-    timeline: '',
-    description: '',
-    services: [] as string[],
-  });
+const initialFormData = {
+  name: '',
+  email: '',
+  company: '',
+  phone: '',
+  projectType: '',
+  budget: '',
+  timeline: '',
+  description: '',
+  services: [] as string[],
+};
 
+export default function QuoteForm({ onClose }: QuoteFormProps) {
+  const [formData, setFormData] = useState(initialFormData);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
     setErrorMessage('');
@@ -44,30 +45,17 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
       }
 
       setStatus('success');
-      // Clear form after successful submission
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        phone: '',
-        projectType: '',
-        budget: '',
-        timeline: '',
-        description: '',
-        services: [],
-      });
+      setFormData(initialFormData);
 
       // Close the form after 2 seconds on success
-      setTimeout(() => {
-        onClose();
-      }, 2000);
+      setTimeout(onClose, 2000);
     } catch (error) {
       setStatus('error');
       setErrorMessage(error instanceof Error ? error.message : 'Failed to send quote request');
     }
-  };
+  }, [formData, onClose]);
 
-  const handleChange = (
+  const handleChange = useCallback((
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
@@ -75,16 +63,16 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
       ...prev,
       [name]: value,
     }));
-  };
+  }, []);
 
-  const handleServiceToggle = (service: string) => {
+  const handleServiceToggle = useCallback((service: string) => {
     setFormData(prev => ({
       ...prev,
       services: prev.services.includes(service)
         ? prev.services.filter(s => s !== service)
         : [...prev.services, service],
     }));
-  };
+  }, []);
 
   const services = [
     'Web Development',

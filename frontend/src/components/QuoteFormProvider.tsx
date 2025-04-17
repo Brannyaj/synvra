@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 
 const QuoteForm = dynamic(() => import('./QuoteForm'), {
   ssr: false,
+  loading: () => null,
 });
 
 interface QuoteFormContextType {
@@ -24,6 +25,7 @@ export function QuoteFormProvider({ children }: QuoteFormProviderProps) {
 
   useEffect(() => {
     setMounted(true);
+    return () => setMounted(false);
   }, []);
 
   const handleSetShowQuoteForm = useCallback((show: boolean) => {
@@ -38,14 +40,15 @@ export function QuoteFormProvider({ children }: QuoteFormProviderProps) {
     }
   }, [mounted]);
 
-  if (!mounted) {
-    return <>{children}</>;
-  }
+  const contextValue = {
+    showQuoteForm,
+    setShowQuoteForm: handleSetShowQuoteForm
+  };
 
   return (
-    <QuoteFormContext.Provider value={{ showQuoteForm, setShowQuoteForm: handleSetShowQuoteForm }}>
+    <QuoteFormContext.Provider value={contextValue}>
       {children}
-      {showQuoteForm && (
+      {mounted && showQuoteForm && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={handleClose} />
           <div className="relative z-[101] w-full max-w-4xl">
