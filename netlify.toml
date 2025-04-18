@@ -13,7 +13,7 @@
   package = "@netlify/plugin-nextjs"
 
 [[headers]]
-  for = "/zohoverify/*"
+  for = "/zoho-domain-verification.html"
   [headers.values]
     Content-Type = "text/plain"
     Cache-Control = "no-store"
