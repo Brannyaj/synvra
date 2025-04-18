@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { generateQuoteEmail, generateNotificationEmail } from '../../../lib/email-template';
+import { generateQuoteEmail, generateNotificationEmail } from '../../lib/email-template';
 import { NextResponse } from 'next/server';
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
