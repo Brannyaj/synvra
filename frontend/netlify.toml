@@ -1,7 +1,7 @@
 [build]
-  base = "frontend"
   command = "npm run build"
   publish = ".next"
+  functions = "netlify/functions"
 
 [context.production]
   command = "npm run build"
@@ -20,6 +20,10 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+[functions]
+node_bundler = "esbuild"
+external_node_modules = ["@node-rs/*"]
 
 [[headers]]
   for = "/*"
