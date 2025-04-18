@@ -1,6 +1,6 @@
 [build]
   command = "npm install && npm run build"
-  publish = ".next"
+  publish = "out"
   functions = "netlify/functions"
 
 [context.production]
@@ -49,6 +49,5 @@
 
 [[redirects]]
   from = "/*"
-  to = "/.netlify/functions/nextjs-server"
-  status = 200
-  force = true 
+  to = "/index.html"
+  status = 200 

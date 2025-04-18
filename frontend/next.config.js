@@ -10,9 +10,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   // Required for Netlify
-  target: 'server',
-  // Disable static exports
-  output: 'standalone',
+  output: 'export',
 }
 
 module.exports = nextConfig
