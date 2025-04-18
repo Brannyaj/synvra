@@ -7,8 +7,6 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  // Required for Netlify
-  output: 'export',
 }
 
 module.exports = nextConfig
