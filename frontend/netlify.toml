@@ -1,13 +1,13 @@
 [build]
-  command = "cd frontend && npm install && npm run build"
-  publish = "frontend/.next"
-  functions = "frontend/netlify/functions"
+  command = "npm install && npm run build"
+  publish = ".next"
+  functions = "netlify/functions"
 
 [context.production]
-  command = "cd frontend && npm install && npm run build"
+  command = "npm install && npm run build"
 
 [context.development]
-  command = "cd frontend && npm install && npm run build"
+  command = "npm install && npm run build"
 
 [build.environment]
   NEXT_PUBLIC_API_URL = "https://synvra.com"
