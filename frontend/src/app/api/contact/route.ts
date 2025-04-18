@@ -10,14 +10,15 @@ export async function POST(request: Request) {
 
     // Send confirmation email to user
     await resend.emails.send({
-      from: 'Synvra <support@synvra.com>',
+      from: 'Synvra <no-reply@synvra.com>',
       to: email,
+      cc: ['support@synvra.com'],
       ...generateContactEmail({ name, message })
     });
 
     // Send notification email to support
     await resend.emails.send({
-      from: 'Synvra <support@synvra.com>',
+      from: 'Synvra <no-reply@synvra.com>',
       to: 'support@synvra.com',
       ...generateNotificationEmail({ name, email, message, type: 'contact' })
     });
