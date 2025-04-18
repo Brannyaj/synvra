@@ -17,7 +17,7 @@ export default function Cookie() {
     // Track visit (cookie-less analytics) with retry
     const trackVisit = async (retries = 3) => {
       try {
-        const response = await fetch('/api/analytics', {
+        const response = await fetch('/api/analytics/stats', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

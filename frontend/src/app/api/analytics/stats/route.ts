@@ -9,4 +9,11 @@ export async function GET() {
       pathStats: []
     }
   });
+}
+
+export async function POST() {
+  return NextResponse.json({ 
+    success: true, 
+    message: 'Visit tracked successfully'
+  });
 } 
