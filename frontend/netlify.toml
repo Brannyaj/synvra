@@ -24,6 +24,7 @@
 [functions]
   node_bundler = "esbuild"
   external_node_modules = ["@node-rs/*"]
+  included_files = ["next.config.js"]
 
 [[headers]]
   for = "/*"
@@ -48,5 +49,6 @@
 
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200 
+  to = "/.netlify/functions/nextjs-server"
+  status = 200
+  force = true 

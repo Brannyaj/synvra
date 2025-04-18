@@ -9,6 +9,10 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  // Required for Netlify
+  target: 'server',
+  // Disable static exports
+  output: 'standalone',
 }
 
 module.exports = nextConfig
