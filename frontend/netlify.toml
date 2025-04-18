@@ -1,13 +1,13 @@
 [build]
-  command = "npm run build"
-  publish = ".next"
-  functions = "netlify/functions"
+  command = "cd frontend && npm install && npm run build"
+  publish = "frontend/.next"
+  functions = "frontend/netlify/functions"
 
 [context.production]
-  command = "npm run build"
+  command = "cd frontend && npm install && npm run build"
 
 [context.development]
-  command = "npm run build"
+  command = "cd frontend && npm install && npm run build"
 
 [build.environment]
   NEXT_PUBLIC_API_URL = "https://synvra.com"
@@ -22,8 +22,8 @@
   package = "@netlify/plugin-nextjs"
 
 [functions]
-node_bundler = "esbuild"
-external_node_modules = ["@node-rs/*"]
+  node_bundler = "esbuild"
+  external_node_modules = ["@node-rs/*"]
 
 [[headers]]
   for = "/*"
