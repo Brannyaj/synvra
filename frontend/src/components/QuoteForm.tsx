@@ -37,6 +37,19 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
       return;
     }
 
+    // Validate description length
+    if (formData.description.length < 100) {
+      setStatus('error');
+      setErrorMessage('Project description must be at least 100 characters long');
+      return;
+    }
+
+    if (formData.description.length > 50000) {
+      setStatus('error');
+      setErrorMessage('Project description cannot exceed 50,000 characters');
+      return;
+    }
+
     try {
       const response = await fetch('/api/quote', {
         method: 'POST',
@@ -298,18 +311,23 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
 
         <div>
           <label htmlFor="description" className="block text-sm font-medium text-synvra-gray-300 mb-2">
-            Project Description *
+            Project Description * <span className="text-synvra-gray-400 text-xs">(min 100 characters)</span>
           </label>
           <textarea
             id="description"
             name="description"
             required
+            minLength={100}
+            maxLength={50000}
             value={formData.description}
             onChange={handleChange}
             rows={6}
             className="w-full px-4 py-2 bg-synvra-black/50 border border-synvra-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-synvra-blue text-white resize-none"
-            placeholder="Tell us about your project requirements and goals"
+            placeholder="Tell us about your project requirements and goals (minimum 100 characters)"
           />
+          <div className="mt-2 text-sm text-synvra-gray-400 flex justify-end">
+            {formData.description.length} / 50,000 characters
+          </div>
         </div>
 
         <button
