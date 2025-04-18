@@ -1,38 +1,38 @@
+import { Resend } from 'resend';
+import { generateContactEmail, generateNotificationEmail } from '../lib/email-template';
 import { NextResponse } from 'next/server';
-import { emailTemplates, sendTemplateEmail } from '../lib/brevo';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
     const { name, email, message } = await request.json();
 
     // Send confirmation email to user
-    await sendTemplateEmail({
-      templateId: emailTemplates.CONTACT_RESPONSE,
-      to: { email, name },
-      params: {
-        name,
-        message,
-        year: new Date().getFullYear()
-      }
+    await resend.emails.send({
+      from: 'Synvra <support@synvra.com>',
+      to: email,
+      ...generateContactEmail({ name, message })
     });
 
-    // Send notification to company
-    await sendTemplateEmail({
-      templateId: emailTemplates.WELCOME_EMAIL,
-      to: { email: 'support@synvra.com', name: 'Synvra Support' },
-      params: {
-        name,
-        email,
-        message,
-        year: new Date().getFullYear()
-      }
+    // Send notification email to support
+    await resend.emails.send({
+      from: 'Synvra <support@synvra.com>',
+      to: 'support@synvra.com',
+      ...generateNotificationEmail({ name, email, message, type: 'contact' })
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({
+      status: 'success',
+      message: 'Your message has been sent successfully!'
+    });
   } catch (error) {
     console.error('Error sending email:', error);
     return NextResponse.json(
-      { error: 'Failed to send email' },
+      {
+        status: 'error',
+        message: 'Failed to send message. Please try again later.'
+      },
       { status: 500 }
     );
   }

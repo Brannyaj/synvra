@@ -28,25 +28,39 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
     setStatus('submitting');
     setErrorMessage('');
 
+    // Validate required fields
+    if (!formData.name || !formData.email || !formData.projectType || 
+        !formData.budget || !formData.timeline || !formData.description ||
+        formData.services.length === 0) {
+      setStatus('error');
+      setErrorMessage('Please fill in all required fields');
+      return;
+    }
+
     try {
       const response = await fetch('/api/quote', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          services: formData.services
+        }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to send quote request');
+        const data = await response.json().catch(() => ({ message: 'Server error' }));
+        throw new Error(data.message || 'Failed to send quote request');
       }
 
+      const data = await response.json();
       setStatus('success');
       setFormData(initialFormData);
       setTimeout(onClose, 2000);
     } catch (error) {
+      console.error('Form submission error:', error);
       setStatus('error');
       setErrorMessage(error instanceof Error ? error.message : 'Failed to send quote request');
     }

@@ -1,7 +1,6 @@
 import { Resend } from 'resend';
-import { generateQuoteEmail, generateNotificationEmail } from '../lib/email-template';
+import { generateQuoteEmail, generateNotificationEmail } from '../../../lib/email-template';
 import { NextResponse } from 'next/server';
-import { headers } from 'next/headers';
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
@@ -71,31 +70,18 @@ ${description}
       })
     });
 
-    return new NextResponse(
-      JSON.stringify({
-        status: 'success',
-        message: 'Your quote request has been received successfully!'
-      }),
-      {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    return NextResponse.json({
+      status: 'success',
+      message: 'Your quote request has been received successfully!'
+    });
   } catch (error) {
     console.error('Error processing quote request:', error);
-    return new NextResponse(
-      JSON.stringify({
+    return NextResponse.json(
+      {
         status: 'error',
         message: 'Failed to submit quote request. Please try again later.'
-      }),
-      {
-        status: 500,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
+      },
+      { status: 500 }
     );
   }
 } 

@@ -1,3 +1,5 @@
+import { contactConfirmationTemplate, newContactNotificationTemplate } from './email-styles';
+
 export const emailTemplates = {
   // Contact Form Response Template
   contactResponse: (name: string, message: string) => `
@@ -289,4 +291,154 @@ export const emailTemplates = {
     </body>
     </html>
   `
-}; 
+};
+
+export const contactConfirmationEmail = ({ name, message }: { name: string; message: string }) => ({
+  subject: 'Thank you for contacting Synvra',
+  html: `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        .email-container {
+          max-width: 600px;
+          margin: 0 auto;
+          font-family: Arial, sans-serif;
+          line-height: 1.6;
+          color: #333333;
+        }
+        .header {
+          background-color: #0A0F1C;
+          padding: 30px;
+          text-align: center;
+        }
+        .logo {
+          max-width: 150px;
+          margin-bottom: 20px;
+        }
+        .content {
+          padding: 30px;
+          background-color: #ffffff;
+        }
+        .footer {
+          background-color: #f7f7f7;
+          padding: 20px;
+          text-align: center;
+          font-size: 12px;
+          color: #666666;
+        }
+        .button {
+          display: inline-block;
+          padding: 12px 24px;
+          background-color: #0A0F1C;
+          color: #ffffff;
+          text-decoration: none;
+          border-radius: 4px;
+          margin: 20px 0;
+        }
+        .social-links {
+          margin-top: 20px;
+        }
+        .social-links a {
+          margin: 0 10px;
+          color: #0A0F1C;
+          text-decoration: none;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="email-container">
+        <div class="header">
+          <img src="https://synvra.com/logo.png" alt="Synvra" class="logo">
+        </div>
+        <div class="content">
+          <h2>Thank you for contacting us, ${name}!</h2>
+          <p>We've received your message and appreciate you reaching out to us. Our team will review your inquiry and get back to you within 1-2 business days.</p>
+          <p>For your reference, here's what you sent us:</p>
+          <blockquote style="border-left: 3px solid #0A0F1C; padding-left: 15px; margin: 20px 0;">
+            ${message}
+          </blockquote>
+          <p>In the meantime, feel free to:</p>
+          <ul>
+            <li>Visit our <a href="https://synvra.com/portfolio" style="color: #0A0F1C;">portfolio</a></li>
+            <li>Check out our <a href="https://synvra.com/services" style="color: #0A0F1C;">services</a></li>
+            <li>Read about <a href="https://synvra.com/about" style="color: #0A0F1C;">our approach</a></li>
+          </ul>
+          <a href="https://synvra.com" class="button">Visit Our Website</a>
+        </div>
+        <div class="footer">
+          <p>© ${new Date().getFullYear()} Synvra. All rights reserved.</p>
+          <div class="social-links">
+            <a href="https://linkedin.com/company/synvra">LinkedIn</a>
+            <a href="https://twitter.com/synvra">Twitter</a>
+            <a href="https://instagram.com/synvra">Instagram</a>
+          </div>
+          <p style="margin-top: 20px;">
+            Synvra - Transforming Ideas into Digital Reality<br>
+            <small>This is an automated response. Please do not reply to this email.</small>
+          </p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `
+});
+
+export const newContactNotificationEmail = ({
+  name,
+  email,
+  message
+}: {
+  name: string;
+  email: string;
+  message: string;
+}) => ({
+  subject: 'New Contact Form Submission',
+  html: `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        .email-container {
+          max-width: 600px;
+          margin: 0 auto;
+          font-family: Arial, sans-serif;
+          line-height: 1.6;
+          color: #333333;
+        }
+        .header {
+          background-color: #0A0F1C;
+          padding: 20px;
+          text-align: center;
+          color: white;
+        }
+        .content {
+          padding: 30px;
+          background-color: #ffffff;
+        }
+        .message-box {
+          background-color: #f7f7f7;
+          padding: 20px;
+          border-radius: 4px;
+          margin: 20px 0;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="email-container">
+        <div class="header">
+          <h1>New Contact Form Submission</h1>
+        </div>
+        <div class="content">
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <div class="message-box">
+            <h3>Message:</h3>
+            <p>${message}</p>
+          </div>
+        </div>
+      </div>
+    </body>
+    </html>
+  `
+}); 
