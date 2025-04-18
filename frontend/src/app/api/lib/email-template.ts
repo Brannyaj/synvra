@@ -6,12 +6,12 @@ const baseEmailTemplate = (content: string) => `
     <title>Synvra</title>
     <style>
       body { 
-        font-family: 'Arial', sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         line-height: 1.6;
-        color: #1F2937;
+        color: #000000;
         margin: 0;
         padding: 0;
-        background-color: #f3f4f6;
+        background-color: #ffffff;
       }
       .container {
         max-width: 600px;
@@ -19,55 +19,50 @@ const baseEmailTemplate = (content: string) => `
         background-color: #ffffff;
       }
       .banner {
-        background-color: #0F172A;
-        padding: 40px 20px;
+        background-color: #0A0F1C;
+        padding: 30px;
         text-align: center;
       }
       .logo {
-        font-family: 'Arial', sans-serif;
-        color: #ffffff;
-        font-size: 48px;
-        font-weight: 800;
-        letter-spacing: 8px;
-        text-transform: uppercase;
-        margin: 0;
-        background: linear-gradient(135deg, #60A5FA, #3B82F6);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        position: relative;
-        display: inline-block;
-      }
-      .logo::after {
-        content: '';
-        position: absolute;
-        bottom: -8px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 60%;
-        height: 3px;
-        background: linear-gradient(90deg, transparent, #60A5FA, transparent);
+        color: #3B82F6;
+        font-size: 32px;
+        font-weight: bold;
+        letter-spacing: 2px;
       }
       .content {
-        padding: 40px 20px;
+        padding: 40px 30px;
         background-color: #ffffff;
       }
       .section {
         margin-bottom: 30px;
       }
+      h1 {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #000000;
+      }
+      p {
+        margin: 0 0 20px;
+        font-size: 16px;
+        line-height: 1.6;
+      }
       .steps {
-        background-color: #F0F9FF;
-        padding: 20px;
+        background-color: #F8FAFC;
+        padding: 25px;
         border-radius: 8px;
-        margin: 20px 0;
+        margin: 30px 0;
       }
       .step {
         display: flex;
         align-items: flex-start;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
+      }
+      .step:last-child {
+        margin-bottom: 0;
       }
       .step-number {
-        background-color: #0EA5E9;
+        background-color: #3B82F6;
         color: white;
         width: 24px;
         height: 24px;
@@ -75,120 +70,50 @@ const baseEmailTemplate = (content: string) => `
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-right: 12px;
+        margin-right: 15px;
+        font-size: 14px;
         flex-shrink: 0;
       }
+      .step-text {
+        font-size: 16px;
+        padding-top: 2px;
+      }
       .footer {
-        background-color: #0F172A;
-        color: #E2E8F0;
-        padding: 40px 20px;
-      }
-      .footer-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 40px;
-        max-width: 600px;
-        margin: 0 auto;
-      }
-      .footer-section {
-        margin-bottom: 30px;
-      }
-      .footer-company-info {
-        grid-column: span 2;
+        background-color: #0A0F1C;
+        color: #ffffff;
+        padding: 30px;
+        text-align: left;
       }
       .footer-heading {
         color: #ffffff;
-        font-size: 16px;
-        margin-bottom: 16px;
-        font-weight: 600;
+        font-size: 18px;
+        margin-bottom: 10px;
       }
       .footer-text {
-        color: #94A3B8;
+        color: #ffffff;
         font-size: 14px;
-        margin: 8px 0;
+        margin: 0 0 15px;
+        opacity: 0.9;
       }
-      .footer-links {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-      .footer-links li {
-        margin-bottom: 8px;
-      }
-      .footer-links a {
-        color: #94A3B8;
+      .footer-email {
+        color: #ffffff;
+        font-size: 14px;
         text-decoration: none;
-      }
-      .contact-item {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 12px;
-      }
-      .social-links {
-        display: flex;
-        gap: 16px;
-        margin-top: 20px;
-      }
-      .social-links a {
-        color: #E2E8F0;
-        text-decoration: none;
-      }
-      .copyright {
-        grid-column: span 2;
-        text-align: center;
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid #1E293B;
-        color: #64748B;
-        font-size: 12px;
       }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="banner">
-        <h1 class="logo">SYNVRA</h1>
+        <div class="logo">SYNVRA</div>
       </div>
       
       ${content}
 
       <div class="footer">
-        <div class="footer-grid">
-          <div class="footer-section footer-company-info">
-            <div class="footer-heading">Synvra</div>
-            <p class="footer-text">Creating innovative digital solutions that help businesses thrive in the modern world.</p>
-            <div class="contact-item">
-              <span class="footer-text">📧 support@synvra.com</span>
-            </div>
-          </div>
-
-          <div class="footer-section">
-            <div class="footer-heading">Solutions</div>
-            <ul class="footer-links">
-              <li><a href="https://synvra.com/services/web-development">Web Development</a></li>
-              <li><a href="https://synvra.com/services/mobile-apps">Mobile Apps</a></li>
-              <li><a href="https://synvra.com/services/cloud-solutions">Cloud Solutions</a></li>
-              <li><a href="https://synvra.com/services/ai-ml">AI & Machine Learning</a></li>
-              <li><a href="https://synvra.com/services/cybersecurity">Cybersecurity</a></li>
-            </ul>
-          </div>
-
-          <div class="footer-section">
-            <div class="footer-heading">Company</div>
-            <ul class="footer-links">
-              <li><a href="https://synvra.com/about">About Us</a></li>
-              <li><a href="https://synvra.com/work">Our Work</a></li>
-              <li><a href="https://synvra.com/services">Services</a></li>
-              <li><a href="https://synvra.com/contact">Contact</a></li>
-            </ul>
-          </div>
-
-          <div class="copyright">
-            ${new Date().getFullYear()} Synvra. All rights reserved.<br>
-            This is an automated message. Please do not reply directly to this email.
-          </div>
-        </div>
+        <div class="footer-heading">Synvra</div>
+        <p class="footer-text">Creating innovative digital solutions that help businesses thrive in the modern world.</p>
+        <a href="mailto:support@synvra.com" class="footer-email">📧 support@synvra.com</a>
       </div>
     </div>
   </body>
@@ -198,32 +123,27 @@ const baseEmailTemplate = (content: string) => `
 export const generateQuoteEmail = ({ name }: { name: string }) => {
   const content = `
     <div class="content">
-      <div class="section">
-        <h1 style="color: #0F172A; margin-bottom: 20px;">Quote Request Received</h1>
-        <p>Dear ${name},</p>
-        <p>Thank you for choosing Synvra. We've received your quote request and are excited to help bring your vision to life.</p>
-      </div>
+      <h1>Quote Request Received</h1>
+      <p>Dear ${name},</p>
+      <p>Thank you for choosing Synvra. We've received your quote request and are excited to help bring your vision to life.</p>
 
       <div class="steps">
-        <h2 style="color: #0F172A; margin-bottom: 15px;">Next Steps</h2>
+        <h2 style="color: #000000; margin: 0 0 20px; font-size: 20px;">Next Steps</h2>
         <div class="step">
           <div class="step-number">1</div>
-          <div>Our team will carefully review your requirements within 24 hours</div>
+          <div class="step-text">Our team will carefully review your requirements within 24 hours</div>
         </div>
         <div class="step">
           <div class="step-number">2</div>
-          <div>We'll prepare a detailed proposal tailored to your needs</div>
+          <div class="step-text">We'll prepare a detailed proposal tailored to your needs</div>
         </div>
         <div class="step">
           <div class="step-number">3</div>
-          <div>A dedicated team member will reach out to discuss your project in detail</div>
+          <div class="step-text">A dedicated team member will reach out to discuss your project in detail</div>
         </div>
       </div>
 
-      <div style="margin-top: 30px; color: #0F172A; font-weight: 500;">
-        Best regards,<br>
-        SYNVRA TEAM
-      </div>
+      <p style="margin-bottom: 0;">Best regards,<br>SYNVRA TEAM</p>
     </div>
   `;
 
@@ -236,23 +156,17 @@ export const generateQuoteEmail = ({ name }: { name: string }) => {
 export const generateContactEmail = ({ name, message }: { name: string; message: string }) => {
   const content = `
     <div class="content">
-      <div class="section">
-        <h1 style="color: #0F172A; margin-bottom: 20px;">Thank You for Contacting Us</h1>
-        <p>Dear ${name},</p>
-        <p>Thank you for reaching out to Synvra. We've received your message and appreciate you taking the time to contact us.</p>
-        
-        <div style="background-color: #F0F9FF; padding: 20px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #0F172A; margin-bottom: 10px;">Your Message:</h3>
-          <p style="color: #1F2937;">${message}</p>
-        </div>
-
-        <p>Our team will review your message and get back to you within 1-2 business days.</p>
+      <h1>Thank You for Contacting Us</h1>
+      <p>Dear ${name},</p>
+      <p>Thank you for reaching out to Synvra. We've received your message and appreciate you taking the time to contact us.</p>
+      
+      <div class="steps">
+        <h3 style="color: #000000; margin: 0 0 10px; font-size: 18px;">Your Message:</h3>
+        <p style="margin: 0;">${message}</p>
       </div>
 
-      <div style="margin-top: 30px; color: #0F172A; font-weight: 500;">
-        Best regards,<br>
-        SYNVRA TEAM
-      </div>
+      <p>Our team will review your message and get back to you within 1-2 business days.</p>
+      <p style="margin-bottom: 0;">Best regards,<br>SYNVRA TEAM</p>
     </div>
   `;
 
@@ -270,15 +184,13 @@ export const generateNotificationEmail = ({ name, email, message, type }: {
 }) => {
   const content = `
     <div class="content">
-      <div class="section">
-        <h1 style="color: #0F172A; margin-bottom: 20px;">New ${type === 'quote' ? 'Quote Request' : 'Contact Form'} Submission</h1>
-        
-        <div style="background-color: #F0F9FF; padding: 20px; border-radius: 8px; margin: 20px 0;">
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Message:</strong></p>
-          <p style="white-space: pre-wrap;">${message}</p>
-        </div>
+      <h1>New ${type === 'quote' ? 'Quote Request' : 'Contact Form'} Submission</h1>
+      
+      <div class="steps">
+        <p style="margin: 0 0 10px;"><strong>Name:</strong> ${name}</p>
+        <p style="margin: 0 0 10px;"><strong>Email:</strong> ${email}</p>
+        <p style="margin: 0 0 10px;"><strong>Message:</strong></p>
+        <p style="margin: 0; white-space: pre-wrap;">${message}</p>
       </div>
     </div>
   `;
