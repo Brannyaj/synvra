@@ -15,8 +15,10 @@
 [[headers]]
   for = "/zoho-domain-verification.html"
   [headers.values]
-    Content-Type = "text/plain"
-    Cache-Control = "no-store"
+    Content-Type = "text/plain; charset=utf-8"
+    Cache-Control = "no-cache"
+    X-Frame-Options = "ALLOW"
+    X-Content-Type-Options = "nosniff"
 
 [[headers]]
   for = "/*"
