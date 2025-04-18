@@ -4,8 +4,6 @@ const nextConfig = {
     unoptimized: true,
     domains: ['synvra.com'],
   },
-  // Copy files from public to out directory
-  distDir: 'out',
   typescript: {
     ignoreBuildErrors: true,
   },
