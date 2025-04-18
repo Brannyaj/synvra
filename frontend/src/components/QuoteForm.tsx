@@ -260,11 +260,18 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
               className="w-full px-4 py-2 bg-synvra-black/50 border border-synvra-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-synvra-blue text-white"
             >
               <option value="">Select budget range</option>
-              <option value="$5,000 - $10,000">$5,000 - $10,000</option>
-              <option value="$10,000 - $25,000">$10,000 - $25,000</option>
-              <option value="$25,000 - $50,000">$25,000 - $50,000</option>
-              <option value="$50,000 - $100,000">$50,000 - $100,000</option>
-              <option value="$100,000+">$100,000+</option>
+              <option value="$5,000 to $10,000">$5,000 to $10,000</option>
+              <option value="$10,000 to $25,000">$10,000 to $25,000</option>
+              <option value="$25,000 to $50,000">$25,000 to $50,000</option>
+              <option value="$50,000 to $100,000">$50,000 to $100,000</option>
+              <option value="$100,000 to $250,000">$100,000 to $250,000</option>
+              <option value="$250,000 to $500,000">$250,000 to $500,000</option>
+              <option value="$500,000 to $1,000,000">$500,000 to $1,000,000</option>
+              <option value="$1,000,000 to $5,000,000">$1,000,000 to $5,000,000</option>
+              <option value="$5,000,000 to $10,000,000">$5,000,000 to $10,000,000</option>
+              <option value="$10,000,000 to $50,000,000">$10,000,000 to $50,000,000</option>
+              <option value="$50,000,000 to $100,000,000">$50,000,000 to $100,000,000</option>
+              <option value="$100,000,000+">$100,000,000+</option>
             </select>
           </div>
 
