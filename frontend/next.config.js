@@ -13,6 +13,14 @@ const nextConfig = {
   },
   trailingSlash: true,
   distDir: 'out',
+  async rewrites() {
+    return [
+      {
+        source: '/zoho-domain-verification.html',
+        destination: '/zoho-domain-verification.html',
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig
