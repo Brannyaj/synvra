@@ -159,13 +159,7 @@ const baseEmailTemplate = (content: string) => `
             <div class="footer-heading">Synvra</div>
             <p class="footer-text">Creating innovative digital solutions that help businesses thrive in the modern world.</p>
             <div class="contact-item">
-              <span class="footer-text">📞 202-573-8594</span>
-            </div>
-            <div class="contact-item">
               <span class="footer-text">📧 support@synvra.com</span>
-            </div>
-            <div class="contact-item">
-              <span class="footer-text">📍 28 West 44th Street, New York, NY 10036</span>
             </div>
           </div>
 
