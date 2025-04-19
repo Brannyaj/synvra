@@ -6,8 +6,27 @@ import ClientLayout from "@/components/ClientLayout";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Synvra - Innovative Digital Solutions",
-  description: "Creating innovative digital solutions that help businesses thrive in the modern world.",
+  metadataBase: new URL('https://synvra.com'),
+  title: "Synvra - Innovative Digital Solutions & Software Development",
+  description: "Synvra delivers cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company specializing in custom solutions.",
+  keywords: "software development, web development, mobile apps, cloud solutions, digital transformation, custom software, enterprise solutions, AI integration, cybersecurity",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    google: "DPfTKOsOVMN8QaDb3OlZgYQOxtV4Y_iM4H_InFtIABc",
+  },
+  alternates: {
+    canonical: "https://synvra.com",
+  },
   icons: {
     icon: [
       { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
@@ -29,16 +48,22 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://synvra.com',
     siteName: 'Synvra',
-    title: 'Synvra - Innovative Digital Solutions',
-    description: 'Creating innovative digital solutions that help businesses thrive in the modern world.',
+    title: 'Synvra - Innovative Digital Solutions & Software Development',
+    description: 'Synvra delivers cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company specializing in custom solutions.',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Synvra',
+        alt: 'Synvra - Innovative Digital Solutions',
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Synvra - Innovative Digital Solutions & Software Development',
+    description: 'Synvra delivers cutting-edge web development, mobile apps, cloud solutions, and digital transformation services.',
+    images: ['/og-image.jpg'],
   },
 };
 
@@ -55,6 +80,7 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Synvra" />
@@ -64,12 +90,12 @@ export default function RootLayout({
         <meta property="og:locale" content="en_US" />
         <meta property="og:url" content="https://synvra.com" />
         <meta property="og:site_name" content="Synvra" />
-        <meta property="og:title" content="Synvra - Innovative Digital Solutions" />
-        <meta property="og:description" content="Creating innovative digital solutions that help businesses thrive in the modern world." />
+        <meta property="og:title" content="Synvra - Innovative Digital Solutions & Software Development" />
+        <meta property="og:description" content="Synvra delivers cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company specializing in custom solutions." />
         <meta property="og:image" content="/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Synvra" />
+        <meta property="og:image:alt" content="Synvra - Innovative Digital Solutions" />
       </head>
       <body className={`${inter.className} bg-synvra-black text-synvra-white min-h-screen`}>
         <ClientLayout>
