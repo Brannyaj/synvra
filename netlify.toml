@@ -1,7 +1,7 @@
 [build]
   base = "frontend"
   command = "npm run build"
-  publish = "out"
+  publish = ".next"
 
 [build.environment]
   NEXT_PUBLIC_API_URL = "https://synvra.com"
@@ -11,6 +11,20 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Content-Type = "application/xml; charset=utf-8"
+    Cache-Control = "public, max-age=3600"
+    X-Content-Type-Options = "nosniff"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+    Cache-Control = "public, max-age=3600"
+    X-Content-Type-Options = "nosniff"
 
 [[headers]]
   for = "/zoho-domain-verification.html"
@@ -34,6 +48,12 @@
   status = 200
 
 [[redirects]]
+  from = "/work"
+  to = "/portfolio"
+  status = 301
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 200 
+  status = 200
+  force = false 
