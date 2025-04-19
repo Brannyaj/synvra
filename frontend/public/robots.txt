@@ -50,6 +50,10 @@ Disallow: /
 # Default rule
 User-agent: *
 Allow: /
+Allow: /about
+Allow: /services
+Allow: /portfolio
+Allow: /contact
 Disallow: /api/
 Disallow: /_next/
 Disallow: /static/ 
