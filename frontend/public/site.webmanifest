@@ -1,0 +1,16 @@
+{
+  "name": "Synvra",
+  "short_name": "Synvra",
+  "description": "Creating innovative digital solutions that help businesses thrive in the modern world.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0F1C",
+  "theme_color": "#0A0F1C",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "32x32",
+      "type": "image/svg+xml"
+    }
+  ]
+} 
