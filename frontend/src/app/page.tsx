@@ -40,7 +40,7 @@ export default function Home() {
               <Link href="/services" className="text-synvra-gray-200 hover:text-synvra-white transition-colors">
                 Services
               </Link>
-              <Link href="/work" className="text-synvra-gray-200 hover:text-synvra-white transition-colors">
+              <Link href="/portfolio" className="text-synvra-gray-200 hover:text-synvra-white transition-colors">
                 Portfolio
               </Link>
               <Link href="/about" className="text-synvra-gray-200 hover:text-synvra-white transition-colors">
@@ -95,7 +95,7 @@ export default function Home() {
               <Link href="/services" className="block text-synvra-gray-200 hover:text-synvra-white transition-colors py-2">
                 Services
               </Link>
-              <Link href="/work" className="block text-synvra-gray-200 hover:text-synvra-white transition-colors py-2">
+              <Link href="/portfolio" className="block text-synvra-gray-200 hover:text-synvra-white transition-colors py-2">
                 Portfolio
               </Link>
               <Link href="/about" className="block text-synvra-gray-200 hover:text-synvra-white transition-colors py-2">
@@ -148,7 +148,7 @@ export default function Home() {
                 Get Started
               </button>
               <Link 
-                href="/work" 
+                href="/portfolio" 
                 className="button-secondary text-lg px-8 py-4"
               >
                 View Our Work
