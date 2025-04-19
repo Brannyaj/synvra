@@ -1,24 +1,34 @@
 # Sitemap
 Sitemap: https://synvra.com/sitemap.xml
 
-# Allow Google crawlers
+# Allow Google crawlers with specific directives
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Googlebot-Image
 Allow: /
+Crawl-delay: 1
 
 User-agent: Googlebot-Mobile
 Allow: /
+Crawl-delay: 1
 
-# Block other crawlers
-User-agent: *
-Disallow: /
-Allow: /$
-Allow: /about$
-Allow: /contact$
-Allow: /services$
-Allow: /work$
+User-agent: Googlebot-News
+Allow: /
+Crawl-delay: 1
+
+User-agent: AdsBot-Google
+Allow: /
+
+# Allow other search engines
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
 
 # Block common scraping tools
 User-agent: HTTrack
@@ -35,4 +45,11 @@ Disallow: /
 
 # Block archive.org
 User-agent: ia_archiver
-Disallow: / 
+Disallow: /
+
+# Default rule
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/ 
