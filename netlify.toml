@@ -18,6 +18,7 @@
     Content-Type = "application/xml; charset=utf-8"
     Cache-Control = "public, max-age=3600"
     X-Content-Type-Options = "nosniff"
+    Access-Control-Allow-Origin = "*"
 
 [[headers]]
   for = "/robots.txt"
@@ -25,6 +26,7 @@
     Content-Type = "text/plain; charset=utf-8"
     Cache-Control = "public, max-age=3600"
     X-Content-Type-Options = "nosniff"
+    Access-Control-Allow-Origin = "*"
 
 [[headers]]
   for = "/zoho-domain-verification.html"
@@ -40,7 +42,8 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://synvra.com;"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: https://www.google-analytics.com; font-src 'self' data:; connect-src 'self' https://synvra.com https://www.google-analytics.com;"
+    X-Robots-Tag = "index, follow"
 
 [[redirects]]
   from = "/zohoverify/*"
@@ -51,6 +54,29 @@
   from = "/work"
   to = "/portfolio"
   status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/*"
+  to = "/services/[slug]"
+  status = 200
+
+[[redirects]]
+  from = "/portfolio/*"
+  to = "/portfolio/[slug]"
+  status = 200
+
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap.xml"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/robots.txt"
+  to = "/robots.txt"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/*"
