@@ -21,6 +21,7 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+    nocache: false,
   },
   verification: {
     google: "DPfTKOsOVMN8QaDb3OlZgYQOxtV4Y_iM4H_InFtIABc",
@@ -66,6 +67,20 @@ export const metadata: Metadata = {
     title: 'Synvra - Transform Your Business with Innovative Digital Solutions',
     description: 'Transform your business with Synvra\'s cutting-edge web development, mobile apps, cloud solutions, and digital transformation services.',
     images: ['/og-image.jpg'],
+  },
+  authors: [{ name: 'Synvra' }],
+  generator: 'Next.js',
+  applicationName: 'Synvra',
+  referrer: 'origin-when-cross-origin',
+  creator: 'Synvra',
+  publisher: 'Synvra',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  other: {
+    'google-site-verification': process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
   },
 };
 
