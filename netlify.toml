@@ -15,13 +15,20 @@
 # Ensure static files are served first
 [[redirects]]
   from = "/sitemap.xml"
-  to = "/.next/static/sitemap.xml"
+  to = "/sitemap.xml"
   status = 200
   force = true
 
 [[redirects]]
   from = "/robots.txt"
-  to = "/.next/static/robots.txt"
+  to = "/robots.txt"
+  status = 200
+  force = true
+
+# Handle analytics API
+[[redirects]]
+  from = "/api/analytics/*"
+  to = "/.netlify/functions/analytics/:splat"
   status = 200
   force = true
 

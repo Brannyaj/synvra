@@ -17,7 +17,7 @@ export default function Cookie() {
     // Track visit (cookie-less analytics) with retry
     const trackVisit = async (retries = 3) => {
       try {
-        const response = await fetch('/api/analytics/stats', {
+        const response = await fetch('/.netlify/functions/analytics/stats', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -42,10 +42,13 @@ export default function Cookie() {
       }
     };
 
-    trackVisit();
+    // Only track visit if consent is accepted or not set
+    const consent = localStorage.getItem('cookie-consent');
+    if (consent !== 'declined') {
+      trackVisit();
+    }
 
     // Check if user has already made a choice
-    const consent = localStorage.getItem('cookie-consent');
     if (!consent) {
       setShowBanner(true);
     }
