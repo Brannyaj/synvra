@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "@/components/ClientLayout";
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -96,6 +97,32 @@ export default function RootLayout({
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Synvra - Innovative Digital Solutions" />
+        <Script
+          id="schema-markup"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Synvra',
+              url: 'https://synvra.com',
+              logo: 'https://synvra.com/favicon.svg',
+              description: 'Synvra delivers cutting-edge web development, mobile apps, cloud solutions, and digital transformation services.',
+              sameAs: [
+                // Add your social media profiles here when available
+              ],
+              contactPoint: {
+                '@type': 'ContactPoint',
+                email: 'support@synvra.com',
+                contactType: 'customer service'
+              },
+              address: {
+                '@type': 'PostalAddress',
+                addressCountry: 'US'
+              }
+            })
+          }}
+        />
       </head>
       <body className={`${inter.className} bg-synvra-black text-synvra-white min-h-screen`}>
         <ClientLayout>
