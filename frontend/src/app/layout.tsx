@@ -101,26 +101,92 @@ export default function RootLayout({
           id="schema-markup"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'Organization',
-              name: 'Synvra',
-              url: 'https://synvra.com',
-              logo: 'https://synvra.com/favicon.svg',
-              description: 'Synvra delivers cutting-edge web development, mobile apps, cloud solutions, and digital transformation services.',
-              sameAs: [
-                // Add your social media profiles here when available
-              ],
-              contactPoint: {
-                '@type': 'ContactPoint',
-                email: 'support@synvra.com',
-                contactType: 'customer service'
+            __html: JSON.stringify([
+              {
+                '@context': 'https://schema.org',
+                '@type': 'Organization',
+                '@id': 'https://synvra.com/#organization',
+                name: 'Synvra',
+                url: 'https://synvra.com',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://synvra.com/favicon.svg',
+                  width: 96,
+                  height: 96
+                },
+                description: 'Synvra delivers cutting-edge web development, mobile apps, cloud solutions, and digital transformation services.',
+                sameAs: [
+                  'https://twitter.com/synvra',
+                  'https://linkedin.com/company/synvra',
+                  'https://github.com/synvra',
+                  'https://discord.gg/synvra'
+                ],
+                contactPoint: {
+                  '@type': 'ContactPoint',
+                  email: 'support@synvra.com',
+                  contactType: 'customer service'
+                },
+                address: {
+                  '@type': 'PostalAddress',
+                  addressCountry: 'US'
+                }
               },
-              address: {
-                '@type': 'PostalAddress',
-                addressCountry: 'US'
+              {
+                '@context': 'https://schema.org',
+                '@type': 'WebSite',
+                '@id': 'https://synvra.com/#website',
+                url: 'https://synvra.com',
+                name: 'Synvra',
+                description: 'Innovative Digital Solutions & Software Development',
+                publisher: {
+                  '@id': 'https://synvra.com/#organization'
+                }
+              },
+              {
+                '@context': 'https://schema.org',
+                '@type': 'BreadcrumbList',
+                itemListElement: [
+                  {
+                    '@type': 'ListItem',
+                    position: 1,
+                    item: {
+                      '@id': 'https://synvra.com',
+                      name: 'Home'
+                    }
+                  }
+                ]
+              },
+              {
+                '@context': 'https://schema.org',
+                '@type': 'FAQPage',
+                mainEntity: [
+                  {
+                    '@type': 'Question',
+                    name: 'What services does Synvra offer?',
+                    acceptedAnswer: {
+                      '@type': 'Answer',
+                      text: 'Synvra offers a comprehensive range of software development services including web development, mobile app development, cloud solutions, AI & machine learning, enterprise solutions, cybersecurity, and data engineering.'
+                    }
+                  },
+                  {
+                    '@type': 'Question',
+                    name: 'How experienced is Synvra\'s development team?',
+                    acceptedAnswer: {
+                      '@type': 'Answer',
+                      text: 'Our team consists of 200+ exceptional full stack developers, carefully selected from the top 1% of global talent. We have delivered 600+ projects across diverse industries with a 97% client satisfaction rate.'
+                    }
+                  },
+                  {
+                    '@type': 'Question',
+                    name: 'What industries does Synvra serve?',
+                    acceptedAnswer: {
+                      '@type': 'Answer',
+                      text: 'Synvra serves various industries including Healthcare, FinTech, E-commerce, Enterprise, EdTech, and Manufacturing, providing specialized solutions for each sector\'s unique needs.'
+                    }
+                  }
+                ]
               }
-            })
+            ])
           }}
         />
       </head>
