@@ -8,13 +8,27 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  // Ensure sitemap and robots.txt are copied to the build output
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      require('fs').copyFileSync('./public/sitemap.xml', './out/sitemap.xml')
-      require('fs').copyFileSync('./public/robots.txt', './out/robots.txt')
+  // Copy sitemap and robots.txt to the output directory
+  async generateStaticParams() {
+    const fs = require('fs');
+    const path = require('path');
+
+    // Ensure the out directory exists
+    if (!fs.existsSync('./out')) {
+      fs.mkdirSync('./out', { recursive: true });
     }
-    return config
+
+    // Copy files if they exist
+    const filesToCopy = ['sitemap.xml', 'robots.txt'];
+    filesToCopy.forEach(file => {
+      const sourcePath = path.join('./public', file);
+      const destPath = path.join('./out', file);
+      if (fs.existsSync(sourcePath)) {
+        fs.copyFileSync(sourcePath, destPath);
+      }
+    });
+
+    return [];
   }
 }
 
