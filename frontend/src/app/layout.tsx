@@ -9,8 +9,8 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL('https://synvra.com'),
   title: "Synvra - Innovative Digital Solutions & Software Development",
-  description: "Synvra delivers cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company specializing in custom solutions.",
-  keywords: "software development, web development, mobile apps, cloud solutions, digital transformation, custom software, enterprise solutions, AI integration, cybersecurity",
+  description: "Transform your business with Synvra's cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company delivering custom enterprise solutions.",
+  keywords: "software development, web development, mobile apps, cloud solutions, digital transformation, custom software, enterprise solutions, AI integration, cybersecurity, New York software company",
   robots: {
     index: true,
     follow: true,
@@ -49,8 +49,8 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://synvra.com',
     siteName: 'Synvra',
-    title: 'Synvra - Innovative Digital Solutions & Software Development',
-    description: 'Synvra delivers cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company specializing in custom solutions.',
+    title: 'Synvra - Transform Your Business with Innovative Digital Solutions',
+    description: 'Transform your business with Synvra\'s cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company delivering custom enterprise solutions.',
     images: [
       {
         url: '/og-image.jpg',
@@ -62,8 +62,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Synvra - Innovative Digital Solutions & Software Development',
-    description: 'Synvra delivers cutting-edge web development, mobile apps, cloud solutions, and digital transformation services.',
+    site: '@synvra',
+    title: 'Synvra - Transform Your Business with Innovative Digital Solutions',
+    description: 'Transform your business with Synvra\'s cutting-edge web development, mobile apps, cloud solutions, and digital transformation services.',
     images: ['/og-image.jpg'],
   },
 };
@@ -91,8 +92,8 @@ export default function RootLayout({
         <meta property="og:locale" content="en_US" />
         <meta property="og:url" content="https://synvra.com" />
         <meta property="og:site_name" content="Synvra" />
-        <meta property="og:title" content="Synvra - Innovative Digital Solutions & Software Development" />
-        <meta property="og:description" content="Synvra delivers cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company specializing in custom solutions." />
+        <meta property="og:title" content="Synvra - Transform Your Business with Innovative Digital Solutions" />
+        <meta property="og:description" content="Transform your business with Synvra\'s cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company delivering custom enterprise solutions." />
         <meta property="og:image" content="/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -110,11 +111,17 @@ export default function RootLayout({
                 url: 'https://synvra.com',
                 logo: {
                   '@type': 'ImageObject',
+                  '@id': 'https://synvra.com/#logo',
                   url: 'https://synvra.com/favicon.svg',
                   width: 96,
-                  height: 96
+                  height: 96,
+                  contentUrl: 'https://synvra.com/favicon.svg'
                 },
-                description: 'Synvra delivers cutting-edge web development, mobile apps, cloud solutions, and digital transformation services.',
+                image: {
+                  '@type': 'ImageObject',
+                  url: 'https://synvra.com/og-image.jpg'
+                },
+                description: 'Transform your business with Synvra\'s cutting-edge web development, mobile apps, cloud solutions, and digital transformation services.',
                 sameAs: [
                   'https://twitter.com/synvra',
                   'https://linkedin.com/company/synvra',
@@ -124,12 +131,24 @@ export default function RootLayout({
                 contactPoint: {
                   '@type': 'ContactPoint',
                   email: 'support@synvra.com',
-                  contactType: 'customer service'
+                  contactType: 'customer service',
+                  availableLanguage: ['English']
                 },
                 address: {
                   '@type': 'PostalAddress',
                   addressCountry: 'US'
-                }
+                },
+                foundingDate: '2023',
+                knowsAbout: [
+                  'Software Development',
+                  'Web Development',
+                  'Mobile App Development',
+                  'Cloud Solutions',
+                  'Digital Transformation',
+                  'Enterprise Solutions',
+                  'AI Integration',
+                  'Cybersecurity'
+                ]
               },
               {
                 '@context': 'https://schema.org',
@@ -137,9 +156,17 @@ export default function RootLayout({
                 '@id': 'https://synvra.com/#website',
                 url: 'https://synvra.com',
                 name: 'Synvra',
-                description: 'Innovative Digital Solutions & Software Development',
+                description: 'Transform Your Business with Innovative Digital Solutions',
                 publisher: {
                   '@id': 'https://synvra.com/#organization'
+                },
+                potentialAction: {
+                  '@type': 'SearchAction',
+                  target: {
+                    '@type': 'EntryPoint',
+                    urlTemplate: 'https://synvra.com/search?q={search_term_string}'
+                  },
+                  'query-input': 'required name=search_term_string'
                 }
               },
               {
@@ -165,7 +192,7 @@ export default function RootLayout({
                     name: 'What services does Synvra offer?',
                     acceptedAnswer: {
                       '@type': 'Answer',
-                      text: 'Synvra offers a comprehensive range of software development services including web development, mobile app development, cloud solutions, AI & machine learning, enterprise solutions, cybersecurity, and data engineering.'
+                      text: 'Synvra offers a comprehensive range of software development services including web development, mobile app development, cloud solutions, AI & machine learning integration, enterprise solutions, cybersecurity, and data engineering. We specialize in creating custom solutions that drive digital transformation and business growth.'
                     }
                   },
                   {
@@ -173,7 +200,7 @@ export default function RootLayout({
                     name: 'How experienced is Synvra\'s development team?',
                     acceptedAnswer: {
                       '@type': 'Answer',
-                      text: 'Our team consists of 200+ exceptional full stack developers, carefully selected from the top 1% of global talent. We have delivered 600+ projects across diverse industries with a 97% client satisfaction rate.'
+                      text: 'Our team consists of 200+ exceptional full stack developers, carefully selected from the top 1% of global talent. We have successfully delivered 600+ projects across diverse industries with a 97% client satisfaction rate. Our developers are experts in modern technologies and best practices.'
                     }
                   },
                   {
@@ -181,7 +208,7 @@ export default function RootLayout({
                     name: 'What industries does Synvra serve?',
                     acceptedAnswer: {
                       '@type': 'Answer',
-                      text: 'Synvra serves various industries including Healthcare, FinTech, E-commerce, Enterprise, EdTech, and Manufacturing, providing specialized solutions for each sector\'s unique needs.'
+                      text: 'Synvra serves various industries including Healthcare, FinTech, E-commerce, Enterprise, EdTech, and Manufacturing. We provide specialized solutions tailored to each sector\'s unique needs, compliance requirements, and business objectives. Our experience spans from startups to Fortune 500 companies.'
                     }
                   }
                 ]
