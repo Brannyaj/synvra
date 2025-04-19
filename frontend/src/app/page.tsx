@@ -997,6 +997,7 @@ export default function Home() {
               <Link href="/privacy-policy" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Privacy Policy</Link>
               <Link href="/terms" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Terms of Service</Link>
               <Link href="/cookies" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Cookie Policy</Link>
+              <Link href="/sitemap.xml" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Sitemap</Link>
             </div>
           </div>
         </div>
