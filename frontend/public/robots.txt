@@ -1,3 +1,6 @@
+# Sitemap
+Sitemap: https://synvra.com/sitemap.xml
+
 # Allow Google crawlers
 User-agent: Googlebot
 Allow: /
