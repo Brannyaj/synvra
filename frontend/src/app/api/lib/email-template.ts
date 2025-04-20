@@ -153,18 +153,13 @@ export const generateQuoteEmail = ({ name }: { name: string }) => {
   };
 };
 
-export const generateContactEmail = ({ name, message }: { name: string; message: string }) => {
+export const generateContactEmail = ({ name }: { name: string }) => {
   const content = `
     <div class="content">
       <h1>Thank You for Contacting Us</h1>
       <p>Dear ${name},</p>
       <p>Thank you for reaching out to Synvra. We've received your message and appreciate you taking the time to contact us.</p>
       
-      <div class="steps">
-        <h3 style="color: #000000; margin: 0 0 10px; font-size: 18px;">Your Message:</h3>
-        <p style="margin: 0;">${message}</p>
-      </div>
-
       <p>Our team will review your message and get back to you within 1-2 business days.</p>
       <p style="margin-bottom: 0;">Best regards,<br>SYNVRA TEAM</p>
     </div>
