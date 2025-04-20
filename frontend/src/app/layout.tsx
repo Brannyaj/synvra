@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL('https://synvra.com'),
   title: "Synvra - Innovative Digital Solutions & Software Development",
-  description: "Transform your business with Synvra's cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company delivering custom enterprise solutions.",
+  description: "Transform your business with Synvra's cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company delivering innovative enterprise solutions.",
   keywords: "software development, web development, mobile apps, cloud solutions, digital transformation, custom software, enterprise solutions, AI integration, cybersecurity, New York software company",
   robots: {
     index: true,
