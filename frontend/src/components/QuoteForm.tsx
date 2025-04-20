@@ -61,7 +61,7 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
     const maxRetries = 3;
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
-        const response = await fetch('/api/quote', {
+        const response = await fetch('/.netlify/functions/nextjs-api/quote', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

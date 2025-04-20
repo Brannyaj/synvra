@@ -8,7 +8,7 @@ export const handler: Handler = async (event) => {
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   };
 
-  // Handle OPTIONS request (CORS preflight)
+  // Handle preflight requests
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 204,
@@ -17,28 +17,8 @@ export const handler: Handler = async (event) => {
     };
   }
 
-  if (event.httpMethod === 'GET') {
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        ...headers,
-      },
-      body: JSON.stringify({
-        success: true,
-        message: 'Analytics data retrieved successfully',
-        stats: {
-          totalVisits: 0,
-          pathStats: []
-        }
-      }),
-    };
-  }
-
-  if (event.httpMethod === 'POST') {
-    try {
-      // Here you would typically store the analytics data
-      // For now, we'll just return a success response
+  try {
+    if (event.httpMethod === 'GET') {
       return {
         statusCode: 200,
         headers: {
@@ -46,34 +26,47 @@ export const handler: Handler = async (event) => {
           ...headers,
         },
         body: JSON.stringify({
-          success: true,
-          message: 'Visit tracked successfully'
+          totalVisits: 0,
+          pathStats: []
         }),
       };
-    } catch (error) {
+    }
+
+    if (event.httpMethod === 'POST') {
+      // Here you can implement actual analytics tracking
       return {
-        statusCode: 500,
+        statusCode: 200,
         headers: {
           'Content-Type': 'application/json',
           ...headers,
         },
         body: JSON.stringify({
-          success: false,
-          message: 'Failed to track visit'
+          message: 'Visit tracked successfully'
         }),
       };
     }
-  }
 
-  return {
-    statusCode: 405,
-    headers: {
-      'Content-Type': 'application/json',
-      ...headers,
-    },
-    body: JSON.stringify({
-      success: false,
-      message: 'Method not allowed'
-    }),
-  };
+    return {
+      statusCode: 405,
+      headers: {
+        'Content-Type': 'application/json',
+        ...headers,
+      },
+      body: JSON.stringify({
+        error: 'Method not allowed'
+      }),
+    };
+  } catch (error) {
+    console.error('Analytics error:', error);
+    return {
+      statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        ...headers,
+      },
+      body: JSON.stringify({
+        error: 'Internal server error'
+      }),
+    };
+  }
 }; 

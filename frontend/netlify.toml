@@ -1,13 +1,11 @@
 [build]
-  base = "frontend"
   command = "npm run build"
-  publish = "out"
+  publish = ".next"
+  functions = "netlify/functions"
 
-[build.environment]
-  NEXT_PUBLIC_API_URL = "https://synvra.com"
-  NODE_VERSION = "18"
-  NPM_VERSION = "10"
-  NEXT_TELEMETRY_DISABLED = "1"
+[functions]
+  external_node_modules = ["@netlify/functions"]
+  included_files = ["src/app/api/**/*"]
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
@@ -29,9 +27,10 @@
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://synvra.com;"
 
 [[redirects]]
-  from = "/zohoverify/*"
-  to = "/zohoverify/:splat"
+  from = "/api/*"
+  to = "/.netlify/functions/nextjs-api/:splat"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/*"
