@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     url: 'https://synvra.com',
     siteName: 'Synvra',
     title: 'Synvra - Transform Your Business with Innovative Digital Solutions',
-    description: 'Transform your business with Synvra\'s cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company delivering custom enterprise solutions.',
+    description: "Transform your business with Synvra's cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company delivering innovative enterprise solutions.",
     images: [
       {
         url: '/og-image.jpg',
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@synvra',
     title: 'Synvra - Transform Your Business with Innovative Digital Solutions',
-    description: 'Transform your business with Synvra\'s cutting-edge web development, mobile apps, cloud solutions, and digital transformation services.',
+    description: "Transform your business with Synvra's cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company delivering innovative enterprise solutions.",
     images: ['/og-image.jpg'],
   },
   authors: [{ name: 'Synvra' }],
@@ -109,7 +109,7 @@ export default function RootLayout({
         <meta property="og:url" content="https://synvra.com" />
         <meta property="og:site_name" content="Synvra" />
         <meta property="og:title" content="Synvra - Transform Your Business with Innovative Digital Solutions" />
-        <meta property="og:description" content="Transform your business with Synvra\'s cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company delivering custom enterprise solutions." />
+        <meta property="og:description" content="Transform your business with Synvra\'s cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company delivering innovative enterprise solutions." />
         <meta property="og:image" content="/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -137,7 +137,7 @@ export default function RootLayout({
                   '@type': 'ImageObject',
                   url: 'https://synvra.com/og-image.jpg'
                 },
-                description: 'Transform your business with Synvra\'s cutting-edge web development, mobile apps, cloud solutions, and digital transformation services.',
+                description: "Transform your business with Synvra's cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company delivering innovative enterprise solutions.",
                 sameAs: [
                   'https://twitter.com/synvra',
                   'https://linkedin.com/company/synvra',
