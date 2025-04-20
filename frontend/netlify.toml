@@ -3,9 +3,13 @@
   publish = ".next"
   functions = "netlify/functions"
 
+[build.environment]
+  NEXT_TELEMETRY_DISABLED = "1"
+
 [functions]
   external_node_modules = ["@netlify/functions"]
   included_files = ["src/app/api/**/*"]
+  node_bundler = "esbuild"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
@@ -35,4 +39,16 @@
 [[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 200 
+  status = 200
+
+[dev]
+  framework = "next"
+  targetPort = 3000
+
+[context.production.environment]
+  SMTP_HOST = "smtp.gmail.com"
+  SMTP_PORT = "587"
+  SMTP_SECURE = "false"
+  SMTP_FROM = "noreply@synvra.com"
+  QUOTE_EMAIL = "quotes@synvra.com"
+  NEXT_PUBLIC_API_URL = "https://api.synvra.com" 
