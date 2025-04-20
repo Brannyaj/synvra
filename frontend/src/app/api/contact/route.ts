@@ -12,7 +12,6 @@ export async function POST(request: Request) {
     await resend.emails.send({
       from: 'Synvra <no-reply@synvra.com>',
       to: email,
-      cc: ['support@synvra.com'],
       ...generateContactEmail({ name, message })
     });
 

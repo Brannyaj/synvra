@@ -80,7 +80,6 @@ export const handler: Handler = async (event) => {
         return resend.emails.send({
           from: 'Synvra <no-reply@synvra.com>',
           to: data.email,
-          cc: ['support@synvra.com'],
           ...generateQuoteEmail({ name: data.name })
         });
       });
