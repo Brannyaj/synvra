@@ -73,15 +73,9 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
           }),
         });
 
-        let data;
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.includes('application/json')) {
-          data = await response.json();
-        } else {
-          throw new Error('Server returned an invalid response. Please try again later.');
-        }
+        const data = await response.json();
 
-        if (!response.ok) {
+        if (!response.ok || data.status === 'error') {
           throw new Error(data.message || 'Failed to send quote request');
         }
 

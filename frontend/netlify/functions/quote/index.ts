@@ -111,8 +111,12 @@ ${data.description}
 
       return {
         statusCode: 200,
-        headers,
+        headers: {
+          ...headers,
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
+          status: 'success',
           message: 'Quote request received successfully',
         }),
       };
@@ -121,8 +125,12 @@ ${data.description}
       if (error instanceof Error && error.message.includes('Resend API')) {
         return {
           statusCode: 503,
-          headers,
+          headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+          },
           body: JSON.stringify({
+            status: 'error',
             message: 'Email service is temporarily unavailable. Please try again later or contact us directly at support@synvra.com'
           }),
         };
@@ -134,8 +142,12 @@ ${data.description}
     
     return {
       statusCode: 500,
-      headers,
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
+        status: 'error',
         message: 'Failed to process quote request',
       }),
     };
