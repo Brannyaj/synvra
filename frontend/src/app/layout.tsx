@@ -1,10 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "@/components/ClientLayout";
 import Script from 'next/script';
 
 const inter = Inter({ subsets: ["latin"] });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: '#0A0F1C',
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://synvra.com'),
@@ -43,8 +50,6 @@ export const metadata: Metadata = {
     statusBarStyle: 'default',
     title: 'Synvra',
   },
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-  themeColor: '#0A0F1C',
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -102,8 +107,6 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Synvra" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <meta name="theme-color" content="#0A0F1C" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en_US" />
         <meta property="og:url" content="https://synvra.com" />
