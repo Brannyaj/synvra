@@ -234,6 +234,16 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} bg-synvra-black text-synvra-white min-h-screen`}>
+        {/* Hidden form for Netlify */}
+        <form name="quote" data-netlify="true" hidden>
+          <input type="text" name="name" />
+          <input type="email" name="email" />
+          <input type="tel" name="phone" />
+          <input type="text" name="company" />
+          <textarea name="description"></textarea>
+          <input type="number" name="budget" />
+          <input type="date" name="deadline" />
+        </form>
         <ClientLayout>
           {children}
         </ClientLayout>

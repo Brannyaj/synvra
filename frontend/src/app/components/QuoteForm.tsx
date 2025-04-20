@@ -30,27 +30,17 @@ export default function QuoteForm() {
     setError('');
 
     try {
-      const response = await fetch('/.netlify/functions/nextjs-api/quote', {
+      const formData = new FormData(e.currentTarget);
+      const response = await fetch('/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          phone,
-          company,
-          description,
-          budget: budget ? parseFloat(budget) : null,
-          deadline: deadline || null,
-        }),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData as any).toString()
       });
 
       if (!response.ok) {
         throw new Error('Failed to submit quote');
       }
 
-      const data = await response.json();
       setSuccess(true);
       resetForm();
     } catch (err) {
@@ -62,7 +52,21 @@ export default function QuoteForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form 
+      name="quote"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      onSubmit={handleSubmit} 
+      className="space-y-6"
+    >
+      <input type="hidden" name="form-name" value="quote" />
+      <p className="hidden">
+        <label>
+          Don't fill this out if you're human: <input name="bot-field" />
+        </label>
+      </p>
+
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded">
           {error}
@@ -82,6 +86,7 @@ export default function QuoteForm() {
         <input
           type="text"
           id="name"
+          name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
@@ -96,6 +101,7 @@ export default function QuoteForm() {
         <input
           type="email"
           id="email"
+          name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -110,6 +116,7 @@ export default function QuoteForm() {
         <input
           type="tel"
           id="phone"
+          name="phone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
@@ -123,6 +130,7 @@ export default function QuoteForm() {
         <input
           type="text"
           id="company"
+          name="company"
           value={company}
           onChange={(e) => setCompany(e.target.value)}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
@@ -135,6 +143,7 @@ export default function QuoteForm() {
         </label>
         <textarea
           id="description"
+          name="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
@@ -150,6 +159,7 @@ export default function QuoteForm() {
         <input
           type="number"
           id="budget"
+          name="budget"
           value={budget}
           onChange={(e) => setBudget(e.target.value)}
           min="0"
@@ -165,6 +175,7 @@ export default function QuoteForm() {
         <input
           type="date"
           id="deadline"
+          name="deadline"
           value={deadline}
           onChange={(e) => setDeadline(e.target.value)}
           min={new Date().toISOString().split('T')[0]}
