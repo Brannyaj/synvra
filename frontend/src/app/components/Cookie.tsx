@@ -22,6 +22,10 @@ export default function Cookie() {
           headers: {
             'Content-Type': 'application/json',
           },
+          body: JSON.stringify({
+            path: window.location.pathname,
+            timestamp: new Date().toISOString()
+          })
         });
         
         if (!response.ok) {
@@ -29,8 +33,8 @@ export default function Cookie() {
         }
         
         const data = await response.json();
-        if (!data.success) {
-          throw new Error('Analytics request was not successful');
+        if (!data.message || data.message !== 'Visit tracked successfully') {
+          throw new Error('Invalid response format');
         }
       } catch (error) {
         console.warn('Analytics error:', error);
@@ -45,7 +49,10 @@ export default function Cookie() {
     // Only track visit if consent is accepted or not set
     const consent = localStorage.getItem('cookie-consent');
     if (consent !== 'declined') {
-      trackVisit();
+      trackVisit().catch(error => {
+        // If tracking fails after all retries, just log it and continue
+        console.warn('Failed to track visit after retries:', error);
+      });
     }
 
     // Check if user has already made a choice
