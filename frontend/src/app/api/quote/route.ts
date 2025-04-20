@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { generateQuoteEmail, generateNotificationEmail } from '../../api/lib/email-template';
+import { generateQuoteEmail, generateNotificationEmail } from '../lib/email-template';
 import { NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 
@@ -12,6 +12,7 @@ async function retryEmailSend(emailFn: () => Promise<any>, maxRetries = 3) {
       const result = await emailFn();
       return result;
     } catch (error) {
+      console.error(`Email send attempt ${attempt} failed:`, error);
       if (attempt === maxRetries) throw error;
       // Wait before retrying (exponential backoff)
       await new Promise(resolve => setTimeout(resolve, attempt * 1000));
@@ -33,6 +34,20 @@ export async function POST(request: Request) {
       );
     }
 
+    let requestData;
+    try {
+      requestData = await request.json();
+    } catch (error) {
+      console.error('Failed to parse request body:', error);
+      return NextResponse.json(
+        { 
+          status: 'error',
+          message: 'Invalid JSON in request body' 
+        },
+        { status: 400 }
+      );
+    }
+
     const { 
       name, 
       email, 
@@ -43,7 +58,7 @@ export async function POST(request: Request) {
       timeline, 
       description,
       services 
-    } = await request.json();
+    } = requestData;
 
     // Validate required fields
     if (!name || !email || !projectType || !budget || !timeline || !description || !services || services.length === 0) {
@@ -68,25 +83,26 @@ export async function POST(request: Request) {
       );
     }
 
-    // Send confirmation email to user with retry logic
-    await retryEmailSend(async () => {
-      return resend.emails.send({
-        from: 'Synvra <no-reply@synvra.com>',
-        to: email,
-        cc: ['support@synvra.com'],
-        ...generateQuoteEmail({ name })
+    try {
+      // Send confirmation email to user with retry logic
+      await retryEmailSend(async () => {
+        return resend.emails.send({
+          from: 'Synvra <no-reply@synvra.com>',
+          to: email,
+          cc: ['support@synvra.com'],
+          ...generateQuoteEmail({ name })
+        });
       });
-    });
 
-    // Send notification email to support with retry logic
-    await retryEmailSend(async () => {
-      return resend.emails.send({
-        from: 'Synvra <no-reply@synvra.com>',
-        to: 'support@synvra.com',
-        ...generateNotificationEmail({
-          name,
-          email,
-          message: `
+      // Send notification email to support with retry logic
+      await retryEmailSend(async () => {
+        return resend.emails.send({
+          from: 'Synvra <no-reply@synvra.com>',
+          to: 'support@synvra.com',
+          ...generateNotificationEmail({
+            name,
+            email,
+            message: `
 Project Type: ${projectType}
 Company: ${company || 'Not provided'}
 Phone: ${phone || 'Not provided'}
@@ -96,30 +112,31 @@ Services: ${services.join(', ')}
 
 Description:
 ${description}
-          `,
-          type: 'quote'
-        })
+            `,
+            type: 'quote'
+          })
+        });
       });
-    });
 
-    return NextResponse.json({
-      status: 'success',
-      message: 'Your quote request has been received successfully!'
-    });
+      return NextResponse.json({
+        status: 'success',
+        message: 'Your quote request has been received successfully!'
+      });
+    } catch (error) {
+      console.error('Error sending emails:', error);
+      if (error instanceof Error && error.message.includes('Resend API')) {
+        return NextResponse.json(
+          {
+            status: 'error',
+            message: 'Email service is temporarily unavailable. Please try again later or contact us directly at support@synvra.com'
+          },
+          { status: 503 }
+        );
+      }
+      throw error; // Let the outer catch block handle other errors
+    }
   } catch (error) {
     console.error('Error processing quote request:', error);
-    
-    // Check if it's a Resend API error
-    if (error instanceof Error && error.message.includes('Resend API')) {
-      return NextResponse.json(
-        {
-          status: 'error',
-          message: 'Email service is temporarily unavailable. Please try again later or contact us directly at support@synvra.com'
-        },
-        { status: 503 }
-      );
-    }
-
     return NextResponse.json(
       {
         status: 'error',
