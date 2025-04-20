@@ -5,6 +5,20 @@ import { headers } from 'next/headers';
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
+// Helper function to retry failed email attempts
+async function retryEmailSend(emailFn: () => Promise<any>, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const result = await emailFn();
+      return result;
+    } catch (error) {
+      if (attempt === maxRetries) throw error;
+      // Wait before retrying (exponential backoff)
+      await new Promise(resolve => setTimeout(resolve, attempt * 1000));
+    }
+  }
+}
+
 export async function POST(request: Request) {
   try {
     // Check content type
@@ -42,22 +56,37 @@ export async function POST(request: Request) {
       );
     }
 
-    // Send confirmation email to user
-    await resend.emails.send({
-      from: 'Synvra <no-reply@synvra.com>',
-      to: email,
-      cc: ['support@synvra.com'],
-      ...generateQuoteEmail({ name })
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        {
+          status: 'error',
+          message: 'Please enter a valid email address'
+        },
+        { status: 400 }
+      );
+    }
+
+    // Send confirmation email to user with retry logic
+    await retryEmailSend(async () => {
+      return resend.emails.send({
+        from: 'Synvra <no-reply@synvra.com>',
+        to: email,
+        cc: ['support@synvra.com'],
+        ...generateQuoteEmail({ name })
+      });
     });
 
-    // Send notification email to support
-    await resend.emails.send({
-      from: 'Synvra <no-reply@synvra.com>',
-      to: 'support@synvra.com',
-      ...generateNotificationEmail({
-        name,
-        email,
-        message: `
+    // Send notification email to support with retry logic
+    await retryEmailSend(async () => {
+      return resend.emails.send({
+        from: 'Synvra <no-reply@synvra.com>',
+        to: 'support@synvra.com',
+        ...generateNotificationEmail({
+          name,
+          email,
+          message: `
 Project Type: ${projectType}
 Company: ${company || 'Not provided'}
 Phone: ${phone || 'Not provided'}
@@ -67,36 +96,36 @@ Services: ${services.join(', ')}
 
 Description:
 ${description}
-        `,
-        type: 'quote'
-      })
+          `,
+          type: 'quote'
+        })
+      });
     });
 
-    return new NextResponse(
-      JSON.stringify({
-        status: 'success',
-        message: 'Your quote request has been received successfully!'
-      }),
-      {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    return NextResponse.json({
+      status: 'success',
+      message: 'Your quote request has been received successfully!'
+    });
   } catch (error) {
     console.error('Error processing quote request:', error);
-    return new NextResponse(
-      JSON.stringify({
+    
+    // Check if it's a Resend API error
+    if (error instanceof Error && error.message.includes('Resend API')) {
+      return NextResponse.json(
+        {
+          status: 'error',
+          message: 'Email service is temporarily unavailable. Please try again later or contact us directly at support@synvra.com'
+        },
+        { status: 503 }
+      );
+    }
+
+    return NextResponse.json(
+      {
         status: 'error',
         message: 'Failed to submit quote request. Please try again later.'
-      }),
-      {
-        status: 500,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
+      },
+      { status: 500 }
     );
   }
 } 

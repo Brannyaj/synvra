@@ -37,6 +37,14 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
       return;
     }
 
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setStatus('error');
+      setErrorMessage('Please enter a valid email address');
+      return;
+    }
+
     // Validate description length
     if (formData.description.length < 100) {
       setStatus('error');
@@ -50,32 +58,47 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
       return;
     }
 
-    try {
-      const response = await fetch('/api/quote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          ...formData,
-          services: formData.services
-        }),
-      });
+    const maxRetries = 3;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        const response = await fetch('/api/quote', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            ...formData,
+            services: formData.services
+          }),
+        });
 
-      if (!response.ok) {
-        const data = await response.json().catch(() => ({ message: 'Server error' }));
-        throw new Error(data.message || 'Failed to send quote request');
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Failed to send quote request');
+        }
+
+        setStatus('success');
+        setFormData(initialFormData);
+        setTimeout(onClose, 2000);
+        return;
+      } catch (error) {
+        console.error(`Form submission attempt ${attempt} failed:`, error);
+        
+        // If this was our last retry, show the error
+        if (attempt === maxRetries) {
+          setStatus('error');
+          setErrorMessage(
+            error instanceof Error 
+              ? error.message 
+              : 'Failed to send quote request. Please try again or contact us directly at support@synvra.com'
+          );
+        } else {
+          // Wait before retrying (exponential backoff)
+          await new Promise(resolve => setTimeout(resolve, attempt * 1000));
+        }
       }
-
-      const data = await response.json();
-      setStatus('success');
-      setFormData(initialFormData);
-      setTimeout(onClose, 2000);
-    } catch (error) {
-      console.error('Form submission error:', error);
-      setStatus('error');
-      setErrorMessage(error instanceof Error ? error.message : 'Failed to send quote request');
     }
   }
 
