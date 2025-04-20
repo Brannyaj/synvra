@@ -18,32 +18,49 @@ export default function ContactForm() {
     setStatus('submitting');
     setErrorMessage('');
 
-    try {
-      const response = await fetch('/.netlify/functions/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+    const maxRetries = 3;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(formData),
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to send message');
+        if (!response.ok || data.status === 'error') {
+          throw new Error(data.message || 'Failed to send message');
+        }
+
+        setStatus('success');
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          phone: '',
+          message: '',
+        });
+        return;
+      } catch (error) {
+        console.error(`Form submission attempt ${attempt} failed:`, error);
+        
+        // If this was our last retry, show the error
+        if (attempt === maxRetries) {
+          setStatus('error');
+          setErrorMessage(
+            error instanceof Error 
+              ? error.message 
+              : 'Failed to send message. Please try again or contact us directly at support@synvra.com'
+          );
+        } else {
+          // Wait before retrying (exponential backoff)
+          await new Promise(resolve => setTimeout(resolve, attempt * 1000));
+        }
       }
-
-      setStatus('success');
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        phone: '',
-        message: '',
-      });
-    } catch (error) {
-      setStatus('error');
-      setErrorMessage(error instanceof Error ? error.message : 'Failed to send message');
     }
   };
 
