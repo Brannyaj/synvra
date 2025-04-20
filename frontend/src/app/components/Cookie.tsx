@@ -17,7 +17,7 @@ export default function Cookie() {
     // Track visit (cookie-less analytics) with retry
     const trackVisit = async (retries = 3) => {
       try {
-        const response = await fetch('/.netlify/functions/analytics/stats', {
+        const response = await fetch('/.netlify/functions/analytics-stats', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -29,7 +29,8 @@ export default function Cookie() {
         });
         
         if (!response.ok) {
-          throw new Error(`Analytics request failed with status ${response.status}`);
+          const errorText = await response.text();
+          throw new Error(`Analytics request failed with status ${response.status}: ${errorText}`);
         }
         
         const data = await response.json();
