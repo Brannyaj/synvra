@@ -19,6 +19,13 @@
   status = 200
   force = true
 
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "Content-Type"
+    Access-Control-Allow-Methods = "GET, POST, OPTIONS"
+
 # Ensure static files are served first
 [[redirects]]
   from = "/sitemap.xml"
@@ -75,7 +82,7 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: https://www.google-analytics.com; font-src 'self' data:; connect-src 'self' https://synvra.com https://www.google-analytics.com;"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: https://www.google-analytics.com; font-src 'self' data:; connect-src 'self' https://synvra.com https://www.google-analytics.com /.netlify/functions/*;"
     X-Robots-Tag = "index, follow"
 
 # Handle dynamic routes

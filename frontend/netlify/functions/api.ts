@@ -1,5 +1,4 @@
 import { Handler } from '@netlify/functions';
-import { prisma } from '../../src/lib/prisma';
 
 export const handler: Handler = async (event, context) => {
   // Set CORS headers
@@ -25,23 +24,13 @@ export const handler: Handler = async (event, context) => {
     if (path === 'quotes' && event.httpMethod === 'POST') {
       const body = JSON.parse(event.body || '{}');
       
-      const quote = await prisma.quote.create({
-        data: {
-          name: body.name,
-          email: body.email,
-          phone: body.phone,
-          company: body.company,
-          description: body.description,
-          budget: body.budget ? parseFloat(body.budget) : null,
-          deadline: body.deadline ? new Date(body.deadline) : null,
-          status: 'pending'
-        }
-      });
-
       return {
-        statusCode: 201,
+        statusCode: 200,
         headers,
-        body: JSON.stringify({ quote })
+        body: JSON.stringify({ 
+          message: 'Quote received',
+          data: body
+        })
       };
     }
 
@@ -49,14 +38,23 @@ export const handler: Handler = async (event, context) => {
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify({ status: 'ok', timestamp: new Date().toISOString() })
+        body: JSON.stringify({ 
+          status: 'ok', 
+          timestamp: new Date().toISOString(),
+          path: event.path,
+          httpMethod: event.httpMethod
+        })
       };
     }
 
     return {
       statusCode: 404,
       headers,
-      body: JSON.stringify({ error: 'Not Found' })
+      body: JSON.stringify({ 
+        error: 'Not Found',
+        path: event.path,
+        httpMethod: event.httpMethod
+      })
     };
 
   } catch (error) {
@@ -64,7 +62,10 @@ export const handler: Handler = async (event, context) => {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Internal Server Error' })
+      body: JSON.stringify({ 
+        error: 'Internal Server Error',
+        message: error instanceof Error ? error.message : 'Unknown error'
+      })
     };
   }
 }; 
