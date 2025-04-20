@@ -4,7 +4,7 @@
   publish = ".next"
 
 [build.environment]
-  NEXT_PUBLIC_API_URL = "https://synvra.com/api"
+  NEXT_PUBLIC_API_URL = "/.netlify/functions/api"
   NODE_VERSION = "18"
   NPM_VERSION = "10"
   NEXT_TELEMETRY_DISABLED = "1"
@@ -12,13 +12,12 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# Handle API requests
+# Handle API requests through Netlify Functions
 [[redirects]]
   from = "/api/*"
-  to = "http://localhost:3002/api/:splat"
+  to = "/.netlify/functions/api/:splat"
   status = 200
   force = true
-  headers = {X-From = "Netlify"}
 
 # Ensure static files are served first
 [[redirects]]
