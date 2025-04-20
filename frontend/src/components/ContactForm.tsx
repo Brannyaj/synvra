@@ -21,7 +21,7 @@ export default function ContactForm() {
     const maxRetries = 3;
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
-        const response = await fetch('/api/contact', {
+        const response = await fetch('/.netlify/functions/contact', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
