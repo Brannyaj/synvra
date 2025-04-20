@@ -11,9 +11,10 @@ const app = express();
 
 // Configure CORS
 app.use(cors({
-  origin: 'http://localhost:3001',
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type'],
+  origin: ['http://localhost:3000', 'http://localhost:3001', 'https://synvra.com'],
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 // Middleware
