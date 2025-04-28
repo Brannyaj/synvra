@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import QuoteForm from '../components/QuoteForm';
 import { useQuoteForm } from '../components/QuoteFormProvider';
+import Script from 'next/script';
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
@@ -1002,6 +1003,26 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      <Script
+        id="breadcrumb-schema-home"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://synvra.com/"
+              }
+            ]
+          })
+        }}
+      />
     </main>
   );
 }

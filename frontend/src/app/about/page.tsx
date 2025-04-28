@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import Script from 'next/script';
 
 export default function About() {
   const [scrolled, setScrolled] = useState(false);
@@ -138,6 +139,32 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      <Script
+        id="breadcrumb-schema-about"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://synvra.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "About",
+                "item": "https://synvra.com/about"
+              }
+            ]
+          })
+        }}
+      />
     </main>
   );
 } 

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import emailjs from '@emailjs/browser';
+import Script from 'next/script';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -123,6 +124,31 @@ export default function ContactPage() {
           </button>
         </form>
       </div>
+      <Script
+        id="breadcrumb-schema-contact"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://synvra.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Contact",
+                "item": "https://synvra.com/contact"
+              }
+            ]
+          })
+        }}
+      />
     </div>
   );
 } 
