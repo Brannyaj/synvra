@@ -16,6 +16,7 @@ const initialFormData = {
   timeline: '',
   description: '',
   services: [] as string[],
+  referredBy: '',
 };
 
 export default function QuoteForm({ onClose }: QuoteFormProps) {
@@ -122,16 +123,16 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
   }
 
   const services = [
-    'Web Development',
-    'Mobile Development',
-    'Cloud Solutions',
-    'AI/ML Integration',
-    'DevOps',
-    'Cybersecurity',
-    'IoT Solutions',
-    'Blockchain',
-    'Enterprise Software',
-    'Data Engineering',
+    'Website Development',
+    'Mobile App Development',
+    'Cloud Hosting & Infrastructure',
+    'Artificial Intelligence & Machine Learning',
+    'IT Operations & Automation',
+    'Security & Data Protection',
+    'Smart Device & IoT Solutions',
+    'Blockchain & Web3 Development',
+    'Custom Business Software',
+    'Data Analytics & Business Intelligence',
   ];
 
   return (
@@ -256,32 +257,6 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
           </select>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-synvra-gray-300 mb-2">
-            Services Required *
-          </label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {services.map(service => (
-              <label
-                key={service}
-                className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
-                  formData.services.includes(service)
-                    ? 'border-synvra-blue bg-synvra-blue/10 text-white'
-                    : 'border-synvra-white/10 text-synvra-gray-300 hover:border-synvra-blue/50'
-                }`}
-              >
-                <input
-                  type="checkbox"
-                  className="hidden"
-                  checked={formData.services.includes(service)}
-                  onChange={() => handleServiceToggle(service)}
-                />
-                <span>{service}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label htmlFor="budget" className="block text-sm font-medium text-synvra-gray-300 mb-2">
@@ -333,6 +308,22 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
         </div>
 
         <div>
+          <label htmlFor="referredBy" className="block text-sm font-medium text-synvra-gray-300 mb-2">
+            How did you hear about us? *
+          </label>
+          <input
+            type="text"
+            id="referredBy"
+            name="referredBy"
+            required
+            value={formData.referredBy}
+            onChange={handleChange}
+            className="w-full px-4 py-2 bg-synvra-black/50 border border-synvra-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-synvra-blue text-white"
+            placeholder="Enter the name of the person who referred you or where you found us"
+          />
+        </div>
+
+        <div>
           <label htmlFor="description" className="block text-sm font-medium text-synvra-gray-300 mb-2">
             Project Description * <span className="text-synvra-gray-400 text-xs">(min 100 characters)</span>
           </label>
@@ -350,6 +341,34 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
           />
           <div className="mt-2 text-sm text-synvra-gray-400 flex justify-end">
             {formData.description.length} / 50,000 characters
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-synvra-gray-300 mb-2">
+              Services Required *
+            </label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {services.map(service => (
+                <label
+                  key={service}
+                  className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
+                    formData.services.includes(service)
+                      ? 'border-synvra-blue bg-synvra-blue/10 text-white'
+                      : 'border-synvra-white/10 text-synvra-gray-300 hover:border-synvra-blue/50'
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    className="hidden"
+                    checked={formData.services.includes(service)}
+                    onChange={() => handleServiceToggle(service)}
+                  />
+                  <span>{service}</span>
+                </label>
+              ))}
+            </div>
           </div>
         </div>
 

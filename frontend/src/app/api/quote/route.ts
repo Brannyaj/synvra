@@ -57,11 +57,12 @@ export async function POST(request: Request) {
       budget, 
       timeline, 
       description,
-      services 
+      services,
+      referredBy 
     } = requestData;
 
     // Validate required fields
-    if (!name || !email || !projectType || !budget || !timeline || !description || !services || services.length === 0) {
+    if (!name || !email || !projectType || !budget || !timeline || !description || !services || services.length === 0 || !referredBy) {
       return NextResponse.json(
         { 
           status: 'error',
@@ -109,6 +110,7 @@ Phone: ${phone || 'Not provided'}
 Budget: ${budget}
 Timeline: ${timeline}
 Services: ${services.join(', ')}
+${referredBy ? `Referred By: ${referredBy}` : ''}
 
 Description:
 ${description}
