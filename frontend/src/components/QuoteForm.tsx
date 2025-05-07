@@ -334,22 +334,6 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
         </div>
 
         <div>
-          <label htmlFor="referredBy" className="block text-sm font-medium text-synvra-gray-300 mb-2">
-            How did you hear about us? *
-          </label>
-          <input
-            type="text"
-            id="referredBy"
-            name="referredBy"
-            required
-            value={formData.referredBy}
-            onChange={handleChange}
-            className="w-full px-4 py-2 bg-synvra-black/50 border border-synvra-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-synvra-blue text-white"
-            placeholder="Enter the name of the person who referred you or where you found us"
-          />
-        </div>
-
-        <div>
           <label htmlFor="description" className="block text-sm font-medium text-synvra-gray-300 mb-2">
             Project Description * <span className="text-synvra-gray-400 text-xs">(min 100 characters)</span>
           </label>
@@ -368,6 +352,22 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
           <div className="mt-2 text-sm text-synvra-gray-400 flex justify-end">
             {formData.description.length} / 50,000 characters
           </div>
+        </div>
+
+        <div>
+          <label htmlFor="referredBy" className="block text-sm font-medium text-synvra-gray-300 mb-2">
+            How did you hear about us? *
+          </label>
+          <input
+            type="text"
+            id="referredBy"
+            name="referredBy"
+            required
+            value={formData.referredBy}
+            onChange={handleChange}
+            className="w-full px-4 py-2 bg-synvra-black/50 border border-synvra-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-synvra-blue text-white"
+            placeholder="Enter the name of the person who referred you or where you found us"
+          />
         </div>
 
         <button
