@@ -257,6 +257,32 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
           </select>
         </div>
 
+        <div>
+          <label className="block text-sm font-medium text-synvra-gray-300 mb-2">
+            Services Required *
+          </label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {services.map(service => (
+              <label
+                key={service}
+                className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
+                  formData.services.includes(service)
+                    ? 'border-synvra-blue bg-synvra-blue/10 text-white'
+                    : 'border-synvra-white/10 text-synvra-gray-300 hover:border-synvra-blue/50'
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  className="hidden"
+                  checked={formData.services.includes(service)}
+                  onChange={() => handleServiceToggle(service)}
+                />
+                <span>{service}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label htmlFor="budget" className="block text-sm font-medium text-synvra-gray-300 mb-2">
@@ -341,34 +367,6 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
           />
           <div className="mt-2 text-sm text-synvra-gray-400 flex justify-end">
             {formData.description.length} / 50,000 characters
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-synvra-gray-300 mb-2">
-              Services Required *
-            </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {services.map(service => (
-                <label
-                  key={service}
-                  className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
-                    formData.services.includes(service)
-                      ? 'border-synvra-blue bg-synvra-blue/10 text-white'
-                      : 'border-synvra-white/10 text-synvra-gray-300 hover:border-synvra-blue/50'
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    className="hidden"
-                    checked={formData.services.includes(service)}
-                    onChange={() => handleServiceToggle(service)}
-                  />
-                  <span>{service}</span>
-                </label>
-              ))}
-            </div>
           </div>
         </div>
 
