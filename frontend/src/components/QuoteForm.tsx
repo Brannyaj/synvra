@@ -370,7 +370,7 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
           />
         </div>
 
-        <div className="mt-16">
+        <div className="mt-24">
           <button
             type="submit"
             disabled={status === 'submitting'}
