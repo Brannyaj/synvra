@@ -370,14 +370,16 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
           />
         </div>
 
-        <button
-          type="submit"
-          disabled={status === 'submitting'}
-          className={`w-full px-8 py-4 bg-synvra-blue text-white rounded-lg font-medium transition-all duration-200
-            ${status === 'submitting' ? 'opacity-50 cursor-not-allowed' : 'hover:bg-opacity-90'}`}
-        >
-          {status === 'submitting' ? 'Sending...' : 'Submit Quote Request'}
-        </button>
+        <div className="mt-8">
+          <button
+            type="submit"
+            disabled={status === 'submitting'}
+            className={`w-full px-8 py-4 bg-synvra-blue text-white rounded-lg font-medium transition-all duration-200
+              ${status === 'submitting' ? 'opacity-50 cursor-not-allowed' : 'hover:bg-opacity-90'}`}
+          >
+            {status === 'submitting' ? 'Sending...' : 'Submit Quote Request'}
+          </button>
+        </div>
       </form>
     </div>
   );
