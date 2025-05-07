@@ -176,7 +176,7 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-synvra-gray-300 mb-2">
-              Name *
+              Full Name *
             </label>
             <input
               type="text"
@@ -186,7 +186,7 @@ export default function QuoteForm({ onClose }: QuoteFormProps) {
               value={formData.name}
               onChange={handleChange}
               className="w-full px-4 py-2 bg-synvra-black/50 border border-synvra-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-synvra-blue text-white"
-              placeholder="Your name"
+              placeholder="Enter your full name"
             />
           </div>
 
