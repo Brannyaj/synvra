@@ -110,12 +110,12 @@ Phone: ${phone || 'Not provided'}
 Budget: ${budget}
 Timeline: ${timeline}
 Services: ${services.join(', ')}
-${referredBy ? `Referred By: ${referredBy}` : ''}
 
 Description:
 ${description}
             `,
-            type: 'quote'
+            type: 'quote',
+            referredBy
           })
         });
       });

@@ -171,11 +171,12 @@ export const generateContactEmail = ({ name }: { name: string }) => {
   };
 };
 
-export const generateNotificationEmail = ({ name, email, message, type }: { 
+export const generateNotificationEmail = ({ name, email, message, type, referredBy }: { 
   name: string; 
   email: string; 
   message: string;
   type: 'quote' | 'contact';
+  referredBy?: string;
 }) => {
   const content = `
     <div class="content">
@@ -184,6 +185,7 @@ export const generateNotificationEmail = ({ name, email, message, type }: {
       <div class="steps">
         <p style="margin: 0 0 10px;"><strong>Name:</strong> ${name}</p>
         <p style="margin: 0 0 10px;"><strong>Email:</strong> ${email}</p>
+        ${type === 'quote' && referredBy ? `<p style="margin: 0 0 10px;"><strong>How did you hear about us?</strong> ${referredBy}</p>` : ''}
         <p style="margin: 0 0 10px;"><strong>Message:</strong></p>
         <p style="margin: 0; white-space: pre-wrap;">${message}</p>
       </div>
