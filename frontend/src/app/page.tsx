@@ -127,9 +127,9 @@ export default function Home() {
                 className="button-primary w-full py-2"
               >
                 Get Started
-              </button>
+      </button>
             </div>
-          </div>
+      </div>
         )}
       </nav>
 
@@ -141,9 +141,9 @@ export default function Home() {
         <div className="container mx-auto px-4 py-24 md:py-32 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-8 md:mb-10 leading-tight">
-              Transforming Ideas into
-              <span className="text-gradient"> Digital Excellence</span>
-        </h1>
+              Building software that
+              <span className="text-gradient"> exceed expectations</span>
+            </h1>
             <p className="text-lg md:text-xl lg:text-2xl text-synvra-gray-300 mb-10 md:mb-12 leading-relaxed max-w-3xl mx-auto">
               From concept to code, we make it happen. Partner with us today to bring your vision to life.
             </p>
