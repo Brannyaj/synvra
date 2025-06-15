@@ -122,9 +122,9 @@ export default function Home() {
                 className="button-primary w-full py-2"
               >
                 Get Started
-              </button>
+      </button>
             </div>
-          </div>
+      </div>
         )}
       </nav>
 
@@ -135,11 +135,9 @@ export default function Home() {
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-8 md:mb-10 leading-tight">
               Transforming Ideas into
               <span className="text-gradient"> Digital Excellence</span>
-            </h1>
+        </h1>
             <p className="text-lg md:text-xl lg:text-2xl text-synvra-gray-300 mb-10 md:mb-12 leading-relaxed max-w-3xl mx-auto">
-              Welcome to Synvra, where innovation meets impact. We craft game-changing software solutions 
-              that don't just meet expectations—they redefine them. Partner with us to unlock your 
-              business's full potential and achieve measurable, lasting growth.
+              From concept to code, we make it happen. Partner with us today to bring your vision to life.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16 md:mb-20">
               <button 
@@ -606,7 +604,7 @@ export default function Home() {
                   <p className="text-synvra-gray-200 mb-8 flex-grow">
                     {testimonial.quote}
                   </p>
-                  <div>
+          <div>
                     <div className="text-synvra-white font-bold">{testimonial.author}</div>
                     <div className="text-synvra-gray-300">{testimonial.position}</div>
                     <div className="text-synvra-blue">{testimonial.company}</div>
@@ -820,8 +818,8 @@ export default function Home() {
                         </span>
                       ))}
                     </div>
-                  </div>
-                  <div>
+          </div>
+          <div>
                     <h4 className="text-lg font-semibold text-synvra-white mb-4">Key Impact</h4>
                     <ul className="space-y-4">
                       {study.impact.map((item, i) => (
@@ -920,8 +918,8 @@ export default function Home() {
                   <div key={index} className="flex gap-4">
                     <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-synvra-blue/10 flex items-center justify-center">
                       <div className="w-6 h-6 bg-synvra-blue rounded-full" />
-                    </div>
-                    <div>
+          </div>
+          <div>
                       <h3 className="text-xl font-bold text-synvra-white mb-2">{item.title}</h3>
                       <p className="text-synvra-gray-300">{item.description}</p>
                     </div>
@@ -999,9 +997,9 @@ export default function Home() {
               <Link href="/terms" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Terms of Service</Link>
               <Link href="/cookies" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Cookie Policy</Link>
               <Link href="/sitemap.xml" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Sitemap</Link>
-            </div>
-          </div>
         </div>
+      </div>
+    </div>
       </footer>
 
       <Script
