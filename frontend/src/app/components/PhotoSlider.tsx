@@ -5,22 +5,22 @@ import Image from 'next/image';
 
 const slides = [
   {
-    image: '/images/slider/tech-innovation.jpg',
+    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475',
     title: 'Innovative Solutions',
     description: 'From concept to code, we make it happen. Partner with us today to bring your vision to life.'
   },
   {
-    image: '/images/slider/digital-transformation.jpg',
+    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b',
     title: 'Digital Transformation',
     description: 'Transform your business with cutting-edge technology and expert guidance.'
   },
   {
-    image: '/images/slider/cloud-solutions.jpg',
+    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8',
     title: 'Cloud Solutions',
     description: 'Scale your operations with our robust cloud infrastructure and services.'
   },
   {
-    image: '/images/slider/ai-ml.jpg',
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995',
     title: 'AI & Machine Learning',
     description: 'Harness the power of AI to drive innovation and growth.'
   }
@@ -28,11 +28,12 @@ const slides = [
 
 export default function PhotoSlider() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000); // Change slide every 5 seconds
+    }, 5000);
 
     return () => clearInterval(timer);
   }, []);
@@ -55,6 +56,9 @@ export default function PhotoSlider() {
               fill
               className="object-cover"
               priority={index === 0}
+              quality={100}
+              sizes="100vw"
+              onLoadingComplete={() => setIsLoading(false)}
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30" />
           </div>
@@ -82,6 +86,13 @@ export default function PhotoSlider() {
           </div>
         </div>
       ))}
+
+      {/* Loading State */}
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+          <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      )}
 
       {/* Navigation Dots */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-3">
