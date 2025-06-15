@@ -122,6 +122,24 @@ export default function RootLayout({
             gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
               page_path: window.location.pathname,
             });
+
+            // Add analytics consent management
+            window.updateAnalyticsConsent = function(granted) {
+              if (granted) {
+                gtag('consent', 'update', {
+                  'analytics_storage': 'granted'
+                });
+              } else {
+                gtag('consent', 'update', {
+                  'analytics_storage': 'denied'
+                });
+              }
+            };
+
+            // Initialize with denied consent by default
+            gtag('consent', 'default', {
+              'analytics_storage': 'denied'
+            });
           `}
         </Script>
         {/* SiteNavigationElement Schema */}
