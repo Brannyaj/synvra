@@ -140,23 +140,23 @@ export default function Home() {
       <section className="min-h-screen relative flex items-center justify-center overflow-hidden">
         <div className="container mx-auto px-4 py-24 md:py-32 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-8 md:mb-10 leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 leading-tight">
               Building software that
               <span className="text-gradient"> exceed expectations</span>
             </h1>
-            <p className="text-lg md:text-xl lg:text-2xl text-synvra-gray-300 mb-10 md:mb-12 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-base md:text-lg lg:text-xl text-synvra-gray-300 mb-8 md:mb-10 leading-relaxed max-w-3xl mx-auto">
               From concept to code, we make it happen. Partner with us today to bring your vision to life.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16 md:mb-20">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 md:mb-16">
               <button 
                 onClick={handleGetStarted}
-                className="button-primary text-lg px-8 py-4"
+                className="button-primary text-base px-6 py-3"
               >
                 Get Started
               </button>
               <Link 
                 href="/portfolio" 
-                className="button-secondary text-lg px-8 py-4"
+                className="button-secondary text-base px-6 py-3"
               >
                 View Our Work
               </Link>
@@ -886,8 +886,8 @@ export default function Home() {
               }
             ].map((industry, index) => (
               <div key={index} className="glass-card p-6 hover:border-synvra-blue/30 transition-colors">
-                <h3 className="text-xl font-bold text-synvra-white mb-4">{industry.industry}</h3>
-                <p className="text-synvra-gray-300 mb-6">{industry.description}</p>
+                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-synvra-white mb-4">{industry.industry}</h3>
+                <p className="text-sm md:text-base text-synvra-gray-300 mb-4">{industry.description}</p>
                 <ul className="space-y-3">
                   {industry.expertise.map((item, i) => (
                     <li key={i} className="flex items-center text-synvra-gray-200">
@@ -971,8 +971,8 @@ export default function Home() {
               </p>
             </div>
             <div>
-              <h3 className="text-lg font-bold text-synvra-white mb-4">Services</h3>
-              <ul className="space-y-2">
+              <h3 className="text-lg md:text-xl font-bold text-synvra-white mb-4">Services</h3>
+              <ul className="space-y-2 text-sm md:text-base">
                 <li><Link href="/services/web-applications" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Web Development</Link></li>
                 <li><Link href="/services/mobile-development" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Mobile Apps</Link></li>
                 <li><Link href="/services/cloud-devops" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Cloud Solutions</Link></li>
@@ -980,8 +980,8 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-bold text-synvra-white mb-4">Company</h3>
-              <ul className="space-y-2">
+              <h3 className="text-lg md:text-xl font-bold text-synvra-white mb-4">Company</h3>
+              <ul className="space-y-2 text-sm md:text-base">
                 <li><Link href="/about" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">About Us</Link></li>
                 <li><Link href="/careers" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Careers</Link></li>
                 <li><Link href="/blog" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Blog</Link></li>
@@ -989,8 +989,8 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-bold text-synvra-white mb-4">Connect</h3>
-              <ul className="space-y-2">
+              <h3 className="text-lg md:text-xl font-bold text-synvra-white mb-4">Connect</h3>
+              <ul className="space-y-2 text-sm md:text-base">
                 <li><Link href="https://twitter.com/synvra" target="_blank" rel="noopener noreferrer" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Twitter</Link></li>
                 <li><Link href="https://linkedin.com/company/synvra" target="_blank" rel="noopener noreferrer" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">LinkedIn</Link></li>
                 <li><Link href="https://github.com/synvra" target="_blank" rel="noopener noreferrer" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">GitHub</Link></li>
