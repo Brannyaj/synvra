@@ -96,18 +96,18 @@ export default function PhotoSlider() {
           {/* Content */}
           <div className="relative h-full flex items-center">
             <div className="container mx-auto px-4">
-              <div className="max-w-3xl">
-                <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6">
+              <div className="max-w-2xl">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
                   {slide.title}
                 </h1>
-                <p className="text-lg md:text-xl lg:text-2xl text-white/90 mb-8">
+                <p className="text-sm md:text-base lg:text-lg text-white/90 mb-6">
                   {slide.description}
                 </p>
-                <div className="flex gap-4">
-                  <button className="button-primary text-lg px-8 py-4">
+                <div className="flex gap-3">
+                  <button className="button-primary text-sm md:text-base px-4 md:px-6 py-2 md:py-3">
                     Get Started
                   </button>
-                  <button className="button-secondary text-lg px-8 py-4">
+                  <button className="button-secondary text-sm md:text-base px-4 md:px-6 py-2 md:py-3">
                     Learn More
                   </button>
                 </div>
@@ -120,18 +120,18 @@ export default function PhotoSlider() {
       {/* Loading State */}
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-          <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-10 h-10 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
 
       {/* Navigation Dots */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-3">
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide ? 'bg-white scale-125' : 'bg-white/50'
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              index === currentSlide ? 'bg-white scale-110' : 'bg-white/50'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
