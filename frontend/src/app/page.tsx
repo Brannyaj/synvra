@@ -191,645 +191,228 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-radial from-synvra-blue/20 to-transparent opacity-30"></div>
       </section>
 
-      {/* Company Highlights */}
-      <section className="py-16 relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            {[
-              { number: '500+', label: 'Enterprise Clients', icon: '🏢' },
-              { number: '99.9%', label: 'Client Satisfaction', icon: '⭐' },
-              { number: '24/7', label: 'Technical Support', icon: '🛟' }
-            ].map((stat, index) => (
-              <div key={index} className="glass-card p-6 hover:border-synvra-blue/30 transition-all duration-300">
-                <div className="text-3xl mb-3">{stat.icon}</div>
-                <div className="text-3xl font-bold text-synvra-white mb-2">{stat.number}</div>
-                <div className="text-synvra-gray-300">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Elite Development Team */}
+      {/* Company Highlights & Services Section - Side by Side */}
       <section className="py-20 relative overflow-hidden">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="section-heading">Elite Global Development Team</h2>
-              <p className="text-xl text-synvra-gray-300 mb-8">
-                Our team consists of 200+ exceptional full stack developers, carefully selected from the top 1% of global talent.
-              </p>
-              <div className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Company Highlights */}
+            <div className="space-y-8">
+              <h2 className="section-heading">Why Choose Synvra?</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[
-                  {
-                    title: 'Rigorous Selection',
-                    description: 'Only 1% of applicants meet our stringent technical and professional standards.',
-                    icon: '🎯'
-                  },
-                  {
-                    title: 'Diverse Expertise',
-                    description: 'Specialists across all major technologies and domains, ensuring comprehensive solutions.',
-                    icon: '🌐'
-                  },
-                  {
-                    title: 'Continuous Growth',
-                    description: 'Regular training and certification programs to stay ahead of technology trends.',
-                    icon: '📈'
-                  },
-                  {
-                    title: 'Global Collaboration',
-                    description: 'Teams distributed across multiple time zones for round-the-clock development and support.',
-                    icon: '🌍'
-                  }
-                ].map((item, index) => (
-                  <div key={index} className="flex gap-4 glass-card p-6 hover:border-synvra-blue/30 transition-all duration-300">
-                    <div className="text-4xl">{item.icon}</div>
-                    <div>
-                      <h3 className="text-xl font-bold text-synvra-white mb-2">{item.title}</h3>
-                      <p className="text-synvra-gray-300">{item.description}</p>
-                    </div>
+                  { number: '500+', label: 'Enterprise Clients', icon: '🏢' },
+                  { number: '99.9%', label: 'Client Satisfaction', icon: '⭐' },
+                  { number: '24/7', label: 'Technical Support', icon: '🛟' },
+                  { number: '200+', label: 'Elite Developers', icon: '👨‍💻' }
+                ].map((stat, index) => (
+                  <div key={index} className="glass-card p-6 hover:border-synvra-blue/30 transition-all duration-300">
+                    <div className="text-3xl mb-3">{stat.icon}</div>
+                    <div className="text-3xl font-bold text-synvra-white mb-2">{stat.number}</div>
+                    <div className="text-synvra-gray-300">{stat.label}</div>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="relative">
-              <div className="aspect-square rounded-2xl overflow-hidden glass-card p-8">
-                <div className="relative h-full">
-                  <div className="absolute top-0 left-0 w-full h-full">
-                    <div className="grid grid-cols-4 gap-4 h-full">
-                      {[
-                        'https://images.unsplash.com/photo-1560250097-0b93528c311a',
-                        'https://images.unsplash.com/photo-1556157382-97eda2d62296',
-                        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d',
-                        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
-                        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e',
-                        'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79',
-                        'https://images.unsplash.com/photo-1548544149-4835e62ee5b3',
-                        'https://images.unsplash.com/photo-1545167622-3a6ac756afa4',
-                        'https://images.unsplash.com/photo-1562788869-4ed32648eb72',
-                        'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7',
-                        'https://images.unsplash.com/photo-1520341280432-4749d4d7bcf9',
-                        'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6',
-                        'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d',
-                        'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c',
-                        'https://images.unsplash.com/photo-1506795660198-e95c6320213d',
-                        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d'
-                      ].map((imageUrl, i) => (
-                        <div
-                          key={i}
-                          className="relative aspect-square rounded-lg overflow-hidden group"
-                        >
-                          <Image
-                            src={imageUrl}
-                            alt={`Team member ${i + 1}`}
-                            fill
-                            className="object-cover transition-transform duration-300 group-hover:scale-110"
-                            sizes="(max-width: 768px) 25vw, 20vw"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.src = 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d';
-                            }}
-                          />
-                          <div className="absolute inset-0 bg-synvra-blue/10 group-hover:bg-synvra-blue/20 transition-colors duration-300" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 flex items-center justify-center bg-synvra-black/60 backdrop-blur-sm">
-                    <div className="text-center">
-                      <div className="text-6xl font-bold text-gradient mb-4">200+</div>
-                      <div className="text-xl text-synvra-white">Elite Full Stack Developers</div>
-                    </div>
-                  </div>
-                </div>
+
+            {/* Services Preview */}
+            <div className="space-y-8">
+              <h2 className="section-heading">Our Services</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[
+                  {
+                    title: 'Enterprise Solutions',
+                    icon: '🏢',
+                    href: '/services/enterprise-solutions'
+                  },
+                  {
+                    title: 'AI & Machine Learning',
+                    icon: '🤖',
+                    href: '/services/ai-machine-learning'
+                  },
+                  {
+                    title: 'Web Applications',
+                    icon: '🌐',
+                    href: '/services/web-applications'
+                  },
+                  {
+                    title: 'Mobile Development',
+                    icon: '📱',
+                    href: '/services/mobile-development'
+                  }
+                ].map((service, index) => (
+                  <Link 
+                    key={index}
+                    href={service.href}
+                    className="glass-card p-6 hover:border-synvra-blue/30 transition-all duration-300 group"
+                  >
+                    <div className="text-3xl mb-3">{service.icon}</div>
+                    <h3 className="text-xl font-bold text-synvra-white group-hover:text-synvra-blue transition-colors">
+                      {service.title}
+                      <span className="inline-block ml-2 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                    </h3>
+                  </Link>
+                ))}
               </div>
-              <div className="absolute -top-4 -right-4 w-32 h-32 bg-synvra-blue/20 rounded-full blur-2xl" />
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-synvra-blue/20 rounded-full blur-2xl" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Services Section */}
-      <section id="services" className="py-20 relative overflow-hidden">
+      {/* Elite Team & Technology Stack - Side by Side */}
+      <section className="py-20 relative overflow-hidden">
         <div className="container mx-auto px-4">
-          <h2 className="section-heading text-center">Our Services</h2>
-          <p className="section-subheading text-center mb-12">
-            Comprehensive software solutions for modern enterprises
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: 'Enterprise Solutions',
-                description: 'Custom ERP, CRM, and business process automation systems tailored to your workflow.',
-                icon: '🏢',
-                features: ['Business Process Automation', 'Data Analytics', 'Enterprise Integration'],
-                href: '/services/enterprise-solutions'
-              },
-              {
-                title: 'AI & Machine Learning',
-                description: 'Intelligent solutions powered by advanced AI algorithms and machine learning models.',
-                icon: '🤖',
-                features: ['Predictive Analytics', 'Natural Language Processing', 'Computer Vision'],
-                href: '/services/ai-machine-learning'
-              },
-              {
-                title: 'Web Applications',
-                description: 'Scalable, responsive web applications with modern architecture and seamless UX.',
-                icon: '🌐',
-                features: ['Progressive Web Apps', 'SaaS Platforms', 'E-commerce Solutions'],
-                href: '/services/web-applications'
-              },
-              {
-                title: 'Mobile Development',
-                description: 'Native and cross-platform mobile apps for iOS and Android with cutting-edge features.',
-                icon: '📱',
-                features: ['iOS & Android Apps', 'Cross-platform Development', 'Mobile Commerce'],
-                href: '/services/mobile-development'
-              },
-              {
-                title: 'Cloud & DevOps',
-                description: 'Robust cloud infrastructure and DevOps solutions for optimal performance and scalability.',
-                icon: '☁️',
-                features: ['Cloud Migration', 'Infrastructure Automation', 'Continuous Integration'],
-                href: '/services/cloud-devops'
-              },
-              {
-                title: 'Blockchain',
-                description: 'Secure and transparent blockchain solutions for modern business needs.',
-                icon: '🔗',
-                features: ['Smart Contracts', 'DeFi Applications', 'NFT Platforms'],
-                href: '/services/blockchain'
-              },
-              {
-                title: 'IoT Solutions',
-                description: 'Connected device ecosystems with real-time monitoring and control capabilities.',
-                icon: '📡',
-                features: ['Device Management', 'Real-time Analytics', 'Industrial IoT'],
-                href: '/services/iot-solutions'
-              },
-              {
-                title: 'Cybersecurity',
-                description: 'Advanced security solutions to protect your digital assets and infrastructure.',
-                icon: '🔒',
-                features: ['Threat Detection', 'Security Audits', 'Compliance Solutions'],
-                href: '/services/cybersecurity'
-              },
-              {
-                title: 'Data Engineering',
-                description: 'Robust data pipelines and analytics solutions for informed decision-making.',
-                icon: '📊',
-                features: ['Big Data Processing', 'Data Warehousing', 'Business Intelligence'],
-                href: '/services/data-engineering'
-              }
-            ].map((service, index) => (
-              <div 
-                key={index}
-                className="glass-card p-6 hover:border-synvra-blue/30 transition-all duration-300 hover:scale-[1.02] cursor-pointer group relative"
-              >
-                <div className="text-4xl mb-4">{service.icon}</div>
-                <h3 className="text-xl font-bold mb-3 text-synvra-white flex items-center gap-2">
-                  {service.title}
-                  <span className="text-synvra-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
-                </h3>
-                <p className="text-synvra-gray-300 mb-4">{service.description}</p>
-                <ul className="space-y-2 mb-6">
-                  {service.features.map((feature, i) => (
-                    <li key={i} className="flex items-center text-synvra-gray-200">
-                      <div className="w-1.5 h-1.5 bg-synvra-blue rounded-full mr-2" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-auto">
-                  <Link 
-                    href={service.href}
-                    className="text-synvra-blue hover:text-synvra-white transition-colors inline-flex items-center gap-2"
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Elite Team */}
+            <div className="space-y-8">
+              <h2 className="section-heading">Elite Global Development Team</h2>
+              <p className="text-xl text-synvra-gray-300">
+                Our team consists of 200+ exceptional full stack developers, carefully selected from the top 1% of global talent.
+              </p>
+              <div className="grid grid-cols-4 gap-4">
+                {[
+                  'https://images.unsplash.com/photo-1560250097-0b93528c311a',
+                  'https://images.unsplash.com/photo-1556157382-97eda2d62296',
+                  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d',
+                  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
+                  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e',
+                  'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79',
+                  'https://images.unsplash.com/photo-1548544149-4835e62ee5b3',
+                  'https://images.unsplash.com/photo-1545167622-3a6ac756afa4'
+                ].map((imageUrl, i) => (
+                  <div
+                    key={i}
+                    className="relative aspect-square rounded-lg overflow-hidden group"
                   >
-                    Learn More
-                    <span className="text-synvra-blue group-hover:translate-x-1 transition-transform duration-300">→</span>
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Projects */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <h2 className="section-heading text-center">Featured Projects</h2>
-          <p className="section-subheading text-center mb-12">
-            Transforming businesses through innovative solutions
-          </p>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {[
-              {
-                title: "Global Payment Platform",
-                description: "Built a scalable payment infrastructure processing $2B+ annually for a leading fintech company.",
-                impact: "500K+ daily transactions",
-                tech: ["React", "Node.js", "PostgreSQL", "AWS"],
-                category: "FinTech",
-                image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e",
-                icon: "💳",
-                href: "/projects/payment-platform"
-              },
-              {
-                title: "AI-Powered Healthcare System",
-                description: "Developed an intelligent healthcare platform serving 1000+ medical facilities.",
-                impact: "10M+ patient records managed",
-                tech: ["Python", "TensorFlow", "MongoDB", "Azure"],
-                category: "Healthcare",
-                image: "https://images.unsplash.com/photo-1551076805-e1869033e561",
-                icon: "🏥",
-                href: "/projects/healthcare-system"
-              },
-              {
-                title: "Smart Manufacturing Platform",
-                description: "IoT solution for predictive maintenance and real-time monitoring of industrial equipment.",
-                impact: "45% reduction in downtime",
-                tech: ["IoT", "Azure IoT", "React", "TypeScript"],
-                category: "Industrial IoT",
-                image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
-                icon: "🏭",
-                href: "/projects/manufacturing"
-              },
-              {
-                title: "E-commerce Ecosystem",
-                description: "End-to-end e-commerce platform with AI-powered recommendations and real-time analytics.",
-                impact: "300% increase in sales",
-                tech: ["Next.js", "GraphQL", "AWS", "Redis"],
-                category: "E-commerce",
-                image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3",
-                icon: "🛍️",
-                href: "/projects/ecommerce"
-              }
-            ].map((project, index) => (
-              <Link 
-                key={index} 
-                href={project.href}
-                className="block glass-card overflow-hidden hover:border-synvra-blue/30 transition-all duration-300 hover:scale-[1.02] group"
-              >
-                <div className="relative h-64 mb-8">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    width={1200}
-                    height={800}
-                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-                    priority={index < 2}
-                    loading={index < 2 ? 'eager' : 'lazy'}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = 'https://images.unsplash.com/photo-1518770660439-4636190af475';
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-synvra-black/90" />
-                  <div className="absolute bottom-4 left-4">
-                    <span className="px-3 py-1 rounded-full bg-synvra-blue/10 text-synvra-gray-200 text-sm backdrop-blur-sm">
-                      {project.category}
-                    </span>
+                    <Image
+                      src={imageUrl}
+                      alt={`Team member ${i + 1}`}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-110"
+                      sizes="(max-width: 768px) 25vw, 20vw"
+                    />
+                    <div className="absolute inset-0 bg-synvra-blue/10 group-hover:bg-synvra-blue/20 transition-colors duration-300" />
                   </div>
-                </div>
-                <div className="p-8">
-                  <div className="flex items-start gap-6">
-                    <div className="text-4xl">{project.icon}</div>
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-bold text-synvra-white mb-4 group-hover:text-synvra-blue transition-colors">
-                        {project.title}
-                        <span className="inline-block ml-2 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                      </h3>
-                      <p className="text-synvra-gray-300 mb-4">{project.description}</p>
-                      <div className="flex items-center text-synvra-blue mb-4">
-                        <span className="text-lg">🎯</span>
-                        <span className="ml-2">{project.impact}</span>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {project.tech.map((tech, i) => (
-                          <span 
-                            key={i} 
-                            className="px-3 py-1 rounded-full bg-synvra-blue/10 text-synvra-gray-200 text-sm"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Technology Stack */}
+            <div className="space-y-8">
+              <h2 className="section-heading">Our Technology Stack</h2>
+              <div className="grid grid-cols-2 gap-6">
+                {[
+                  {
+                    category: 'Frontend',
+                    technologies: ['React', 'Next.js', 'Vue.js', 'TypeScript'],
+                    icon: '🎨'
+                  },
+                  {
+                    category: 'Backend',
+                    technologies: ['Node.js', 'Python', 'Java', 'Go'],
+                    icon: '⚙️'
+                  },
+                  {
+                    category: 'Database',
+                    technologies: ['PostgreSQL', 'MongoDB', 'Redis'],
+                    icon: '🗄️'
+                  },
+                  {
+                    category: 'DevOps',
+                    technologies: ['AWS', 'Docker', 'Kubernetes'],
+                    icon: '🚀'
+                  }
+                ].map((stack, index) => (
+                  <div key={index} className="glass-card p-6 hover:border-synvra-blue/30 transition-colors">
+                    <div className="text-3xl mb-4">{stack.icon}</div>
+                    <h3 className="text-xl font-bold text-synvra-white mb-4">{stack.category}</h3>
+                    <ul className="space-y-2">
+                      {stack.technologies.map((tech, i) => (
+                        <li key={i} className="text-synvra-gray-300">{tech}</li>
+                      ))}
+                    </ul>
                   </div>
-                </div>
-              </Link>
-            ))}
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Value Proposition */}
+      {/* Featured Projects & Case Studies - Side by Side */}
       <section className="py-20 relative overflow-hidden">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="section-heading">Why Partner With Synvra?</h2>
-            <p className="text-xl text-synvra-gray-300">
-              We combine technical excellence with innovative thinking to deliver transformative digital solutions.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: 'Technical Excellence',
-                description: 'Our team of elite developers and architects brings decades of combined experience in building enterprise-grade solutions.',
-                icon: '💡',
-                points: ['Industry-leading expertise', 'Best practices & standards', 'Continuous innovation']
-              },
-              {
-                title: 'Proven Methodology',
-                description: 'Our battle-tested development process ensures consistent quality and timely delivery of your projects.',
-                icon: '📈',
-                points: ['Agile development', 'Regular updates', 'Quality assurance']
-              },
-              {
-                title: 'Long-term Partnership',
-                description: 'We are not just a service provider – we are your technology partner committed to your long-term success.',
-                icon: '🤝',
-                points: ['Dedicated support', 'Strategic consulting', 'Growth-focused solutions']
-              }
-            ].map((value, index) => (
-              <div key={index} className="glass-card p-8 hover:border-synvra-blue/30 transition-all duration-300">
-                <div className="text-4xl mb-6">{value.icon}</div>
-                <h3 className="text-xl font-bold text-synvra-white mb-4">{value.title}</h3>
-                <p className="text-synvra-gray-300 mb-6">{value.description}</p>
-                <ul className="space-y-3">
-                  {value.points.map((point, i) => (
-                    <li key={i} className="flex items-center text-synvra-gray-200">
-                      <div className="w-1.5 h-1.5 bg-synvra-blue rounded-full mr-2" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Client Testimonials */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <h2 className="section-heading text-center">What Our Clients Say</h2>
-          <p className="section-subheading text-center mb-12">
-            Success stories from industry leaders
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              {
-                quote: "Synvra's expertise in AI and machine learning helped us reduce operational costs by 40% while improving customer satisfaction scores.",
-                author: "Sarah Chen",
-                position: "CTO",
-                company: "TechCorp Global"
-              },
-              {
-                quote: "The team's technical prowess and commitment to quality delivered a solution that exceeded our expectations and transformed our business.",
-                author: "Michael Rodriguez",
-                position: "Director of Innovation",
-                company: "FinTech Solutions"
-              },
-              {
-                quote: "Working with Synvra has been a game-changer. Their cloud solutions helped us scale our operations seamlessly across multiple regions.",
-                author: "Emma Thompson",
-                position: "Head of Operations",
-                company: "E-commerce Leaders"
-              },
-              {
-                quote: "The dedication and expertise of the Synvra team made our digital transformation journey smooth and successful.",
-                author: "David Park",
-                position: "CEO",
-                company: "Healthcare Innovations"
-              }
-            ].map((testimonial, index) => (
-              <div key={index} className="glass-card p-8 hover:border-synvra-blue/30 transition-all duration-300">
-                <div className="flex flex-col h-full">
-                  <div className="text-4xl mb-6">"</div>
-                  <p className="text-synvra-gray-200 mb-8 flex-grow">
-                    {testimonial.quote}
-                  </p>
-          <div>
-                    <div className="text-synvra-white font-bold">{testimonial.author}</div>
-                    <div className="text-synvra-gray-300">{testimonial.position}</div>
-                    <div className="text-synvra-blue">{testimonial.company}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Work Section */}
-      <section id="work" className="py-20 relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <h2 className="section-heading text-center">Our Work</h2>
-          <p className="section-subheading text-center">
-            Delivering excellence across industries
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: 'E-commerce Platform',
-                category: 'Web Development',
-                image: 'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1',
-                description: 'Modern e-commerce solution with AI-powered recommendations'
-              },
-              {
-                title: 'Healthcare App',
-                category: 'Mobile Development',
-                image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d',
-                description: 'Patient-centric healthcare management system'
-              },
-              {
-                title: 'Cloud Infrastructure',
-                category: 'Cloud Solutions',
-                image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8',
-                description: 'Scalable cloud architecture for enterprise'
-              },
-              {
-                title: 'FinTech Dashboard',
-                category: 'Web Development',
-                image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f',
-                description: 'Real-time financial analytics platform'
-              },
-              {
-                title: 'IoT Management',
-                category: 'IoT Solutions',
-                image: 'https://images.unsplash.com/photo-1518770660439-4636190af475',
-                description: 'Industrial IoT monitoring system'
-              },
-              {
-                title: 'AI Analytics',
-                category: 'Machine Learning',
-                image: 'https://images.unsplash.com/photo-1509228627152-72ae9ae6848d',
-                description: 'Advanced data analytics with AI'
-              }
-            ].map((project, index) => (
-              <div key={index} className="group glass-card p-4 cursor-pointer hover:scale-[1.02] transition-all duration-300">
-                <div className="relative aspect-video rounded-lg overflow-hidden mb-4">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    width={800}
-                    height={600}
-                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
-                    priority={index < 3}
-                    loading={index < 3 ? 'eager' : 'lazy'}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = 'https://images.unsplash.com/photo-1518770660439-4636190af475';
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-synvra-blue/10 group-hover:bg-synvra-blue/20 transition-colors duration-300" />
-                </div>
-                <h3 className="text-xl font-bold text-synvra-white mb-2">{project.title}</h3>
-                <p className="text-synvra-gray-300 mb-2">{project.description}</p>
-                <span className="inline-block px-3 py-1 rounded-full bg-synvra-blue/10 text-synvra-gray-200 text-sm">
-                  {project.category}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Technology Stack Section */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <h2 className="section-heading text-center">Our Technology Stack</h2>
-          <p className="section-subheading text-center mb-12">
-            Leveraging cutting-edge technologies to build robust solutions
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                category: 'Frontend',
-                technologies: ['React', 'Next.js', 'Vue.js', 'TypeScript', 'Tailwind CSS'],
-                icon: '🎨'
-              },
-              {
-                category: 'Backend',
-                technologies: ['Node.js', 'Python', 'Java', 'Go', 'GraphQL'],
-                icon: '⚙️'
-              },
-              {
-                category: 'Database',
-                technologies: ['PostgreSQL', 'MongoDB', 'Redis', 'Elasticsearch'],
-                icon: '🗄️'
-              },
-              {
-                category: 'DevOps',
-                technologies: ['AWS', 'Docker', 'Kubernetes', 'CI/CD', 'Terraform'],
-                icon: '🚀'
-              }
-            ].map((stack, index) => (
-              <div key={index} className="glass-card p-6 hover:border-synvra-blue/30 transition-colors">
-                <div className="text-3xl mb-4">{stack.icon}</div>
-                <h3 className="text-xl font-bold text-synvra-white mb-4">{stack.category}</h3>
-                <ul className="space-y-2">
-                  {stack.technologies.map((tech, i) => (
-                    <li key={i} className="text-synvra-gray-300">{tech}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Development Process Section */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <h2 className="section-heading text-center">Our Development Process</h2>
-          <p className="section-subheading text-center mb-12">
-            A systematic approach to delivering exceptional software
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                phase: 'Discovery & Planning',
-                description: 'Deep dive into requirements, market research, and technical feasibility analysis.',
-                steps: ['Requirement Analysis', 'Technical Architecture', 'Project Roadmap']
-              },
-              {
-                phase: 'Design & Development',
-                description: 'Iterative development with continuous feedback and quality assurance.',
-                steps: ['UI/UX Design', 'Agile Development', 'Code Reviews']
-              },
-              {
-                phase: 'Deployment & Support',
-                description: 'Smooth deployment and ongoing maintenance for optimal performance.',
-                steps: ['CI/CD Pipeline', 'Performance Monitoring', '24/7 Support']
-              }
-            ].map((process, index) => (
-              <div key={index} className="glass-card p-8">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 rounded-full bg-synvra-blue/20 flex items-center justify-center text-2xl">
-                    {index + 1}
-                  </div>
-                  <h3 className="text-xl font-bold text-synvra-white ml-4">{process.phase}</h3>
-                </div>
-                <p className="text-synvra-gray-300 mb-6">{process.description}</p>
-                <ul className="space-y-3">
-                  {process.steps.map((step, i) => (
-                    <li key={i} className="flex items-center text-synvra-gray-200">
-                      <div className="w-2 h-2 bg-synvra-blue rounded-full mr-3" />
-                      {step}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Case Studies Section */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <h2 className="section-heading text-center">Case Studies</h2>
-          <p className="section-subheading text-center mb-12">
-            Real-world impact through innovative solutions
-          </p>
-          <div className="space-y-12">
-            {[
-              {
-                title: 'Enterprise E-commerce Platform',
-                client: 'Global Retail Corporation',
-                impact: ['500% increase in online sales', '99.99% uptime', '50% reduction in operational costs'],
-                tech: ['Next.js', 'Node.js', 'PostgreSQL', 'AWS'],
-                description: 'Developed a scalable e-commerce platform handling millions of transactions monthly.'
-              },
-              {
-                title: 'Healthcare Management System',
-                client: 'National Healthcare Provider',
-                impact: ['30% improvement in patient care', '45% reduction in wait times', 'HIPAA compliant'],
-                tech: ['React', 'Python', 'MongoDB', 'Docker'],
-                description: 'Built a comprehensive healthcare management system with real-time patient monitoring.'
-              }
-            ].map((study, index) => (
-              <div key={index} className="glass-card p-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <div>
-                    <h3 className="text-2xl font-bold text-synvra-white mb-2">{study.title}</h3>
-                    <p className="text-synvra-blue mb-4">{study.client}</p>
-                    <p className="text-synvra-gray-300 mb-6">{study.description}</p>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {study.tech.map((tech, i) => (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Featured Projects */}
+            <div className="space-y-8">
+              <h2 className="section-heading">Featured Projects</h2>
+              <div className="space-y-6">
+                {[
+                  {
+                    title: "Global Payment Platform",
+                    description: "Built a scalable payment infrastructure processing $2B+ annually.",
+                    tech: ["React", "Node.js", "PostgreSQL"],
+                    category: "FinTech",
+                    href: "/projects/payment-platform"
+                  },
+                  {
+                    title: "AI-Powered Healthcare System",
+                    description: "Developed an intelligent healthcare platform serving 1000+ facilities.",
+                    tech: ["Python", "TensorFlow", "MongoDB"],
+                    category: "Healthcare",
+                    href: "/projects/healthcare-system"
+                  }
+                ].map((project, index) => (
+                  <Link 
+                    key={index}
+                    href={project.href}
+                    className="block glass-card p-6 hover:border-synvra-blue/30 transition-all duration-300 group"
+                  >
+                    <h3 className="text-xl font-bold text-synvra-white mb-2 group-hover:text-synvra-blue transition-colors">
+                      {project.title}
+                      <span className="inline-block ml-2 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                    </h3>
+                    <p className="text-synvra-gray-300 mb-4">{project.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.map((tech, i) => (
                         <span key={i} className="px-3 py-1 rounded-full bg-synvra-blue/10 text-synvra-gray-200 text-sm">
                           {tech}
                         </span>
                       ))}
                     </div>
-          </div>
-          <div>
-                    <h4 className="text-lg font-semibold text-synvra-white mb-4">Key Impact</h4>
-                    <ul className="space-y-4">
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Case Studies */}
+            <div className="space-y-8">
+              <h2 className="section-heading">Case Studies</h2>
+              <div className="space-y-6">
+                {[
+                  {
+                    title: 'Enterprise E-commerce Platform',
+                    client: 'Global Retail Corporation',
+                    impact: ['500% increase in online sales', '99.99% uptime'],
+                    href: '/case-studies/ecommerce'
+                  },
+                  {
+                    title: 'Healthcare Management System',
+                    client: 'National Healthcare Provider',
+                    impact: ['30% improvement in patient care', '45% reduction in wait times'],
+                    href: '/case-studies/healthcare'
+                  }
+                ].map((study, index) => (
+                  <Link 
+                    key={index}
+                    href={study.href}
+                    className="block glass-card p-6 hover:border-synvra-blue/30 transition-all duration-300 group"
+                  >
+                    <h3 className="text-xl font-bold text-synvra-white mb-2 group-hover:text-synvra-blue transition-colors">
+                      {study.title}
+                      <span className="inline-block ml-2 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                    </h3>
+                    <p className="text-synvra-blue mb-4">{study.client}</p>
+                    <ul className="space-y-2">
                       {study.impact.map((item, i) => (
                         <li key={i} className="flex items-center text-synvra-gray-200">
                           <div className="w-2 h-2 bg-synvra-blue rounded-full mr-3" />
@@ -837,110 +420,9 @@ export default function Home() {
                         </li>
                       ))}
                     </ul>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Industry Expertise Section */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <h2 className="section-heading text-center">Industry Expertise</h2>
-          <p className="section-subheading text-center mb-12">
-            Delivering specialized solutions across diverse sectors
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                industry: 'Healthcare',
-                description: 'HIPAA-compliant solutions for modern healthcare challenges.',
-                expertise: ['Electronic Health Records', 'Telemedicine Platforms', 'Medical Imaging Systems']
-              },
-              {
-                industry: 'FinTech',
-                description: 'Secure and scalable financial technology solutions.',
-                expertise: ['Payment Processing', 'Blockchain Integration', 'Risk Management']
-              },
-              {
-                industry: 'E-commerce',
-                description: 'End-to-end solutions for online retail success.',
-                expertise: ['Marketplace Platforms', 'Inventory Management', 'Payment Gateway Integration']
-              },
-              {
-                industry: 'Enterprise',
-                description: 'Custom solutions for large-scale business operations.',
-                expertise: ['ERP Systems', 'Business Intelligence', 'Workflow Automation']
-              },
-              {
-                industry: 'EdTech',
-                description: 'Innovative solutions for modern education.',
-                expertise: ['Learning Management Systems', 'Virtual Classrooms', 'Student Analytics']
-              },
-              {
-                industry: 'IoT & Manufacturing',
-                description: 'Smart solutions for connected industries.',
-                expertise: ['Industrial IoT', 'Predictive Maintenance', 'Supply Chain Optimization']
-              }
-            ].map((industry, index) => (
-              <div key={index} className="glass-card p-6 hover:border-synvra-blue/30 transition-colors">
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-synvra-white mb-4">{industry.industry}</h3>
-                <p className="text-sm md:text-base text-synvra-gray-300 mb-4">{industry.description}</p>
-                <ul className="space-y-3">
-                  {industry.expertise.map((item, i) => (
-                    <li key={i} className="flex items-center text-synvra-gray-200">
-                      <div className="w-2 h-2 bg-synvra-blue rounded-full mr-3" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="py-20 relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="section-heading">About Synvra</h2>
-              <div className="space-y-6">
-                {[
-                  {
-                    title: 'Our Mission',
-                    description: 'To empower businesses with transformative digital solutions that drive growth and innovation.'
-                  },
-                  {
-                    title: 'Global Presence',
-                    description: 'With teams across multiple continents, we deliver excellence to clients worldwide.'
-                  },
-                  {
-                    title: 'Our Values',
-                    description: 'We believe in innovation, transparency, and building lasting partnerships with our clients.'
-                  }
-                ].map((item, index) => (
-                  <div key={index} className="flex gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-synvra-blue/10 flex items-center justify-center">
-                      <div className="w-6 h-6 bg-synvra-blue rounded-full" />
-          </div>
-          <div>
-                      <h3 className="text-xl font-bold text-synvra-white mb-2">{item.title}</h3>
-                      <p className="text-synvra-gray-300">{item.description}</p>
-                    </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
-            </div>
-            <div className="relative">
-              <div className="aspect-square rounded-2xl overflow-hidden">
-                <div className="w-full h-full bg-gradient-to-br from-synvra-blue/20 to-synvra-white/5 glass-card" />
-              </div>
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-synvra-blue/10 rounded-full blur-2xl" />
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-synvra-blue/10 rounded-full blur-2xl" />
             </div>
           </div>
         </div>
