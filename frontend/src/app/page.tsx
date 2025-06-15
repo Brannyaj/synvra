@@ -258,22 +258,22 @@ export default function Home() {
                   <div className="absolute top-0 left-0 w-full h-full">
                     <div className="grid grid-cols-4 gap-4 h-full">
                       {[
-                        'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d',
-                        'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7',
-                        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d',
-                        'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79',
-                        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
-                        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e',
-                        'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79',
-                        'https://images.unsplash.com/photo-1520341280432-4749d4d7bcf9',
-                        'https://images.unsplash.com/photo-1548544149-4835e62ee5b3',
-                        'https://images.unsplash.com/photo-1545167622-3a6ac756afa4',
-                        'https://images.unsplash.com/photo-1560250097-0b93528c311a',
-                        'https://images.unsplash.com/photo-1562788869-4ed32648eb72',
-                        'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7',
-                        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d',
-                        'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79',
-                        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e'
+                        'https://images.unsplash.com/photo-1560250097-0b93528c311a', // Professional male developer
+                        'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2', // Professional female developer
+                        'https://images.unsplash.com/photo-1556157382-97eda2d62296', // Professional male developer
+                        'https://images.unsplash.com/photo-1580489944761-15a19d654956', // Professional female developer
+                        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d', // Professional male developer
+                        'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e', // Professional female developer
+                        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e', // Professional male developer
+                        'https://images.unsplash.com/photo-1580489944761-15a19d654956', // Professional female developer
+                        'https://images.unsplash.com/photo-1560250097-0b93528c311a', // Professional male developer
+                        'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2', // Professional female developer
+                        'https://images.unsplash.com/photo-1556157382-97eda2d62296', // Professional male developer
+                        'https://images.unsplash.com/photo-1580489944761-15a19d654956', // Professional female developer
+                        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d', // Professional male developer
+                        'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e', // Professional female developer
+                        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e', // Professional male developer
+                        'https://images.unsplash.com/photo-1580489944761-15a19d654956'  // Professional female developer
                       ].map((imageUrl, i) => (
                         <div
                           key={i}
