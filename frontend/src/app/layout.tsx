@@ -283,7 +283,7 @@ export default function RootLayout({
             ])
           }}
         />
-        <Script id="ze-snippet" strategy="afterInteractive">
+        <Script id="zendesk-settings" strategy="afterInteractive">
           {`
             window.zESettings = {
               webWidget: {
@@ -311,7 +311,7 @@ export default function RootLayout({
         </form>
         {children}
         <Script 
-          id="ze-snippet" 
+          id="zendesk-widget" 
           src="https://static.zdassets.com/ekr/snippet.js?key=9126e8e2-48b7-4868-8c2d-fdcd0538bb23"
           strategy="afterInteractive"
           onLoad={() => {
