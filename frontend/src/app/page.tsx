@@ -6,6 +6,7 @@ import Link from 'next/link';
 import QuoteForm from '../components/QuoteForm';
 import { useQuoteForm } from '../components/QuoteFormProvider';
 import Script from 'next/script';
+import PhotoSlider from './components/PhotoSlider';
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
@@ -24,6 +25,10 @@ export default function Home() {
   const handleGetStarted = () => {
     setShowQuoteForm(true);
     setMobileMenuOpen(false);
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -122,11 +127,14 @@ export default function Home() {
                 className="button-primary w-full py-2"
               >
                 Get Started
-      </button>
+              </button>
             </div>
-      </div>
+          </div>
         )}
       </nav>
+
+      {/* Hero Section with Photo Slider */}
+      <PhotoSlider />
 
       {/* Hero Section */}
       <section className="min-h-screen relative flex items-center justify-center overflow-hidden">
