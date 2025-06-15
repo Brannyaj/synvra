@@ -3,7 +3,11 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "@/components/ClientLayout";
 import Script from 'next/script';
-import ZendeskChat from "@/components/ZendeskChat";
+import dynamic from 'next/dynamic';
+
+const ZendeskChat = dynamic(() => import('@/components/ZendeskChat'), {
+  ssr: false
+});
 
 declare global {
   interface Window {
