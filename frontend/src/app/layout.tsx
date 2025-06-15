@@ -27,21 +27,10 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://synvra.com'),
-  title: "Synvra - Innovative Digital Solutions & Software Development",
-  description: "Transform your business with Synvra's cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company delivering innovative enterprise solutions.",
-  keywords: "software development, web development, mobile apps, cloud solutions, digital transformation, custom software, enterprise solutions, AI integration, cybersecurity, New York software company",
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-    nocache: false,
-  },
+  title: 'Synvra - Building software that exceed expectations',
+  description: 'Building software that exceed expectations',
+  keywords: 'software development, web development, mobile apps, cloud solutions, AI, machine learning, IT automation, data security, IoT, blockchain, custom software, business intelligence',
+  robots: 'index, follow',
   verification: {
     google: "DPfTKOsOVMN8QaDb3OlZgYQOxtV4Y_iM4H_InFtIABc",
   },
@@ -49,11 +38,7 @@ export const metadata: Metadata = {
     canonical: "https://synvra.com",
   },
   icons: {
-    icon: [
-      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-    ],
-    shortcut: '/favicon.ico',
+    icon: '/favicon.ico',
     apple: '/apple-touch-icon.png',
   },
   manifest: '/site.webmanifest',
@@ -66,9 +51,9 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://synvra.com',
+    title: 'Synvra - Building software that exceed expectations',
+    description: 'Building software that exceed expectations',
     siteName: 'Synvra',
-    title: 'Synvra - Transform Your Business with Innovative Digital Solutions',
-    description: "Transform your business with Synvra's cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company delivering innovative enterprise solutions.",
     images: [
       {
         url: '/og-image.jpg',
@@ -81,9 +66,10 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@synvra',
-    title: 'Synvra - Transform Your Business with Innovative Digital Solutions',
-    description: "Transform your business with Synvra's cutting-edge web development, mobile apps, cloud solutions, and digital transformation services. Expert software development company delivering innovative enterprise solutions.",
+    title: 'Synvra - Building software that exceed expectations',
+    description: 'Building software that exceed expectations',
     images: ['/og-image.jpg'],
+    creator: '@synvra',
   },
   authors: [{ name: 'Synvra' }],
   generator: 'Next.js',
