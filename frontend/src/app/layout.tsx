@@ -4,6 +4,13 @@ import "./globals.css";
 import ClientLayout from "@/components/ClientLayout";
 import Script from 'next/script';
 
+declare global {
+  interface Window {
+    zE?: any;
+    zESettings?: any;
+  }
+}
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const viewport: Viewport = {
@@ -290,11 +297,6 @@ export default function RootLayout({
             };
           `}
         </Script>
-        <Script 
-          id="ze-snippet" 
-          src="https://static.zdassets.com/ekr/snippet.js?key=9126e8e2-48b7-4868-8c2d-fdcd0538bb23"
-          strategy="afterInteractive"
-        />
       </head>
       <body className={`${inter.className} bg-synvra-black text-synvra-white min-h-screen`}>
         {/* Hidden form for Netlify */}
@@ -308,6 +310,16 @@ export default function RootLayout({
           <input type="date" name="deadline" />
         </form>
         {children}
+        <Script 
+          id="ze-snippet" 
+          src="https://static.zdassets.com/ekr/snippet.js?key=9126e8e2-48b7-4868-8c2d-fdcd0538bb23"
+          strategy="afterInteractive"
+          onLoad={() => {
+            if (typeof window !== 'undefined' && window.zE) {
+              window.zE('webWidget', 'show');
+            }
+          }}
+        />
       </body>
     </html>
   );
