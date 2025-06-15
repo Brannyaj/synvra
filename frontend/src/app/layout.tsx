@@ -283,20 +283,6 @@ export default function RootLayout({
             ])
           }}
         />
-        <Script id="zendesk-settings" strategy="afterInteractive">
-          {`
-            window.zESettings = {
-              webWidget: {
-                chat: {
-                  title: 'Chat with Synvra',
-                  color: {
-                    theme: '#2563eb'
-                  }
-                }
-              }
-            };
-          `}
-        </Script>
       </head>
       <body className={`${inter.className} bg-synvra-black text-synvra-white min-h-screen`}>
         {/* Hidden form for Netlify */}
@@ -310,14 +296,29 @@ export default function RootLayout({
           <input type="date" name="deadline" />
         </form>
         {children}
-        <Script 
-          id="zendesk-widget" 
-          src="https://static.zdassets.com/ekr/snippet.js?key=9126e8e2-48b7-4868-8c2d-fdcd0538bb23"
+        <Script
+          id="zendesk-widget"
           strategy="afterInteractive"
-          onLoad={() => {
-            if (typeof window !== 'undefined' && window.zE) {
-              window.zE('webWidget', 'show');
-            }
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.zESettings = {
+                webWidget: {
+                  chat: {
+                    title: 'Chat with Synvra',
+                    color: {
+                      theme: '#2563eb'
+                    }
+                  }
+                }
+              };
+              (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = 'https://static.zdassets.com/ekr/snippet.js?key=9126e8e2-48b7-4868-8c2d-fdcd0538bb23';
+                fjs.parentNode.insertBefore(js, fjs);
+              }(document, 'script', 'ze-snippet'));
+            `
           }}
         />
       </body>
