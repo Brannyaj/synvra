@@ -5,24 +5,54 @@ import Image from 'next/image';
 
 const slides = [
   {
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475',
-    title: 'Innovative Solutions',
-    description: 'From concept to code, we make it happen. Partner with us today to bring your vision to life.'
+    image: 'https://images.unsplash.com/photo-1547658719-da2b51169166',
+    title: 'Website Development',
+    description: 'Custom, responsive, and high-performance websites that drive business growth.'
   },
   {
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b',
-    title: 'Digital Transformation',
-    description: 'Transform your business with cutting-edge technology and expert guidance.'
+    image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3',
+    title: 'App Development',
+    description: 'Native and cross-platform mobile applications that deliver exceptional user experiences.'
   },
   {
     image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8',
-    title: 'Cloud Solutions',
-    description: 'Scale your operations with our robust cloud infrastructure and services.'
+    title: 'Cloud Infrastructure Development',
+    description: 'Scalable and secure cloud solutions that power your digital transformation.'
   },
   {
     image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995',
-    title: 'AI & Machine Learning',
-    description: 'Harness the power of AI to drive innovation and growth.'
+    title: 'AI & Machine Learning Development',
+    description: 'Intelligent solutions that leverage cutting-edge AI and ML technologies.'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b',
+    title: 'IT Automation Development',
+    description: 'Streamline operations and boost efficiency with smart automation solutions.'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3',
+    title: 'Data Protection & Security Development',
+    description: 'Comprehensive security solutions to protect your valuable digital assets.'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31',
+    title: 'Smart Device & IoT Development',
+    description: 'Connected solutions that bring intelligence to your devices and systems.'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1639762681057-408e52192e55',
+    title: 'Blockchain & Web3 Development',
+    description: 'Next-generation decentralized applications and blockchain solutions.'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f',
+    title: 'Custom Business Software Development',
+    description: 'Tailored software solutions that address your unique business challenges.'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71',
+    title: 'Data Analytics & Business Intelligence Development',
+    description: 'Transform your data into actionable insights for informed decision-making.'
   }
 ];
 
