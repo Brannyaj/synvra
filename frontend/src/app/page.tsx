@@ -221,23 +221,66 @@ export default function Home() {
                 {[
                   {
                     title: 'Enterprise Solutions',
+                    description: 'Custom ERP, CRM, and business process automation systems tailored to your workflow.',
                     icon: '🏢',
+                    features: ['Business Process Automation', 'Data Analytics', 'Enterprise Integration'],
                     href: '/services/enterprise-solutions'
                   },
                   {
                     title: 'AI & Machine Learning',
+                    description: 'Intelligent solutions powered by advanced AI algorithms and machine learning models.',
                     icon: '🤖',
+                    features: ['Predictive Analytics', 'Natural Language Processing', 'Computer Vision'],
                     href: '/services/ai-machine-learning'
                   },
                   {
                     title: 'Web Applications',
+                    description: 'Scalable, responsive web applications with modern architecture and seamless UX.',
                     icon: '🌐',
+                    features: ['Progressive Web Apps', 'SaaS Platforms', 'E-commerce Solutions'],
                     href: '/services/web-applications'
                   },
                   {
                     title: 'Mobile Development',
+                    description: 'Native and cross-platform mobile apps for iOS and Android with cutting-edge features.',
                     icon: '📱',
+                    features: ['iOS & Android Apps', 'Cross-platform Development', 'Mobile Commerce'],
                     href: '/services/mobile-development'
+                  },
+                  {
+                    title: 'Cloud & DevOps',
+                    description: 'Robust cloud infrastructure and DevOps solutions for optimal performance and scalability.',
+                    icon: '☁️',
+                    features: ['Cloud Migration', 'Infrastructure Automation', 'Continuous Integration'],
+                    href: '/services/cloud-devops'
+                  },
+                  {
+                    title: 'Blockchain',
+                    description: 'Secure and transparent blockchain solutions for modern business needs.',
+                    icon: '🔗',
+                    features: ['Smart Contracts', 'DeFi Applications', 'NFT Platforms'],
+                    href: '/services/blockchain'
+                  },
+                  {
+                    title: 'IoT Solutions',
+                    description: 'Connected device ecosystems with real-time monitoring and control capabilities.',
+                    icon: '📡',
+                    features: ['Device Management', 'Real-time Analytics', 'Industrial IoT'],
+                    href: '/services/iot-solutions'
+                  },
+                  {
+                    title: 'Cybersecurity',
+                    description: 'Advanced security solutions to protect your digital assets and infrastructure.',
+                    icon: '🔒',
+                    features: ['Threat Detection', 'Security Audits', 'Compliance Solutions'],
+                    href: '/services/cybersecurity'
+                  },
+                  {
+                    title: 'Data Engineering',
+                    description: 'Robust data pipelines and analytics solutions for informed decision-making.',
+                    icon: '📊',
+                    features: ['Big Data Processing', 'Data Warehousing', 'Business Intelligence'],
+                    href: '/services/data-engineering'
                   }
                 ].map((service, index) => (
                   <Link 
@@ -250,6 +293,15 @@ export default function Home() {
                       {service.title}
                       <span className="inline-block ml-2 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                     </h3>
+                    <p className="text-synvra-gray-300 mb-4">{service.description}</p>
+                    <ul className="space-y-2">
+                      {service.features.map((feature, i) => (
+                        <li key={i} className="flex items-center text-synvra-gray-200">
+                          <div className="w-1.5 h-1.5 bg-synvra-blue rounded-full mr-2" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
                   </Link>
                 ))}
               </div>
