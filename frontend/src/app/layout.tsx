@@ -276,6 +276,25 @@ export default function RootLayout({
             ])
           }}
         />
+        <Script id="ze-snippet" strategy="afterInteractive">
+          {`
+            window.zESettings = {
+              webWidget: {
+                chat: {
+                  title: 'Chat with Synvra',
+                  color: {
+                    theme: '#2563eb'
+                  }
+                }
+              }
+            };
+          `}
+        </Script>
+        <Script 
+          id="ze-snippet" 
+          src="https://static.zdassets.com/ekr/snippet.js?key=9126e8e2-48b7-4868-8c2d-fdcd0538bb23"
+          strategy="afterInteractive"
+        />
       </head>
       <body className={`${inter.className} bg-synvra-black text-synvra-white min-h-screen`}>
         {/* Hidden form for Netlify */}
@@ -288,9 +307,7 @@ export default function RootLayout({
           <input type="number" name="budget" />
           <input type="date" name="deadline" />
         </form>
-        <ClientLayout>
-          {children}
-        </ClientLayout>
+        {children}
       </body>
     </html>
   );
