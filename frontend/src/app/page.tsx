@@ -268,31 +268,47 @@ export default function Home() {
               <p className="text-xl text-synvra-gray-300">
                 Our team consists of 200+ exceptional full stack developers, carefully selected from the top 1% of global talent.
               </p>
-              <div className="grid grid-cols-4 gap-4">
-                {[
-                  'https://images.unsplash.com/photo-1560250097-0b93528c311a',
-                  'https://images.unsplash.com/photo-1556157382-97eda2d62296',
-                  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d',
-                  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
-                  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e',
-                  'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79',
-                  'https://images.unsplash.com/photo-1548544149-4835e62ee5b3',
-                  'https://images.unsplash.com/photo-1545167622-3a6ac756afa4'
-                ].map((imageUrl, i) => (
-                  <div
-                    key={i}
-                    className="relative aspect-square rounded-lg overflow-hidden group"
-                  >
-                    <Image
-                      src={imageUrl}
-                      alt={`Team member ${i + 1}`}
-                      fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-110"
-                      sizes="(max-width: 768px) 25vw, 20vw"
-                    />
-                    <div className="absolute inset-0 bg-synvra-blue/10 group-hover:bg-synvra-blue/20 transition-colors duration-300" />
+              <div className="relative">
+                <div className="aspect-square rounded-2xl overflow-hidden glass-card p-8">
+                  <div className="relative h-full">
+                    <div className="absolute top-0 left-0 w-full h-full">
+                      <div className="grid grid-cols-4 gap-4 h-full">
+                        {[
+                          'https://images.unsplash.com/photo-1560250097-0b93528c311a',
+                          'https://images.unsplash.com/photo-1556157382-97eda2d62296',
+                          'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d',
+                          'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
+                          'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e',
+                          'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79',
+                          'https://images.unsplash.com/photo-1548544149-4835e62ee5b3',
+                          'https://images.unsplash.com/photo-1545167622-3a6ac756afa4'
+                        ].map((imageUrl, i) => (
+                          <div
+                            key={i}
+                            className="relative aspect-square rounded-lg overflow-hidden group"
+                          >
+                            <Image
+                              src={imageUrl}
+                              alt={`Team member ${i + 1}`}
+                              fill
+                              className="object-cover transition-transform duration-300 group-hover:scale-110"
+                              sizes="(max-width: 768px) 25vw, 20vw"
+                            />
+                            <div className="absolute inset-0 bg-synvra-blue/10 group-hover:bg-synvra-blue/20 transition-colors duration-300" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center bg-synvra-black/60 backdrop-blur-sm">
+                      <div className="text-center">
+                        <div className="text-6xl font-bold text-gradient mb-4">200+</div>
+                        <div className="text-xl text-synvra-white">Elite Full Stack Developers</div>
+                      </div>
+                    </div>
                   </div>
-                ))}
+                </div>
+                <div className="absolute -top-4 -right-4 w-32 h-32 bg-synvra-blue/20 rounded-full blur-2xl" />
+                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-synvra-blue/20 rounded-full blur-2xl" />
               </div>
             </div>
 
