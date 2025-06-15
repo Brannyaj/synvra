@@ -43,16 +43,19 @@ export default function Home() {
               </Link>
             </div>
             <div className="hidden md:flex items-center space-x-8">
-              <Link href="/services" className="text-synvra-gray-200 hover:text-synvra-white transition-colors">
+              <Link href="/services" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">
                 Services
               </Link>
-              <Link href="/portfolio" className="text-synvra-gray-200 hover:text-synvra-white transition-colors">
-                Portfolio
+              <Link href="/work" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">
+                Work
               </Link>
-              <Link href="/about" className="text-synvra-gray-200 hover:text-synvra-white transition-colors">
+              <Link href="/about" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">
                 About
               </Link>
-              <Link href="/contact" className="text-synvra-gray-200 hover:text-synvra-white transition-colors">
+              <Link href="/faq" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">
+                FAQ
+              </Link>
+              <Link href="/contact" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">
                 Contact
               </Link>
               <div className="relative group">
@@ -101,11 +104,14 @@ export default function Home() {
               <Link href="/services" className="block text-synvra-gray-200 hover:text-synvra-white transition-colors py-2">
                 Services
               </Link>
-              <Link href="/portfolio" className="block text-synvra-gray-200 hover:text-synvra-white transition-colors py-2">
-                Portfolio
+              <Link href="/work" className="block text-synvra-gray-200 hover:text-synvra-white transition-colors py-2">
+                Work
               </Link>
               <Link href="/about" className="block text-synvra-gray-200 hover:text-synvra-white transition-colors py-2">
                 About
+              </Link>
+              <Link href="/faq" className="block text-synvra-gray-200 hover:text-synvra-white transition-colors py-2">
+                FAQ
               </Link>
               <Link href="/contact" className="block text-synvra-gray-200 hover:text-synvra-white transition-colors py-2">
                 Contact
