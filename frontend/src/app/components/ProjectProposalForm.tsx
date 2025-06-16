@@ -22,6 +22,7 @@ interface FormData {
   phone: string;
   companySize: string;
   industry: string;
+  projectType: string;
 }
 
 const services: ServiceOption[] = [
@@ -117,7 +118,8 @@ export default function ProjectProposalForm() {
     email: '',
     phone: '',
     companySize: '',
-    industry: ''
+    industry: '',
+    projectType: ''
   });
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -206,6 +208,24 @@ export default function ProjectProposalForm() {
       </div>
 
       <div>
+        <label htmlFor="projectType" className="block text-sm font-medium text-synvra-gray-200">Project Type</label>
+        <select
+          id="projectType"
+          name="projectType"
+          value={formData.projectType || ''}
+          onChange={handleInputChange}
+          className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
+          required
+          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
+        >
+          <option value="">Select project type</option>
+          <option value="New Project">New Project</option>
+          <option value="Existing Project">Existing Project</option>
+          <option value="Maintenance">Maintenance</option>
+        </select>
+      </div>
+
+      <div>
         <label htmlFor="tier" className="block text-sm font-medium text-synvra-gray-200">
           Project Tier
         </label>
@@ -244,7 +264,7 @@ export default function ProjectProposalForm() {
 
       <div>
         <label htmlFor="additionalRequirements" className="block text-sm font-medium text-synvra-gray-200">
-          Additional Requirements
+          Project Description
         </label>
         <textarea
           id="additionalRequirements"
