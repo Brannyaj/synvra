@@ -194,7 +194,7 @@ export default function ProjectProposalForm() {
           onChange={handleInputChange}
           className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff' }}
+          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         >
           <option value="">Select a service</option>
           {services.map(service => (
@@ -216,7 +216,7 @@ export default function ProjectProposalForm() {
           onChange={handleInputChange}
           className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff' }}
+          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         >
           <option value="Basic">Basic</option>
           <option value="Complex">Complex</option>
@@ -234,7 +234,7 @@ export default function ProjectProposalForm() {
           onChange={handleInputChange}
           className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff' }}
+          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         >
           <option value="Standard">Standard (1x multiplier)</option>
           <option value="Fast-track">Fast-track (1.25x multiplier)</option>
@@ -253,7 +253,7 @@ export default function ProjectProposalForm() {
           onChange={handleInputChange}
           rows={4}
           className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
-          style={{ backgroundColor: '#0A0F1C', color: '#fff' }}
+          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         />
       </div>
 
@@ -303,7 +303,7 @@ export default function ProjectProposalForm() {
           onChange={handleInputChange}
           className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff' }}
+          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         />
       </div>
 
@@ -319,7 +319,7 @@ export default function ProjectProposalForm() {
           onChange={handleInputChange}
           className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff' }}
+          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         />
       </div>
 
@@ -335,7 +335,7 @@ export default function ProjectProposalForm() {
           onChange={handleInputChange}
           className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff' }}
+          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         />
       </div>
 
@@ -351,7 +351,7 @@ export default function ProjectProposalForm() {
           onChange={handleInputChange}
           className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff' }}
+          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         />
       </div>
 
@@ -366,7 +366,7 @@ export default function ProjectProposalForm() {
           onChange={handleInputChange}
           className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff' }}
+          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         >
           <option value="">Select company size</option>
           <option value="1-10">1-10 employees</option>
@@ -388,7 +388,7 @@ export default function ProjectProposalForm() {
           onChange={handleInputChange}
           className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff' }}
+          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         >
           <option value="">Select industry</option>
           <option value="Technology">Technology</option>
