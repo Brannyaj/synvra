@@ -23,6 +23,7 @@ interface FormData {
   companySize: string;
   industry: string;
   projectType: string;
+  termsAccepted: boolean;
 }
 
 const services: ServiceOption[] = [
@@ -139,7 +140,8 @@ export default function ProjectProposalForm() {
     phone: '',
     companySize: '',
     industry: '',
-    projectType: ''
+    projectType: '',
+    termsAccepted: false
   });
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -166,10 +168,10 @@ export default function ProjectProposalForm() {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
     }));
   };
 
@@ -562,9 +564,11 @@ export default function ProjectProposalForm() {
           <input
             type="checkbox"
             id="terms"
-            name="terms"
-            className="h-4 w-4 text-synvra-blue focus:ring-synvra-blue border-synvra-white rounded !bg-gray-900 text-white appearance-none"
+            name="termsAccepted"
+            checked={formData.termsAccepted}
+            onChange={handleInputChange}
             required
+            className="h-4 w-4 text-synvra-blue focus:ring-synvra-blue border-synvra-white rounded !bg-gray-900 text-white appearance-none"
           />
           <label htmlFor="terms" className="text-sm text-synvra-gray-200">
             I have read and agree to the terms and conditions
