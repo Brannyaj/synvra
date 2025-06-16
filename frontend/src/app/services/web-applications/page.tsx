@@ -2,16 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useQuoteForm } from '../../../components/QuoteFormProvider';
 
 export default function WebApplications() {
   const [scrolled, setScrolled] = useState(false);
-  const { setShowQuoteForm } = useQuoteForm();
-
-  const handleStartProject = () => {
-    console.log('Opening quote form for Web Applications');
-    setShowQuoteForm(true);
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -154,7 +147,6 @@ export default function WebApplications() {
             Let's build a powerful web application that drives your business forward and delights your users.
           </p>
           <button 
-            onClick={handleStartProject}
             className="button-primary px-8 py-3 text-lg font-medium hover:bg-synvra-blue/90 active:bg-synvra-blue/80 cursor-pointer"
             type="button"
           >

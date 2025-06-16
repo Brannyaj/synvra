@@ -2,16 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useQuoteForm } from '../../../components/QuoteFormProvider';
 
 export default function EnterpriseSolutions() {
   const [scrolled, setScrolled] = useState(false);
-  const { setShowQuoteForm } = useQuoteForm();
-
-  const handleStartProject = () => {
-    console.log('Opening quote form for Enterprise Solutions');
-    setShowQuoteForm(true);
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -154,7 +147,6 @@ export default function EnterpriseSolutions() {
             Let's discuss how our enterprise solutions can streamline your operations and drive growth.
           </p>
           <button 
-            onClick={handleStartProject}
             className="button-primary px-8 py-3 text-lg font-medium hover:bg-synvra-blue/90 active:bg-synvra-blue/80 cursor-pointer"
             type="button"
           >

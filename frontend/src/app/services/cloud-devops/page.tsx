@@ -2,16 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useQuoteForm } from '../../../components/QuoteFormProvider';
 
 export default function CloudDevOps() {
   const [scrolled, setScrolled] = useState(false);
-  const { setShowQuoteForm } = useQuoteForm();
-
-  const handleStartProject = () => {
-    console.log('Opening quote form for Cloud & DevOps');
-    setShowQuoteForm(true);
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -154,7 +147,6 @@ export default function CloudDevOps() {
             Let's optimize your cloud infrastructure and DevOps practices for maximum efficiency.
           </p>
           <button 
-            onClick={handleStartProject}
             className="button-primary px-8 py-3 text-lg font-medium hover:bg-synvra-blue/90 active:bg-synvra-blue/80 cursor-pointer"
             type="button"
           >

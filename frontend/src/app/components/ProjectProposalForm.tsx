@@ -1,0 +1,644 @@
+'use client';
+
+import { useState } from 'react';
+
+interface ServiceOption {
+  id: string;
+  name: string;
+  basicPrice: number;
+  complexPrice: number;
+  description: string;
+}
+
+interface FormData {
+  projectName: string;
+  serviceType: string;
+  tier: 'Basic' | 'Complex';
+  timeline: 'Standard' | 'Fast-track' | 'Urgent';
+  additionalRequirements: string;
+  fullName: string;
+  companyName: string;
+  email: string;
+  phone: string;
+  companySize: string;
+  industry: string;
+}
+
+const services: ServiceOption[] = [
+  {
+    id: 'website',
+    name: 'Website Development',
+    basicPrice: 2000,
+    complexPrice: 10000,
+    description: 'Platform-Based (GoDaddy, WordPress) or Custom-Coded solutions'
+  },
+  {
+    id: 'app',
+    name: 'App Development',
+    basicPrice: 10000,
+    complexPrice: 25000,
+    description: 'Mobile and web applications'
+  },
+  {
+    id: 'cloud',
+    name: 'Cloud Infrastructure Development',
+    basicPrice: 7000,
+    complexPrice: 50000,
+    description: 'Cloud solutions and infrastructure'
+  },
+  {
+    id: 'ai',
+    name: 'AI & Machine Learning Development',
+    basicPrice: 50000,
+    complexPrice: 75000000,
+    description: 'AI integration and model training'
+  },
+  {
+    id: 'automation',
+    name: 'IT Automation Development',
+    basicPrice: 6000,
+    complexPrice: 30000,
+    description: 'Business process automation'
+  },
+  {
+    id: 'security',
+    name: 'Data Protection & Security Development',
+    basicPrice: 7000,
+    complexPrice: 40000,
+    description: 'Security solutions and data protection'
+  },
+  {
+    id: 'iot',
+    name: 'Smart Device & IoT Development',
+    basicPrice: 10000,
+    complexPrice: 60000,
+    description: 'IoT solutions and smart device integration'
+  },
+  {
+    id: 'blockchain',
+    name: 'Blockchain & Web3 Development',
+    basicPrice: 200000,
+    complexPrice: 200000,
+    description: 'Blockchain and Web3 solutions'
+  },
+  {
+    id: 'business',
+    name: 'Custom Business Software Development',
+    basicPrice: 25000,
+    complexPrice: 150000,
+    description: 'Custom business software solutions'
+  },
+  {
+    id: 'analytics',
+    name: 'Data Analytics & Business Intelligence Development',
+    basicPrice: 7000,
+    complexPrice: 45000,
+    description: 'Analytics and business intelligence solutions'
+  }
+];
+
+const timelineMultipliers = {
+  'Standard': 1,
+  'Fast-track': 1.25,
+  'Urgent': 1.5
+};
+
+const ZAPIER_WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/23336720/uoor2gh/';
+
+export default function ProjectProposalForm() {
+  const [formData, setFormData] = useState<FormData>({
+    projectName: '',
+    serviceType: '',
+    tier: 'Basic',
+    timeline: 'Standard',
+    additionalRequirements: '',
+    fullName: '',
+    companyName: '',
+    email: '',
+    phone: '',
+    companySize: '',
+    industry: ''
+  });
+
+  const [currentStep, setCurrentStep] = useState(1);
+  const [totalSteps] = useState(4);
+
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [submitError, setSubmitError] = useState('');
+
+  const calculateBasePrice = () => {
+    const service = services.find(s => s.id === formData.serviceType);
+    if (!service) return 0;
+    return formData.tier === 'Basic' ? service.basicPrice : service.complexPrice;
+  };
+
+  const calculateTotalPrice = () => {
+    const basePrice = calculateBasePrice();
+    const multiplier = timelineMultipliers[formData.timeline];
+    return basePrice * multiplier;
+  };
+
+  const calculateDeposit = () => {
+    return calculateTotalPrice() * 0.25;
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const nextStep = () => {
+    setCurrentStep(prev => Math.min(prev + 1, totalSteps));
+  };
+
+  const prevStep = () => {
+    setCurrentStep(prev => Math.max(prev - 1, 1));
+  };
+
+  const handleFinalSubmit = async () => {
+    setSubmitStatus('submitting');
+    setSubmitError('');
+    try {
+      const payload = {
+        ...formData,
+        basePrice: calculateBasePrice(),
+        totalPrice: calculateTotalPrice(),
+        deposit: calculateDeposit(),
+      };
+      const response = await fetch(ZAPIER_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) throw new Error('Failed to submit proposal');
+      setSubmitStatus('success');
+    } catch (err) {
+      setSubmitStatus('error');
+      setSubmitError('Failed to submit proposal. Please try again later.');
+    }
+  };
+
+  const renderStep1 = () => (
+    <div className="space-y-6">
+      <div>
+        <label htmlFor="projectName" className="block text-sm font-medium text-synvra-gray-700">
+          Project Name
+        </label>
+        <input
+          type="text"
+          id="projectName"
+          name="projectName"
+          value={formData.projectName}
+          onChange={handleInputChange}
+          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          required
+        />
+      </div>
+
+      <div>
+        <label htmlFor="serviceType" className="block text-sm font-medium text-synvra-gray-700">
+          Service Type
+        </label>
+        <select
+          id="serviceType"
+          name="serviceType"
+          value={formData.serviceType}
+          onChange={handleInputChange}
+          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          required
+        >
+          <option value="">Select a service</option>
+          {services.map(service => (
+            <option key={service.id} value={service.id}>
+              {service.name} - {service.description}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label htmlFor="tier" className="block text-sm font-medium text-synvra-gray-700">
+          Project Tier
+        </label>
+        <select
+          id="tier"
+          name="tier"
+          value={formData.tier}
+          onChange={handleInputChange}
+          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          required
+        >
+          <option value="Basic">Basic</option>
+          <option value="Complex">Complex</option>
+        </select>
+      </div>
+
+      <div>
+        <label htmlFor="timeline" className="block text-sm font-medium text-synvra-gray-700">
+          Timeline
+        </label>
+        <select
+          id="timeline"
+          name="timeline"
+          value={formData.timeline}
+          onChange={handleInputChange}
+          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          required
+        >
+          <option value="Standard">Standard (1x multiplier)</option>
+          <option value="Fast-track">Fast-track (1.25x multiplier)</option>
+          <option value="Urgent">Urgent (1.5x multiplier)</option>
+        </select>
+      </div>
+
+      <div>
+        <label htmlFor="additionalRequirements" className="block text-sm font-medium text-synvra-gray-700">
+          Additional Requirements
+        </label>
+        <textarea
+          id="additionalRequirements"
+          name="additionalRequirements"
+          value={formData.additionalRequirements}
+          onChange={handleInputChange}
+          rows={4}
+          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+        />
+      </div>
+
+      {formData.serviceType && (
+        <div className="bg-synvra-gray-50 p-4 rounded-md">
+          <h3 className="text-lg font-medium text-synvra-black mb-2">Price Estimate</h3>
+          <div className="space-y-2">
+            <p className="text-synvra-gray-600">
+              Base Price: ${calculateBasePrice().toLocaleString()}
+            </p>
+            <p className="text-synvra-gray-600">
+              Timeline Adjustment: {timelineMultipliers[formData.timeline]}x
+            </p>
+            <p className="text-synvra-black font-medium">
+              Total Project Cost: ${calculateTotalPrice().toLocaleString()}
+            </p>
+            <p className="text-synvra-green font-medium">
+              Required Deposit (25%): ${calculateDeposit().toLocaleString()}
+            </p>
+          </div>
+        </div>
+      )}
+
+      <div className="flex justify-end">
+        <button
+          type="button"
+          onClick={nextStep}
+          className="bg-synvra-blue text-white px-4 py-2 rounded-md hover:bg-synvra-blue-dark transition-colors"
+        >
+          Next Step
+        </button>
+      </div>
+    </div>
+  );
+
+  const renderStep2 = () => (
+    <div className="space-y-6">
+      <div>
+        <label htmlFor="fullName" className="block text-sm font-medium text-synvra-gray-700">
+          Full Name
+        </label>
+        <input
+          type="text"
+          id="fullName"
+          name="fullName"
+          value={formData.fullName}
+          onChange={handleInputChange}
+          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          required
+        />
+      </div>
+
+      <div>
+        <label htmlFor="companyName" className="block text-sm font-medium text-synvra-gray-700">
+          Company Name
+        </label>
+        <input
+          type="text"
+          id="companyName"
+          name="companyName"
+          value={formData.companyName}
+          onChange={handleInputChange}
+          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          required
+        />
+      </div>
+
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium text-synvra-gray-700">
+          Email
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          required
+        />
+      </div>
+
+      <div>
+        <label htmlFor="phone" className="block text-sm font-medium text-synvra-gray-700">
+          Phone
+        </label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          value={formData.phone}
+          onChange={handleInputChange}
+          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          required
+        />
+      </div>
+
+      <div>
+        <label htmlFor="companySize" className="block text-sm font-medium text-synvra-gray-700">
+          Company Size
+        </label>
+        <select
+          id="companySize"
+          name="companySize"
+          value={formData.companySize}
+          onChange={handleInputChange}
+          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          required
+        >
+          <option value="">Select company size</option>
+          <option value="1-10">1-10 employees</option>
+          <option value="11-50">11-50 employees</option>
+          <option value="51-200">51-200 employees</option>
+          <option value="201-1000">201-1000 employees</option>
+          <option value="1000+">1000+ employees</option>
+        </select>
+      </div>
+
+      <div>
+        <label htmlFor="industry" className="block text-sm font-medium text-synvra-gray-700">
+          Industry
+        </label>
+        <select
+          id="industry"
+          name="industry"
+          value={formData.industry}
+          onChange={handleInputChange}
+          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          required
+        >
+          <option value="">Select industry</option>
+          <option value="Technology">Technology</option>
+          <option value="Finance">Finance</option>
+          <option value="Healthcare">Healthcare</option>
+          <option value="Manufacturing">Manufacturing</option>
+          <option value="Retail">Retail</option>
+          <option value="Education">Education</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div className="flex justify-between">
+        <button
+          type="button"
+          onClick={prevStep}
+          className="bg-synvra-gray-200 text-synvra-gray-700 px-4 py-2 rounded-md hover:bg-synvra-gray-300 transition-colors"
+        >
+          Previous Step
+        </button>
+        <button
+          type="button"
+          onClick={nextStep}
+          className="bg-synvra-blue text-white px-4 py-2 rounded-md hover:bg-synvra-blue-dark transition-colors"
+        >
+          Next Step
+        </button>
+      </div>
+    </div>
+  );
+
+  const renderStep3 = () => {
+    const selectedService = services.find(s => s.id === formData.serviceType);
+    
+    return (
+      <div className="space-y-6">
+        <div className="bg-synvra-gray-50 p-6 rounded-lg">
+          <h3 className="text-lg font-medium text-synvra-black mb-4">Project Summary</h3>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <h4 className="font-medium text-synvra-gray-700">Project Details</h4>
+              <dl className="mt-2 space-y-2">
+                <div>
+                  <dt className="text-sm text-synvra-gray-500">Project Name</dt>
+                  <dd className="text-sm text-synvra-black">{formData.projectName}</dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-synvra-gray-500">Service Type</dt>
+                  <dd className="text-sm text-synvra-black">{selectedService?.name}</dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-synvra-gray-500">Tier</dt>
+                  <dd className="text-sm text-synvra-black">{formData.tier}</dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-synvra-gray-500">Timeline</dt>
+                  <dd className="text-sm text-synvra-black">{formData.timeline}</dd>
+                </div>
+              </dl>
+            </div>
+
+            <div>
+              <h4 className="font-medium text-synvra-gray-700">Client Information</h4>
+              <dl className="mt-2 space-y-2">
+                <div>
+                  <dt className="text-sm text-synvra-gray-500">Full Name</dt>
+                  <dd className="text-sm text-synvra-black">{formData.fullName}</dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-synvra-gray-500">Company</dt>
+                  <dd className="text-sm text-synvra-black">{formData.companyName}</dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-synvra-gray-500">Email</dt>
+                  <dd className="text-sm text-synvra-black">{formData.email}</dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-synvra-gray-500">Phone</dt>
+                  <dd className="text-sm text-synvra-black">{formData.phone}</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
+          <div className="mt-6 pt-6 border-t border-synvra-gray-200">
+            <h4 className="font-medium text-synvra-gray-700 mb-4">Pricing Summary</h4>
+            <dl className="space-y-2">
+              <div className="flex justify-between">
+                <dt className="text-synvra-gray-600">Base Price</dt>
+                <dd className="text-synvra-black">${calculateBasePrice().toLocaleString()}</dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-synvra-gray-600">Timeline Adjustment</dt>
+                <dd className="text-synvra-black">{timelineMultipliers[formData.timeline]}x</dd>
+              </div>
+              <div className="flex justify-between font-medium">
+                <dt className="text-synvra-black">Total Project Cost</dt>
+                <dd className="text-synvra-black">${calculateTotalPrice().toLocaleString()}</dd>
+              </div>
+              <div className="flex justify-between font-medium">
+                <dt className="text-synvra-green">Required Deposit (25%)</dt>
+                <dd className="text-synvra-green">${calculateDeposit().toLocaleString()}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+        <div className="bg-synvra-gray-50 p-6 rounded-lg">
+          <h3 className="text-lg font-medium text-synvra-black mb-4">Terms and Conditions</h3>
+          <div className="prose prose-sm text-synvra-gray-600">
+            <p>By proceeding with this project, you agree to the following terms:</p>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>A 25% deposit is required to begin the project</li>
+              <li>The remaining balance will be due upon project completion</li>
+              <li>Project timeline is subject to change based on requirements and feedback</li>
+              <li>All intellectual property rights will be transferred upon final payment</li>
+              <li>Synvra reserves the right to use the project in its portfolio</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="flex items-center space-x-3">
+          <input
+            type="checkbox"
+            id="terms"
+            name="terms"
+            className="h-4 w-4 text-synvra-blue focus:ring-synvra-blue border-synvra-gray-300 rounded"
+            required
+          />
+          <label htmlFor="terms" className="text-sm text-synvra-gray-700">
+            I have read and agree to the terms and conditions
+          </label>
+        </div>
+
+        <div className="flex justify-between">
+          <button
+            type="button"
+            onClick={prevStep}
+            className="bg-synvra-gray-200 text-synvra-gray-700 px-4 py-2 rounded-md hover:bg-synvra-gray-300 transition-colors"
+          >
+            Previous Step
+          </button>
+          <button
+            type="button"
+            onClick={nextStep}
+            className="bg-synvra-blue text-white px-4 py-2 rounded-md hover:bg-synvra-blue-dark transition-colors"
+          >
+            Proceed to Payment
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  const renderStep4 = () => (
+    <div className="space-y-6">
+      <div className="bg-synvra-gray-50 p-6 rounded-lg">
+        <h3 className="text-lg font-medium text-synvra-black mb-4">Payment Details</h3>
+        
+        <div className="mb-6">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-synvra-gray-600">Total Project Cost:</span>
+            <span className="text-synvra-black font-medium">${calculateTotalPrice().toLocaleString()}</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-synvra-green">Required Deposit (25%):</span>
+            <span className="text-synvra-green font-medium">${calculateDeposit().toLocaleString()}</span>
+          </div>
+        </div>
+
+        <div className="border-t border-synvra-gray-200 pt-6">
+          <h4 className="text-sm font-medium text-synvra-gray-700 mb-4">Payment Method</h4>
+          
+          {/* Payment plugin integration will go here */}
+          <div className="bg-white p-4 rounded-md border border-synvra-gray-200">
+            <p className="text-synvra-gray-600 text-sm">
+              Payment integration will be added here. This will connect to your chosen payment plugin.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-synvra-gray-50 p-6 rounded-lg">
+        <h3 className="text-lg font-medium text-synvra-black mb-4">What happens next?</h3>
+        <ul className="space-y-3 text-synvra-gray-600">
+          <li className="flex items-start">
+            <span className="text-synvra-green mr-2">✓</span>
+            <span>After successful payment, you'll receive a confirmation email with your project details</span>
+          </li>
+          <li className="flex items-start">
+            <span className="text-synvra-green mr-2">✓</span>
+            <span>Our team will review your project requirements and get in touch within 24 hours</span>
+          </li>
+          <li className="flex items-start">
+            <span className="text-synvra-green mr-2">✓</span>
+            <span>We'll schedule a kickoff meeting to discuss your project in detail</span>
+          </li>
+          <li className="flex items-start">
+            <span className="text-synvra-green mr-2">✓</span>
+            <span>Your project will be assigned to our expert development team</span>
+          </li>
+        </ul>
+      </div>
+
+      {submitStatus === 'error' && (
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded">{submitError}</div>
+      )}
+      {submitStatus === 'success' && (
+        <div className="bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded">Thank you for your proposal! We'll be in touch soon.</div>
+      )}
+      <div className="flex justify-between">
+        <button
+          type="button"
+          onClick={prevStep}
+          className="bg-synvra-gray-200 text-synvra-gray-700 px-4 py-2 rounded-md hover:bg-synvra-gray-300 transition-colors"
+          disabled={submitStatus === 'submitting'}
+        >
+          Previous Step
+        </button>
+        <button
+          type="button"
+          onClick={handleFinalSubmit}
+          className="bg-synvra-green text-white px-6 py-2 rounded-md hover:bg-synvra-green-dark transition-colors"
+          disabled={submitStatus === 'submitting'}
+        >
+          {submitStatus === 'submitting' ? 'Submitting...' : 'Pay Deposit & Submit'}
+        </button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="max-w-4xl mx-auto p-6">
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-synvra-black mb-2">Project Proposal Form</h2>
+        <p className="text-synvra-gray-600">Step {currentStep} of {totalSteps}</p>
+      </div>
+
+      <div className="bg-white rounded-lg shadow-lg p-6">
+        {currentStep === 1 && renderStep1()}
+        {currentStep === 2 && renderStep2()}
+        {currentStep === 3 && renderStep3()}
+        {currentStep === 4 && renderStep4()}
+      </div>
+    </div>
+  );
+} 

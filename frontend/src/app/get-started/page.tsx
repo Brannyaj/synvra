@@ -1,6 +1,6 @@
 'use client';
 
-import ServiceCalculator from '../components/ServiceCalculator';
+import ProjectProposalForm from '../components/ProjectProposalForm';
 
 export default function GetStarted() {
   return (
@@ -13,8 +13,7 @@ export default function GetStarted() {
               Calculate your project cost and start your journey with Synvra
             </p>
           </div>
-          
-          <ServiceCalculator />
+          <ProjectProposalForm />
         </div>
       </div>
     </main>

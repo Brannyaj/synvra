@@ -3,11 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useQuoteForm } from '../../../components/QuoteFormProvider';
 
 export default function HealthcareSystem() {
   const [scrolled, setScrolled] = useState(false);
-  const { setShowQuoteForm } = useQuoteForm();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -188,7 +186,6 @@ export default function HealthcareSystem() {
             Let's build an innovative healthcare solution that improves patient outcomes and operational efficiency.
           </p>
           <button 
-            onClick={() => setShowQuoteForm(true)}
             className="button-primary"
           >
             Start Your Project

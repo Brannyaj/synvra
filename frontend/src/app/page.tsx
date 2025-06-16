@@ -3,15 +3,12 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import QuoteForm from '../components/QuoteForm';
-import { useQuoteForm } from '../components/QuoteFormProvider';
 import Script from 'next/script';
 import PhotoSlider from './components/PhotoSlider';
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { setShowQuoteForm } = useQuoteForm();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,8 +20,6 @@ export default function Home() {
   }, []);
 
   const handleGetStarted = () => {
-    setShowQuoteForm(true);
-    setMobileMenuOpen(false);
     const contactSection = document.getElementById('contact');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
@@ -74,12 +69,7 @@ export default function Home() {
                   </Link>
                 </div>
               </div>
-              <button 
-                onClick={handleGetStarted}
-                className="button-primary px-6 py-2"
-              >
-                Get Started
-              </button>
+              <Link href="/get-started"><button className="button-primary px-6 py-2">Get Started</button></Link>
             </div>
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -128,14 +118,9 @@ export default function Home() {
                   Cookie Policy
                 </Link>
               </div>
-              <button 
-                onClick={handleGetStarted}
-                className="button-primary w-full py-2"
-              >
-                Get Started
-      </button>
+              <Link href="/get-started"><button className="button-primary w-full py-2">Get Started</button></Link>
             </div>
-      </div>
+          </div>
         )}
       </nav>
 
@@ -154,12 +139,7 @@ export default function Home() {
               From concept to code, we make it happen. Partner with us today to bring your vision to life.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 md:mb-16">
-              <button 
-                onClick={handleGetStarted}
-                className="button-primary text-base px-6 py-3"
-              >
-                Get Started
-              </button>
+              <Link href="/get-started"><button className="button-primary text-base px-6 py-3">Get Started</button></Link>
               <Link 
                 href="/portfolio" 
                 className="button-secondary text-base px-6 py-3"
@@ -561,9 +541,9 @@ export default function Home() {
               <Link href="/terms" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Terms of Service</Link>
               <Link href="/cookies" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Cookie Policy</Link>
               <Link href="/sitemap.xml" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Sitemap</Link>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
       </footer>
 
       <Script

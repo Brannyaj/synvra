@@ -3,11 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useQuoteForm } from '../../../components/QuoteFormProvider';
 
 export default function Ecommerce() {
   const [scrolled, setScrolled] = useState(false);
-  const { setShowQuoteForm } = useQuoteForm();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -188,7 +186,6 @@ export default function Ecommerce() {
             Let's build a powerful e-commerce platform that drives growth and delivers exceptional customer experiences.
           </p>
           <button 
-            onClick={() => setShowQuoteForm(true)}
             className="button-primary"
           >
             Start Your Project
