@@ -27,74 +27,81 @@ interface FormData {
 
 const services: ServiceOption[] = [
   {
-    id: 'website',
-    name: 'Website Development',
+    id: 'website-platform',
+    name: 'Website Development: Platform-Based (GoDaddy, WordPress)',
     basicPrice: 2000,
+    complexPrice: 4000,
+    description: 'Platform-based websites using GoDaddy, WordPress, etc.'
+  },
+  {
+    id: 'website-custom',
+    name: 'Website Development: Custom-Coded (From Scratch)',
+    basicPrice: 5000,
     complexPrice: 10000,
-    description: 'Platform-Based (GoDaddy, WordPress) or Custom-Coded solutions'
+    description: 'Fully custom-coded websites built from scratch.'
   },
   {
     id: 'app',
     name: 'App Development',
     basicPrice: 10000,
     complexPrice: 25000,
-    description: 'Mobile and web applications'
+    description: 'Basic MVPs to complex apps with chat, payments, maps, etc.'
   },
   {
     id: 'cloud',
     name: 'Cloud Infrastructure Development',
     basicPrice: 7000,
     complexPrice: 50000,
-    description: 'Cloud solutions and infrastructure'
+    description: 'Standard setup to complex, scalable, secure cloud architecture.'
   },
   {
     id: 'ai',
     name: 'AI & Machine Learning Development',
     basicPrice: 50000,
     complexPrice: 75000000,
-    description: 'AI integration and model training'
+    description: 'AI integration (existing APIs) to custom AI model development.'
   },
   {
     id: 'automation',
     name: 'IT Automation Development',
     basicPrice: 6000,
     complexPrice: 30000,
-    description: 'Business process automation'
+    description: 'Simple automation scripts to advanced enterprise automation.'
   },
   {
     id: 'security',
     name: 'Data Protection & Security Development',
     basicPrice: 7000,
     complexPrice: 40000,
-    description: 'Security solutions and data protection'
+    description: 'Basic security to full-scale security development.'
   },
   {
     id: 'iot',
     name: 'Smart Device & IoT Development',
     basicPrice: 10000,
     complexPrice: 60000,
-    description: 'IoT solutions and smart device integration'
+    description: 'Basic device integration to complex IoT ecosystems.'
   },
   {
     id: 'blockchain',
     name: 'Blockchain & Web3 Development',
     basicPrice: 200000,
     complexPrice: 200000,
-    description: 'Blockchain and Web3 solutions'
+    description: 'Full-scale enterprise blockchain solutions.'
   },
   {
     id: 'business',
     name: 'Custom Business Software Development',
     basicPrice: 25000,
     complexPrice: 150000,
-    description: 'Custom business software solutions'
+    description: 'Basic tools to complex enterprise systems.'
   },
   {
     id: 'analytics',
     name: 'Data Analytics & Business Intelligence Development',
     basicPrice: 7000,
     complexPrice: 45000,
-    description: 'Analytics and business intelligence solutions'
+    description: 'Simple dashboards to advanced BI tools.'
   }
 ];
 
