@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useQuoteForm } from '../../../components/QuoteFormProvider';
 
 interface ServiceClientProps {
   service: {
@@ -21,12 +20,6 @@ interface ServiceClientProps {
 
 export default function ServiceClient({ service }: ServiceClientProps) {
   const [scrolled, setScrolled] = useState(false);
-  const { setShowQuoteForm } = useQuoteForm();
-
-  const handleStartProject = () => {
-    console.log('Opening quote form for service:', service.title);
-    setShowQuoteForm(true);
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -130,13 +123,7 @@ export default function ServiceClient({ service }: ServiceClientProps) {
           <p className="text-xl mb-8 text-synvra-gray-200">
             Let's discuss how our {service.title.toLowerCase()} can help you achieve your goals.
           </p>
-          <button 
-            onClick={handleStartProject}
-            className="button-primary inline-block px-8 py-3 text-lg font-medium hover:bg-synvra-blue/90 active:bg-synvra-blue/80 cursor-pointer"
-            type="button"
-          >
-            Start Your Project
-          </button>
+          <Link href="/get-started"><button className="button-primary">Get Started</button></Link>
         </div>
       </section>
     </main>
