@@ -184,7 +184,7 @@ export default function ProjectProposalForm() {
   const renderStep1 = () => (
     <div className="space-y-6">
       <div>
-        <label htmlFor="projectName" className="block text-sm font-medium text-synvra-gray-700">
+        <label htmlFor="projectName" className="block text-sm font-medium text-synvra-gray-200">
           Project Name
         </label>
         <input
@@ -193,13 +193,13 @@ export default function ProjectProposalForm() {
           name="projectName"
           value={formData.projectName}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          className="mt-1 block w-full rounded-md border-synvra-white/10 shadow-synvra-blue/10 focus:border-synvra-blue focus:ring-synvra-blue"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="serviceType" className="block text-sm font-medium text-synvra-gray-700">
+        <label htmlFor="serviceType" className="block text-sm font-medium text-synvra-gray-200">
           Service Type
         </label>
         <select
@@ -207,7 +207,7 @@ export default function ProjectProposalForm() {
           name="serviceType"
           value={formData.serviceType}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          className="mt-1 block w-full rounded-md border-synvra-white/10 shadow-synvra-blue/10 focus:border-synvra-blue focus:ring-synvra-blue"
           required
         >
           <option value="">Select a service</option>
@@ -220,7 +220,7 @@ export default function ProjectProposalForm() {
       </div>
 
       <div>
-        <label htmlFor="tier" className="block text-sm font-medium text-synvra-gray-700">
+        <label htmlFor="tier" className="block text-sm font-medium text-synvra-gray-200">
           Project Tier
         </label>
         <select
@@ -228,7 +228,7 @@ export default function ProjectProposalForm() {
           name="tier"
           value={formData.tier}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          className="mt-1 block w-full rounded-md border-synvra-white/10 shadow-synvra-blue/10 focus:border-synvra-blue focus:ring-synvra-blue"
           required
         >
           <option value="Basic">Basic</option>
@@ -237,7 +237,7 @@ export default function ProjectProposalForm() {
       </div>
 
       <div>
-        <label htmlFor="timeline" className="block text-sm font-medium text-synvra-gray-700">
+        <label htmlFor="timeline" className="block text-sm font-medium text-synvra-gray-200">
           Timeline
         </label>
         <select
@@ -245,7 +245,7 @@ export default function ProjectProposalForm() {
           name="timeline"
           value={formData.timeline}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          className="mt-1 block w-full rounded-md border-synvra-white/10 shadow-synvra-blue/10 focus:border-synvra-blue focus:ring-synvra-blue"
           required
         >
           <option value="Standard">Standard (1x multiplier)</option>
@@ -255,7 +255,7 @@ export default function ProjectProposalForm() {
       </div>
 
       <div>
-        <label htmlFor="additionalRequirements" className="block text-sm font-medium text-synvra-gray-700">
+        <label htmlFor="additionalRequirements" className="block text-sm font-medium text-synvra-gray-200">
           Additional Requirements
         </label>
         <textarea
@@ -264,21 +264,21 @@ export default function ProjectProposalForm() {
           value={formData.additionalRequirements}
           onChange={handleInputChange}
           rows={4}
-          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          className="mt-1 block w-full rounded-md border-synvra-white/10 shadow-synvra-blue/10 focus:border-synvra-blue focus:ring-synvra-blue"
         />
       </div>
 
       {formData.serviceType && (
-        <div className="bg-synvra-gray-50 p-4 rounded-md">
-          <h3 className="text-lg font-medium text-synvra-black mb-2">Price Estimate</h3>
+        <div className="bg-synvra-black p-4 rounded-md">
+          <h3 className="text-lg font-medium text-synvra-white mb-2">Price Estimate</h3>
           <div className="space-y-2">
-            <p className="text-synvra-gray-600">
+            <p className="text-synvra-gray-300">
               Base Price: ${calculateBasePrice().toLocaleString()}
             </p>
-            <p className="text-synvra-gray-600">
+            <p className="text-synvra-gray-300">
               Timeline Adjustment: {timelineMultipliers[formData.timeline]}x
             </p>
-            <p className="text-synvra-black font-medium">
+            <p className="text-synvra-white font-medium">
               Total Project Cost: ${calculateTotalPrice().toLocaleString()}
             </p>
             <p className="text-synvra-green font-medium">
@@ -303,7 +303,7 @@ export default function ProjectProposalForm() {
   const renderStep2 = () => (
     <div className="space-y-6">
       <div>
-        <label htmlFor="fullName" className="block text-sm font-medium text-synvra-gray-700">
+        <label htmlFor="fullName" className="block text-sm font-medium text-synvra-gray-200">
           Full Name
         </label>
         <input
@@ -312,13 +312,13 @@ export default function ProjectProposalForm() {
           name="fullName"
           value={formData.fullName}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          className="mt-1 block w-full rounded-md border-synvra-white/10 shadow-synvra-blue/10 focus:border-synvra-blue focus:ring-synvra-blue"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="companyName" className="block text-sm font-medium text-synvra-gray-700">
+        <label htmlFor="companyName" className="block text-sm font-medium text-synvra-gray-200">
           Company Name
         </label>
         <input
@@ -327,13 +327,13 @@ export default function ProjectProposalForm() {
           name="companyName"
           value={formData.companyName}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          className="mt-1 block w-full rounded-md border-synvra-white/10 shadow-synvra-blue/10 focus:border-synvra-blue focus:ring-synvra-blue"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-synvra-gray-700">
+        <label htmlFor="email" className="block text-sm font-medium text-synvra-gray-200">
           Email
         </label>
         <input
@@ -342,13 +342,13 @@ export default function ProjectProposalForm() {
           name="email"
           value={formData.email}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          className="mt-1 block w-full rounded-md border-synvra-white/10 shadow-synvra-blue/10 focus:border-synvra-blue focus:ring-synvra-blue"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-synvra-gray-700">
+        <label htmlFor="phone" className="block text-sm font-medium text-synvra-gray-200">
           Phone
         </label>
         <input
@@ -357,13 +357,13 @@ export default function ProjectProposalForm() {
           name="phone"
           value={formData.phone}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          className="mt-1 block w-full rounded-md border-synvra-white/10 shadow-synvra-blue/10 focus:border-synvra-blue focus:ring-synvra-blue"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="companySize" className="block text-sm font-medium text-synvra-gray-700">
+        <label htmlFor="companySize" className="block text-sm font-medium text-synvra-gray-200">
           Company Size
         </label>
         <select
@@ -371,7 +371,7 @@ export default function ProjectProposalForm() {
           name="companySize"
           value={formData.companySize}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          className="mt-1 block w-full rounded-md border-synvra-white/10 shadow-synvra-blue/10 focus:border-synvra-blue focus:ring-synvra-blue"
           required
         >
           <option value="">Select company size</option>
@@ -384,7 +384,7 @@ export default function ProjectProposalForm() {
       </div>
 
       <div>
-        <label htmlFor="industry" className="block text-sm font-medium text-synvra-gray-700">
+        <label htmlFor="industry" className="block text-sm font-medium text-synvra-gray-200">
           Industry
         </label>
         <select
@@ -392,7 +392,7 @@ export default function ProjectProposalForm() {
           name="industry"
           value={formData.industry}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-300 shadow-sm focus:border-synvra-blue focus:ring-synvra-blue"
+          className="mt-1 block w-full rounded-md border-synvra-white/10 shadow-synvra-blue/10 focus:border-synvra-blue focus:ring-synvra-blue"
           required
         >
           <option value="">Select industry</option>
@@ -410,7 +410,7 @@ export default function ProjectProposalForm() {
         <button
           type="button"
           onClick={prevStep}
-          className="bg-synvra-gray-200 text-synvra-gray-700 px-4 py-2 rounded-md hover:bg-synvra-gray-300 transition-colors"
+          className="bg-synvra-gray-200 text-synvra-gray-200 px-4 py-2 rounded-md hover:bg-synvra-gray-300 transition-colors"
         >
           Previous Step
         </button>
@@ -430,69 +430,69 @@ export default function ProjectProposalForm() {
     
     return (
       <div className="space-y-6">
-        <div className="bg-synvra-gray-50 p-6 rounded-lg">
-          <h3 className="text-lg font-medium text-synvra-black mb-4">Project Summary</h3>
+        <div className="bg-synvra-black p-6 rounded-lg">
+          <h3 className="text-lg font-medium text-synvra-white mb-4">Project Summary</h3>
           
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <h4 className="font-medium text-synvra-gray-700">Project Details</h4>
+              <h4 className="font-medium text-synvra-gray-200">Project Details</h4>
               <dl className="mt-2 space-y-2">
                 <div>
-                  <dt className="text-sm text-synvra-gray-500">Project Name</dt>
-                  <dd className="text-sm text-synvra-black">{formData.projectName}</dd>
+                  <dt className="text-sm text-synvra-gray-300">Project Name</dt>
+                  <dd className="text-sm text-synvra-white">{formData.projectName}</dd>
                 </div>
                 <div>
-                  <dt className="text-sm text-synvra-gray-500">Service Type</dt>
-                  <dd className="text-sm text-synvra-black">{selectedService?.name}</dd>
+                  <dt className="text-sm text-synvra-gray-300">Service Type</dt>
+                  <dd className="text-sm text-synvra-white">{selectedService?.name}</dd>
                 </div>
                 <div>
-                  <dt className="text-sm text-synvra-gray-500">Tier</dt>
-                  <dd className="text-sm text-synvra-black">{formData.tier}</dd>
+                  <dt className="text-sm text-synvra-gray-300">Tier</dt>
+                  <dd className="text-sm text-synvra-white">{formData.tier}</dd>
                 </div>
                 <div>
-                  <dt className="text-sm text-synvra-gray-500">Timeline</dt>
-                  <dd className="text-sm text-synvra-black">{formData.timeline}</dd>
+                  <dt className="text-sm text-synvra-gray-300">Timeline</dt>
+                  <dd className="text-sm text-synvra-white">{formData.timeline}</dd>
                 </div>
               </dl>
             </div>
 
             <div>
-              <h4 className="font-medium text-synvra-gray-700">Client Information</h4>
+              <h4 className="font-medium text-synvra-gray-200">Client Information</h4>
               <dl className="mt-2 space-y-2">
                 <div>
-                  <dt className="text-sm text-synvra-gray-500">Full Name</dt>
-                  <dd className="text-sm text-synvra-black">{formData.fullName}</dd>
+                  <dt className="text-sm text-synvra-gray-300">Full Name</dt>
+                  <dd className="text-sm text-synvra-white">{formData.fullName}</dd>
                 </div>
                 <div>
-                  <dt className="text-sm text-synvra-gray-500">Company</dt>
-                  <dd className="text-sm text-synvra-black">{formData.companyName}</dd>
+                  <dt className="text-sm text-synvra-gray-300">Company</dt>
+                  <dd className="text-sm text-synvra-white">{formData.companyName}</dd>
                 </div>
                 <div>
-                  <dt className="text-sm text-synvra-gray-500">Email</dt>
-                  <dd className="text-sm text-synvra-black">{formData.email}</dd>
+                  <dt className="text-sm text-synvra-gray-300">Email</dt>
+                  <dd className="text-sm text-synvra-white">{formData.email}</dd>
                 </div>
                 <div>
-                  <dt className="text-sm text-synvra-gray-500">Phone</dt>
-                  <dd className="text-sm text-synvra-black">{formData.phone}</dd>
+                  <dt className="text-sm text-synvra-gray-300">Phone</dt>
+                  <dd className="text-sm text-synvra-white">{formData.phone}</dd>
                 </div>
               </dl>
             </div>
           </div>
 
-          <div className="mt-6 pt-6 border-t border-synvra-gray-200">
-            <h4 className="font-medium text-synvra-gray-700 mb-4">Pricing Summary</h4>
+          <div className="mt-6 pt-6 border-t border-synvra-white">
+            <h4 className="font-medium text-synvra-gray-200 mb-4">Pricing Summary</h4>
             <dl className="space-y-2">
               <div className="flex justify-between">
-                <dt className="text-synvra-gray-600">Base Price</dt>
-                <dd className="text-synvra-black">${calculateBasePrice().toLocaleString()}</dd>
+                <dt className="text-synvra-gray-300">Base Price</dt>
+                <dd className="text-synvra-white">${calculateBasePrice().toLocaleString()}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-synvra-gray-600">Timeline Adjustment</dt>
-                <dd className="text-synvra-black">{timelineMultipliers[formData.timeline]}x</dd>
+                <dt className="text-synvra-gray-300">Timeline Adjustment</dt>
+                <dd className="text-synvra-white">{timelineMultipliers[formData.timeline]}x</dd>
               </div>
               <div className="flex justify-between font-medium">
-                <dt className="text-synvra-black">Total Project Cost</dt>
-                <dd className="text-synvra-black">${calculateTotalPrice().toLocaleString()}</dd>
+                <dt className="text-synvra-white">Total Project Cost</dt>
+                <dd className="text-synvra-white">${calculateTotalPrice().toLocaleString()}</dd>
               </div>
               <div className="flex justify-between font-medium">
                 <dt className="text-synvra-green">Required Deposit (25%)</dt>
@@ -502,9 +502,9 @@ export default function ProjectProposalForm() {
           </div>
         </div>
 
-        <div className="bg-synvra-gray-50 p-6 rounded-lg">
-          <h3 className="text-lg font-medium text-synvra-black mb-4">Terms and Conditions</h3>
-          <div className="prose prose-sm text-synvra-gray-600">
+        <div className="bg-synvra-black p-6 rounded-lg">
+          <h3 className="text-lg font-medium text-synvra-white mb-4">Terms and Conditions</h3>
+          <div className="prose prose-sm text-synvra-gray-300">
             <p>By proceeding with this project, you agree to the following terms:</p>
             <ul className="list-disc pl-5 space-y-2">
               <li>A 25% deposit is required to begin the project</li>
@@ -521,10 +521,10 @@ export default function ProjectProposalForm() {
             type="checkbox"
             id="terms"
             name="terms"
-            className="h-4 w-4 text-synvra-blue focus:ring-synvra-blue border-synvra-gray-300 rounded"
+            className="h-4 w-4 text-synvra-blue focus:ring-synvra-blue border-synvra-white rounded"
             required
           />
-          <label htmlFor="terms" className="text-sm text-synvra-gray-700">
+          <label htmlFor="terms" className="text-sm text-synvra-gray-200">
             I have read and agree to the terms and conditions
           </label>
         </div>
@@ -533,7 +533,7 @@ export default function ProjectProposalForm() {
           <button
             type="button"
             onClick={prevStep}
-            className="bg-synvra-gray-200 text-synvra-gray-700 px-4 py-2 rounded-md hover:bg-synvra-gray-300 transition-colors"
+            className="bg-synvra-gray-200 text-synvra-gray-200 px-4 py-2 rounded-md hover:bg-synvra-gray-300 transition-colors"
           >
             Previous Step
           </button>
@@ -551,13 +551,13 @@ export default function ProjectProposalForm() {
 
   const renderStep4 = () => (
     <div className="space-y-6">
-      <div className="bg-synvra-gray-50 p-6 rounded-lg">
-        <h3 className="text-lg font-medium text-synvra-black mb-4">Payment Details</h3>
+      <div className="bg-synvra-black p-6 rounded-lg">
+        <h3 className="text-lg font-medium text-synvra-white mb-4">Payment Details</h3>
         
         <div className="mb-6">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-synvra-gray-600">Total Project Cost:</span>
-            <span className="text-synvra-black font-medium">${calculateTotalPrice().toLocaleString()}</span>
+            <span className="text-synvra-gray-300">Total Project Cost:</span>
+            <span className="text-synvra-white font-medium">${calculateTotalPrice().toLocaleString()}</span>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-synvra-green">Required Deposit (25%):</span>
@@ -565,21 +565,21 @@ export default function ProjectProposalForm() {
           </div>
         </div>
 
-        <div className="border-t border-synvra-gray-200 pt-6">
-          <h4 className="text-sm font-medium text-synvra-gray-700 mb-4">Payment Method</h4>
+        <div className="border-t border-synvra-white pt-6">
+          <h4 className="text-sm font-medium text-synvra-gray-200 mb-4">Payment Method</h4>
           
           {/* Payment plugin integration will go here */}
-          <div className="bg-white p-4 rounded-md border border-synvra-gray-200">
-            <p className="text-synvra-gray-600 text-sm">
+          <div className="bg-synvra-black p-4 rounded-md border border-synvra-white">
+            <p className="text-synvra-gray-300 text-sm">
               Payment integration will be added here. This will connect to your chosen payment plugin.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="bg-synvra-gray-50 p-6 rounded-lg">
-        <h3 className="text-lg font-medium text-synvra-black mb-4">What happens next?</h3>
-        <ul className="space-y-3 text-synvra-gray-600">
+      <div className="bg-synvra-black p-6 rounded-lg">
+        <h3 className="text-lg font-medium text-synvra-white mb-4">What happens next?</h3>
+        <ul className="space-y-3 text-synvra-gray-300">
           <li className="flex items-start">
             <span className="text-synvra-green mr-2">✓</span>
             <span>After successful payment, you'll receive a confirmation email with your project details</span>
@@ -609,7 +609,7 @@ export default function ProjectProposalForm() {
         <button
           type="button"
           onClick={prevStep}
-          className="bg-synvra-gray-200 text-synvra-gray-700 px-4 py-2 rounded-md hover:bg-synvra-gray-300 transition-colors"
+          className="bg-synvra-gray-200 text-synvra-gray-200 px-4 py-2 rounded-md hover:bg-synvra-gray-300 transition-colors"
           disabled={submitStatus === 'submitting'}
         >
           Previous Step
@@ -629,11 +629,11 @@ export default function ProjectProposalForm() {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-synvra-black mb-2">Project Proposal Form</h2>
-        <p className="text-synvra-gray-600">Step {currentStep} of {totalSteps}</p>
+        <h2 className="text-2xl font-bold text-synvra-white mb-2">Project Proposal Form</h2>
+        <p className="text-synvra-gray-300">Step {currentStep} of {totalSteps}</p>
       </div>
 
-      <div className="bg-white rounded-lg shadow-lg p-6">
+      <div className="bg-synvra-black rounded-lg shadow-synvra-blue/10 p-6">
         {currentStep === 1 && renderStep1()}
         {currentStep === 2 && renderStep2()}
         {currentStep === 3 && renderStep3()}
