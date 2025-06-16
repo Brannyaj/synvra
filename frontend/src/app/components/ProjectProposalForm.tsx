@@ -405,7 +405,8 @@ export default function ProjectProposalForm() {
         <button
           type="button"
           onClick={prevStep}
-          className="bg-synvra-gray-200 text-synvra-gray-200 px-4 py-2 rounded-md hover:bg-synvra-gray-300 transition-colors"
+          className="border border-[#2563eb] text-[#2563eb] bg-transparent px-4 py-2 rounded-md hover:bg-[#2563eb] hover:text-white transition-colors"
+          style={{ color: '#2563eb', background: 'transparent', border: '1px solid #2563eb' }}
         >
           Previous Step
         </button>
@@ -528,7 +529,8 @@ export default function ProjectProposalForm() {
           <button
             type="button"
             onClick={prevStep}
-            className="bg-synvra-gray-200 text-synvra-gray-200 px-4 py-2 rounded-md hover:bg-synvra-gray-300 transition-colors"
+            className="border border-[#2563eb] text-[#2563eb] bg-transparent px-4 py-2 rounded-md hover:bg-[#2563eb] hover:text-white transition-colors"
+            style={{ color: '#2563eb', background: 'transparent', border: '1px solid #2563eb' }}
           >
             Previous Step
           </button>
@@ -604,8 +606,8 @@ export default function ProjectProposalForm() {
         <button
           type="button"
           onClick={prevStep}
-          className="bg-synvra-gray-200 text-synvra-gray-200 px-4 py-2 rounded-md hover:bg-synvra-gray-300 transition-colors"
-          disabled={submitStatus === 'submitting'}
+          className="border border-[#2563eb] text-[#2563eb] bg-transparent px-4 py-2 rounded-md hover:bg-[#2563eb] hover:text-white transition-colors"
+          style={{ color: '#2563eb', background: 'transparent', border: '1px solid #2563eb' }}
         >
           Previous Step
         </button>
