@@ -569,10 +569,12 @@ export default function ProjectProposalForm() {
             onChange={handleInputChange}
             required
             className="h-4 w-4 text-synvra-blue focus:ring-synvra-blue border-synvra-white rounded !bg-gray-900 text-white appearance-none"
+            style={{ accentColor: '#2563eb' }}
           />
           <label htmlFor="terms" className="text-sm text-synvra-gray-200">
             I have read and agree to the terms and conditions
           </label>
+          <div style={{ color: 'white' }}>Checked: {formData.termsAccepted ? 'Yes' : 'No'}</div>
         </div>
 
         <div className="flex justify-between">
