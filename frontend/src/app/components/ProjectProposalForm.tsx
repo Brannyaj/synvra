@@ -193,7 +193,7 @@ export default function ProjectProposalForm() {
           name="projectName"
           value={formData.projectName}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue placeholder-synvra-gray-400"
+          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue !bg-synvra-gray-900 text-synvra-white appearance-none placeholder-synvra-gray-400"
           required
         />
       </div>
@@ -207,7 +207,7 @@ export default function ProjectProposalForm() {
           name="serviceType"
           value={formData.serviceType}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue placeholder-synvra-gray-400"
+          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue !bg-synvra-gray-900 text-synvra-white appearance-none placeholder-synvra-gray-400"
           required
         >
           <option value="">Select a service</option>
@@ -228,7 +228,7 @@ export default function ProjectProposalForm() {
           name="tier"
           value={formData.tier}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue placeholder-synvra-gray-400"
+          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue !bg-synvra-gray-900 text-synvra-white appearance-none placeholder-synvra-gray-400"
           required
         >
           <option value="Basic">Basic</option>
@@ -245,7 +245,7 @@ export default function ProjectProposalForm() {
           name="timeline"
           value={formData.timeline}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue placeholder-synvra-gray-400"
+          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue !bg-synvra-gray-900 text-synvra-white appearance-none placeholder-synvra-gray-400"
           required
         >
           <option value="Standard">Standard (1x multiplier)</option>
@@ -264,7 +264,7 @@ export default function ProjectProposalForm() {
           value={formData.additionalRequirements}
           onChange={handleInputChange}
           rows={4}
-          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue placeholder-synvra-gray-400"
+          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue !bg-synvra-gray-900 text-synvra-white appearance-none placeholder-synvra-gray-400"
         />
       </div>
 
@@ -312,7 +312,7 @@ export default function ProjectProposalForm() {
           name="fullName"
           value={formData.fullName}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue placeholder-synvra-gray-400"
+          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue !bg-synvra-gray-900 text-synvra-white appearance-none placeholder-synvra-gray-400"
           required
         />
       </div>
@@ -327,7 +327,7 @@ export default function ProjectProposalForm() {
           name="companyName"
           value={formData.companyName}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue placeholder-synvra-gray-400"
+          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue !bg-synvra-gray-900 text-synvra-white appearance-none placeholder-synvra-gray-400"
           required
         />
       </div>
@@ -342,7 +342,7 @@ export default function ProjectProposalForm() {
           name="email"
           value={formData.email}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue placeholder-synvra-gray-400"
+          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue !bg-synvra-gray-900 text-synvra-white appearance-none placeholder-synvra-gray-400"
           required
         />
       </div>
@@ -357,7 +357,7 @@ export default function ProjectProposalForm() {
           name="phone"
           value={formData.phone}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue placeholder-synvra-gray-400"
+          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue !bg-synvra-gray-900 text-synvra-white appearance-none placeholder-synvra-gray-400"
           required
         />
       </div>
@@ -371,7 +371,7 @@ export default function ProjectProposalForm() {
           name="companySize"
           value={formData.companySize}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue placeholder-synvra-gray-400"
+          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue !bg-synvra-gray-900 text-synvra-white appearance-none placeholder-synvra-gray-400"
           required
         >
           <option value="">Select company size</option>
@@ -392,7 +392,7 @@ export default function ProjectProposalForm() {
           name="industry"
           value={formData.industry}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue placeholder-synvra-gray-400"
+          className="mt-1 block w-full rounded-md border-synvra-gray-700 focus:ring-synvra-blue focus:border-synvra-blue !bg-synvra-gray-900 text-synvra-white appearance-none placeholder-synvra-gray-400"
           required
         >
           <option value="">Select industry</option>
@@ -521,7 +521,7 @@ export default function ProjectProposalForm() {
             type="checkbox"
             id="terms"
             name="terms"
-            className="h-4 w-4 text-synvra-blue focus:ring-synvra-blue border-synvra-white rounded"
+            className="h-4 w-4 text-synvra-blue focus:ring-synvra-blue border-synvra-white rounded !bg-synvra-gray-900 text-synvra-white appearance-none"
             required
           />
           <label htmlFor="terms" className="text-sm text-synvra-gray-200">
