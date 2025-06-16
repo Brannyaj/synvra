@@ -55,11 +55,18 @@ const services: ServiceOption[] = [
     description: 'Standard setup to complex, scalable, secure cloud architecture.'
   },
   {
-    id: 'ai',
-    name: 'AI & Machine Learning Development',
+    id: 'ai-integration',
+    name: 'AI Integration (Existing APIs)',
     basicPrice: 50000,
+    complexPrice: 50000,
+    description: 'Connecting to AI services (e.g., ChatGPT, Claude), prompt design, and integration with your app or business logic.'
+  },
+  {
+    id: 'ai-custom',
+    name: 'Custom AI Model Development (From Scratch)',
+    basicPrice: 75000000,
     complexPrice: 75000000,
-    description: 'AI integration (existing APIs) to custom AI model development.'
+    description: 'Building a custom AI model from scratch, including data pipeline design, training infrastructure, deep learning systems, and full-scale deployment.'
   },
   {
     id: 'automation',
