@@ -118,6 +118,12 @@ const timelineMultipliers = {
   'Urgent': 1.5
 };
 
+const projectTypeMultipliers: Record<string, number> = {
+  'New Project': 1.2,
+  'Existing Project': 1,
+  'Maintenance': 0.5,
+};
+
 const ZAPIER_WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/23336720/uoor2gh/';
 
 export default function ProjectProposalForm() {
@@ -150,8 +156,9 @@ export default function ProjectProposalForm() {
 
   const calculateTotalPrice = () => {
     const basePrice = calculateBasePrice();
-    const multiplier = timelineMultipliers[formData.timeline];
-    return basePrice * multiplier;
+    const timelineMultiplier = timelineMultipliers[formData.timeline];
+    const projectTypeMultiplier = projectTypeMultipliers[formData.projectType] || 1;
+    return basePrice * timelineMultiplier * projectTypeMultiplier;
   };
 
   const calculateDeposit = () => {
@@ -301,6 +308,7 @@ export default function ProjectProposalForm() {
             <p className="text-synvra-gray-300">
               Timeline Adjustment: {timelineMultipliers[formData.timeline]}x
             </p>
+            <p className="text-synvra-gray-300">Project Type Adjustment: {projectTypeMultipliers[formData.projectType] || 1}x</p>
             <p className="text-synvra-white font-medium">
               Total Project Cost: ${calculateTotalPrice().toLocaleString()}
             </p>
@@ -519,6 +527,10 @@ export default function ProjectProposalForm() {
               <div className="flex justify-between">
                 <dt className="text-synvra-gray-300">Timeline Adjustment</dt>
                 <dd className="text-synvra-white">{timelineMultipliers[formData.timeline]}x</dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-synvra-gray-300">Project Type Adjustment</dt>
+                <dd className="text-synvra-white">{projectTypeMultipliers[formData.projectType] || 1}x</dd>
               </div>
               <div className="flex justify-between font-medium">
                 <dt className="text-synvra-white">Total Project Cost</dt>
