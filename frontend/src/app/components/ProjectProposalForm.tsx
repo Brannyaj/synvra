@@ -125,8 +125,6 @@ const projectTypeMultipliers: Record<string, number> = {
   'Maintenance': 0.5,
 };
 
-const ZAPIER_WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/23336720/uoor2gh/';
-
 export default function ProjectProposalForm() {
   const [formData, setFormData] = useState<FormData>({
     projectName: '',
@@ -193,16 +191,48 @@ export default function ProjectProposalForm() {
         totalPrice: calculateTotalPrice(),
         deposit: calculateDeposit(),
       };
-      const response = await fetch(ZAPIER_WEBHOOK_URL, {
+
+      // Submit to our API route which will proxy to Zapier
+      const response = await fetch('/api/submit-proposal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-      if (!response.ok) throw new Error('Failed to submit proposal');
-      setSubmitStatus('success');
-    } catch (err) {
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to submit proposal');
+      }
+
+      // Create Stripe checkout session
+      const checkoutResponse = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: calculateDeposit(),
+          email: formData.email,
+          name: formData.fullName,
+          projectDetails: {
+            name: formData.projectName,
+            service: formData.serviceType,
+            tier: formData.tier,
+            timeline: formData.timeline,
+            totalPrice: calculateTotalPrice(),
+            deposit: calculateDeposit()
+          }
+        }),
+      });
+
+      if (!checkoutResponse.ok) {
+        throw new Error('Failed to create checkout session');
+      }
+
+      const { url } = await checkoutResponse.json();
+      window.location.href = url;
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitError(error instanceof Error ? error.message : 'Failed to submit proposal');
       setSubmitStatus('error');
-      setSubmitError('Failed to submit proposal. Please try again later.');
     }
   };
 
