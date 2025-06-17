@@ -23,7 +23,9 @@ export async function POST(request: Request) {
       console.error('Zapier webhook error:', {
         status: response.status,
         statusText: response.statusText,
-        error: errorText
+        error: errorText,
+        url: ZAPIER_WEBHOOK_URL,
+        payload
       });
       throw new Error(`Failed to submit to Zapier: ${response.statusText}`);
     }
