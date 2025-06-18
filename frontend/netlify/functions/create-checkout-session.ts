@@ -15,9 +15,10 @@ const handler: Handler = async (event) => {
 
   try {
     const { amount, email, name, projectDetails } = JSON.parse(event.body || '{}');
-    console.log("Received payload:", { amount, email, name, projectDetails });
+    const numericAmount = typeof amount === 'string' ? parseFloat(amount) : amount;
+    console.log("Received payload:", { amount, numericAmount, email, name, projectDetails });
 
-    if (!amount || amount <= 0) {
+    if (!numericAmount || numericAmount <= 0) {
       return {
         statusCode: 400,
         body: JSON.stringify({ error: 'Amount must be greater than zero' }),
@@ -34,7 +35,7 @@ const handler: Handler = async (event) => {
               name: 'Project Deposit',
               description: `25% deposit for ${JSON.stringify(projectDetails)}`,
             },
-            unit_amount: Math.round(amount * 100), // Convert to cents
+            unit_amount: Math.round(numericAmount * 100), // Convert to cents
           },
           quantity: 1,
         },
