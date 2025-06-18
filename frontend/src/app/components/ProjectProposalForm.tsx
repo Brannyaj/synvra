@@ -598,6 +598,27 @@ export default function ProjectProposalForm() {
           </label>
         </div>
 
+        <div className="mb-6">
+          <div className="mb-4">
+            <label className="font-semibold text-synvra-blue block mb-2">Privacy Policy</label>
+            <div
+              className="bg-synvra-black border border-synvra-blue rounded p-4 text-synvra-gray-200 text-sm"
+              style={{ maxHeight: '200px', overflowY: 'auto', whiteSpace: 'pre-wrap' }}
+            >
+              {`Introduction\nAt Synvra, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your information when you visit our website.\n\nInformation We Collect\nWe collect information using the following tools:\n\nGoogle Analytics: We use Google Analytics to understand how visitors interact with our website. This includes:\nPages visited and time spent on each page\nTechnical information (browser type, device type)\nApproximate geographic location\nReferral sources\n\nHow We Use Your Information\nWe use the collected information to:\nImprove our website and services\nAnalyze user behavior and preferences\nOptimize our content and user experience\nMonitor website performance\n\nCookies\nOur website uses cookies and similar tracking technologies to enhance your browsing experience and collect usage data. These include:\nAnalytics Cookies: Used by Google Analytics to track user interactions and gather usage statistics\nFunctional Cookies: Used to remember your preferences and settings\n\nData Retention\nAnalytics data is retained for 26 months, after which it is automatically deleted. You can opt out of Google Analytics tracking by using the Google Analytics Opt-out Browser Add-on.\n\nYour Rights\nYou have the right to:\nAccess your personal data\nRequest deletion of your data\nObject to our processing of your data\nWithdraw consent at any time\n\nContact Information\nIf you have any questions about our Privacy Policy, please contact us at support@synvra.com\n\nUpdates to This Policy\nWe may update this Privacy Policy from time to time. The latest version will always be available on this page.`}
+            </div>
+          </div>
+          <div>
+            <label className="font-semibold text-synvra-blue block mb-2">Terms of Service</label>
+            <div
+              className="bg-synvra-black border border-synvra-blue rounded p-4 text-synvra-gray-200 text-sm"
+              style={{ maxHeight: '200px', overflowY: 'auto', whiteSpace: 'pre-wrap' }}
+            >
+              {`1. Agreement to Terms\nBy accessing and using Synvra's website and services, you agree to be bound by these Terms of Service and all applicable laws and regulations.\n\n2. Services\nSynvra provides software development and technology consulting services, including but not limited to:\nCustom software development\nWeb and mobile application development\nAI and machine learning solutions\nCloud computing and DevOps services\nTechnical consulting and support\n\n3. Intellectual Property\nAll content, features, and functionality of our website, including but not limited to text, graphics, logos, and code, are owned by Synvra and are protected by international copyright, trademark, and other intellectual property laws.\n\n4. User Responsibilities\nWhen using our services, you agree to:\nProvide accurate and complete information\nMaintain the confidentiality of any login credentials\nUse our services in compliance with all applicable laws\nNot engage in any unauthorized use of our services\n\n5. Privacy and Data Protection\nOur collection and use of personal information is governed by our Privacy Policy.\n\n6. Limitation of Liability\nSynvra shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use or inability to use our services.\n\n7. Changes to Terms\nWe reserve the right to modify these terms at any time. We will notify users of any material changes by posting the new terms on this site.\n\n8. Contact Information\nFor any questions about these Terms of Service, please contact us at support@synvra.com`}
+            </div>
+          </div>
+        </div>
+
         <div className="flex justify-between">
           <button
             type="button"
