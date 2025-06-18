@@ -25,6 +25,9 @@ const handler: Handler = async (event) => {
       };
     }
 
+    // Format a user-friendly description
+    const desc = `25% deposit for ${projectDetails.name || 'your project'}: ${projectDetails.service.replace('-', ' ')} (${projectDetails.tier}, ${projectDetails.timeline})`;
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -33,7 +36,7 @@ const handler: Handler = async (event) => {
             currency: 'usd',
             product_data: {
               name: 'Project Deposit',
-              description: `25% deposit for ${JSON.stringify(projectDetails)}`,
+              description: desc,
             },
             unit_amount: Math.round(numericAmount * 100), // Convert to cents
           },
