@@ -183,25 +183,6 @@ export default function ProjectProposalForm() {
     setSubmitStatus('submitting');
     setSubmitError('');
     try {
-      const payload = {
-        ...formData,
-        basePrice: calculateBasePrice(),
-        totalPrice: calculateTotalPrice(),
-        deposit: calculateDeposit(),
-      };
-
-      // Submit to our API route which will proxy to Zapier
-      const response = await fetch('/api/submit-proposal', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to submit proposal');
-      }
-
       // Create Stripe checkout session
       const checkoutResponse = await fetch('/api/create-checkout-session', {
         method: 'POST',
