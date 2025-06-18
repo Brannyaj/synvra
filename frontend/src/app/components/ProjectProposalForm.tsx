@@ -181,7 +181,7 @@ export default function ProjectProposalForm() {
     setCurrentStep(prev => Math.max(prev - 1, 1));
   };
 
-  const handleFinalSubmit = async () => {
+  const handleProceedToPayment = async () => {
     setSubmitStatus('submitting');
     setSubmitError('');
     try {
@@ -616,92 +616,16 @@ export default function ProjectProposalForm() {
           </button>
           <button
             type="button"
-            onClick={nextStep}
+            onClick={handleProceedToPayment}
             className="bg-synvra-blue text-white px-4 py-2 rounded-md hover:bg-synvra-blue-dark transition-colors"
+            disabled={!formData.termsAccepted || submitStatus === 'submitting'}
           >
-            Proceed to Payment
+            {submitStatus === 'submitting' ? 'Submitting...' : 'Proceed to Payment'}
           </button>
         </div>
       </div>
     );
   };
-
-  const renderStep4 = () => (
-    <div className="space-y-6">
-      <div className="bg-synvra-black p-6 rounded-lg">
-        <h3 className="text-lg font-medium text-synvra-white mb-4">Payment Details</h3>
-        
-        <div className="mb-6">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-synvra-gray-300">Total Project Cost:</span>
-            <span className="text-synvra-white font-medium">${calculateTotalPrice().toLocaleString()}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-synvra-green">Required Deposit (25%):</span>
-            <span className="text-synvra-green font-medium">${calculateDeposit().toLocaleString()}</span>
-          </div>
-        </div>
-
-        <div className="border-t border-synvra-white pt-6">
-          <h4 className="text-sm font-medium text-synvra-gray-200 mb-4">Payment Method</h4>
-          
-          {/* Payment plugin integration will go here */}
-          <div className="bg-synvra-black p-4 rounded-md border border-synvra-white">
-            <p className="text-synvra-gray-300 text-sm">
-              Payment integration will be added here. This will connect to your chosen payment plugin.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-synvra-black p-6 rounded-lg">
-        <h3 className="text-lg font-medium text-synvra-white mb-4">What happens next?</h3>
-        <ul className="space-y-3 text-synvra-gray-300">
-          <li className="flex items-start">
-            <span className="text-synvra-green mr-2">✓</span>
-            <span>After successful payment, you'll receive a confirmation email with your project details</span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-synvra-green mr-2">✓</span>
-            <span>Our team will review your project requirements and get in touch within 24 hours</span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-synvra-green mr-2">✓</span>
-            <span>We'll schedule a kickoff meeting to discuss your project in detail</span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-synvra-green mr-2">✓</span>
-            <span>Your project will be assigned to our expert development team</span>
-          </li>
-        </ul>
-      </div>
-
-      {submitStatus === 'error' && (
-        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded">{submitError}</div>
-      )}
-      {submitStatus === 'success' && (
-        <div className="bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded">Thank you for your proposal! We'll be in touch soon.</div>
-      )}
-      <div className="flex justify-between">
-        <button
-          type="button"
-          onClick={prevStep}
-          className="border border-[#2563eb] text-[#2563eb] bg-transparent px-4 py-2 rounded-md hover:bg-[#2563eb] hover:text-white transition-colors"
-          style={{ color: '#2563eb', background: 'transparent', border: '1px solid #2563eb' }}
-        >
-          Previous Step
-        </button>
-        <button
-          type="button"
-          onClick={handleFinalSubmit}
-          className="bg-synvra-green text-white px-6 py-2 rounded-md hover:bg-synvra-green-dark transition-colors"
-          disabled={submitStatus === 'submitting'}
-        >
-          {submitStatus === 'submitting' ? 'Submitting...' : 'Pay Deposit & Submit'}
-        </button>
-      </div>
-    </div>
-  );
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -714,7 +638,6 @@ export default function ProjectProposalForm() {
         {currentStep === 1 && renderStep1()}
         {currentStep === 2 && renderStep2()}
         {currentStep === 3 && renderStep3()}
-        {currentStep === 4 && renderStep4()}
       </div>
     </div>
   );
