@@ -11,7 +11,6 @@ interface ServiceOption {
 }
 
 interface FormData {
-  projectName: string;
   serviceType: string;
   tier: 'Basic' | 'Complex';
   timeline: 'Standard' | 'Fast-track' | 'Urgent';
@@ -127,7 +126,6 @@ const projectTypeMultipliers: Record<string, number> = {
 
 export default function ProjectProposalForm() {
   const [formData, setFormData] = useState<FormData>({
-    projectName: '',
     serviceType: '',
     tier: 'Basic',
     timeline: 'Standard',
@@ -213,7 +211,6 @@ export default function ProjectProposalForm() {
           email: formData.email,
           name: formData.fullName,
           projectDetails: {
-            name: formData.projectName,
             service: formData.serviceType,
             tier: formData.tier,
             timeline: formData.timeline,
@@ -507,10 +504,6 @@ export default function ProjectProposalForm() {
             <div>
               <h4 className="font-medium text-synvra-gray-200">Project Details</h4>
               <dl className="mt-2 space-y-2">
-                <div>
-                  <dt className="text-sm text-synvra-gray-300">Project Name</dt>
-                  <dd className="text-sm text-synvra-white">{formData.projectName}</dd>
-                </div>
                 <div>
                   <dt className="text-sm text-synvra-gray-300">Service Type</dt>
                   <dd className="text-sm text-synvra-white">{selectedService?.name}</dd>

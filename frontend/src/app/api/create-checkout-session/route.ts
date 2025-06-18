@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(request: Request) {
   try {
-    const { amount, email, name, projectDetails } = await request.json();
+    const { amount, email, name, projectDetails, ...rest } = await request.json();
 
     // Create a checkout session
     const session = await stripe.checkout.sessions.create({
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
             currency: 'usd',
             product_data: {
               name: 'Project Deposit',
-              description: `25% deposit for ${projectDetails}`,
+              description: `25% deposit for ${projectDetails?.name || ''}`,
             },
             unit_amount: Math.round(amount * 100), // Convert to cents
           },
@@ -31,7 +31,12 @@ export async function POST(request: Request) {
       customer_email: email,
       client_reference_id: name,
       metadata: {
-        projectDetails,
+        ...rest, // All other form fields
+        serviceType: projectDetails?.service || '',
+        tier: projectDetails?.tier || '',
+        timeline: projectDetails?.timeline || '',
+        totalPrice: projectDetails?.totalPrice ? String(projectDetails.totalPrice) : '',
+        deposit: projectDetails?.deposit ? String(projectDetails.deposit) : '',
       },
     });
 
