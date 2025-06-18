@@ -15,6 +15,7 @@ const handler: Handler = async (event) => {
 
   try {
     const { amount, email, name, projectDetails } = JSON.parse(event.body || '{}');
+    console.log("Received payload:", { amount, email, name, projectDetails });
 
     if (!amount || amount <= 0) {
       return {
