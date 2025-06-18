@@ -3,8 +3,6 @@ import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2025-05-28.basil' });
 
-export const config = { api: { bodyParser: false } };
-
 export async function POST(req: NextRequest) {
   const sig = req.headers.get('stripe-signature');
   const rawBody = await req.text();
