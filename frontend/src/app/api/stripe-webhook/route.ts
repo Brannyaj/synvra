@@ -2,6 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { SignatureRequestApi } from '@dropbox/sign/api';
 
+// Add timestamp to logs
+const log = (message: string, data?: any) => {
+  const timestamp = new Date().toISOString();
+  console.log(`[${timestamp}] ${message}`);
+  if (data) {
+    console.log(`[${timestamp}] Data:`, JSON.stringify(data, null, 2));
+  }
+}
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2025-05-28.basil' });
 
 if (!process.env.DROPBOX_SIGN_API_KEY) {
@@ -13,33 +22,38 @@ const signatureRequestApi = new SignatureRequestApi();
 signatureRequestApi.username = process.env.DROPBOX_SIGN_API_KEY;
 
 export async function POST(req: NextRequest) {
-  console.log('Webhook received');
+  log('Webhook received - Starting processing');
+  
   const sig = req.headers.get('stripe-signature');
+  log('Stripe signature received', { signature: sig?.substring(0, 10) + '...' });
+  
   const rawBody = await req.text();
+  log('Request body received', { bodyLength: rawBody.length });
+  
   let event;
 
   try {
     event = stripe.webhooks.constructEvent(rawBody, sig!, process.env.STRIPE_WEBHOOK_SECRET!);
-    console.log('Event type:', event.type);
+    log('Event constructed successfully', { type: event.type });
   } catch (err: any) {
-    console.error('Webhook signature verification failed:', err.message);
+    log('Webhook signature verification failed', { error: err.message });
     return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 });
   }
 
   // Handle both immediate and async payment success
   if (event.type === 'checkout.session.completed' || event.type === 'checkout.session.async_payment_succeeded') {
-    console.log('Processing payment success event:', event.type);
+    log('Processing payment success event', { eventType: event.type });
     const session = event.data.object as Stripe.Checkout.Session;
     const metadata = session.metadata || {};
-    console.log('Session metadata:', metadata);
+    log('Session metadata received', metadata);
     
     // Parse projectDetails from metadata
     let projectDetails;
     try {
       projectDetails = JSON.parse(metadata.projectDetails || '{}');
-      console.log('Parsed project details:', projectDetails);
+      log('Project details parsed successfully', projectDetails);
     } catch (err) {
-      console.error('Error parsing projectDetails:', err);
+      log('Error parsing projectDetails', { error: err, metadata });
       projectDetails = {};
     }
 
@@ -47,6 +61,8 @@ export async function POST(req: NextRequest) {
     const fullName = session.customer_details?.name || '';
     const deposit = projectDetails.deposit?.toString() || '';
     const totalPrice = projectDetails.totalPrice?.toString() || '';
+
+    log('Customer details extracted', { clientEmail, fullName, deposit, totalPrice });
 
     // Create signature request
     try {
@@ -58,7 +74,7 @@ export async function POST(req: NextRequest) {
         throw new Error('DROPBOX_SIGN_CLIENT_ID environment variable is not set');
       }
 
-      console.log('Creating Dropbox Sign request for:', clientEmail);
+      log('Creating Dropbox Sign request', { clientEmail, templateId: process.env.DROPBOX_SIGN_TEMPLATE_ID });
       const data = {
         templateIds: [process.env.DROPBOX_SIGN_TEMPLATE_ID],
         subject: 'Project Services Agreement',
@@ -88,14 +104,14 @@ export async function POST(req: NextRequest) {
       };
 
       await signatureRequestApi.signatureRequestCreateEmbeddedWithTemplate(data);
-      console.log('Dropbox Sign request created successfully');
+      log('Dropbox Sign request created successfully');
     } catch (error) {
-      console.error('Error creating signature request:', error);
+      log('Error creating signature request', { error });
     }
 
     // Send confirmation to client
     try {
-      console.log('Sending confirmation email to:', clientEmail);
+      log('Sending confirmation email to:', clientEmail);
       const resendResClient = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
@@ -115,17 +131,17 @@ export async function POST(req: NextRequest) {
       });
       if (!resendResClient.ok) {
         const resendErr = await resendResClient.text();
-        console.error('Resend client email error:', resendErr);
+        log('Resend client email error', { error: resendErr });
       } else {
-        console.log('Confirmation email sent successfully');
+        log('Confirmation email sent successfully');
       }
     } catch (err) {
-      console.error('Error sending confirmation email to client via Resend:', err);
+      log('Error sending confirmation email to client via Resend', { error: err });
     }
 
     // Send internal notification
     try {
-      console.log('Sending internal notification');
+      log('Sending internal notification');
       const resendResInternal = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
@@ -152,12 +168,12 @@ export async function POST(req: NextRequest) {
       });
       if (!resendResInternal.ok) {
         const resendErr = await resendResInternal.text();
-        console.error('Resend internal email error:', resendErr);
+        log('Resend internal email error', { error: resendErr });
       } else {
-        console.log('Internal notification sent successfully');
+        log('Internal notification sent successfully');
       }
     } catch (err) {
-      console.error('Error sending internal notification email via Resend:', err);
+      log('Error sending internal notification email via Resend', { error: err });
     }
   } else if (event.type === 'checkout.session.async_payment_failed') {
     // Handle failed ACH payment
@@ -184,7 +200,7 @@ export async function POST(req: NextRequest) {
         })
       });
     } catch (err) {
-      console.error('Error sending payment failure email:', err);
+      log('Error sending payment failure email', { error: err });
     }
   }
 
