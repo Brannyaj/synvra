@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import api from "@dropbox/sign";
+import { SignatureRequestApi } from '@dropbox/sign/api';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2025-05-28.basil' });
 
@@ -9,7 +9,7 @@ if (!process.env.DROPBOX_SIGN_API_KEY) {
 }
 
 // Initialize Dropbox Sign API
-const signatureRequestApi = new api.SignatureRequestApi();
+const signatureRequestApi = new SignatureRequestApi();
 signatureRequestApi.username = process.env.DROPBOX_SIGN_API_KEY;
 
 export async function POST(req: NextRequest) {
