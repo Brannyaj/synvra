@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 });
   }
 
-  if (event.type === 'checkout.session.completed') {
+  if (event.type === 'checkout.session.created') {
     const session = event.data.object as Stripe.Checkout.Session;
     const metadata = session.metadata || {};
     const clientEmail = metadata.email || metadata.clientEmail;
@@ -87,8 +87,9 @@ export async function POST(req: NextRequest) {
         body: JSON.stringify({
           from: 'noreply@synvra.com',
           to: clientEmail,
-          subject: 'Payment Confirmation – Thank you for your deposit!',
+          subject: '[TEST] Payment Confirmation – Thank you for your deposit!',
           html: `<p>Hi ${fullName},</p>
+                 <p>This is a test email. Your actual payment confirmation will be sent once the payment is completed.</p>
                  <p>Thank you for your payment of <strong>$${deposit}</strong> for your project deposit.</p>
                  <p>You will receive a separate email with a link to sign the Project Services Agreement.</p>
                  <p>If you have any questions, please contact us at <a href="mailto:support@synvra.com">support@synvra.com</a>.</p>
@@ -114,9 +115,9 @@ export async function POST(req: NextRequest) {
         body: JSON.stringify({
           from: 'noreply@synvra.com',
           to: 'support@synvra.com',
-          subject: 'New Project Proposal Submission – Payment Received',
+          subject: '[TEST] New Project Proposal Submission – Payment Initiated',
           html: `
-            <h2>New Project Proposal Submission</h2>
+            <h2>Test Submission - Payment Not Yet Completed</h2>
             <ul>
               <li><strong>Full Name:</strong> ${fullName}</li>
               <li><strong>Email:</strong> ${clientEmail}</li>
