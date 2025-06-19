@@ -32,9 +32,21 @@ export async function POST(req: NextRequest) {
     const session = event.data.object as Stripe.Checkout.Session;
     const metadata = session.metadata || {};
     console.log('Session metadata:', metadata);
-    const clientEmail = metadata.email || metadata.clientEmail;
-    const fullName = metadata.fullName || '';
-    const deposit = metadata.deposit || '';
+    
+    // Parse projectDetails from metadata
+    let projectDetails;
+    try {
+      projectDetails = JSON.parse(metadata.projectDetails || '{}');
+      console.log('Parsed project details:', projectDetails);
+    } catch (err) {
+      console.error('Error parsing projectDetails:', err);
+      projectDetails = {};
+    }
+
+    const clientEmail = session.customer_details?.email || '';
+    const fullName = session.customer_details?.name || '';
+    const deposit = projectDetails.deposit?.toString() || '';
+    const totalPrice = projectDetails.totalPrice?.toString() || '';
 
     // Create signature request
     try {
@@ -60,18 +72,16 @@ export async function POST(req: NextRequest) {
         ],
         customFields: [
           { name: 'full_name', value: fullName },
-          { name: 'company_name', value: metadata.companyName || '' },
           { name: 'email', value: clientEmail },
-          { name: 'phone', value: metadata.phone || '' },
-          { name: 'service_type', value: metadata.serviceType || '' },
-          { name: 'project_type', value: metadata.projectType || '' },
-          { name: 'tier', value: metadata.tier || '' },
-          { name: 'timeline', value: metadata.timeline || '' },
-          { name: 'total_amount', value: metadata.totalPrice || '' },
+          { name: 'service_type', value: projectDetails.service || '' },
+          { name: 'project_type', value: 'Website/Platform' },
+          { name: 'tier', value: projectDetails.tier || '' },
+          { name: 'timeline', value: projectDetails.timeline || '' },
+          { name: 'total_amount', value: totalPrice },
           { name: 'deposit_paid', value: deposit },
-          { name: 'remaining_balance', value: (Number(metadata.totalPrice || 0) - Number(deposit)).toString() },
+          { name: 'remaining_balance', value: (Number(totalPrice || 0) - Number(deposit)).toString() },
           { name: 'deposit_deducted', value: deposit },
-          { name: 'project_description', value: metadata.additionalRequirements || '' }
+          { name: 'project_description', value: `Service: ${projectDetails.service || ''}\nTier: ${projectDetails.tier || ''}\nTimeline: ${projectDetails.timeline || ''}` }
         ],
         clientId: process.env.DROPBOX_SIGN_CLIENT_ID,
         testMode: process.env.NODE_ENV === 'development'
@@ -132,16 +142,10 @@ export async function POST(req: NextRequest) {
               <li><strong>Full Name:</strong> ${fullName}</li>
               <li><strong>Email:</strong> ${clientEmail}</li>
               <li><strong>Deposit:</strong> $${deposit}</li>
-              <li><strong>Total Project Amount:</strong> $${metadata.totalPrice}</li>
-              <li><strong>Service Type:</strong> ${metadata.serviceType}</li>
-              <li><strong>Tier:</strong> ${metadata.tier}</li>
-              <li><strong>Timeline:</strong> ${metadata.timeline}</li>
-              <li><strong>Company Name:</strong> ${metadata.companyName}</li>
-              <li><strong>Phone:</strong> ${metadata.phone}</li>
-              <li><strong>Company Size:</strong> ${metadata.companySize}</li>
-              <li><strong>Industry:</strong> ${metadata.industry}</li>
-              <li><strong>Project Type:</strong> ${metadata.projectType}</li>
-              <li><strong>Project Description:</strong> ${metadata.additionalRequirements}</li>
+              <li><strong>Total Project Amount:</strong> $${totalPrice}</li>
+              <li><strong>Service Type:</strong> ${projectDetails.service}</li>
+              <li><strong>Tier:</strong> ${projectDetails.tier}</li>
+              <li><strong>Timeline:</strong> ${projectDetails.timeline}</li>
             </ul>
           `
         })
