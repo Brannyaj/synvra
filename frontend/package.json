@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dropbox/sign": "^1.9.0",
     "@emailjs/browser": "^4.4.1",
     "@netlify/functions": "^3.1.2",
     "@prisma/client": "^6.6.0",
