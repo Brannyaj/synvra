@@ -1,7 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import api from '@dropbox/sign';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2025-05-28.basil' });
+
+if (!process.env.DROPBOX_SIGN_API_KEY) {
+  throw new Error('DROPBOX_SIGN_API_KEY environment variable is not set');
+}
+
+// Initialize Dropbox Sign API
+const signatureRequestApi = new api.SignatureRequestApi();
+signatureRequestApi.username = process.env.DROPBOX_SIGN_API_KEY;
 
 export async function POST(req: NextRequest) {
   const sig = req.headers.get('stripe-signature');
@@ -22,7 +31,52 @@ export async function POST(req: NextRequest) {
     const fullName = metadata.fullName || '';
     const deposit = metadata.deposit || '';
 
-    // 1. Send confirmation to client
+    // Create signature request
+    try {
+      if (!process.env.DROPBOX_SIGN_TEMPLATE_ID) {
+        throw new Error('DROPBOX_SIGN_TEMPLATE_ID environment variable is not set');
+      }
+
+      if (!process.env.DROPBOX_SIGN_CLIENT_ID) {
+        throw new Error('DROPBOX_SIGN_CLIENT_ID environment variable is not set');
+      }
+
+      const data = {
+        templateIds: [process.env.DROPBOX_SIGN_TEMPLATE_ID],
+        subject: 'Project Services Agreement',
+        message: 'Please review and sign the project services agreement.',
+        signers: [
+          {
+            role: 'Client',
+            emailAddress: clientEmail,
+            name: fullName,
+          }
+        ],
+        customFields: [
+          { name: 'full_name', value: fullName },
+          { name: 'company_name', value: metadata.companyName || '' },
+          { name: 'email', value: clientEmail },
+          { name: 'phone', value: metadata.phone || '' },
+          { name: 'service_type', value: metadata.serviceType || '' },
+          { name: 'project_type', value: metadata.projectType || '' },
+          { name: 'tier', value: metadata.tier || '' },
+          { name: 'timeline', value: metadata.timeline || '' },
+          { name: 'total_amount', value: metadata.totalPrice || '' },
+          { name: 'deposit_paid', value: deposit },
+          { name: 'remaining_balance', value: (Number(metadata.totalPrice || 0) - Number(deposit)).toString() },
+          { name: 'deposit_deducted', value: deposit },
+          { name: 'project_description', value: metadata.additionalRequirements || '' }
+        ],
+        clientId: process.env.DROPBOX_SIGN_CLIENT_ID,
+        testMode: process.env.NODE_ENV === 'development'
+      };
+
+      await signatureRequestApi.signatureRequestCreateEmbeddedWithTemplate(data);
+    } catch (error) {
+      console.error('Error creating signature request:', error);
+    }
+
+    // Send confirmation to client
     try {
       const resendResClient = await fetch('https://api.resend.com/emails', {
         method: 'POST',
@@ -36,7 +90,7 @@ export async function POST(req: NextRequest) {
           subject: 'Payment Confirmation – Thank you for your deposit!',
           html: `<p>Hi ${fullName},</p>
                  <p>Thank you for your payment of <strong>$${deposit}</strong> for your project deposit.</p>
-                 <p>We've received your deposit and will be in touch soon with next steps.</p>
+                 <p>You will receive a separate email with a link to sign the Project Services Agreement.</p>
                  <p>If you have any questions, please contact us at <a href="mailto:support@synvra.com">support@synvra.com</a>.</p>
                  <p>Best,<br>The Synvra Team</p>`
         })
@@ -49,7 +103,7 @@ export async function POST(req: NextRequest) {
       console.error('Error sending confirmation email to client via Resend:', err);
     }
 
-    // 2. Send internal notification to support@synvra.com
+    // Send internal notification
     try {
       const resendResInternal = await fetch('https://api.resend.com/emails', {
         method: 'POST',
