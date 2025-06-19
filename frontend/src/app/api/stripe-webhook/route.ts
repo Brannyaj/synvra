@@ -13,20 +13,24 @@ const signatureRequestApi = new SignatureRequestApi();
 signatureRequestApi.username = process.env.DROPBOX_SIGN_API_KEY;
 
 export async function POST(req: NextRequest) {
+  console.log('Webhook received');
   const sig = req.headers.get('stripe-signature');
   const rawBody = await req.text();
   let event;
 
   try {
     event = stripe.webhooks.constructEvent(rawBody, sig!, process.env.STRIPE_WEBHOOK_SECRET!);
+    console.log('Event type:', event.type);
   } catch (err: any) {
     console.error('Webhook signature verification failed:', err.message);
     return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 });
   }
 
   if (event.type === 'checkout.session.created') {
+    console.log('Processing checkout.session.created event');
     const session = event.data.object as Stripe.Checkout.Session;
     const metadata = session.metadata || {};
+    console.log('Session metadata:', metadata);
     const clientEmail = metadata.email || metadata.clientEmail;
     const fullName = metadata.fullName || '';
     const deposit = metadata.deposit || '';
@@ -41,6 +45,7 @@ export async function POST(req: NextRequest) {
         throw new Error('DROPBOX_SIGN_CLIENT_ID environment variable is not set');
       }
 
+      console.log('Creating Dropbox Sign request for:', clientEmail);
       const data = {
         templateIds: [process.env.DROPBOX_SIGN_TEMPLATE_ID],
         subject: 'Project Services Agreement',
@@ -72,12 +77,14 @@ export async function POST(req: NextRequest) {
       };
 
       await signatureRequestApi.signatureRequestCreateEmbeddedWithTemplate(data);
+      console.log('Dropbox Sign request created successfully');
     } catch (error) {
       console.error('Error creating signature request:', error);
     }
 
     // Send confirmation to client
     try {
+      console.log('Sending confirmation email to:', clientEmail);
       const resendResClient = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
@@ -99,6 +106,8 @@ export async function POST(req: NextRequest) {
       if (!resendResClient.ok) {
         const resendErr = await resendResClient.text();
         console.error('Resend client email error:', resendErr);
+      } else {
+        console.log('Confirmation email sent successfully');
       }
     } catch (err) {
       console.error('Error sending confirmation email to client via Resend:', err);
@@ -106,6 +115,7 @@ export async function POST(req: NextRequest) {
 
     // Send internal notification
     try {
+      console.log('Sending internal notification');
       const resendResInternal = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
@@ -139,10 +149,14 @@ export async function POST(req: NextRequest) {
       if (!resendResInternal.ok) {
         const resendErr = await resendResInternal.text();
         console.error('Resend internal email error:', resendErr);
+      } else {
+        console.log('Internal notification sent successfully');
       }
     } catch (err) {
       console.error('Error sending internal notification email via Resend:', err);
     }
+  } else {
+    console.log('Unhandled event type:', event.type);
   }
 
   return NextResponse.json({ received: true });
