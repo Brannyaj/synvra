@@ -44,6 +44,62 @@ export async function POST(req: NextRequest) {
   if (event.type === 'checkout.session.completed' || event.type === 'checkout.session.async_payment_succeeded') {
     log('Processing payment success event', { eventType: event.type });
     const session = event.data.object as Stripe.Checkout.Session;
+    
+    // Log payment details
+    log('Payment status details', {
+      payment_status: session.payment_status,
+      status: session.status,
+      payment_intent: session.payment_intent
+    });
+
+    // For ACH payments, only proceed if payment is confirmed
+    if (session.payment_status === 'unpaid' && session.payment_method_options?.us_bank_account) {
+      log('ACH payment initiated but not yet confirmed', {
+        payment_status: session.payment_status,
+        payment_intent: session.payment_intent
+      });
+      
+      // Send initial confirmation for ACH
+      try {
+        const clientEmail = session.customer_details?.email || '';
+        const fullName = session.customer_details?.name || '';
+        
+        log('Sending ACH initiation email to:', clientEmail);
+        const resendResClient = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: 'noreply@synvra.com',
+            to: clientEmail,
+            subject: 'Payment Initiated – ACH Transfer in Progress',
+            html: `<p>Hi ${fullName},</p>
+                   <p>Thank you for initiating your ACH payment. Your payment is being processed and may take 3-5 business days to complete.</p>
+                   <p>Once the payment is confirmed, you will receive:</p>
+                   <ul>
+                     <li>A payment confirmation email</li>
+                     <li>The Project Services Agreement to sign</li>
+                   </ul>
+                   <p>If you have any questions, please contact us at <a href="mailto:support@synvra.com">support@synvra.com</a>.</p>
+                   <p>Best,<br>The Synvra Team</p>`
+          })
+        });
+        if (!resendResClient.ok) {
+          const resendErr = await resendResClient.text();
+          log('Resend ACH initiation email error', { error: resendErr });
+        } else {
+          log('ACH initiation email sent successfully');
+        }
+      } catch (err) {
+        log('Error sending ACH initiation email', { error: err });
+      }
+      
+      return NextResponse.json({ received: true });
+    }
+
+    // Continue with normal processing for confirmed payments
     const metadata = session.metadata || {};
     log('Session metadata received', metadata);
     
