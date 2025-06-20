@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { Resend } from 'resend';
-import * as docusign from 'docusign-esign';
+// Use require for docusign-esign to prevent build errors with Next.js
+const docusign = require('docusign-esign');
 
 // Add timestamp to logs
 const log = (message: string, data?: any) => {
