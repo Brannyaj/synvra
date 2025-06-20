@@ -156,6 +156,9 @@ async function createAndSendEnvelope(clientEmail: string, fullName: string, proj
     status: 'sent', // 'sent' to send the envelope immediately
   };
 
+  // The definitive final log. This will show us exactly what we are sending.
+  log('Attempting to create envelope with the following definition:', envelopeDefinition);
+
   try {
     const envelope = await envelopesApi.createEnvelope(accountId!, {
       envelopeDefinition: envelopeDefinition as any,
