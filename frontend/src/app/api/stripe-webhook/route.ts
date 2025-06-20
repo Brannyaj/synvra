@@ -47,16 +47,6 @@ export async function POST(req: NextRequest) {
     if (event.type === 'checkout.session.completed' || event.type === 'checkout.session.async_payment_succeeded') {
       const session = event.data.object as Stripe.Checkout.Session;
       
-      // For ACH payments that are not yet confirmed, send an initial email and wait.
-      if (session.payment_status === 'unpaid' && session.payment_method_options?.us_bank_account) {
-        log('ACH payment initiated but not yet confirmed. Sending initial notification.');
-        const clientEmail = session.customer_details?.email || '';
-        const fullName = session.customer_details?.name || '';
-        await sendAchInitiatedEmail(clientEmail, fullName);
-        return NextResponse.json({ received: true });
-      }
-      
-      // Proceed for all other successful payments (or confirmed ACH payments)
       const clientEmail = session.customer_details?.email;
       if (!clientEmail) {
         const errorMessage = 'CRITICAL: No email address found in Stripe checkout session customer_details.';
@@ -184,7 +174,7 @@ async function sendConfirmationEmails(clientEmail: string, fullName: string, pro
   log('Internal notification email sent successfully');
 }
 
-async function sendFailureEmail(clientEmail: string, fullName: string) {
+async function sendFailureEmail(clientEmail: string, fullName: string | null) {
   const emailBody = {
     from: 'noreply@synvra.com',
     to: clientEmail,
@@ -193,16 +183,4 @@ async function sendFailureEmail(clientEmail: string, fullName: string) {
   };
   await resend.emails.send(emailBody);
   log('Payment failure email sent successfully');
-}
-
-// New helper function for the initial ACH email
-async function sendAchInitiatedEmail(clientEmail: string, fullName: string) {
-  const emailBody = {
-    from: 'noreply@synvra.com',
-    to: clientEmail,
-    subject: 'Payment Initiated – ACH Transfer in Progress',
-    html: `<p>Hi ${fullName},</p><p>Thank you for initiating your ACH payment. It may take 3-5 business days to complete.</p><p>Once confirmed, you will receive a payment confirmation and the Project Services Agreement to sign.</p><p>Best,<br>The Synvra Team</p>`
-  };
-  await resend.emails.send(emailBody);
-  log('ACH payment initiation email sent successfully.');
 } 
