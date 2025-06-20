@@ -123,6 +123,10 @@ async function createAndSendEnvelope(clientEmail: string, fullName: string, proj
 
   const envelopesApi = new docusign.EnvelopesApi(apiClient);
 
+  const deposit = projectDetails.deposit?.toString() || '0';
+  const totalPrice = projectDetails.totalPrice?.toString() || '0';
+  const remainingBalance = (Number(totalPrice) - Number(deposit)).toString();
+
   const envelopeDefinition = {
     templateId: process.env.DOCUSIGN_TEMPLATE_ID,
     templateRoles: [
@@ -130,6 +134,23 @@ async function createAndSendEnvelope(clientEmail: string, fullName: string, proj
         email: clientEmail,
         name: fullName,
         roleName: 'Client', // This must match the role in your DocuSign template
+        tabs: {
+          textTabs: [
+            { tabLabel: 'full_name', value: fullName },
+            { tabLabel: 'company_name', value: fullName }, // Using fullName as fallback
+            { tabLabel: 'email', value: clientEmail },
+            { tabLabel: 'phone', value: projectDetails.phone || '' },
+            { tabLabel: 'service_type', value: projectDetails.service || '' },
+            { tabLabel: 'project_type', value: 'Website/Platform' },
+            { tabLabel: 'tier', value: projectDetails.tier || '' },
+            { tabLabel: 'timeline', value: projectDetails.timeline || '' },
+            { tabLabel: 'total_amount', value: totalPrice },
+            { tabLabel: 'deposit_paid', value: deposit },
+            { tabLabel: 'deposit_deducted', value: deposit },
+            { tabLabel: 'remaining_balance', value: remainingBalance },
+            { tabLabel: 'project_description', value: `Service: ${projectDetails.service || ''}\nTier: ${projectDetails.tier || ''}\nTimeline: ${projectDetails.timeline || ''}` },
+          ],
+        },
       },
     ],
     status: 'sent', // 'sent' to send the envelope immediately
