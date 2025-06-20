@@ -53,8 +53,13 @@ export async function POST(req: NextRequest) {
     if (missingEnvVars.length > 0) {
       const errorMessage = `CRITICAL: Missing required environment variables: ${missingEnvVars.join(', ')}`;
       log(errorMessage);
+      // Expose the exact missing variables in the response for debugging
       return NextResponse.json(
-        { error: 'Server configuration error. Required environment variables are missing.' },
+        { 
+          error: 'Server configuration error.',
+          details: errorMessage,
+          missing_variables: missingEnvVars
+        },
         { status: 500, headers: corsHeaders }
       );
     }
