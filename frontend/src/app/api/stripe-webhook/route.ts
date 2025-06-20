@@ -113,8 +113,9 @@ async function createDropboxSignRequest(clientEmail: string, fullName: string, p
     templateIds: [process.env.DROPBOX_SIGN_TEMPLATE_ID!],
     subject: 'Project Services Agreement',
     message: 'Please review and sign the project services agreement.',
-    // Using `emailAddress` as required by the SDK's type definitions.
-    signers: [{ role: 'Client', emailAddress: clientEmail, name: fullName }],
+    // Correcting the property name to 'email_address' as required by the API
+    // and using 'as any' to bypass the incorrect SDK type definitions.
+    signers: [{ role: 'Client', email_address: clientEmail, name: fullName } as any],
     customFields: [
       { name: 'full_name', value: fullName },
       { name: 'email', value: clientEmail },
