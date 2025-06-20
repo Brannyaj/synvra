@@ -76,6 +76,8 @@ export async function POST(req: NextRequest) {
 
       try {
         log('Payment successful. Sending confirmation emails.');
+        const amountPaid = (session.amount_total || 0) / 100; // Convert cents to dollars
+        projectDetails.deposit = amountPaid; // Update the deposit amount with actual payment
         await sendConfirmationEmails(clientEmail, fullName, projectDetails);
         log('Confirmation emails sent successfully.');
         return NextResponse.json({ received: true });
@@ -100,6 +102,7 @@ export async function POST(req: NextRequest) {
 }
 
 async function sendConfirmationEmails(clientEmail: string, fullName: string, projectDetails: any) {
+  // Get amount directly from the session's amount_total which is in cents
   const deposit = projectDetails.deposit?.toString() || '';
   const totalPrice = projectDetails.totalPrice?.toString() || '';
 
