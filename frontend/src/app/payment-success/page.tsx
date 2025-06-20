@@ -38,8 +38,8 @@ export default function PaymentSuccessPage() {
               <h3 className="text-blue-800 font-semibold mb-2">Next Steps:</h3>
               <ul className="text-blue-700 text-sm space-y-2">
                 <li>• Check your email for payment confirmation</li>
-                <li>• You will receive the Project Services Agreement for signature</li>
-                <li>• Our team will contact you to schedule the project kickoff</li>
+                <li>• You'll receive a Project Services Agreement to sign shortly</li>
+                <li>• A member of our dev team will reach out to discuss your project in detail</li>
               </ul>
             </div>
             <Link
