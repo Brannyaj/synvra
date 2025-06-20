@@ -52,9 +52,17 @@ export async function POST(req: NextRequest) {
   try {
     if (event.type === 'checkout.session.completed' || event.type === 'checkout.session.async_payment_succeeded') {
       const session = event.data.object as Stripe.Checkout.Session;
-      const metadata = session.metadata || {};
-      const clientEmail = session.customer_details?.email || '';
+      
+      // Definitive check for the customer's email address.
+      const clientEmail = session.customer_details?.email;
+      if (!clientEmail) {
+        const errorMessage = 'CRITICAL: No email address found in Stripe checkout session customer_details.';
+        log(errorMessage, { customer_details: session.customer_details });
+        return NextResponse.json({ step: 'customer-email-check', error: errorMessage }, { status: 400 });
+      }
+
       const fullName = session.customer_details?.name || '';
+      const metadata = session.metadata || {};
       
       let projectDetails: any = {};
       try {
@@ -63,26 +71,11 @@ export async function POST(req: NextRequest) {
          log('ERROR: Failed to parse projectDetails JSON.', { error: err.message });
       }
 
-      try {
-        await createDropboxSignRequest(clientEmail, fullName, projectDetails);
-      } catch (err: any) {
-        log('ERROR: Failed during Dropbox Sign request creation.', { 
-            error: err.message, 
-            response_body: err.body,
-            stack: err.stack 
-        });
-        return NextResponse.json({ 
-            step: 'dropbox-sign-request', 
-            error: err.message,
-            details: err.body
-        }, { status: 500 });
-      }
-
-      try {
-        await sendConfirmationEmails(clientEmail, fullName, projectDetails);
-      } catch (err: any) {
-        log('ERROR: Failed during email sending.', { error: err.message, stack: err.stack });
-      }
+      // This is the main operation.
+      await createDropboxSignRequest(clientEmail, fullName, projectDetails);
+      
+      // We send emails after the critical step succeeds.
+      await sendConfirmationEmails(clientEmail, fullName, projectDetails);
 
     } else if (event.type === 'checkout.session.async_payment_failed') {
       const session = event.data.object as Stripe.Checkout.Session;
@@ -93,22 +86,14 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ received: true });
   } catch (err: any) {
-    log('FATAL: An unhandled error occurred in the main webhook handler.', { error: err.message, stack: err.stack });
-    return NextResponse.json({ step: 'main-handler-unhandled', error: err.message }, { status: 500 });
+    // This will now catch our specific errors from the helper functions.
+    log('ERROR: A critical step failed in the webhook handler.', { error: err.message, stack: err.stack });
+    return NextResponse.json({ step: 'critical-step-failed', error: err.message, details: (err as any).body }, { status: 500 });
   }
 }
 
 async function createDropboxSignRequest(clientEmail: string, fullName: string, projectDetails: any) {
-  // Final verification to ensure we have a valid email before calling the API.
-  if (!clientEmail || typeof clientEmail !== 'string') {
-    throw new Error(`Attempted to create a signature request with an invalid email address. Value received: '${clientEmail}'`);
-  }
-
-  log('Preparing to create Dropbox Sign request with valid details:', {
-    clientEmail,
-    fullName,
-  });
-
+  log('Preparing to create Dropbox Sign request for:', { clientEmail });
   const deposit = projectDetails.deposit?.toString() || '';
   const totalPrice = projectDetails.totalPrice?.toString() || '';
   
@@ -116,7 +101,8 @@ async function createDropboxSignRequest(clientEmail: string, fullName: string, p
     templateIds: [process.env.DROPBOX_SIGN_TEMPLATE_ID!],
     subject: 'Project Services Agreement',
     message: 'Please review and sign the project services agreement.',
-    signers: [{ role: 'Client', email_address: clientEmail, name: fullName } as any],
+    // Using `emailAddress` as required by the SDK's type definitions.
+    signers: [{ role: 'Client', emailAddress: clientEmail, name: fullName }],
     customFields: [
       { name: 'full_name', value: fullName },
       { name: 'email', value: clientEmail },
@@ -131,10 +117,16 @@ async function createDropboxSignRequest(clientEmail: string, fullName: string, p
       { name: 'project_description', value: `Service: ${projectDetails.service || ''}\nTier: ${projectDetails.tier || ''}\nTimeline: ${projectDetails.timeline || ''}` }
     ],
     clientId: process.env.DROPBOX_SIGN_CLIENT_ID!,
-    testMode: true
+    testMode: true // Keep test mode on for now.
   };
-  await signatureRequestApi.signatureRequestCreateEmbeddedWithTemplate(data);
-  log('Dropbox Sign request created successfully');
+
+  try {
+    await signatureRequestApi.signatureRequestCreateEmbeddedWithTemplate(data);
+    log('Dropbox Sign request created successfully.');
+  } catch (err) {
+    // Re-throw the error to be caught by the main handler, which will expose the details.
+    throw err;
+  }
 }
 
 async function sendConfirmationEmails(clientEmail: string, fullName: string, projectDetails: any) {
