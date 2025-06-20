@@ -83,7 +83,8 @@ export async function POST(req: NextRequest) {
           step: 'docusign-or-email', 
           error: error.message, 
           details: error.response?.data || error,
-          data_sent: error.dataSent
+          data_sent: error.dataSent,
+          project_details_received: projectDetails
         }, { status: 500 });
       }
 
