@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const slides = [
   {
@@ -104,12 +105,16 @@ export default function PhotoSlider() {
                   {slide.description}
                 </p>
                 <div className="flex gap-3">
-                  <button className="button-primary text-sm md:text-base px-4 md:px-6 py-2 md:py-3">
-                    Get Started
-                  </button>
-                  <button className="button-secondary text-sm md:text-base px-4 md:px-6 py-2 md:py-3">
-                    Learn More
-                  </button>
+                  <Link href="/get-started">
+                    <button className="button-primary text-sm md:text-base px-4 md:px-6 py-2 md:py-3">
+                      Get Started
+                    </button>
+                  </Link>
+                  <Link href={`/services/${slide.title.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and')}`}>
+                    <button className="button-secondary text-sm md:text-base px-4 md:px-6 py-2 md:py-3">
+                      Learn More
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
