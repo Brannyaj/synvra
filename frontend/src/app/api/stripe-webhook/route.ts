@@ -99,6 +99,11 @@ export async function POST(req: NextRequest) {
 }
 
 async function createDropboxSignRequest(clientEmail: string, fullName: string, projectDetails: any) {
+  log('Preparing to create Dropbox Sign request with the following details:', {
+    clientEmail,
+    fullName,
+  });
+
   const deposit = projectDetails.deposit?.toString() || '';
   const totalPrice = projectDetails.totalPrice?.toString() || '';
   
