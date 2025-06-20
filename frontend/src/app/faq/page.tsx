@@ -67,6 +67,10 @@ export default function FAQ() {
         answer: "We offer flexible pricing models including fixed-price projects, time and materials, and dedicated team models. Pricing is based on project scope, complexity, and requirements."
       },
       {
+        question: "Is a deposit required?",
+        answer: "Yes, we require a 25% deposit to begin the project development process. This helps us allocate resources and begin work immediately on your project."
+      },
+      {
         question: "Are there any hidden costs?",
         answer: "No, we believe in complete transparency. All costs are clearly outlined in the project proposal, and any additional requirements are discussed and approved before implementation."
       },
