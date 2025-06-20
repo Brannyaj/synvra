@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { SignatureRequestApi } from '@dropbox/sign/api';
+import { Resend } from 'resend';
+import * as docusign from 'docusign-esign';
 
 // Add timestamp to logs
 const log = (message: string, data?: any) => {
@@ -27,14 +28,7 @@ export async function OPTIONS() {
 }
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2025-05-28.basil' });
-
-if (!process.env.DROPBOX_SIGN_API_KEY) {
-  throw new Error('DROPBOX_SIGN_API_KEY environment variable is not set');
-}
-
-// Initialize Dropbox Sign API
-const signatureRequestApi = new SignatureRequestApi();
-signatureRequestApi.username = process.env.DROPBOX_SIGN_API_KEY!;
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   let event: Stripe.Event;
@@ -53,7 +47,16 @@ export async function POST(req: NextRequest) {
     if (event.type === 'checkout.session.completed' || event.type === 'checkout.session.async_payment_succeeded') {
       const session = event.data.object as Stripe.Checkout.Session;
       
-      // Definitive check for the customer's email address.
+      // For ACH payments that are not yet confirmed, send an initial email and wait.
+      if (session.payment_status === 'unpaid' && session.payment_method_options?.us_bank_account) {
+        log('ACH payment initiated but not yet confirmed. Sending initial notification.');
+        const clientEmail = session.customer_details?.email || '';
+        const fullName = session.customer_details?.name || '';
+        await sendAchInitiatedEmail(clientEmail, fullName);
+        return NextResponse.json({ received: true });
+      }
+      
+      // Proceed for all other successful payments (or confirmed ACH payments)
       const clientEmail = session.customer_details?.email;
       if (!clientEmail) {
         const errorMessage = 'CRITICAL: No email address found in Stripe checkout session customer_details.';
@@ -72,21 +75,24 @@ export async function POST(req: NextRequest) {
       }
 
       try {
-        await createDropboxSignRequest(clientEmail, fullName, projectDetails);
-      } catch (err: any) {
-        log('ERROR: Failed during Dropbox Sign request creation.', { error: err.message, stack: err.stack });
-        return NextResponse.json({
-          step: 'dropbox-sign-request',
-          error: err.message,
-          details: (err as any).body,
-          data_sent: { clientEmail, fullName }
-        }, { status: 500 });
-      }
-      
-      try {
+        log('Attempting to create and send DocuSign envelope...');
+        await createAndSendEnvelope(clientEmail, fullName, projectDetails);
+        log('DocuSign envelope sent successfully.');
+
         await sendConfirmationEmails(clientEmail, fullName, projectDetails);
-      } catch (err: any) {
-        log('ERROR: Failed during email sending (after successful signature request).', { error: err.message, stack: err.stack });
+
+        return NextResponse.json({ received: true });
+      } catch (error: any) {
+        log('Error in processing step after payment confirmation.', { 
+          step: 'docusign-or-email', 
+          error: error.message,
+          details: error.response?.data || error,
+        });
+        return NextResponse.json({ 
+          step: 'docusign-or-email', 
+          error: error.message, 
+          details: error.response?.data || error 
+        }, { status: 500 });
       }
 
     } else if (event.type === 'checkout.session.async_payment_failed') {
@@ -104,38 +110,53 @@ export async function POST(req: NextRequest) {
   }
 }
 
-async function createDropboxSignRequest(clientEmail: string, fullName: string, projectDetails: any) {
-  log('Preparing to send Dropbox Sign request for:', { clientEmail });
-  const deposit = projectDetails.deposit?.toString() || '';
-  const totalPrice = projectDetails.totalPrice?.toString() || '';
+async function createAndSendEnvelope(clientEmail: string, fullName: string, projectDetails: any) {
+  const apiClient = new docusign.ApiClient();
+  apiClient.setOAuthBasePath('account-d.docusign.com'); // Use developer sandbox
+
+  const privateKey = process.env.DOCUSIGN_PRIVATE_KEY!.replace(/\\n/g, '\n');
+
+  const results = await apiClient.requestJWTUserToken(
+    process.env.DOCUSIGN_INTEGRATION_KEY!,
+    process.env.DOCUSIGN_USER_ID!,
+    ['signature', 'impersonation'],
+    Buffer.from(privateKey),
+    3600 // Token expires in 1 hour
+  );
+
+  const accessToken = results.body.access_token;
+  const accountId = process.env.DOCUSIGN_API_ACCOUNT_ID;
   
-  const data = {
-    templateIds: [process.env.DROPBOX_SIGN_TEMPLATE_ID!],
-    subject: 'Project Services Agreement',
-    message: 'Please review and sign the project services agreement.',
-    signers: [{ role: 'Client', email_address: clientEmail, name: fullName } as any],
-    customFields: [
-      { name: 'full_name', value: fullName },
-      { name: 'email', value: clientEmail },
-      { name: 'service_type', value: projectDetails.service || '' },
-      { name: 'project_type', value: 'Website/Platform' },
-      { name: 'tier', value: projectDetails.tier || '' },
-      { name: 'timeline', value: projectDetails.timeline || '' },
-      { name: 'total_amount', value: totalPrice },
-      { name: 'deposit_paid', value: deposit },
-      { name: 'remaining_balance', value: (Number(totalPrice || 0) - Number(deposit)).toString() },
-      { name: 'deposit_deducted', value: deposit },
-      { name: 'project_description', value: `Service: ${projectDetails.service || ''}\nTier: ${projectDetails.tier || ''}\nTimeline: ${projectDetails.timeline || ''}` }
+  apiClient.addDefaultHeader('Authorization', 'Bearer ' + accessToken);
+  apiClient.setBasePath(`https://demo.docusign.net/restapi`); // Set API base path after getting token
+
+  const envelopesApi = new docusign.EnvelopesApi(apiClient);
+
+  const envelopeDefinition = {
+    templateId: process.env.DOCUSIGN_TEMPLATE_ID,
+    templateRoles: [
+      {
+        email: clientEmail,
+        name: fullName,
+        roleName: 'Client', // This must match the role in your DocuSign template
+      },
     ],
-    testMode: true
+    status: 'sent', // 'sent' to send the envelope immediately
   };
 
   try {
-    await signatureRequestApi.signatureRequestSendWithTemplate(data);
-    log('Dropbox Sign request sent successfully.');
-  } catch (err) {
-    // Re-throw the error to be caught by the main handler, which will expose the details.
-    throw err;
+    const envelope = await envelopesApi.createEnvelope(accountId!, {
+      envelopeDefinition: envelopeDefinition as any,
+    });
+    log('Successfully created DocuSign envelope.', { envelopeId: envelope.envelopeId });
+    return envelope;
+  } catch (error: any) {
+    log('Error creating DocuSign envelope.', { 
+      error: error.message,
+      details: error.response?.data || error,
+    });
+    // Re-throw the error to be caught by the main handler and sent back to Stripe
+    throw error;
   }
 }
 
@@ -157,7 +178,6 @@ async function sendConfirmationEmails(clientEmail: string, fullName: string, pro
     html: `<h2>New Project Proposal Submission</h2><ul><li><strong>Full Name:</strong> ${fullName}</li><li><strong>Email:</strong> ${clientEmail}</li><li><strong>Deposit:</strong> $${deposit}</li><li><strong>Total Project Amount:</strong> $${totalPrice}</li><li><strong>Service Type:</strong> ${projectDetails.service}</li><li><strong>Tier:</strong> ${projectDetails.tier}</li><li><strong>Timeline:</strong> ${projectDetails.timeline}</li></ul>`
   };
   
-  const resend = new (require('resend').Resend)(process.env.RESEND_API_KEY);
   await resend.emails.send(clientEmailBody);
   log('Confirmation email sent to client successfully');
   await resend.emails.send(internalEmailBody);
@@ -171,7 +191,18 @@ async function sendFailureEmail(clientEmail: string, fullName: string) {
     subject: 'Payment Failed – Action Required',
     html: `<p>Hi ${fullName},</p><p>We were unable to process your payment. Please contact your bank or try another payment method.</p><p>If you need assistance, please contact us at <a href="mailto:support@synvra.com">support@synvra.com</a>.</p><p>Best,<br>The Synvra Team</p>`
   };
-  const resend = new (require('resend').Resend)(process.env.RESEND_API_KEY);
   await resend.emails.send(emailBody);
   log('Payment failure email sent successfully');
+}
+
+// New helper function for the initial ACH email
+async function sendAchInitiatedEmail(clientEmail: string, fullName: string) {
+  const emailBody = {
+    from: 'noreply@synvra.com',
+    to: clientEmail,
+    subject: 'Payment Initiated – ACH Transfer in Progress',
+    html: `<p>Hi ${fullName},</p><p>Thank you for initiating your ACH payment. It may take 3-5 business days to complete.</p><p>Once confirmed, you will receive a payment confirmation and the Project Services Agreement to sign.</p><p>Best,<br>The Synvra Team</p>`
+  };
+  await resend.emails.send(emailBody);
+  log('ACH payment initiation email sent successfully.');
 } 
