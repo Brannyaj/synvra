@@ -23,6 +23,7 @@ interface FormData {
   industry: string;
   projectType: string;
   termsAccepted: boolean;
+  projectDescription: string;
 }
 
 const services: ServiceOption[] = [
@@ -137,7 +138,8 @@ export default function ProjectProposalForm() {
     companySize: '',
     industry: '',
     projectType: '',
-    termsAccepted: false
+    termsAccepted: false,
+    projectDescription: ''
   });
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -196,7 +198,8 @@ export default function ProjectProposalForm() {
             tier: formData.tier,
             timeline: formData.timeline,
             totalPrice: calculateTotalPrice(),
-            deposit: calculateDeposit()
+            deposit: calculateDeposit(),
+            description: formData.projectDescription
           }
         }),
       });
