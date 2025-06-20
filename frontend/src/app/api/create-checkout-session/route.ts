@@ -30,12 +30,14 @@ export async function POST(request: Request) {
       customer_email: email,
       client_reference_id: name,
       metadata: {
-        ...rest, // All other form fields
-        serviceType: projectDetails?.service || '',
-        tier: projectDetails?.tier || '',
-        timeline: projectDetails?.timeline || '',
-        totalPrice: projectDetails?.totalPrice ? String(projectDetails.totalPrice) : '',
-        deposit: projectDetails?.deposit ? String(projectDetails.deposit) : '',
+        projectDetails: JSON.stringify({
+          service: projectDetails?.service || '',
+          tier: projectDetails?.tier || '',
+          timeline: projectDetails?.timeline || '',
+          totalPrice: projectDetails?.totalPrice ? String(projectDetails.totalPrice) : '',
+          deposit: projectDetails?.deposit ? String(projectDetails.deposit) : '',
+          description: projectDetails?.description || ''
+        })
       },
     });
 

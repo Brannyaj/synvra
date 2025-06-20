@@ -61,12 +61,21 @@ export async function POST(req: NextRequest) {
       let projectDetails: any = {};
       try {
         projectDetails = JSON.parse(metadata.projectDetails || '{}');
+        log('Successfully parsed project details:', projectDetails);
       } catch (err: any) {
-         log('ERROR: Failed to parse projectDetails JSON.', { error: err.message });
+        log('ERROR: Failed to parse projectDetails JSON.', { error: err.message, metadata });
+        projectDetails = {
+          service: 'Not provided',
+          tier: 'Not provided',
+          timeline: 'Not provided',
+          totalPrice: '0',
+          deposit: '0',
+          description: 'Not provided'
+        };
       }
 
       try {
-        log('Payment successful. Sending confirmation emails only.');
+        log('Payment successful. Sending confirmation emails.');
         await sendConfirmationEmails(clientEmail, fullName, projectDetails);
         log('Confirmation emails sent successfully.');
         return NextResponse.json({ received: true });
