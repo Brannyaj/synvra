@@ -71,11 +71,23 @@ export async function POST(req: NextRequest) {
          log('ERROR: Failed to parse projectDetails JSON.', { error: err.message });
       }
 
-      // This is the main operation.
-      await createDropboxSignRequest(clientEmail, fullName, projectDetails);
+      try {
+        await createDropboxSignRequest(clientEmail, fullName, projectDetails);
+      } catch (err: any) {
+        log('ERROR: Failed during Dropbox Sign request creation.', { error: err.message, stack: err.stack });
+        return NextResponse.json({
+          step: 'dropbox-sign-request',
+          error: err.message,
+          details: (err as any).body,
+          data_sent: { clientEmail, fullName }
+        }, { status: 500 });
+      }
       
-      // We send emails after the critical step succeeds.
-      await sendConfirmationEmails(clientEmail, fullName, projectDetails);
+      try {
+        await sendConfirmationEmails(clientEmail, fullName, projectDetails);
+      } catch (err: any) {
+        log('ERROR: Failed during email sending (after successful signature request).', { error: err.message, stack: err.stack });
+      }
 
     } else if (event.type === 'checkout.session.async_payment_failed') {
       const session = event.data.object as Stripe.Checkout.Session;
