@@ -38,7 +38,28 @@ signatureRequestApi.username = process.env.DROPBOX_SIGN_API_KEY;
 
 export async function POST(req: NextRequest) {
   try {
-    log('Webhook received - Starting processing');
+    // Environment Variable Self-Check
+    const requiredEnvVars = [
+      'STRIPE_SECRET_KEY',
+      'STRIPE_WEBHOOK_SECRET',
+      'DROPBOX_SIGN_API_KEY',
+      'DROPBOX_SIGN_TEMPLATE_ID',
+      'DROPBOX_SIGN_CLIENT_ID',
+      'RESEND_API_KEY',
+    ];
+
+    const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
+
+    if (missingEnvVars.length > 0) {
+      const errorMessage = `CRITICAL: Missing required environment variables: ${missingEnvVars.join(', ')}`;
+      log(errorMessage);
+      return NextResponse.json(
+        { error: 'Server configuration error. Required environment variables are missing.' },
+        { status: 500, headers: corsHeaders }
+      );
+    }
+
+    log('Webhook received - All environment variables present.');
 
     const sig = req.headers.get('stripe-signature');
     if (!sig) {
