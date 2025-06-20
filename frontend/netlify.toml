@@ -1,5 +1,11 @@
+# This is the recommended configuration for a Next.js 14 site on Netlify.
+# It relies on the official Next.js plugin to handle all routing and configuration automatically.
+
 [build]
+  # The build command for Next.js
   command = "npm run build"
+  
+  # The directory where Next.js outputs the build files
   publish = ".next"
   # The functions directory is automatically set by the Next.js plugin
   # functions = "netlify/functions" 
@@ -13,6 +19,8 @@
   # included_files = ["src/app/api/**/*"]
   # node_bundler = "esbuild"
 
+# This plugin is essential for Next.js sites on Netlify.
+# It automatically configures redirects, serverless functions, and more.
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
