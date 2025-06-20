@@ -66,25 +66,22 @@ export async function POST(req: NextRequest) {
 
       try {
         log('Attempting to create and send DocuSign envelope...');
-        const envelopeData = await createAndSendEnvelope(clientEmail, fullName, projectDetails);
-        log('Envelope data constructed for debugging. Returning to Stripe.');
+        await createAndSendEnvelope(clientEmail, fullName, projectDetails);
+        log('DocuSign envelope sent successfully.');
 
         await sendConfirmationEmails(clientEmail, fullName, projectDetails);
 
-        return NextResponse.json(envelopeData);
+        return NextResponse.json({ received: true });
       } catch (error: any) {
         log('Error in processing step after payment confirmation.', { 
           step: 'docusign-or-email', 
           error: error.message,
           details: error.response?.data || error,
-          dataSent: error.dataSent,
         });
         return NextResponse.json({ 
           step: 'docusign-or-email', 
           error: error.message, 
-          details: error.response?.data || error,
-          data_sent: error.dataSent,
-          project_details_received: projectDetails
+          details: error.response?.data || error 
         }, { status: 500 });
       }
 
@@ -179,9 +176,19 @@ async function createAndSendEnvelope(clientEmail: string, fullName: string, proj
   
   log('Attempting to create envelope with the following definition:', envelopeDefinition);
 
-  // For debugging, we will return the envelope definition instead of sending it.
-  // This allows us to see the exact data being constructed in the Stripe webhook response.
-  return envelopeDefinition; 
+  try {
+    const envelope = await envelopesApi.createEnvelope(accountId!, {
+      envelopeDefinition,
+    });
+    log('Successfully created DocuSign envelope.', { envelopeId: envelope.envelopeId });
+    return envelope;
+  } catch (error: any) {
+    log('Error creating DocuSign envelope.', { 
+      error: error.message,
+      details: error.response?.data || error,
+    });
+    throw error;
+  }
 }
 
 async function sendConfirmationEmails(clientEmail: string, fullName: string, projectDetails: any) {
