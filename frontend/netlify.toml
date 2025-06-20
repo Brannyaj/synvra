@@ -27,10 +27,12 @@
     Permissions-Policy = "camera=(), microphone=(self), geolocation=(), interest-cohort=()"
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://static.zdassets.com https://*.zendesk.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.synvra.com https://www.google-analytics.com https://ekr.zdassets.com https://*.zendesk.com https://synvra.zendesk.com; frame-src 'self' https://tawk.to https://*.zendesk.com;"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# This catch-all redirect is for SPAs and conflicts with Next.js routing.
+# The @netlify/plugin-nextjs handles this automatically.
+# [[redirects]]
+#  from = "/*"
+#  to = "/index.html"
+#  status = 200
 
 [dev]
   framework = "next"
