@@ -77,11 +77,13 @@ export async function POST(req: NextRequest) {
           step: 'docusign-or-email', 
           error: error.message,
           details: error.response?.data || error,
+          dataSent: error.dataSent,
         });
         return NextResponse.json({ 
           step: 'docusign-or-email', 
           error: error.message, 
-          details: error.response?.data || error 
+          details: error.response?.data || error,
+          data_sent: error.dataSent
         }, { status: 500 });
       }
 
@@ -170,8 +172,11 @@ async function createAndSendEnvelope(clientEmail: string, fullName: string, proj
       error: error.message,
       details: error.response?.data || error,
     });
-    // Re-throw the error to be caught by the main handler and sent back to Stripe
-    throw error;
+    // Create a new error that includes the data we sent for debugging
+    const enhancedError = new Error(error.message);
+    (enhancedError as any).response = error.response;
+    (enhancedError as any).dataSent = envelopeDefinition; // Attach the data
+    throw enhancedError; // Re-throw the enhanced error
   }
 }
 
