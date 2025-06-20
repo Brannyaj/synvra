@@ -105,7 +105,7 @@ export async function POST(req: NextRequest) {
 }
 
 async function createDropboxSignRequest(clientEmail: string, fullName: string, projectDetails: any) {
-  log('Preparing to create Dropbox Sign request for:', { clientEmail });
+  log('Preparing to send Dropbox Sign request for:', { clientEmail });
   const deposit = projectDetails.deposit?.toString() || '';
   const totalPrice = projectDetails.totalPrice?.toString() || '';
   
@@ -113,8 +113,6 @@ async function createDropboxSignRequest(clientEmail: string, fullName: string, p
     templateIds: [process.env.DROPBOX_SIGN_TEMPLATE_ID!],
     subject: 'Project Services Agreement',
     message: 'Please review and sign the project services agreement.',
-    // Correcting the property name to 'email_address' as required by the API
-    // and using 'as any' to bypass the incorrect SDK type definitions.
     signers: [{ role: 'Client', email_address: clientEmail, name: fullName } as any],
     customFields: [
       { name: 'full_name', value: fullName },
@@ -129,13 +127,12 @@ async function createDropboxSignRequest(clientEmail: string, fullName: string, p
       { name: 'deposit_deducted', value: deposit },
       { name: 'project_description', value: `Service: ${projectDetails.service || ''}\nTier: ${projectDetails.tier || ''}\nTimeline: ${projectDetails.timeline || ''}` }
     ],
-    clientId: process.env.DROPBOX_SIGN_CLIENT_ID!,
-    testMode: true // Keep test mode on for now.
+    testMode: true
   };
 
   try {
-    await signatureRequestApi.signatureRequestCreateEmbeddedWithTemplate(data);
-    log('Dropbox Sign request created successfully.');
+    await signatureRequestApi.signatureRequestSendWithTemplate(data);
+    log('Dropbox Sign request sent successfully.');
   } catch (err) {
     // Re-throw the error to be caught by the main handler, which will expose the details.
     throw err;
