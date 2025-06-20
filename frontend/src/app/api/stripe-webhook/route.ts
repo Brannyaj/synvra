@@ -43,7 +43,9 @@ export async function POST(req: NextRequest) {
   log(`Event received: ${event.type}`);
 
   try {
-    if (event.type === 'checkout.session.completed' || event.type === 'checkout.session.async_payment_succeeded') {
+    if (event.type === 'checkout.session.completed' || 
+        event.type === 'checkout.session.async_payment_succeeded' ||
+        event.type === 'payment_intent.processing') {
       const session = event.data.object as Stripe.Checkout.Session;
       
       const clientEmail = session.customer_details?.email;
