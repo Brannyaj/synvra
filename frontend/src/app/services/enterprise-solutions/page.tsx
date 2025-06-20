@@ -146,12 +146,14 @@ export default function EnterpriseSolutions() {
           <p className="text-xl text-synvra-gray-300 mb-8 max-w-2xl mx-auto">
             Let's discuss how our enterprise solutions can streamline your operations and drive growth.
           </p>
-          <button 
-            className="button-primary px-8 py-3 text-lg font-medium hover:bg-synvra-blue/90 active:bg-synvra-blue/80 cursor-pointer"
-            type="button"
-          >
-            Start Your Project
-          </button>
+          <Link href="/get-started">
+            <button 
+              className="button-primary px-8 py-3 text-lg font-medium hover:bg-synvra-blue/90 active:bg-synvra-blue/80 cursor-pointer"
+              type="button"
+            >
+              Start Your Project
+            </button>
+          </Link>
         </div>
       </section>
     </main>

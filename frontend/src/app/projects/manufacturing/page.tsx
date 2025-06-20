@@ -174,9 +174,11 @@ export default function Manufacturing() {
           <p className="text-xl text-synvra-gray-300 mb-8 max-w-2xl mx-auto">
             Let's transform your manufacturing facility with smart IoT solutions and predictive analytics.
           </p>
-          <button className="button-primary">
-            Start Your Project
-          </button>
+          <Link href="/get-started">
+            <button className="button-primary">
+              Start Your Project
+            </button>
+          </Link>
         </div>
       </section>
     </main>

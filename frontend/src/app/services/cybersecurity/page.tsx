@@ -135,9 +135,11 @@ export default function Cybersecurity() {
           <p className="text-xl text-synvra-gray-300 mb-8 max-w-2xl mx-auto">
             Let's build a robust security infrastructure that protects your digital assets.
           </p>
-          <button className="button-primary">
-            Start Your Project
-          </button>
+          <Link href="/get-started">
+            <button className="button-primary">
+              Start Your Project
+            </button>
+          </Link>
         </div>
       </section>
     </main>

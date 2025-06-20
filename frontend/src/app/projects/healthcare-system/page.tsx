@@ -185,11 +185,13 @@ export default function HealthcareSystem() {
           <p className="text-xl text-synvra-gray-300 mb-8 max-w-2xl mx-auto">
             Let's build an innovative healthcare solution that improves patient outcomes and operational efficiency.
           </p>
-          <button 
-            className="button-primary"
-          >
-            Start Your Project
-          </button>
+          <Link href="/get-started">
+            <button 
+              className="button-primary"
+            >
+              Start Your Project
+            </button>
+          </Link>
         </div>
       </section>
     </main>

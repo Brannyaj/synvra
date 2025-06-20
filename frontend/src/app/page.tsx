@@ -139,7 +139,10 @@ export default function Home() {
               From concept to code, we make it happen. Partner with us today to bring your vision to life.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 md:mb-16">
-              <Link href="/get-started"><button className="button-primary text-base px-6 py-3">Get Started</button></Link>
+              <Link href="/get-started" className="group relative px-8 py-4 bg-[#0047CC] hover:bg-[#0047CC]/90 rounded-lg transition-all duration-300">
+                <span className="relative z-10 text-white text-lg font-medium">Start Your Project</span>
+                <div className="absolute inset-0 rounded-lg bg-[#00CC47] opacity-0 group-hover:opacity-100 mix-blend-screen transition-opacity duration-300" />
+              </Link>
               <Link 
                 href="/portfolio" 
                 className="button-secondary text-base px-6 py-3"

@@ -174,9 +174,11 @@ export default function PaymentPlatform() {
           <p className="text-xl text-synvra-gray-300 mb-8 max-w-2xl mx-auto">
             Let's create a secure and scalable payment platform that powers your financial operations.
           </p>
-          <button className="button-primary">
-            Start Your Project
-          </button>
+          <Link href="/get-started">
+            <button className="button-primary">
+              Start Your Project
+            </button>
+          </Link>
         </div>
       </section>
     </main>
