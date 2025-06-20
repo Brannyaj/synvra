@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
-import { Client, SignatureRequestCreateEmbeddedWithTemplateRequest } from '@dropbox/sign';
+import { SignatureRequestApi, SignatureRequestCreateEmbeddedWithTemplateRequest } from '@dropbox/sign';
 
-const client = new Client({ accessToken: process.env.DROPBOX_SIGN_API_KEY });
+const signatureRequestApi = new SignatureRequestApi();
+signatureRequestApi.username = process.env.DROPBOX_SIGN_API_KEY!;
 
 export async function POST(request: Request) {
   try {
@@ -45,16 +46,26 @@ export async function POST(request: Request) {
         { name: 'deposit_deducted', value: depositPaid.toString() },
         { name: 'project_description', value: projectDescription }
       ],
-      signingRedirectUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/contract-signed`,
+      clientId: process.env.DROPBOX_SIGN_CLIENT_ID!,
       testMode: process.env.NODE_ENV === 'development'
     };
 
-    const result = await client.signatureRequestApi.signatureRequestCreateEmbeddedWithTemplate(data);
+    const result = await signatureRequestApi.signatureRequestCreateEmbeddedWithTemplate(data);
+    const signatureRequest = result.body.signatureRequest;
+
+    if (!signatureRequest) {
+      throw new Error('Signature request not found in response');
+    }
+
+    const firstSigner = signatureRequest.signatures?.[0];
+    if (!firstSigner?.sign_url) {
+      throw new Error('Sign URL not found for the first signer');
+    }
     
     return NextResponse.json({ 
       success: true,
-      signatureRequestId: result.signatureRequest?.signatureRequestId,
-      signingUrl: result.signatureRequest?.signingUrl
+      signatureRequestId: signatureRequest.signatureRequestId,
+      signingUrl: firstSigner.sign_url
     });
   } catch (error) {
     console.error('Error creating signature request:', error);
