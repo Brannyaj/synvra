@@ -121,7 +121,7 @@ async function createDropboxSignRequest(clientEmail: string, fullName: string, p
       { name: 'project_description', value: `Service: ${projectDetails.service || ''}\nTier: ${projectDetails.tier || ''}\nTimeline: ${projectDetails.timeline || ''}` }
     ],
     clientId: process.env.DROPBOX_SIGN_CLIENT_ID!,
-    testMode: process.env.NODE_ENV === 'development'
+    testMode: true
   };
   await signatureRequestApi.signatureRequestCreateEmbeddedWithTemplate(data);
   log('Dropbox Sign request created successfully');
