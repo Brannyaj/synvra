@@ -66,8 +66,16 @@ export async function POST(req: NextRequest) {
       try {
         await createDropboxSignRequest(clientEmail, fullName, projectDetails);
       } catch (err: any) {
-        log('ERROR: Failed during Dropbox Sign request creation.', { error: err.message, stack: err.stack });
-        return NextResponse.json({ step: 'dropbox-sign-request', error: err.message }, { status: 500 });
+        log('ERROR: Failed during Dropbox Sign request creation.', { 
+            error: err.message, 
+            response_body: err.body,
+            stack: err.stack 
+        });
+        return NextResponse.json({ 
+            step: 'dropbox-sign-request', 
+            error: err.message,
+            details: err.body
+        }, { status: 500 });
       }
 
       try {
