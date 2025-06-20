@@ -104,24 +104,21 @@ export async function POST(req: NextRequest) {
 
 async function createAndSendEnvelope(clientEmail: string, fullName: string, projectDetails: any) {
   const apiClient = new docusign.ApiClient();
-  apiClient.setOAuthBasePath('account-d.docusign.com'); // Use developer sandbox
-
-  // Decode the Base64 private key from environment variables
+  apiClient.setOAuthBasePath('account-d.docusign.com');
   const privateKeyBuffer = Buffer.from(process.env.DOCUSIGN_PRIVATE_KEY!, 'base64');
-
   const results = await apiClient.requestJWTUserToken(
     process.env.DOCUSIGN_INTEGRATION_KEY!,
     process.env.DOCUSIGN_USER_ID!,
     ['signature', 'impersonation'],
     privateKeyBuffer,
-    3600 // Token expires in 1 hour
+    3600
   );
 
   const accessToken = results.body.access_token;
   const accountId = process.env.DOCUSIGN_API_ACCOUNT_ID;
   
   apiClient.addDefaultHeader('Authorization', 'Bearer ' + accessToken);
-  apiClient.setBasePath(`https://demo.docusign.net/restapi`); // Set API base path after getting token
+  apiClient.setBasePath(`https://demo.docusign.net/restapi`);
 
   const envelopesApi = new docusign.EnvelopesApi(apiClient);
 
@@ -129,41 +126,61 @@ async function createAndSendEnvelope(clientEmail: string, fullName: string, proj
   const totalPrice = projectDetails.totalPrice?.toString() || '0';
   const remainingBalance = (Number(totalPrice) - Number(deposit)).toString();
 
-  const envelopeDefinition = {
-    templateId: process.env.DOCUSIGN_TEMPLATE_ID,
-    templateRoles: [
-      {
-        email: clientEmail,
-        name: fullName,
-        roleName: 'Client', // This must match the role in your DocuSign template
-        tabs: {
-          textTabs: [
-            { tabLabel: 'full_name', value: fullName },
-            { tabLabel: 'company_name', value: fullName }, // Using fullName as fallback
-            { tabLabel: 'email', value: clientEmail },
-            { tabLabel: 'phone', value: projectDetails.phone || '' },
-            { tabLabel: 'service_type', value: projectDetails.service || '' },
-            { tabLabel: 'project_type', value: 'Website/Platform' },
-            { tabLabel: 'tier', value: projectDetails.tier || '' },
-            { tabLabel: 'timeline', value: projectDetails.timeline || '' },
-            { tabLabel: 'total_amount', value: totalPrice },
-            { tabLabel: 'deposit_paid', value: deposit },
-            { tabLabel: 'deposit_deducted', value: deposit },
-            { tabLabel: 'remaining_balance', value: remainingBalance },
-            { tabLabel: 'project_description', value: `Service: ${projectDetails.service || ''}\nTier: ${projectDetails.tier || ''}\nTimeline: ${projectDetails.timeline || ''}` },
-          ],
-        },
-      },
-    ],
-    status: 'sent', // 'sent' to send the envelope immediately
-  };
+  // Create the signer tabs
+  const textTabs = [
+    // @ts-ignore
+    docusign.Text.constructFromObject({ tabLabel: 'full_name', value: fullName }),
+    // @ts-ignore
+    docusign.Text.constructFromObject({ tabLabel: 'company_name', value: fullName }),
+    // @ts-ignore
+    docusign.Text.constructFromObject({ tabLabel: 'email', value: clientEmail }),
+    // @ts-ignore
+    docusign.Text.constructFromObject({ tabLabel: 'phone', value: projectDetails.phone || '' }),
+    // @ts-ignore
+    docusign.Text.constructFromObject({ tabLabel: 'service_type', value: projectDetails.service || '' }),
+    // @ts-ignore
+    docusign.Text.constructFromObject({ tabLabel: 'project_type', value: 'Website/Platform' }),
+    // @ts-ignore
+    docusign.Text.constructFromObject({ tabLabel: 'tier', value: projectDetails.tier || '' }),
+    // @ts-ignore
+    docusign.Text.constructFromObject({ tabLabel: 'timeline', value: projectDetails.timeline || '' }),
+    // @ts-ignore
+    docusign.Text.constructFromObject({ tabLabel: 'total_amount', value: totalPrice }),
+    // @ts-ignore
+    docusign.Text.constructFromObject({ tabLabel: 'deposit_paid', value: deposit }),
+    // @ts-ignore
+    docusign.Text.constructFromObject({ tabLabel: 'deposit_deducted', value: deposit }),
+    // @ts-ignore
+    docusign.Text.constructFromObject({ tabLabel: 'remaining_balance', value: remainingBalance }),
+    // @ts-ignore
+    docusign.Text.constructFromObject({ tabLabel: 'project_description', value: `Service: ${projectDetails.service || ''}\nTier: ${projectDetails.tier || ''}\nTimeline: ${projectDetails.timeline || ''}` }),
+  ];
 
-  // The definitive final log. This will show us exactly what we are sending.
+  // @ts-ignore
+  const tabs = docusign.Tabs.constructFromObject({ textTabs });
+
+  // Create a signer recipient to receive the email and be assigned the tabs
+  // @ts-ignore
+  const signer = docusign.TemplateRole.constructFromObject({
+    email: clientEmail,
+    name: fullName,
+    roleName: 'Client',
+    tabs: tabs,
+  });
+
+  // Create the envelope definition
+  // @ts-ignore
+  const envelopeDefinition = docusign.EnvelopeDefinition.constructFromObject({
+    templateId: process.env.DOCUSIGN_TEMPLATE_ID,
+    templateRoles: [signer],
+    status: 'sent',
+  });
+  
   log('Attempting to create envelope with the following definition:', envelopeDefinition);
 
   try {
     const envelope = await envelopesApi.createEnvelope(accountId!, {
-      envelopeDefinition: envelopeDefinition as any,
+      envelopeDefinition,
     });
     log('Successfully created DocuSign envelope.', { envelopeId: envelope.envelopeId });
     return envelope;
