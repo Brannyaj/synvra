@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { Resend } from 'resend';
-import * as docusign from 'docusign-esign';
 
 // Add timestamp to logs
 const log = (message: string, data?: any) => {
@@ -16,7 +15,7 @@ const log = (message: string, data?: any) => {
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-  'Access-Chtrol-Allow-Headers': 'Content-Type, Authorization, stripe-signature',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization, stripe-signature',
 };
 
 // Handle OPTIONS requests for CORS
@@ -65,24 +64,13 @@ export async function POST(req: NextRequest) {
       }
 
       try {
-        log('Attempting to create and send DocuSign envelope...');
-        await createAndSendEnvelope(clientEmail, fullName, projectDetails);
-        log('DocuSign envelope sent successfully.');
-
+        log('Payment successful. Sending confirmation emails only.');
         await sendConfirmationEmails(clientEmail, fullName, projectDetails);
-
+        log('Confirmation emails sent successfully.');
         return NextResponse.json({ received: true });
       } catch (error: any) {
-        log('Error in processing step after payment confirmation.', { 
-          step: 'docusign-or-email', 
-          error: error.message,
-          details: error.response?.data || error,
-        });
-        return NextResponse.json({ 
-          step: 'docusign-or-email', 
-          error: error.message, 
-          details: error.response?.data || error 
-        }, { status: 500 });
+        log('Error sending confirmation emails.', { error: error.message });
+        return NextResponse.json({ step: 'send-emails', error: error.message }, { status: 500 });
       }
 
     } else if (event.type === 'checkout.session.async_payment_failed') {
@@ -100,97 +88,6 @@ export async function POST(req: NextRequest) {
   }
 }
 
-async function createAndSendEnvelope(clientEmail: string, fullName: string, projectDetails: any) {
-  const apiClient = new docusign.ApiClient();
-  apiClient.setOAuthBasePath('account-d.docusign.com');
-  const privateKeyBuffer = Buffer.from(process.env.DOCUSIGN_PRIVATE_KEY!, 'base64');
-  const results = await apiClient.requestJWTUserToken(
-    process.env.DOCUSIGN_INTEGRATION_KEY!,
-    process.env.DOCUSIGN_USER_ID!,
-    ['signature', 'impersonation'],
-    privateKeyBuffer,
-    3600
-  );
-
-  const accessToken = results.body.access_token;
-  const accountId = process.env.DOCUSIGN_API_ACCOUNT_ID;
-  
-  apiClient.addDefaultHeader('Authorization', 'Bearer ' + accessToken);
-  apiClient.setBasePath(`https://demo.docusign.net/restapi`);
-
-  const envelopesApi = new docusign.EnvelopesApi(apiClient);
-
-  const deposit = projectDetails.deposit?.toString() || '0';
-  const totalPrice = projectDetails.totalPrice?.toString() || '0';
-  const remainingBalance = (Number(totalPrice) - Number(deposit)).toString();
-
-  // Create the signer tabs
-  const textTabs = [
-    // @ts-ignore
-    docusign.Text.constructFromObject({ tabLabel: 'full_name', value: fullName }),
-    // @ts-ignore
-    docusign.Text.constructFromObject({ tabLabel: 'company_name', value: fullName }),
-    // @ts-ignore
-    docusign.Text.constructFromObject({ tabLabel: 'email', value: clientEmail }),
-    // @ts-ignore
-    docusign.Text.constructFromObject({ tabLabel: 'phone', value: projectDetails.phone || '' }),
-    // @ts-ignore
-    docusign.Text.constructFromObject({ tabLabel: 'service_type', value: projectDetails.service || '' }),
-    // @ts-ignore
-    docusign.Text.constructFromObject({ tabLabel: 'project_type', value: 'Website/Platform' }),
-    // @ts-ignore
-    docusign.Text.constructFromObject({ tabLabel: 'tier', value: projectDetails.tier || '' }),
-    // @ts-ignore
-    docusign.Text.constructFromObject({ tabLabel: 'timeline', value: projectDetails.timeline || '' }),
-    // @ts-ignore
-    docusign.Text.constructFromObject({ tabLabel: 'total_amount', value: totalPrice }),
-    // @ts-ignore
-    docusign.Text.constructFromObject({ tabLabel: 'deposit_paid', value: deposit }),
-    // @ts-ignore
-    docusign.Text.constructFromObject({ tabLabel: 'deposit_deducted', value: deposit }),
-    // @ts-ignore
-    docusign.Text.constructFromObject({ tabLabel: 'remaining_balance', value: remainingBalance }),
-    // @ts-ignore
-    docusign.Text.constructFromObject({ tabLabel: 'project_description', value: `Service: ${projectDetails.service || ''}\nTier: ${projectDetails.tier || ''}\nTimeline: ${projectDetails.timeline || ''}` }),
-  ];
-
-  // @ts-ignore
-  const tabs = docusign.Tabs.constructFromObject({ textTabs });
-
-  // Create a signer recipient to receive the email and be assigned the tabs
-  // @ts-ignore
-  const signer = docusign.TemplateRole.constructFromObject({
-    email: clientEmail,
-    name: fullName,
-    roleName: 'Client',
-    tabs: tabs,
-  });
-
-  // Create the envelope definition
-  // @ts-ignore
-  const envelopeDefinition = docusign.EnvelopeDefinition.constructFromObject({
-    templateId: process.env.DOCUSIGN_TEMPLATE_ID,
-    templateRoles: [signer],
-    status: 'sent',
-  });
-  
-  log('Attempting to create envelope with the following definition:', envelopeDefinition);
-
-  try {
-    const envelope = await envelopesApi.createEnvelope(accountId!, {
-      envelopeDefinition,
-    });
-    log('Successfully created DocuSign envelope.', { envelopeId: envelope.envelopeId });
-    return envelope;
-  } catch (error: any) {
-    log('Error creating DocuSign envelope.', { 
-      error: error.message,
-      details: error.response?.data || error,
-    });
-    throw error;
-  }
-}
-
 async function sendConfirmationEmails(clientEmail: string, fullName: string, projectDetails: any) {
   const deposit = projectDetails.deposit?.toString() || '';
   const totalPrice = projectDetails.totalPrice?.toString() || '';
@@ -199,7 +96,7 @@ async function sendConfirmationEmails(clientEmail: string, fullName: string, pro
     from: 'noreply@synvra.com',
     to: clientEmail,
     subject: 'Payment Confirmation – Thank you for your deposit!',
-    html: `<p>Hi ${fullName},</p><p>Thank you for your payment of <strong>$${deposit}</strong> for your project deposit.</p><p>You will receive a separate email with a link to sign the Project Services Agreement.</p><p>If you have any questions, please contact us at <a href="mailto:support@synvra.com">support@synvra.com</a>.</p><p>Best,<br>The Synvra Team</p>`
+    html: `<p>Hi ${fullName},</p><p>Thank you for your payment of <strong>$${deposit}</strong> for your project deposit.</p><p>If you have any questions, please contact us at <a href="mailto:support@synvra.com">support@synvra.com</a>.</p><p>Best,<br>The Synvra Team</p>`
   };
 
   const internalEmailBody = {
@@ -220,7 +117,7 @@ async function sendFailureEmail(clientEmail: string, fullName: string | null) {
     from: 'noreply@synvra.com',
     to: clientEmail,
     subject: 'Payment Failed – Action Required',
-    html: `<p>Hi ${fullName},</p><p>We were unable to process your payment. Please contact your bank or try another payment method.</p><p>If you need assistance, please contact us at <a href="mailto:support@synvra.com">support@synvra.com</a>.</p><p>Best,<br>The Synvra Team</p>`
+    html: `<p>Hi ${fullName || 'there'},</p><p>We were unable to process your payment. Please contact your bank or try another payment method.</p><p>If you need assistance, please contact us at <a href="mailto:support@synvra.com">support@synvra.com</a>.</p><p>Best,<br>The Synvra Team</p>`
   };
   await resend.emails.send(emailBody);
   log('Payment failure email sent successfully');
