@@ -66,12 +66,12 @@ export async function POST(req: NextRequest) {
 
       try {
         log('Attempting to create and send DocuSign envelope...');
-        await createAndSendEnvelope(clientEmail, fullName, projectDetails);
-        log('DocuSign envelope sent successfully.');
+        const envelopeData = await createAndSendEnvelope(clientEmail, fullName, projectDetails);
+        log('Envelope data constructed for debugging. Returning to Stripe.');
 
         await sendConfirmationEmails(clientEmail, fullName, projectDetails);
 
-        return NextResponse.json({ received: true });
+        return NextResponse.json(envelopeData);
       } catch (error: any) {
         log('Error in processing step after payment confirmation.', { 
           step: 'docusign-or-email', 
@@ -179,23 +179,9 @@ async function createAndSendEnvelope(clientEmail: string, fullName: string, proj
   
   log('Attempting to create envelope with the following definition:', envelopeDefinition);
 
-  try {
-    const envelope = await envelopesApi.createEnvelope(accountId!, {
-      envelopeDefinition,
-    });
-    log('Successfully created DocuSign envelope.', { envelopeId: envelope.envelopeId });
-    return envelope;
-  } catch (error: any) {
-    log('Error creating DocuSign envelope.', { 
-      error: error.message,
-      details: error.response?.data || error,
-    });
-    // Create a new error that includes the data we sent for debugging
-    const enhancedError = new Error(error.message);
-    (enhancedError as any).response = error.response;
-    (enhancedError as any).dataSent = envelopeDefinition; // Attach the data
-    throw enhancedError; // Re-throw the enhanced error
-  }
+  // For debugging, we will return the envelope definition instead of sending it.
+  // This allows us to see the exact data being constructed in the Stripe webhook response.
+  return envelopeDefinition; 
 }
 
 async function sendConfirmationEmails(clientEmail: string, fullName: string, projectDetails: any) {
