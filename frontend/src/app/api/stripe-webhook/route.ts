@@ -99,7 +99,12 @@ export async function POST(req: NextRequest) {
 }
 
 async function createDropboxSignRequest(clientEmail: string, fullName: string, projectDetails: any) {
-  log('Preparing to create Dropbox Sign request with the following details:', {
+  // Final verification to ensure we have a valid email before calling the API.
+  if (!clientEmail || typeof clientEmail !== 'string') {
+    throw new Error(`Attempted to create a signature request with an invalid email address. Value received: '${clientEmail}'`);
+  }
+
+  log('Preparing to create Dropbox Sign request with valid details:', {
     clientEmail,
     fullName,
   });
