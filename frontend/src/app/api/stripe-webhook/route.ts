@@ -102,7 +102,6 @@ export async function POST(req: NextRequest) {
 }
 
 async function sendConfirmationEmails(clientEmail: string, fullName: string, projectDetails: any) {
-  // Get amount directly from the session's amount_total which is in cents
   const deposit = projectDetails.deposit?.toString() || '';
   const totalPrice = projectDetails.totalPrice?.toString() || '';
 
