@@ -104,13 +104,14 @@ async function createAndSendEnvelope(clientEmail: string, fullName: string, proj
   const apiClient = new docusign.ApiClient();
   apiClient.setOAuthBasePath('account-d.docusign.com'); // Use developer sandbox
 
-  const privateKey = process.env.DOCUSIGN_PRIVATE_KEY!.replace(/\\n/g, '\n');
+  // Decode the Base64 private key from environment variables
+  const privateKeyBuffer = Buffer.from(process.env.DOCUSIGN_PRIVATE_KEY!, 'base64');
 
   const results = await apiClient.requestJWTUserToken(
     process.env.DOCUSIGN_INTEGRATION_KEY!,
     process.env.DOCUSIGN_USER_ID!,
     ['signature', 'impersonation'],
-    Buffer.from(privateKey),
+    privateKeyBuffer,
     3600 // Token expires in 1 hour
   );
 
