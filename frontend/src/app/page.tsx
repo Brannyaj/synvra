@@ -42,7 +42,7 @@ export default function Home() {
                 Services
               </Link>
               <Link href="/portfolio" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">
-                Work
+                Portfolio
               </Link>
               <Link href="/about" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">
                 About
