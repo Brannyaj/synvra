@@ -113,7 +113,7 @@ export default function Careers() {
             </p>
             <div className="flex justify-center space-x-6">
               <Link 
-                href="https://linkedin.com/company/synvra" 
+                href="https://www.linkedin.com/company/synvra617/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="glass-card p-4 hover:border-synvra-blue/30 transition-all duration-300"
@@ -122,22 +122,31 @@ export default function Careers() {
                 <div className="text-sm text-synvra-gray-300 mt-2">LinkedIn</div>
               </Link>
               <Link 
-                href="https://twitter.com/synvra" 
+                href="https://www.tiktok.com/@synvra?_t=ZT-8xO7M8KuWKs&_r=1" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="glass-card p-4 hover:border-synvra-blue/30 transition-all duration-300"
               >
-                <div className="text-3xl">🐦</div>
-                <div className="text-sm text-synvra-gray-300 mt-2">Twitter</div>
+                <div className="text-3xl">📱</div>
+                <div className="text-sm text-synvra-gray-300 mt-2">TikTok</div>
               </Link>
               <Link 
-                href="https://discord.gg/synvra" 
+                href="https://www.facebook.com/share/1A6b2wrgDC/?mibextid=wwXIfr" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="glass-card p-4 hover:border-synvra-blue/30 transition-all duration-300"
               >
-                <div className="text-3xl">💬</div>
-                <div className="text-sm text-synvra-gray-300 mt-2">Discord</div>
+                <div className="text-3xl">👥</div>
+                <div className="text-sm text-synvra-gray-300 mt-2">Facebook</div>
+              </Link>
+              <Link 
+                href="https://www.instagram.com/synvra_?igsh=MXN2NnJ5aGt0N2VyeQ%3D%3D&utm_source=qr" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="glass-card p-4 hover:border-synvra-blue/30 transition-all duration-300"
+              >
+                <div className="text-3xl">📸</div>
+                <div className="text-sm text-synvra-gray-300 mt-2">Instagram</div>
               </Link>
             </div>
           </div>

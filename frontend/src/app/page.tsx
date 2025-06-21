@@ -618,10 +618,10 @@ export default function Home() {
             <div>
               <h3 className="text-lg md:text-xl font-bold text-synvra-white mb-4">Connect</h3>
               <ul className="space-y-2 text-sm md:text-base">
-                <li><Link href="https://twitter.com/synvra" target="_blank" rel="noopener noreferrer" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Twitter</Link></li>
-                <li><Link href="https://linkedin.com/company/synvra" target="_blank" rel="noopener noreferrer" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">LinkedIn</Link></li>
-                <li><Link href="https://github.com/synvra" target="_blank" rel="noopener noreferrer" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">GitHub</Link></li>
-                <li><Link href="https://discord.gg/synvra" target="_blank" rel="noopener noreferrer" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Discord</Link></li>
+                <li><Link href="https://www.tiktok.com/@synvra?_t=ZT-8xO7M8KuWKs&_r=1" target="_blank" rel="noopener noreferrer" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">TikTok</Link></li>
+                <li><Link href="https://www.facebook.com/share/1A6b2wrgDC/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Facebook</Link></li>
+                <li><Link href="https://www.instagram.com/synvra_?igsh=MXN2NnJ5aGt0N2VyeQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">Instagram</Link></li>
+                <li><Link href="https://www.linkedin.com/company/synvra617/" target="_blank" rel="noopener noreferrer" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">LinkedIn</Link></li>
               </ul>
             </div>
           </div>
