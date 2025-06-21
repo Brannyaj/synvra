@@ -242,7 +242,7 @@ export default function ProjectProposalForm() {
             timeline: formData.timeline,
             totalPrice: calculateTotalPrice(),
             deposit: calculateDeposit(),
-            description: formData.projectDescription,
+            description: formData.additionalRequirements,
             phone: formData.phone,
             companyName: formData.companyName,
             companySize: formData.companySize,

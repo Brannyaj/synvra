@@ -36,7 +36,11 @@ export async function POST(request: Request) {
           timeline: projectDetails?.timeline || '',
           totalPrice: projectDetails?.totalPrice ? String(projectDetails.totalPrice) : '',
           deposit: projectDetails?.deposit ? String(projectDetails.deposit) : '',
-          description: projectDetails?.description || ''
+          description: projectDetails?.description || '',
+          phone: projectDetails?.phone || '',
+          companyName: projectDetails?.companyName || '',
+          companySize: projectDetails?.companySize || '',
+          industry: projectDetails?.industry || ''
         })
       },
     });
