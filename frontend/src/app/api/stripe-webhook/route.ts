@@ -106,46 +106,25 @@ async function sendConfirmationEmails(clientEmail: string, fullName: string, pro
     from: 'noreply@synvra.com',
     to: clientEmail,
     subject: 'Payment Confirmation – Thank you for your deposit!',
-    html: `
-      <p>Hi ${fullName},</p>
-      <p>Thank you for your payment of <strong>$${deposit}</strong> for your project deposit.</p>
-      <p>Here's a summary of your project:</p>
-      <ul>
-        <li><strong>Service:</strong> ${projectDetails.service}</li>
-        <li><strong>Tier:</strong> ${projectDetails.tier}</li>
-        <li><strong>Timeline:</strong> ${projectDetails.timeline}</li>
-        <li><strong>Total Project Cost:</strong> $${totalPrice}</li>
-        <li><strong>Deposit Paid:</strong> $${deposit}</li>
-      </ul>
-      <p>Next steps:</p>
-      <ol>
-        <li>Our team will review your project requirements</li>
-        <li>We'll schedule a kickoff meeting within 24 hours</li>
-        <li>You'll receive a Project Services Agreement to sign</li>
-      </ol>
-      <p>If you have any questions, please contact us at <a href="mailto:support@synvra.com">support@synvra.com</a>.</p>
-      <p>Best,<br>The Synvra Team</p>
-    `
+    html: `<p>Hi ${fullName},</p><p>Thank you for your payment of <strong>$${deposit}</strong> for your project deposit.</p><p>If you have any questions, please contact us at <a href="mailto:support@synvra.com">support@synvra.com</a>.</p><p>Best,<br>The Synvra Team</p>`
   };
 
   const internalEmailBody = {
     from: 'noreply@synvra.com',
     to: 'support@synvra.com',
     subject: 'New Project Proposal Submission – Payment Received',
-    html: `
-      <h2>New Project Proposal Submission</h2>
-      <ul>
-        <li><strong>Full Name:</strong> ${fullName}</li>
-        <li><strong>Email:</strong> ${clientEmail}</li>
-        <li><strong>Deposit:</strong> $${deposit}</li>
-        <li><strong>Total Project Amount:</strong> $${totalPrice}</li>
-        <li><strong>Service Type:</strong> ${projectDetails.service}</li>
-        <li><strong>Tier:</strong> ${projectDetails.tier}</li>
-        <li><strong>Timeline:</strong> ${projectDetails.timeline}</li>
-      </ul>
-      <h3>Project Description:</h3>
-      <p>${description}</p>
-    `
+    html: `<h2>New Project Proposal Submission</h2>
+    <ul>
+      <li><strong>Full Name:</strong> ${fullName}</li>
+      <li><strong>Email:</strong> ${clientEmail}</li>
+      <li><strong>Deposit:</strong> $${deposit}</li>
+      <li><strong>Total Project Amount:</strong> $${totalPrice}</li>
+      <li><strong>Service Type:</strong> ${projectDetails.service}</li>
+      <li><strong>Tier:</strong> ${projectDetails.tier}</li>
+      <li><strong>Timeline:</strong> ${projectDetails.timeline}</li>
+    </ul>
+    <h3>Project Description:</h3>
+    <p style="white-space: pre-wrap;">${projectDetails.description || 'Not provided'}</p>`
   };
   
   await resend.emails.send(clientEmailBody);
