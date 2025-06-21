@@ -485,6 +485,82 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Latest Tech News */}
+      <section className="py-20 relative overflow-hidden bg-synvra-black/50">
+        <div className="container mx-auto px-4">
+          <h2 className="section-heading text-center mb-12">Latest Tech News</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              {
+                title: "AI Revolution in Software Development: The Rise of Code Generation",
+                excerpt: "How advanced AI models are transforming the way developers write and maintain code, with a focus on increased productivity and reduced errors.",
+                date: "March 18, 2024",
+                time: "14:30 GMT",
+                category: "Artificial Intelligence",
+                readTime: "5 min read"
+              },
+              {
+                title: "Web Development Trends 2024: The Impact of WebAssembly",
+                excerpt: "Exploring how WebAssembly is enabling high-performance web applications and revolutionizing browser-based computing.",
+                date: "March 15, 2024",
+                time: "09:45 GMT",
+                category: "Web Development",
+                readTime: "4 min read"
+              },
+              {
+                title: "The Future of Cloud Computing: Edge Computing Takes Center Stage",
+                excerpt: "Analysis of how edge computing is reshaping cloud architecture and enabling real-time processing for IoT devices.",
+                date: "March 12, 2024",
+                time: "11:20 GMT",
+                category: "Cloud Computing",
+                readTime: "6 min read"
+              },
+              {
+                title: "Cybersecurity in 2024: Zero Trust Architecture Adoption",
+                excerpt: "Understanding the growing importance of Zero Trust security models in modern enterprise architecture.",
+                date: "March 8, 2024",
+                time: "16:15 GMT",
+                category: "Cybersecurity",
+                readTime: "7 min read"
+              }
+            ].map((post, index) => (
+              <Link 
+                key={index}
+                href={`/blog/${post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                className="glass-card p-6 hover:border-synvra-blue/30 transition-all duration-300 group"
+              >
+                <div className="flex flex-col h-full">
+                  <div className="mb-4">
+                    <span className="text-sm text-synvra-blue">{post.category}</span>
+                    <h3 className="text-xl font-bold text-synvra-white mt-2 group-hover:text-synvra-blue transition-colors">
+                      {post.title}
+                    </h3>
+                  </div>
+                  <p className="text-synvra-gray-300 mb-4 flex-grow">
+                    {post.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between text-sm text-synvra-gray-400">
+                    <div>
+                      {post.date} • {post.time}
+                    </div>
+                    <div>{post.readTime}</div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <Link 
+              href="/blog" 
+              className="button-secondary inline-flex items-center space-x-2 px-6 py-3"
+            >
+              <span>View All Articles</span>
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Contact CTA */}
       <section id="contact" className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-synvra-blue/10 to-synvra-white/5" />
