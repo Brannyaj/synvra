@@ -43,9 +43,7 @@ export async function POST(req: NextRequest) {
   log(`Event received: ${event.type}`);
 
   try {
-    if (event.type === 'checkout.session.completed' || 
-        event.type === 'checkout.session.async_payment_succeeded' ||
-        event.type === 'payment_intent.processing') {
+    if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session;
       
       const clientEmail = session.customer_details?.email;
@@ -85,17 +83,15 @@ export async function POST(req: NextRequest) {
         log('Error sending confirmation emails.', { error: error.message });
         return NextResponse.json({ step: 'send-emails', error: error.message }, { status: 500 });
       }
-
-    } else if (event.type === 'checkout.session.async_payment_failed') {
-      const session = event.data.object as Stripe.Checkout.Session;
-      const clientEmail = session.customer_details?.email || '';
-      const fullName = session.customer_details?.name || '';
+    } else if (event.type === 'payment_intent.payment_failed') {
+      const paymentIntent = event.data.object as Stripe.PaymentIntent;
+      const clientEmail = paymentIntent.receipt_email || '';
+      const fullName = paymentIntent.shipping?.name || null;
       await sendFailureEmail(clientEmail, fullName);
     }
 
     return NextResponse.json({ received: true });
   } catch (err: any) {
-    // This will now catch our specific errors from the helper functions.
     log('ERROR: A critical step failed in the webhook handler.', { error: err.message, stack: err.stack });
     return NextResponse.json({ step: 'critical-step-failed', error: err.message, details: (err as any).body }, { status: 500 });
   }
@@ -104,19 +100,52 @@ export async function POST(req: NextRequest) {
 async function sendConfirmationEmails(clientEmail: string, fullName: string, projectDetails: any) {
   const deposit = projectDetails.deposit?.toString() || '';
   const totalPrice = projectDetails.totalPrice?.toString() || '';
+  const description = projectDetails.description || 'Not provided';
 
   const clientEmailBody = {
     from: 'noreply@synvra.com',
     to: clientEmail,
     subject: 'Payment Confirmation – Thank you for your deposit!',
-    html: `<p>Hi ${fullName},</p><p>Thank you for your payment of <strong>$${deposit}</strong> for your project deposit.</p><p>If you have any questions, please contact us at <a href="mailto:support@synvra.com">support@synvra.com</a>.</p><p>Best,<br>The Synvra Team</p>`
+    html: `
+      <p>Hi ${fullName},</p>
+      <p>Thank you for your payment of <strong>$${deposit}</strong> for your project deposit.</p>
+      <p>Here's a summary of your project:</p>
+      <ul>
+        <li><strong>Service:</strong> ${projectDetails.service}</li>
+        <li><strong>Tier:</strong> ${projectDetails.tier}</li>
+        <li><strong>Timeline:</strong> ${projectDetails.timeline}</li>
+        <li><strong>Total Project Cost:</strong> $${totalPrice}</li>
+        <li><strong>Deposit Paid:</strong> $${deposit}</li>
+      </ul>
+      <p>Next steps:</p>
+      <ol>
+        <li>Our team will review your project requirements</li>
+        <li>We'll schedule a kickoff meeting within 24 hours</li>
+        <li>You'll receive a Project Services Agreement to sign</li>
+      </ol>
+      <p>If you have any questions, please contact us at <a href="mailto:support@synvra.com">support@synvra.com</a>.</p>
+      <p>Best,<br>The Synvra Team</p>
+    `
   };
 
   const internalEmailBody = {
     from: 'noreply@synvra.com',
     to: 'support@synvra.com',
     subject: 'New Project Proposal Submission – Payment Received',
-    html: `<h2>New Project Proposal Submission</h2><ul><li><strong>Full Name:</strong> ${fullName}</li><li><strong>Email:</strong> ${clientEmail}</li><li><strong>Deposit:</strong> $${deposit}</li><li><strong>Total Project Amount:</strong> $${totalPrice}</li><li><strong>Service Type:</strong> ${projectDetails.service}</li><li><strong>Tier:</strong> ${projectDetails.tier}</li><li><strong>Timeline:</strong> ${projectDetails.timeline}</li><li><strong>Project Description:</strong> ${projectDetails.description || 'Not provided'}</li></ul>`
+    html: `
+      <h2>New Project Proposal Submission</h2>
+      <ul>
+        <li><strong>Full Name:</strong> ${fullName}</li>
+        <li><strong>Email:</strong> ${clientEmail}</li>
+        <li><strong>Deposit:</strong> $${deposit}</li>
+        <li><strong>Total Project Amount:</strong> $${totalPrice}</li>
+        <li><strong>Service Type:</strong> ${projectDetails.service}</li>
+        <li><strong>Tier:</strong> ${projectDetails.tier}</li>
+        <li><strong>Timeline:</strong> ${projectDetails.timeline}</li>
+      </ul>
+      <h3>Project Description:</h3>
+      <p>${description}</p>
+    `
   };
   
   await resend.emails.send(clientEmailBody);
@@ -130,7 +159,12 @@ async function sendFailureEmail(clientEmail: string, fullName: string | null) {
     from: 'noreply@synvra.com',
     to: clientEmail,
     subject: 'Payment Failed – Action Required',
-    html: `<p>Hi ${fullName || 'there'},</p><p>We were unable to process your payment. Please contact your bank or try another payment method.</p><p>If you need assistance, please contact us at <a href="mailto:support@synvra.com">support@synvra.com</a>.</p><p>Best,<br>The Synvra Team</p>`
+    html: `
+      <p>Hi ${fullName || 'there'},</p>
+      <p>We were unable to process your payment. Please contact your bank or try another payment method.</p>
+      <p>If you need assistance, please contact us at <a href="mailto:support@synvra.com">support@synvra.com</a>.</p>
+      <p>Best,<br>The Synvra Team</p>
+    `
   };
   await resend.emails.send(emailBody);
   log('Payment failure email sent successfully');
