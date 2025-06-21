@@ -195,7 +195,8 @@ export default function ProjectProposalForm() {
       if (!formData.projectType) errors.projectType = 'Please select a project type';
       if (!formData.tier) errors.tier = 'Please select a project tier';
       if (!formData.timeline) errors.timeline = 'Please select a timeline';
-      if (!formData.additionalRequirements) errors.additionalRequirements = 'Please provide a project description';
+      if (!formData.additionalRequirements) errors.additionalRequirements = 'Please describe what you need built for your business';
+      else if (formData.additionalRequirements.length < 50) errors.additionalRequirements = 'Project description must be at least 50 characters';
     }
 
     if (step === 2) {
@@ -366,7 +367,7 @@ export default function ProjectProposalForm() {
 
       <div>
         <label htmlFor="additionalRequirements" className="block text-sm font-medium text-synvra-gray-200">
-          Project Description *
+          What do you need built for your business? * <span className="text-synvra-gray-400 text-xs">(min 50 characters)</span>
         </label>
         <textarea
           id="additionalRequirements"
@@ -374,12 +375,17 @@ export default function ProjectProposalForm() {
           value={formData.additionalRequirements}
           onChange={handleInputChange}
           rows={4}
+          minLength={50}
           className={`mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
             validationErrors.additionalRequirements ? 'border-red-500' : 'border-synvra-blue'
           }`}
           required
+          placeholder="Describe what you need built for your business. Include key features, functionality, and specific requirements. Be as detailed as possible to help us understand your vision."
           style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         />
+        <div className="mt-1 text-sm text-synvra-gray-400 flex justify-between">
+          <span>{formData.additionalRequirements.length} / 50 characters minimum</span>
+        </div>
         {validationErrors.additionalRequirements && (
           <p className="mt-1 text-sm text-red-500">{validationErrors.additionalRequirements}</p>
         )}
