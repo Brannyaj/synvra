@@ -76,8 +76,8 @@ export default function About() {
             <div>
               <h2 className="text-3xl font-bold text-synvra-white mb-6">Our Story</h2>
               <div className="space-y-4 text-synvra-gray-300">
-                <p>
-                  Founded in 2020, Synvra emerged from a vision to bridge the gap between 
+                <p className="text-lg text-synvra-gray-300 leading-relaxed mb-6">
+                  Founded in 2022, Synvra emerged from a vision to bridge the gap between 
                   cutting-edge technology and real-world business challenges. Our journey 
                   began with a small team of dedicated developers and has grown into a 
                   full-service digital transformation partner.
