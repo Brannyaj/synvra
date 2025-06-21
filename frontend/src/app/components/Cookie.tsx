@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 
+// Extend Window interface for TypeScript
 declare global {
   interface Window {
     gtag: (...args: any[]) => void;
-    updateAnalyticsConsent?: (granted: boolean) => void;
+    updateAnalyticsConsent: (granted: boolean) => void;
   }
 }
 
@@ -14,95 +14,83 @@ export default function Cookie() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    // Track visit (cookie-less analytics) with retry
-    const trackVisit = async (retries = 3) => {
-      try {
-        const response = await fetch('/.netlify/functions/analytics-stats', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            path: window.location.pathname,
-            timestamp: new Date().toISOString()
-          })
-        });
-        
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Analytics request failed with status ${response.status}: ${errorText}`);
-        }
-        
-        const data = await response.json();
-        if (!data.message || data.message !== 'Visit tracked successfully') {
-          throw new Error('Invalid response format');
-        }
-      } catch (error) {
-        console.warn('Analytics error:', error);
-        if (retries > 0) {
-          // Wait for 1 second before retrying
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          return trackVisit(retries - 1);
-        }
-      }
-    };
-
-    // Only track visit if consent is accepted or not set
+    // Check if user has already made a consent choice
     const consent = localStorage.getItem('cookie-consent');
-    if (consent !== 'declined') {
-      trackVisit().catch(error => {
-        // If tracking fails after all retries, just log it and continue
-        console.warn('Failed to track visit after retries:', error);
-      });
-    }
-
-    // Check if user has already made a choice
+    
     if (!consent) {
+      // No previous choice - show banner
       setShowBanner(true);
+    } else if (consent === 'accepted') {
+      // User previously accepted - enable enhanced tracking
+      if (typeof window !== 'undefined' && window.updateAnalyticsConsent) {
+        window.updateAnalyticsConsent(true);
+      }
     }
+    // If declined, basic tracking continues (already set in layout)
   }, []);
 
-  const enableAnalytics = () => {
-    // Update Google Analytics consent using the global function
-    window.updateAnalyticsConsent?.(true);
-    console.log('Analytics enabled');
-  };
-
   const acceptCookies = () => {
+    // Store consent choice
     localStorage.setItem('cookie-consent', 'accepted');
+    
+    // Enable enhanced Google Analytics tracking
+    if (typeof window !== 'undefined' && window.updateAnalyticsConsent) {
+      window.updateAnalyticsConsent(true);
+    }
+    
+    // Hide banner
     setShowBanner(false);
-    enableAnalytics();
+    
+    console.log('Cookies accepted - enhanced analytics enabled');
   };
 
   const declineCookies = () => {
+    // Store consent choice
     localStorage.setItem('cookie-consent', 'declined');
+    
+    // Keep basic tracking only
+    if (typeof window !== 'undefined' && window.updateAnalyticsConsent) {
+      window.updateAnalyticsConsent(false);
+    }
+    
+    // Hide banner
     setShowBanner(false);
-    // Ensure analytics remain disabled using the global function
-    window.updateAnalyticsConsent?.(false);
-    console.log('Cookies declined - analytics disabled');
+    
+    console.log('Cookies declined - basic analytics only');
   };
 
-  if (!showBanner) return null;
+  // Don't render if banner shouldn't be shown
+  if (!showBanner) {
+    return null;
+  }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-[#0A0F1C] border-t border-synvra-white/10 p-4 md:p-6 z-50">
-      <div className="container mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="text-synvra-gray-300 text-sm md:text-base">
-          We use cookies to improve your browsing experience and help us understand how you use our website.{' '}
-          <Link href="/cookies" className="text-synvra-blue hover:text-synvra-blue/80">
-            Learn more
-          </Link>
+    <div className="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 shadow-lg z-50 border-t border-gray-700">
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex-1 text-sm">
+          <p>
+            We use cookies to enhance your browsing experience and analyze our traffic. 
+            By clicking "Accept", you consent to our use of cookies for analytics and personalization.{' '}
+            <a 
+              href="/cookies" 
+              className="text-blue-400 hover:text-blue-300 underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Learn more
+            </a>
+          </p>
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-3 flex-shrink-0">
           <button
             onClick={declineCookies}
-            className="px-4 py-2 text-sm text-synvra-gray-300 hover:text-synvra-white transition-colors"
+            className="px-4 py-2 text-sm border border-gray-600 rounded-lg hover:bg-gray-800 transition-colors"
           >
             Decline
           </button>
           <button
             onClick={acceptCookies}
-            className="px-4 py-2 text-sm bg-synvra-blue text-white rounded hover:bg-synvra-blue/90 transition-colors"
+            className="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
           >
             Accept
           </button>

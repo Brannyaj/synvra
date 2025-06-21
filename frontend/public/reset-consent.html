@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Consent Testing Utility</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        .accepted { background: #d4edda; color: #155724; }
+        .declined { background: #f8d7da; color: #721c24; }
+        .none { background: #fff3cd; color: #856404; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .danger {
+            background: #dc3545;
+        }
+        .danger:hover {
+            background: #c82333;
+        }
+        .success {
+            background: #28a745;
+        }
+        .success:hover {
+            background: #218838;
+        }
+        .info {
+            background: #17a2b8;
+        }
+        .info:hover {
+            background: #138496;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍪 Cookie Consent Testing Utility</h1>
+        
+        <div id="status"></div>
+        
+        <h3>Testing Actions:</h3>
+        <button onclick="resetConsent()" class="danger">Reset Consent (Show Banner)</button>
+        <button onclick="setAccepted()" class="success">Set Accepted</button>
+        <button onclick="setDeclined()" class="info">Set Declined</button>
+        <button onclick="goToSite()">Go to Main Site</button>
+        
+        <h3>Instructions:</h3>
+        <ol>
+            <li><strong>Reset Consent:</strong> Clears stored consent - banner will appear on next visit</li>
+            <li><strong>Set Accepted:</strong> Simulates accepting cookies - enhanced tracking enabled</li>
+            <li><strong>Set Declined:</strong> Simulates declining cookies - basic tracking only</li>
+            <li><strong>Go to Main Site:</strong> Navigate to your website to test the banner</li>
+        </ol>
+        
+        <h3>Testing Workflow:</h3>
+        <ol>
+            <li>Click "Reset Consent"</li>
+            <li>Click "Go to Main Site"</li>
+            <li>Cookie banner should appear</li>
+            <li>Test Accept/Decline buttons</li>
+            <li>Return here to reset and test again</li>
+        </ol>
+        
+        <div style="margin-top: 30px; padding: 15px; background: #e9ecef; border-radius: 5px;">
+            <strong>💡 Pro Tip:</strong> Open browser dev tools (F12) → Console tab to see detailed logging of consent changes and analytics status.
+        </div>
+    </div>
+
+    <script>
+        function updateStatus() {
+            const consent = localStorage.getItem('cookie-consent');
+            const statusDiv = document.getElementById('status');
+            
+            if (!consent) {
+                statusDiv.innerHTML = '<div class="status none">❓ No consent stored - Banner will appear</div>';
+            } else if (consent === 'accepted') {
+                statusDiv.innerHTML = '<div class="status accepted">✅ Cookies Accepted - Enhanced tracking enabled</div>';
+            } else if (consent === 'declined') {
+                statusDiv.innerHTML = '<div class="status declined">❌ Cookies Declined - Basic tracking only</div>';
+            }
+        }
+        
+        function resetConsent() {
+            localStorage.removeItem('cookie-consent');
+            updateStatus();
+            console.log('Consent reset - banner will appear on next visit');
+        }
+        
+        function setAccepted() {
+            localStorage.setItem('cookie-consent', 'accepted');
+            updateStatus();
+            console.log('Consent set to accepted');
+        }
+        
+        function setDeclined() {
+            localStorage.setItem('cookie-consent', 'declined');
+            updateStatus();
+            console.log('Consent set to declined');
+        }
+        
+        function goToSite() {
+            window.location.href = '/';
+        }
+        
+        // Update status on page load
+        updateStatus();
+        
+        // Auto-refresh status every 2 seconds
+        setInterval(updateStatus, 2000);
+    </script>
+</body>
+</html> 
