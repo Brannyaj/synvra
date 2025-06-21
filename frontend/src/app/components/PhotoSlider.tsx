@@ -8,52 +8,62 @@ const slides = [
   {
     image: 'https://images.unsplash.com/photo-1547658719-da2b51169166',
     title: 'Website Development',
-    description: 'Custom, responsive, and high-performance websites that drive business growth.'
+    description: 'Custom, responsive, and high-performance websites that drive business growth.',
+    slug: 'web-applications'
   },
   {
     image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3',
     title: 'App Development',
-    description: 'Native and cross-platform mobile applications that deliver exceptional user experiences.'
+    description: 'Native and cross-platform mobile applications that deliver exceptional user experiences.',
+    slug: 'mobile-development'
   },
   {
     image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8',
     title: 'Cloud Infrastructure Development',
-    description: 'Scalable and secure cloud solutions that power your digital transformation.'
+    description: 'Scalable and secure cloud solutions that power your digital transformation.',
+    slug: 'cloud-devops'
   },
   {
     image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995',
     title: 'AI & Machine Learning Development',
-    description: 'Intelligent solutions that leverage cutting-edge AI and ML technologies.'
+    description: 'Intelligent solutions that leverage cutting-edge AI and ML technologies.',
+    slug: 'ai-machine-learning'
   },
   {
     image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b',
     title: 'IT Automation Development',
-    description: 'Streamline operations and boost efficiency with smart automation solutions.'
+    description: 'Streamline operations and boost efficiency with smart automation solutions.',
+    slug: 'enterprise-solutions'
   },
   {
     image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3',
     title: 'Data Protection & Security Development',
-    description: 'Comprehensive security solutions to protect your valuable digital assets.'
+    description: 'Comprehensive security solutions to protect your valuable digital assets.',
+    slug: 'cybersecurity'
   },
   {
     image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31',
     title: 'Smart Device & IoT Development',
-    description: 'Connected solutions that bring intelligence to your devices and systems.'
+    description: 'Connected solutions that bring intelligence to your devices and systems.',
+    slug: 'iot-solutions'
   },
   {
     image: 'https://images.unsplash.com/photo-1639762681057-408e52192e55',
     title: 'Blockchain & Web3 Development',
-    description: 'Next-generation decentralized applications and blockchain solutions.'
+    description: 'Next-generation decentralized applications and blockchain solutions.',
+    slug: 'blockchain'
   },
   {
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f',
     title: 'Custom Business Software Development',
-    description: 'Tailored software solutions that address your unique business challenges.'
+    description: 'Tailored software solutions that address your unique business challenges.',
+    slug: 'enterprise-solutions'
   },
   {
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71',
     title: 'Data Analytics & Business Intelligence Development',
-    description: 'Transform your data into actionable insights for informed decision-making.'
+    description: 'Transform your data into actionable insights for informed decision-making.',
+    slug: 'data-engineering'
   }
 ];
 
@@ -110,7 +120,7 @@ export default function PhotoSlider() {
                       Get Started
                     </button>
                   </Link>
-                  <Link href={`/services/${slide.title.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and')}`}>
+                  <Link href={`/services/${slide.slug}`}>
                     <button className="button-secondary text-sm md:text-base px-4 md:px-6 py-2 md:py-3">
                       Learn More
                     </button>
