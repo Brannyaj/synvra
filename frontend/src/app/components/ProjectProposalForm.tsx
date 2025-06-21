@@ -14,8 +14,8 @@ interface ServiceOption {
 
 interface FormData {
   serviceType: string;
-  tier: 'Basic' | 'Complex';
-  timeline: 'Standard' | 'Fast-track' | 'Urgent';
+  tier: 'Basic' | 'Complex' | '';
+  timeline: 'Standard' | 'Fast-track' | 'Urgent' | '';
   additionalRequirements: string;
   fullName: string;
   companyName: string;
@@ -130,8 +130,8 @@ const projectTypeMultipliers: Record<string, number> = {
 export default function ProjectProposalForm() {
   const [formData, setFormData] = useState<FormData>({
     serviceType: '',
-    tier: 'Basic',
-    timeline: 'Standard',
+    tier: '',
+    timeline: '',
     additionalRequirements: '',
     fullName: '',
     companyName: '',
@@ -159,7 +159,7 @@ export default function ProjectProposalForm() {
 
   const calculateTotalPrice = () => {
     const basePrice = calculateBasePrice();
-    const timelineMultiplier = timelineMultipliers[formData.timeline];
+    const timelineMultiplier = formData.timeline ? timelineMultipliers[formData.timeline] : 1;
     const projectTypeMultiplier = projectTypeMultipliers[formData.projectType] || 1;
     return basePrice * timelineMultiplier * projectTypeMultiplier;
   };
@@ -193,7 +193,9 @@ export default function ProjectProposalForm() {
     if (step === 1) {
       if (!formData.serviceType) errors.serviceType = 'Please select a service type';
       if (!formData.projectType) errors.projectType = 'Please select a project type';
-      if (!formData.projectDescription) errors.projectDescription = 'Please provide a project description';
+      if (!formData.tier) errors.tier = 'Please select a project tier';
+      if (!formData.timeline) errors.timeline = 'Please select a timeline';
+      if (!formData.additionalRequirements) errors.additionalRequirements = 'Please provide a project description';
     }
 
     if (step === 2) {
@@ -213,6 +215,7 @@ export default function ProjectProposalForm() {
   const nextStep = () => {
     if (validateStep(currentStep)) {
       setCurrentStep(prev => Math.min(prev + 1, totalSteps));
+      setValidationErrors({}); // Clear validation errors when moving to next step
     }
   };
 
@@ -290,13 +293,15 @@ export default function ProjectProposalForm() {
       </div>
 
       <div>
-        <label htmlFor="projectType" className="block text-sm font-medium text-synvra-gray-200">Project Type</label>
+        <label htmlFor="projectType" className="block text-sm font-medium text-synvra-gray-200">Project Type *</label>
         <select
           id="projectType"
           name="projectType"
           value={formData.projectType || ''}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
+          className={`mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
+            validationErrors.projectType ? 'border-red-500' : 'border-synvra-blue'
+          }`}
           required
           style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         >
@@ -305,48 +310,63 @@ export default function ProjectProposalForm() {
           <option value="Existing Project">Existing Project</option>
           <option value="Maintenance">Maintenance</option>
         </select>
+        {validationErrors.projectType && (
+          <p className="mt-1 text-sm text-red-500">{validationErrors.projectType}</p>
+        )}
       </div>
 
       <div>
         <label htmlFor="tier" className="block text-sm font-medium text-synvra-gray-200">
-          Project Tier
+          Project Tier *
         </label>
         <select
           id="tier"
           name="tier"
           value={formData.tier}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
+          className={`mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
+            validationErrors.tier ? 'border-red-500' : 'border-synvra-blue'
+          }`}
           required
           style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         >
+          <option value="">Select project tier</option>
           <option value="Basic">Basic</option>
           <option value="Complex">Complex</option>
         </select>
+        {validationErrors.tier && (
+          <p className="mt-1 text-sm text-red-500">{validationErrors.tier}</p>
+        )}
       </div>
 
       <div>
         <label htmlFor="timeline" className="block text-sm font-medium text-synvra-gray-200">
-          Timeline
+          Timeline *
         </label>
         <select
           id="timeline"
           name="timeline"
           value={formData.timeline}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
+          className={`mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
+            validationErrors.timeline ? 'border-red-500' : 'border-synvra-blue'
+          }`}
           required
           style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         >
+          <option value="">Select timeline</option>
           <option value="Standard">Standard (1x multiplier)</option>
           <option value="Fast-track">Fast-track (1.25x multiplier)</option>
           <option value="Urgent">Urgent (1.5x multiplier)</option>
         </select>
+        {validationErrors.timeline && (
+          <p className="mt-1 text-sm text-red-500">{validationErrors.timeline}</p>
+        )}
       </div>
 
       <div>
         <label htmlFor="additionalRequirements" className="block text-sm font-medium text-synvra-gray-200">
-          Project Description
+          Project Description *
         </label>
         <textarea
           id="additionalRequirements"
@@ -354,9 +374,15 @@ export default function ProjectProposalForm() {
           value={formData.additionalRequirements}
           onChange={handleInputChange}
           rows={4}
-          className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
+          className={`mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
+            validationErrors.additionalRequirements ? 'border-red-500' : 'border-synvra-blue'
+          }`}
+          required
           style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         />
+        {validationErrors.additionalRequirements && (
+          <p className="mt-1 text-sm text-red-500">{validationErrors.additionalRequirements}</p>
+        )}
       </div>
 
       {formData.serviceType && (
@@ -367,7 +393,7 @@ export default function ProjectProposalForm() {
               Base Price: ${calculateBasePrice().toLocaleString()}
             </p>
             <p className="text-synvra-gray-300">
-              Timeline Adjustment: {timelineMultipliers[formData.timeline]}x
+              Timeline Adjustment: {formData.timeline ? timelineMultipliers[formData.timeline] : 1}x
             </p>
             <p className="text-synvra-gray-300">Project Type Adjustment: {projectTypeMultipliers[formData.projectType] || 1}x</p>
             <p className="text-synvra-white font-medium">
@@ -489,14 +515,16 @@ export default function ProjectProposalForm() {
 
       <div>
         <label htmlFor="companySize" className="block text-sm font-medium text-synvra-gray-200">
-          Company Size
+          Company Size *
         </label>
         <select
           id="companySize"
           name="companySize"
           value={formData.companySize}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
+          className={`mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
+            validationErrors.companySize ? 'border-red-500' : 'border-synvra-blue'
+          }`}
           required
           style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         >
@@ -507,18 +535,23 @@ export default function ProjectProposalForm() {
           <option value="201-1000">201-1000 employees</option>
           <option value="1000+">1000+ employees</option>
         </select>
+        {validationErrors.companySize && (
+          <p className="mt-1 text-sm text-red-500">{validationErrors.companySize}</p>
+        )}
       </div>
 
       <div>
         <label htmlFor="industry" className="block text-sm font-medium text-synvra-gray-200">
-          Industry
+          Industry *
         </label>
         <select
           id="industry"
           name="industry"
           value={formData.industry}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
+          className={`mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
+            validationErrors.industry ? 'border-red-500' : 'border-synvra-blue'
+          }`}
           required
           style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         >
@@ -531,6 +564,9 @@ export default function ProjectProposalForm() {
           <option value="Education">Education</option>
           <option value="Other">Other</option>
         </select>
+        {validationErrors.industry && (
+          <p className="mt-1 text-sm text-red-500">{validationErrors.industry}</p>
+        )}
       </div>
 
       <div className="flex justify-between">
@@ -612,7 +648,7 @@ export default function ProjectProposalForm() {
               </div>
               <div className="flex justify-between">
                 <dt className="text-synvra-gray-300">Timeline Adjustment</dt>
-                <dd className="text-synvra-white">{timelineMultipliers[formData.timeline]}x</dd>
+                <dd className="text-synvra-white">{formData.timeline ? timelineMultipliers[formData.timeline] : 1}x</dd>
               </div>
               <div className="flex justify-between">
                 <dt className="text-synvra-gray-300">Project Type Adjustment</dt>
