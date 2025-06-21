@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 interface ServiceOption {
   id: string;
@@ -147,6 +149,7 @@ export default function ProjectProposalForm() {
 
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [submitError, setSubmitError] = useState('');
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
   const calculateBasePrice = () => {
     const service = services.find(s => s.id === formData.serviceType);
@@ -171,10 +174,46 @@ export default function ProjectProposalForm() {
       ...prev,
       [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
     }));
+    // Clear validation error when field is changed
+    if (validationErrors[name]) {
+      setValidationErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const handlePhoneChange = (value: string) => {
+    setFormData(prev => ({ ...prev, phone: value }));
+    if (validationErrors.phone) {
+      setValidationErrors(prev => ({ ...prev, phone: '' }));
+    }
+  };
+
+  const validateStep = (step: number) => {
+    const errors: Record<string, string> = {};
+
+    if (step === 1) {
+      if (!formData.serviceType) errors.serviceType = 'Please select a service type';
+      if (!formData.projectType) errors.projectType = 'Please select a project type';
+      if (!formData.projectDescription) errors.projectDescription = 'Please provide a project description';
+    }
+
+    if (step === 2) {
+      if (!formData.fullName) errors.fullName = 'Please enter your full name';
+      if (!formData.companyName) errors.companyName = 'Please enter your company name';
+      if (!formData.email) errors.email = 'Please enter your email';
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) errors.email = 'Please enter a valid email';
+      if (!formData.phone) errors.phone = 'Please enter your phone number';
+      if (!formData.companySize) errors.companySize = 'Please select your company size';
+      if (!formData.industry) errors.industry = 'Please select your industry';
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
   };
 
   const nextStep = () => {
-    setCurrentStep(prev => Math.min(prev + 1, totalSteps));
+    if (validateStep(currentStep)) {
+      setCurrentStep(prev => Math.min(prev + 1, totalSteps));
+    }
   };
 
   const prevStep = () => {
@@ -199,7 +238,11 @@ export default function ProjectProposalForm() {
             timeline: formData.timeline,
             totalPrice: calculateTotalPrice(),
             deposit: calculateDeposit(),
-            description: formData.projectDescription
+            description: formData.projectDescription,
+            phone: formData.phone,
+            companyName: formData.companyName,
+            companySize: formData.companySize,
+            industry: formData.industry
           }
         }),
       });
@@ -221,14 +264,16 @@ export default function ProjectProposalForm() {
     <div className="space-y-6">
       <div>
         <label htmlFor="serviceType" className="block text-sm font-medium text-synvra-gray-200">
-          Service Type
+          Service Type *
         </label>
         <select
           id="serviceType"
           name="serviceType"
           value={formData.serviceType}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
+          className={`mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
+            validationErrors.serviceType ? 'border-red-500' : 'border-synvra-blue'
+          }`}
           required
           style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         >
@@ -239,6 +284,9 @@ export default function ProjectProposalForm() {
             </option>
           ))}
         </select>
+        {validationErrors.serviceType && (
+          <p className="mt-1 text-sm text-red-500">{validationErrors.serviceType}</p>
+        )}
       </div>
 
       <div>
@@ -348,7 +396,7 @@ export default function ProjectProposalForm() {
     <div className="space-y-6">
       <div>
         <label htmlFor="fullName" className="block text-sm font-medium text-synvra-gray-200">
-          Full Name
+          Full Name *
         </label>
         <input
           type="text"
@@ -356,15 +404,20 @@ export default function ProjectProposalForm() {
           name="fullName"
           value={formData.fullName}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
+          className={`mt-1 block w-full rounded-md focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
+            validationErrors.fullName ? 'border-red-500' : 'border-synvra-blue'
+          }`}
           required
           style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         />
+        {validationErrors.fullName && (
+          <p className="mt-1 text-sm text-red-500">{validationErrors.fullName}</p>
+        )}
       </div>
 
       <div>
         <label htmlFor="companyName" className="block text-sm font-medium text-synvra-gray-200">
-          Company Name
+          Company Name *
         </label>
         <input
           type="text"
@@ -372,15 +425,20 @@ export default function ProjectProposalForm() {
           name="companyName"
           value={formData.companyName}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
+          className={`mt-1 block w-full rounded-md focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
+            validationErrors.companyName ? 'border-red-500' : 'border-synvra-blue'
+          }`}
           required
           style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         />
+        {validationErrors.companyName && (
+          <p className="mt-1 text-sm text-red-500">{validationErrors.companyName}</p>
+        )}
       </div>
 
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-synvra-gray-200">
-          Email
+          Email *
         </label>
         <input
           type="email"
@@ -388,26 +446,45 @@ export default function ProjectProposalForm() {
           name="email"
           value={formData.email}
           onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
+          className={`mt-1 block w-full rounded-md focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
+            validationErrors.email ? 'border-red-500' : 'border-synvra-blue'
+          }`}
           required
           style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
         />
+        {validationErrors.email && (
+          <p className="mt-1 text-sm text-red-500">{validationErrors.email}</p>
+        )}
       </div>
 
       <div>
         <label htmlFor="phone" className="block text-sm font-medium text-synvra-gray-200">
-          Phone
+          Phone *
         </label>
-        <input
-          type="tel"
-          id="phone"
-          name="phone"
+        <PhoneInput
+          country={'us'}
           value={formData.phone}
-          onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400"
-          required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
+          onChange={handlePhoneChange}
+          inputStyle={{
+            width: '100%',
+            height: '40px',
+            backgroundColor: '#0A0F1C',
+            color: '#fff',
+            border: validationErrors.phone ? '1px solid #ef4444' : '1px solid #2563eb',
+          }}
+          dropdownStyle={{
+            backgroundColor: '#0A0F1C',
+            color: '#fff',
+          }}
+          buttonStyle={{
+            backgroundColor: '#0A0F1C',
+            borderColor: validationErrors.phone ? '#ef4444' : '#2563eb',
+          }}
+          containerClass="phone-input"
         />
+        {validationErrors.phone && (
+          <p className="mt-1 text-sm text-red-500">{validationErrors.phone}</p>
+        )}
       </div>
 
       <div>
@@ -630,6 +707,7 @@ export default function ProjectProposalForm() {
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-synvra-white mb-2">Project Proposal Form</h2>
         <p className="text-synvra-gray-300">Step {currentStep} of {totalSteps}</p>
+        <p className="text-synvra-gray-400 text-sm">* Required fields</p>
       </div>
 
       <div className="bg-synvra-black rounded-lg shadow-synvra-blue/10 p-6">

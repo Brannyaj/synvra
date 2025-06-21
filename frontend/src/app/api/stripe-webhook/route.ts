@@ -117,6 +117,10 @@ async function sendConfirmationEmails(clientEmail: string, fullName: string, pro
     <ul>
       <li><strong>Full Name:</strong> ${fullName}</li>
       <li><strong>Email:</strong> ${clientEmail}</li>
+      <li><strong>Phone:</strong> ${projectDetails.phone || 'Not provided'}</li>
+      <li><strong>Company:</strong> ${projectDetails.companyName || 'Not provided'}</li>
+      <li><strong>Company Size:</strong> ${projectDetails.companySize || 'Not provided'}</li>
+      <li><strong>Industry:</strong> ${projectDetails.industry || 'Not provided'}</li>
       <li><strong>Deposit:</strong> $${deposit}</li>
       <li><strong>Total Project Amount:</strong> $${totalPrice}</li>
       <li><strong>Service Type:</strong> ${projectDetails.service}</li>
