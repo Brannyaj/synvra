@@ -40,6 +40,7 @@ export default function BlogPost() {
               fill
               className="object-cover"
               priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
 
@@ -153,6 +154,7 @@ export default function BlogPost() {
                   alt="Author"
                   fill
                   className="object-cover"
+                  sizes="64px"
                 />
               </div>
               <div>
