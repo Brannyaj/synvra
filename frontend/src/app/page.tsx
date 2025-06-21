@@ -50,6 +50,9 @@ export default function Home() {
               <Link href="/blog" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">
                 Blog
               </Link>
+              <Link href="/careers" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">
+                Careers
+              </Link>
               <Link href="/faq" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">
                 FAQ
               </Link>
@@ -105,6 +108,9 @@ export default function Home() {
               </Link>
               <Link href="/blog" className="block text-synvra-gray-200 hover:text-synvra-white transition-colors py-2">
                 Blog
+              </Link>
+              <Link href="/careers" className="block text-synvra-gray-200 hover:text-synvra-white transition-colors py-2">
+                Careers
               </Link>
               <Link href="/faq" className="block text-synvra-gray-200 hover:text-synvra-white transition-colors py-2">
                 FAQ
