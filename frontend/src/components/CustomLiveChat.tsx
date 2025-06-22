@@ -498,6 +498,30 @@ export default function CustomLiveChat() {
     setShowServiceButtons(false);
   };
 
+  const handleServiceButtonClick = (service: string) => {
+    // Hide service buttons immediately
+    setShowServiceButtons(false);
+    
+    // Add user message
+    addMessage({
+      text: service,
+      sender: 'user'
+    });
+
+    // Get automated response and show it with typing indicator
+    const automatedResponse = getAutomatedResponse(service);
+    
+    if (automatedResponse) {
+      addBotMessageWithTyping(automatedResponse, 1500);
+    } else {
+      // Fallback response with typing indicator
+      addBotMessageWithTyping(
+        "I'd be happy to help! For more specific questions, type 'agent' to speak with one of our specialists.",
+        1200
+      );
+    }
+  };
+
   return (
     <>
       {/* Enhanced Chat Widget Button */}
@@ -663,19 +687,19 @@ export default function CustomLiveChat() {
                 <div className="text-xs text-gray-500 mb-2 text-center">Choose a service to learn more:</div>
                 <div className="flex flex-wrap gap-2">
                   <button 
-                    onClick={() => setCurrentMessage('Web Development')}
+                    onClick={() => handleServiceButtonClick('Web Development')}
                     className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors duration-200"
                   >
                     🌐 Web Development
                   </button>
                   <button 
-                    onClick={() => setCurrentMessage('Mobile Apps')}
+                    onClick={() => handleServiceButtonClick('Mobile Apps')}
                     className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors duration-200"
                   >
                     📱 Mobile Apps
                   </button>
                   <button 
-                    onClick={() => setCurrentMessage('Cloud Infrastructure')}
+                    onClick={() => handleServiceButtonClick('Cloud Infrastructure')}
                     className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors duration-200"
                   >
                     ☁️ Cloud Infrastructure
@@ -683,19 +707,19 @@ export default function CustomLiveChat() {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <button 
-                    onClick={() => setCurrentMessage('AI/Machine Learning')}
+                    onClick={() => handleServiceButtonClick('AI/Machine Learning')}
                     className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors duration-200"
                   >
                     🤖 AI/Machine Learning
                   </button>
                   <button 
-                    onClick={() => setCurrentMessage('Cybersecurity')}
+                    onClick={() => handleServiceButtonClick('Cybersecurity')}
                     className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors duration-200"
                   >
                     🔒 Cybersecurity
                   </button>
                   <button 
-                    onClick={() => setCurrentMessage('Blockchain')}
+                    onClick={() => handleServiceButtonClick('Blockchain')}
                     className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors duration-200"
                   >
                     ⛓️ Blockchain
@@ -703,19 +727,19 @@ export default function CustomLiveChat() {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <button 
-                    onClick={() => setCurrentMessage('Pricing Information')}
+                    onClick={() => handleServiceButtonClick('Pricing Information')}
                     className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors duration-200"
                   >
                     💰 Pricing Information
                   </button>
                   <button 
-                    onClick={() => setCurrentMessage('Project Timeline')}
+                    onClick={() => handleServiceButtonClick('Project Timeline')}
                     className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors duration-200"
                   >
                     ⏱️ Project Timeline
                   </button>
                   <button 
-                    onClick={() => setCurrentMessage('agent')}
+                    onClick={() => handleServiceButtonClick('agent')}
                     className="px-4 py-2 bg-green-50 border border-green-300 text-green-700 text-sm rounded-full hover:bg-green-100 transition-colors duration-200"
                   >
                     👨‍💼 Speak with Agent
