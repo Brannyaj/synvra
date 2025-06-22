@@ -4,11 +4,11 @@ import "./globals.css";
 import Script from 'next/script';
 import dynamic from 'next/dynamic';
 
-const ZendeskChat = dynamic(() => import('@/components/ZendeskChat'), {
+const Cookie = dynamic(() => import('./components/Cookie'), {
   ssr: false,
 });
 
-const Cookie = dynamic(() => import('./components/Cookie'), {
+const CustomLiveChat = dynamic(() => import('../components/CustomLiveChat'), {
   ssr: false,
 });
 
@@ -134,8 +134,8 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         {children}
-        <ZendeskChat />
         <Cookie />
+        <CustomLiveChat />
       </body>
     </html>
   );
