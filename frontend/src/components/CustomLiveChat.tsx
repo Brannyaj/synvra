@@ -2,6 +2,14 @@
 
 import { useState, useEffect, useRef } from 'react';
 
+// Add Tawk.to TypeScript declarations
+declare global {
+  interface Window {
+    Tawk_API?: any;
+    Tawk_LoadStart?: Date;
+  }
+}
+
 interface Message {
   id: string;
   text: string;
@@ -218,8 +226,35 @@ export default function CustomLiveChat() {
   const [formEmail, setFormEmail] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [showServiceButtons, setShowServiceButtons] = useState(false);
+  const [tawkLoaded, setTawkLoaded] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Initialize Tawk.to when component mounts
+  useEffect(() => {
+    // Only load Tawk.to once
+    if (!window.Tawk_API && !document.getElementById('tawk-script')) {
+      const script = document.createElement('script');
+      script.id = 'tawk-script';
+      script.async = true;
+      script.src = 'https://embed.tawk.to/685817e2d74f68191345b1d5/1iuc1qjl7'; // Your actual Tawk.to Property ID and Widget ID
+      script.charset = 'UTF-8';
+      script.setAttribute('crossorigin', '*');
+      
+      script.onload = () => {
+        setTawkLoaded(true);
+        // Hide Tawk.to widget by default - we'll show it only when needed
+        if (window.Tawk_API) {
+          window.Tawk_API.hideWidget();
+        }
+      };
+      
+      document.head.appendChild(script);
+    } else if (window.Tawk_API) {
+      setTawkLoaded(true);
+      window.Tawk_API.hideWidget();
+    }
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -228,48 +263,6 @@ export default function CustomLiveChat() {
   useEffect(() => {
     scrollToBottom();
   }, [chatState.messages]);
-
-  // Poll for new messages when waiting for agent
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    
-    if (chatState.waitingForAgent && chatState.userEmail) {
-      interval = setInterval(async () => {
-        try {
-          const response = await fetch('/api/chat-socket', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              action: 'get-messages',
-              userEmail: chatState.userEmail
-            })
-          });
-          
-          const data = await response.json();
-          
-          if (data.agentJoined && !chatState.agentJoined) {
-            setChatState(prev => ({
-              ...prev,
-              agentJoined: true,
-              waitingForAgent: false
-            }));
-            
-            addMessage({
-              text: `Hi! I'm ${data.agentName || 'Sarah'} from Synvra. I'm here to help with your project. What can I assist you with?`,
-              sender: 'agent',
-              agentName: data.agentName || 'Sarah'
-            });
-          }
-        } catch (error) {
-          console.error('Error polling for messages:', error);
-        }
-      }, 3000);
-    }
-    
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [chatState.waitingForAgent, chatState.userEmail, chatState.agentJoined]);
 
   const addMessage = (message: Omit<Message, 'id' | 'timestamp'>) => {
     const newMessage: Message = {
@@ -326,42 +319,44 @@ export default function CustomLiveChat() {
   };
 
   const connectToAgent = async () => {
-    setChatState(prev => ({ ...prev, waitingForAgent: true }));
-    
+    // Check if Tawk.to is loaded
+    if (!tawkLoaded || !window.Tawk_API) {
+      addMessage({
+        text: "Sorry, our live chat system is still loading. Please try again in a moment or refresh the page.",
+        sender: 'bot'
+      });
+      return;
+    }
+
+    // Add connecting message to your custom chat
     addMessage({
-      text: 'Please wait while I connect you with one of our specialists... ⏳\n\nAn agent will be with you shortly!',
+      text: "Connecting you with a live agent... Please wait a moment! 🔄",
       sender: 'bot'
     });
 
-    // Join chat session
-    try {
-      await fetch('/api/chat-socket', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'join',
-          userEmail: chatState.userEmail,
-          userName: chatState.userName
-        })
+    // Set user info in Tawk.to if available
+    if (chatState.userName && chatState.userEmail) {
+      window.Tawk_API.setAttributes({
+        name: chatState.userName,
+        email: chatState.userEmail
+      }, function(error: any) {
+        if (error) {
+          console.log('Error setting Tawk.to attributes:', error);
+        }
       });
-    } catch (error) {
-      console.error('Error joining chat:', error);
     }
 
-    // Send notification to admin
-    try {
-      await fetch('/api/notify-admin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userEmail: chatState.userEmail,
-          userName: chatState.userName,
-          message: 'User requested to speak with an agent'
-        })
+    // Show Tawk.to widget and maximize it
+    setTimeout(() => {
+      window.Tawk_API.showWidget();
+      window.Tawk_API.maximize();
+      
+      // Add a message to your custom chat
+      addMessage({
+        text: "✅ Live chat opened! You can now speak with our agent in the chat window that just appeared. Feel free to close this window or keep it open for reference.",
+        sender: 'bot'
       });
-    } catch (error) {
-      console.error('Error notifying admin:', error);
-    }
+    }, 1000);
   };
 
   const sendMessage = async () => {
@@ -380,24 +375,6 @@ export default function CustomLiveChat() {
 
     // Clear input immediately
     setCurrentMessage('');
-
-    // Send message to backend if agent is connected
-    if (chatState.agentJoined) {
-      try {
-        await fetch('/api/chat-socket', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: 'send-message',
-            userEmail: chatState.userEmail,
-            message: userMessage
-          })
-        });
-      } catch (error) {
-        console.error('Error sending message:', error);
-      }
-      return; // Don't show automated responses when agent is connected
-    }
 
     // Check if user wants to speak with agent
     if (handleAgentRequest(userMessage)) {
