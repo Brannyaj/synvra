@@ -419,25 +419,33 @@ export default function CustomLiveChat() {
       });
     }
 
-    // Start a chat session in the background (widget stays hidden)
+    // Start a chat session that will notify agents
     try {
-      // Send initial message to trigger agent notification
-      window.Tawk_API.addEvent({
-        event: 'Agent Request',
-        metadata: {
-          userEmail: chatState.userEmail,
-          userName: chatState.userName,
-          message: 'User requested to speak with an agent'
+      // First, make the widget temporarily visible to start the session
+      window.Tawk_API.showWidget();
+      
+      // Send a message through Tawk.to to start the chat session
+      window.Tawk_API.sendMessage('User has requested to speak with an agent through the website chat interface.', function(error: any) {
+        if (error) {
+          console.error('Error sending initial message:', error);
+          addMessage({
+            text: "There was an issue connecting to our live chat. Please try again or contact us directly.",
+            sender: 'bot'
+          });
+          setChatState(prev => ({ ...prev, waitingForAgent: false }));
+        } else {
+          // Hide the widget again after starting the session
+          window.Tawk_API.hideWidget();
+          
+          // Add status message
+          setTimeout(() => {
+            addMessage({
+              text: "✅ Request sent! An agent will join this conversation shortly. You can continue chatting here - no need to switch windows!",
+              sender: 'bot'
+            });
+          }, 1500);
         }
       });
-
-      // Add status message
-      setTimeout(() => {
-        addMessage({
-          text: "✅ Request sent! An agent will join this conversation shortly. You can continue chatting here - no need to switch windows!",
-          sender: 'bot'
-        });
-      }, 1500);
 
     } catch (error) {
       console.error('Error connecting to agent:', error);
@@ -470,12 +478,13 @@ export default function CustomLiveChat() {
     if (chatState.agentJoined && window.Tawk_API) {
       try {
         // Send message to agent through Tawk.to
-        window.Tawk_API.addEvent({
-          event: 'User Message',
-          metadata: {
-            message: userMessage,
-            userEmail: chatState.userEmail,
-            userName: chatState.userName
+        window.Tawk_API.sendMessage(userMessage, function(error: any) {
+          if (error) {
+            console.error('Error sending message to agent:', error);
+            addMessage({
+              text: "Failed to send message to agent. Please try again.",
+              sender: 'bot'
+            });
           }
         });
         return; // Don't show automated responses when agent is connected
