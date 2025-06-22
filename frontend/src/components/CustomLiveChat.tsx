@@ -33,36 +33,160 @@ const AUTOMATED_RESPONSES = {
 
 Which service interests you? Type "agent" to speak with our team!`
   },
-  pricing: {
-    keywords: ['price', 'cost', 'how much', 'pricing', 'budget'],
-    response: `Our pricing packages:
+  webDevelopment: {
+    keywords: ['web development', 'website', 'web app'],
+    response: `🌐 **Web Development Services:**
 
-💼 **Basic**: $5,000-$15,000 (4-6 weeks)
-🚀 **Professional**: $15,000-$50,000 (6-10 weeks)
-🏢 **Enterprise**: $50,000+ (8-12 weeks)
+• Custom websites and web applications
+• E-commerce platforms
+• Progressive Web Apps (PWAs)
+• API development and integration
+• Database design and optimization
+
+**Pricing:** $5,000 - $15,000
+**Timeline:** 4-6 weeks
+**Includes:** 3 months free support
+
+Ready to start your web project? Type "agent" to discuss your specific needs!`
+  },
+  mobileApps: {
+    keywords: ['mobile apps', 'mobile', 'app development', 'ios', 'android'],
+    response: `📱 **Mobile App Development:**
+
+• Native iOS and Android apps
+• Cross-platform development (React Native)
+• App Store optimization
+• Push notifications and analytics
+• Backend integration
+
+**Pricing:** $8,000 - $25,000
+**Timeline:** 6-10 weeks
+**Includes:** App Store submission + 3 months support
+
+Want to build your mobile app? Type "agent" to get started!`
+  },
+  cloudInfrastructure: {
+    keywords: ['cloud infrastructure', 'cloud', 'aws', 'azure', 'devops'],
+    response: `☁️ **Cloud Infrastructure Services:**
+
+• Cloud migration and deployment
+• AWS/Azure/GCP setup
+• DevOps and CI/CD pipelines
+• Scalable architecture design
+• Monitoring and security
+
+**Pricing:** $10,000 - $30,000
+**Timeline:** 6-8 weeks
+**Includes:** 24/7 monitoring + ongoing support
+
+Ready to move to the cloud? Type "agent" for a consultation!`
+  },
+  aiMachineLearning: {
+    keywords: ['ai/machine learning', 'ai', 'machine learning', 'artificial intelligence'],
+    response: `🤖 **AI/Machine Learning Solutions:**
+
+• Custom AI model development
+• Data analysis and insights
+• Chatbots and virtual assistants
+• Predictive analytics
+• Computer vision solutions
+
+**Pricing:** $15,000 - $50,000
+**Timeline:** 8-12 weeks
+**Includes:** Model training + deployment + support
+
+Interested in AI solutions? Type "agent" to explore possibilities!`
+  },
+  cybersecurity: {
+    keywords: ['cybersecurity', 'security', 'penetration testing'],
+    response: `🔒 **Cybersecurity Services:**
+
+• Security audits and assessments
+• Penetration testing
+• Compliance consulting (GDPR, HIPAA)
+• Security training and awareness
+• Incident response planning
+
+**Pricing:** $5,000 - $20,000
+**Timeline:** 4-8 weeks
+**Includes:** Detailed security report + recommendations
+
+Need security assessment? Type "agent" to protect your business!`
+  },
+  blockchain: {
+    keywords: ['blockchain', 'smart contracts', 'cryptocurrency', 'web3'],
+    response: `⛓️ **Blockchain Development:**
+
+• Smart contract development
+• DeFi applications
+• NFT marketplaces
+• Cryptocurrency solutions
+• Web3 integration
+
+**Pricing:** $12,000 - $40,000
+**Timeline:** 8-12 weeks
+**Includes:** Security audit + deployment + support
+
+Ready for blockchain innovation? Type "agent" to discuss your project!`
+  },
+  pricing: {
+    keywords: ['price', 'cost', 'how much', 'pricing', 'budget', 'pricing information'],
+    response: `💰 **Our Pricing Packages:**
+
+**Basic Package:** $5,000-$15,000
+• 4-6 weeks timeline
+• Perfect for startups and small businesses
+• Includes 3 months free support
+
+**Professional Package:** $15,000-$50,000
+• 6-10 weeks timeline
+• Advanced features and integrations
+• Priority support and maintenance
+
+**Enterprise Package:** $50,000+
+• 8-12 weeks timeline
+• Custom solutions and scalability
+• Dedicated project manager
 
 Ready for a custom quote? Type "agent" to chat with our team!`
   },
   timeline: {
-    keywords: ['timeline', 'how long', 'duration', 'when', 'time'],
-    response: `Project timelines:
+    keywords: ['timeline', 'how long', 'duration', 'when', 'time', 'project timeline'],
+    response: `⏱️ **Project Timelines:**
 
-⚡ **Basic projects**: 4-6 weeks
-🔥 **Professional**: 6-10 weeks  
-🏆 **Enterprise**: 8-12 weeks
+**Basic Projects:** 4-6 weeks
+• Simple websites and web apps
+• Basic mobile apps
+• Small integrations
+
+**Professional Projects:** 6-10 weeks
+• Complex web applications
+• Full-featured mobile apps
+• Cloud migrations
+
+**Enterprise Projects:** 8-12 weeks
+• Large-scale systems
+• AI/ML implementations
+• Complex integrations
 
 Want to discuss your specific timeline? Type "agent" for live chat!`
   },
   support: {
     keywords: ['support', 'maintenance', 'help after', 'ongoing'],
-    response: `We provide comprehensive support:
+    response: `✅ **Support & Maintenance:**
 
-✅ **3 months free support** after launch
-✅ **Ongoing maintenance** packages from $500/month
-✅ **24/7 monitoring** and updates
-✅ **Priority bug fixes** and improvements
+**Included with every project:**
+• 3 months free support after launch
+• Bug fixes and minor updates
+• Performance monitoring
+• Security updates
 
-Need more details? Type "agent" to speak with our team!`
+**Ongoing Maintenance Packages:**
+• Basic: $500/month
+• Professional: $1,000/month
+• Enterprise: $2,500/month
+
+Need more details about support? Type "agent" to speak with our team!`
   }
 };
 
@@ -288,38 +412,19 @@ export default function CustomLiveChat() {
       
       // Welcome message
       addMessage({
-        text: `Hi ${formName.trim()}! 👋 Welcome to Synvra!`,
+        text: `Hi ${formName.trim()}! 👋`,
         sender: 'bot'
       });
 
-      // Show typing and then pre-answered questions
+      // Show typing and then service options
       setTimeout(() => {
         showTypingIndicator();
         setTimeout(() => {
           addMessage({
-            text: `I'm here to help you with your project needs. Here are some quick answers to get you started:
-
-🌐 **Our Services:**
-• Web Development ($5K-$15K)
-• Mobile Apps ($8K-$25K) 
-• Cloud Infrastructure ($10K-$30K)
-• AI/Machine Learning ($15K-$50K)
-• Cybersecurity ($5K-$20K)
-• Blockchain ($12K-$40K)
-
-💰 **Pricing Packages:**
-• Basic: $5,000-$15,000 (4-6 weeks)
-• Professional: $15,000-$50,000 (6-10 weeks)
-• Enterprise: $50,000+ (8-12 weeks)
-
-⏱️ **Timeline:** Most projects take 4-12 weeks depending on complexity.
-
-✅ **Support:** 3 months free support + ongoing maintenance packages available.
-
-What specific service interests you most? Or type "agent" to speak with our team directly!`,
+            text: `Welcome to Synvra! Which service can I help you with today?`,
             sender: 'bot'
           });
-        }, 2000);
+        }, 1500);
       }, 1000);
       
       // Clear form
@@ -509,6 +614,74 @@ What specific service interests you most? Or type "agent" to speak with our team
                 </div>
               </div>
             ))}
+            
+            {/* Service Selection Buttons - Show after welcome message */}
+            {chatState.messages.length > 0 && 
+             chatState.messages[chatState.messages.length - 1]?.text?.includes('Which service can I help you with today?') && 
+             !isTyping && (
+              <div className="flex flex-col space-y-2 px-4 animate-in slide-in-from-bottom-2 duration-300">
+                <div className="flex flex-wrap gap-2">
+                  <button 
+                    onClick={() => setCurrentMessage('Web Development')}
+                    className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    🌐 Web Development
+                  </button>
+                  <button 
+                    onClick={() => setCurrentMessage('Mobile Apps')}
+                    className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    📱 Mobile Apps
+                  </button>
+                  <button 
+                    onClick={() => setCurrentMessage('Cloud Infrastructure')}
+                    className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    ☁️ Cloud Infrastructure
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <button 
+                    onClick={() => setCurrentMessage('AI/Machine Learning')}
+                    className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    🤖 AI/Machine Learning
+                  </button>
+                  <button 
+                    onClick={() => setCurrentMessage('Cybersecurity')}
+                    className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    🔒 Cybersecurity
+                  </button>
+                  <button 
+                    onClick={() => setCurrentMessage('Blockchain')}
+                    className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    ⛓️ Blockchain
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <button 
+                    onClick={() => setCurrentMessage('Pricing Information')}
+                    className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    💰 Pricing Information
+                  </button>
+                  <button 
+                    onClick={() => setCurrentMessage('Project Timeline')}
+                    className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    ⏱️ Project Timeline
+                  </button>
+                  <button 
+                    onClick={() => setCurrentMessage('agent')}
+                    className="px-4 py-2 bg-green-50 border border-green-300 text-green-700 text-sm rounded-full hover:bg-green-100 transition-colors duration-200"
+                  >
+                    👨‍💼 Speak with Agent
+                  </button>
+                </div>
+              </div>
+            )}
             
             {chatState.waitingForAgent && (
               <div className="flex justify-center animate-pulse">
