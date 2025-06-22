@@ -421,7 +421,7 @@ export default function CustomLiveChat() {
         showTypingIndicator();
         setTimeout(() => {
           addMessage({
-            text: `Welcome to Synvra! Which service can I help you with today?`,
+            text: `Welcome to Synvra. How can I assist you today?`,
             sender: 'bot'
           });
         }, 1500);
@@ -617,7 +617,7 @@ export default function CustomLiveChat() {
             
             {/* Service Selection Buttons - Show after welcome message */}
             {chatState.messages.length > 0 && 
-             chatState.messages[chatState.messages.length - 1]?.text?.includes('Which service can I help you with today?') && 
+             chatState.messages[chatState.messages.length - 1]?.text?.includes('How can I assist you today?') && 
              !isTyping && (
               <div className="flex flex-col space-y-2 px-4 animate-in slide-in-from-bottom-2 duration-300">
                 <div className="flex flex-wrap gap-2">
