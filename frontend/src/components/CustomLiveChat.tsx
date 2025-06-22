@@ -472,29 +472,33 @@ export default function CustomLiveChat() {
       // Send an initial message to properly start the chat session
       const initialMessage = `Hello! I'm ${chatState.userName || 'a visitor'} and I would like to speak with an agent about my project. My email is ${chatState.userEmail || 'not provided'}.`;
       
-      // Use Tawk.to's sendChatMessage API to actually start the chat
-      if (window.Tawk_API.sendChatMessage) {
-        window.Tawk_API.sendChatMessage(initialMessage);
-      } else if (window.Tawk_API.addEvent) {
-        // Alternative method using addEvent
-        window.Tawk_API.addEvent('visitor_message', {
-          message: initialMessage,
-          type: 'visitor'
-        });
+      // Use the proper Tawk.to API to send message without showing widget
+      if (window.Tawk_API.visitor && window.Tawk_API.visitor.sendMessage) {
+        // This is the correct API method that sends message without showing widget
+        window.Tawk_API.visitor.sendMessage(initialMessage);
+      } else if (window.Tawk_API.sendMessage) {
+        // Alternative method
+        window.Tawk_API.sendMessage(initialMessage);
+      } else {
+        // Fallback: use the onLoad callback to send message when widget is ready
+        window.Tawk_API.onLoad = function() {
+          if (window.Tawk_API.visitor && window.Tawk_API.visitor.sendMessage) {
+            window.Tawk_API.visitor.sendMessage(initialMessage);
+          }
+          // Ensure widget stays hidden
+          if (window.Tawk_API.hideWidget) {
+            window.Tawk_API.hideWidget();
+          }
+        };
       }
       
-      // Ensure widget stays hidden after sending message
+      // Add success message after a delay
       setTimeout(() => {
-        if (window.Tawk_API.hideWidget) {
-          window.Tawk_API.hideWidget();
-        }
-        
-        // Add success message
         addMessage({
           text: "✅ Message sent to agent! You should receive a response shortly. All messages will appear right here in this chat window.",
           sender: 'bot'
         });
-      }, 1000);
+      }, 1500);
 
     } catch (error) {
       console.error('Error sending initial message to agent:', error);
