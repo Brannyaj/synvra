@@ -433,43 +433,42 @@ export default function CustomLiveChat() {
       });
     }
 
-    // Start a background chat session that will notify agents
+    // Start a real chat session that will notify agents
     try {
-      // Use Tawk.to's visitor API to start a chat session in background
-      // This will notify agents without showing the widget
+      // Temporarily show the widget to start a proper chat session
+      window.Tawk_API.showWidget();
       
-      // First, ensure we have a chat session started
-      if (window.Tawk_API.isChatOngoing && !window.Tawk_API.isChatOngoing()) {
-        // Start the chat session by sending an initial system message
-        // This creates a session that agents can see and respond to
-        window.Tawk_API.addEvent('chat_started', {
-          type: 'agent_request',
-          message: 'User has requested to speak with an agent',
-          userInfo: {
-            name: chatState.userName,
-            email: chatState.userEmail,
-            timestamp: new Date().toISOString()
-          }
-        });
-      }
-      
-      // Send a message that will appear in the agent's dashboard
-      // This ensures agents get notified of the new chat request
+      // Wait for widget to load, then send a message and hide it
       setTimeout(() => {
         try {
-          // Use the visitor message API to send a message that triggers notifications
-          if (window.Tawk_API.addEvent) {
-            window.Tawk_API.addEvent('visitor_message', {
-              message: `Hello! I'm ${chatState.userName} (${chatState.userEmail}). I would like to speak with an agent about my project. Please join this conversation.`,
-              visitor: {
-                name: chatState.userName,
-                email: chatState.userEmail
+          // Send a real message that will appear in agent dashboard
+          // This creates an actual chat session that agents can see
+          const message = `Hello! I'm ${chatState.userName} (${chatState.userEmail}). I would like to speak with an agent about my project. Please join this conversation through the website's custom chat interface.`;
+          
+          // Use the chat API to send a message
+          if (window.Tawk_API.sendMessage) {
+            window.Tawk_API.sendMessage(message);
+          } else {
+            // Fallback: trigger chat start
+            window.Tawk_API.maximize();
+            setTimeout(() => {
+              // Manually trigger a chat message
+              const chatInput = document.querySelector('#chat-input');
+              if (chatInput) {
+                (chatInput as HTMLInputElement).value = message;
+                const sendButton = document.querySelector('#send-button');
+                if (sendButton) {
+                  (sendButton as HTMLElement).click();
+                }
               }
-            });
+            }, 500);
           }
           
-          // Add success message to custom chat
+          // Hide the widget after starting the session
           setTimeout(() => {
+            window.Tawk_API.hideWidget();
+            
+            // Add success message to custom chat
             addMessage({
               text: "✅ Request sent! An agent will join this conversation shortly. All messages will appear right here in this chat window.",
               sender: 'bot'
@@ -477,13 +476,14 @@ export default function CustomLiveChat() {
           }, 1000);
           
         } catch (innerError) {
-          console.error('Error sending agent request:', innerError);
+          console.error('Error sending message to agent:', innerError);
+          window.Tawk_API.hideWidget();
           addMessage({
             text: "Request sent! If an agent doesn't respond shortly, please contact us directly at support@synvra.com",
             sender: 'bot'
           });
         }
-      }, 500);
+      }, 1500);
 
     } catch (error) {
       console.error('Error connecting to agent:', error);
@@ -496,7 +496,7 @@ export default function CustomLiveChat() {
     // Reset waiting state after a delay
     setTimeout(() => {
       setChatState(prev => ({ ...prev, waitingForAgent: false }));
-    }, 3000);
+    }, 4000);
   };
 
   const sendMessage = async () => {
@@ -519,17 +519,9 @@ export default function CustomLiveChat() {
     // If agent is connected, send message through Tawk.to API
     if (chatState.agentJoined && window.Tawk_API) {
       try {
-        // Send message to agent through Tawk.to background API
-        // This sends the message without showing the widget
-        if (window.Tawk_API.addEvent) {
-          window.Tawk_API.addEvent('visitor_message', {
-            message: userMessage,
-            visitor: {
-              name: chatState.userName,
-              email: chatState.userEmail
-            },
-            timestamp: new Date().toISOString()
-          });
+        // Send message to agent through Tawk.to's real messaging API
+        if (window.Tawk_API.sendMessage) {
+          window.Tawk_API.sendMessage(userMessage);
         }
         return; // Don't show automated responses when agent is connected
       } catch (error) {
