@@ -81,6 +81,7 @@ export default function CustomLiveChat() {
   const [isHovered, setIsHovered] = useState(false);
   const [formName, setFormName] = useState('');
   const [formEmail, setFormEmail] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -144,6 +145,23 @@ export default function CustomLiveChat() {
       ...prev,
       messages: [...prev.messages, newMessage]
     }));
+  };
+
+  const showTypingIndicator = () => {
+    setIsTyping(true);
+    setTimeout(() => {
+      setIsTyping(false);
+    }, 1500 + Math.random() * 1000); // Random typing duration between 1.5-2.5 seconds
+  };
+
+  const addBotMessageWithTyping = (text: string, delay: number = 1500) => {
+    showTypingIndicator();
+    setTimeout(() => {
+      addMessage({
+        text: text,
+        sender: 'bot'
+      });
+    }, delay + Math.random() * 500); // Add some randomness to feel more natural
   };
 
   const getAutomatedResponse = (userMessage: string): string | null => {
@@ -214,6 +232,9 @@ export default function CustomLiveChat() {
       sender: 'user'
     });
 
+    // Clear input immediately
+    setCurrentMessage('');
+
     // Send message to backend if agent is connected
     if (chatState.agentJoined) {
       try {
@@ -229,12 +250,12 @@ export default function CustomLiveChat() {
       } catch (error) {
         console.error('Error sending message:', error);
       }
+      return; // Don't show automated responses when agent is connected
     }
 
     // Check if user wants to speak with agent
     if (handleAgentRequest(userMessage)) {
       connectToAgent();
-      setCurrentMessage('');
       return;
     }
 
@@ -242,24 +263,15 @@ export default function CustomLiveChat() {
     const automatedResponse = getAutomatedResponse(userMessage);
     
     if (automatedResponse) {
-      // Send automated response
-      setTimeout(() => {
-        addMessage({
-          text: automatedResponse,
-          sender: 'bot'
-        });
-      }, 1000);
+      // Send automated response with typing indicator
+      addBotMessageWithTyping(automatedResponse, 1500);
     } else {
-      // No automated response, suggest agent
-      setTimeout(() => {
-        addMessage({
-          text: "I'd be happy to help! For more specific questions, type 'agent' to speak with one of our specialists, or ask about:\n\n• Our services\n• Pricing\n• Project timelines\n• Support options",
-          sender: 'bot'
-        });
-      }, 1000);
+      // No automated response, suggest agent with typing indicator
+      addBotMessageWithTyping(
+        "I'd be happy to help! For more specific questions, type 'agent' to speak with one of our specialists, or ask about:\n\n• Our services\n• Pricing\n• Project timelines\n• Support options",
+        1200
+      );
     }
-
-    setCurrentMessage('');
   };
 
   const handleEmailSubmit = (e: React.FormEvent) => {
@@ -274,10 +286,41 @@ export default function CustomLiveChat() {
       
       setShowEmailForm(false);
       
+      // Welcome message
       addMessage({
-        text: `Hi ${formName.trim()}! How can I assist you today?`,
+        text: `Hi ${formName.trim()}! 👋 Welcome to Synvra!`,
         sender: 'bot'
       });
+
+      // Show typing and then pre-answered questions
+      setTimeout(() => {
+        showTypingIndicator();
+        setTimeout(() => {
+          addMessage({
+            text: `I'm here to help you with your project needs. Here are some quick answers to get you started:
+
+🌐 **Our Services:**
+• Web Development ($5K-$15K)
+• Mobile Apps ($8K-$25K) 
+• Cloud Infrastructure ($10K-$30K)
+• AI/Machine Learning ($15K-$50K)
+• Cybersecurity ($5K-$20K)
+• Blockchain ($12K-$40K)
+
+💰 **Pricing Packages:**
+• Basic: $5,000-$15,000 (4-6 weeks)
+• Professional: $15,000-$50,000 (6-10 weeks)
+• Enterprise: $50,000+ (8-12 weeks)
+
+⏱️ **Timeline:** Most projects take 4-12 weeks depending on complexity.
+
+✅ **Support:** 3 months free support + ongoing maintenance packages available.
+
+What specific service interests you most? Or type "agent" to speak with our team directly!`,
+            sender: 'bot'
+          });
+        }, 2000);
+      }, 1000);
       
       // Clear form
       setFormName('');
@@ -482,6 +525,22 @@ export default function CustomLiveChat() {
               </div>
             )}
             
+            {/* Typing Indicator */}
+            {isTyping && (
+              <div className="flex justify-start animate-in slide-in-from-bottom-2 duration-300">
+                <div className="bg-white text-gray-800 border border-gray-200 rounded-2xl rounded-bl-md p-4 shadow-sm max-w-[85%]">
+                  <div className="flex items-center space-x-2">
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.15s'}}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.3s'}}></div>
+                    </div>
+                    <span className="text-sm text-gray-500 italic">Synvra Support is typing...</span>
+                  </div>
+                </div>
+              </div>
+            )}
+            
             <div ref={messagesEndRef} />
           </div>
 
@@ -497,11 +556,12 @@ export default function CustomLiveChat() {
                     placeholder="Type your message..."
                     className="w-full p-3 border border-gray-300 rounded-2xl text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-synvra-blue focus:border-transparent transition-all duration-200 resize-none"
                     onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
+                    disabled={isTyping}
                   />
                 </div>
                 <button
                   onClick={sendMessage}
-                  disabled={!currentMessage.trim()}
+                  disabled={!currentMessage.trim() || isTyping}
                   className="bg-gradient-to-r from-synvra-blue to-blue-600 hover:from-blue-700 hover:to-blue-800 text-white p-3 rounded-2xl transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -514,25 +574,29 @@ export default function CustomLiveChat() {
               <div className="flex flex-wrap gap-2 mt-3">
                 <button 
                   onClick={() => setCurrentMessage('What services do you offer?')}
-                  className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded-full transition-colors duration-200"
+                  className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded-full transition-colors duration-200 disabled:opacity-50"
+                  disabled={isTyping}
                 >
                   🌐 Services
                 </button>
                 <button 
                   onClick={() => setCurrentMessage('What are your prices?')}
-                  className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded-full transition-colors duration-200"
+                  className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded-full transition-colors duration-200 disabled:opacity-50"
+                  disabled={isTyping}
                 >
                   💰 Pricing
                 </button>
                 <button 
                   onClick={() => setCurrentMessage('How long does a project take?')}
-                  className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded-full transition-colors duration-200"
+                  className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded-full transition-colors duration-200 disabled:opacity-50"
+                  disabled={isTyping}
                 >
                   ⏱️ Timeline
                 </button>
                 <button 
                   onClick={() => setCurrentMessage('agent')}
-                  className="px-3 py-1 bg-green-100 hover:bg-green-200 text-green-700 text-xs rounded-full transition-colors duration-200"
+                  className="px-3 py-1 bg-green-100 hover:bg-green-200 text-green-700 text-xs rounded-full transition-colors duration-200 disabled:opacity-50"
+                  disabled={isTyping}
                 >
                   👨‍💼 Talk to Agent
                 </button>
