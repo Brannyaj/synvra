@@ -24,12 +24,12 @@ const AUTOMATED_RESPONSES = {
     keywords: ['services', 'what do you do', 'offerings', 'what services'],
     response: `We offer these services:
 
-🌐 **Web Development** - $5K-$15K
-📱 **Mobile Apps** - $8K-$25K  
-☁️ **Cloud Infrastructure** - $10K-$30K
-🤖 **AI/Machine Learning** - $15K-$50K
-🔒 **Cybersecurity** - $5K-$20K
-⛓️ **Blockchain** - $12K-$40K
+🌐 **Web Development** - Custom websites & web apps
+📱 **Mobile Apps** - iOS & Android development  
+☁️ **Cloud Infrastructure** - AWS/Azure/GCP solutions
+🤖 **AI/Machine Learning** - Custom AI solutions
+🔒 **Cybersecurity** - Security audits & protection
+⛓️ **Blockchain** - Smart contracts & Web3
 
 Which service interests you? Type "agent" to speak with our team!`
   },
@@ -43,9 +43,11 @@ Which service interests you? Type "agent" to speak with our team!`
 • API development and integration
 • Database design and optimization
 
-**Pricing:** $5,000 - $15,000
-**Timeline:** 4-6 weeks
-**Includes:** 3 months free support
+**What's Included:**
+• Responsive design for all devices
+• SEO optimization
+• 3 months free support after launch
+• Performance optimization
 
 Ready to start your web project? Type "agent" to discuss your specific needs!`
   },
@@ -59,9 +61,11 @@ Ready to start your web project? Type "agent" to discuss your specific needs!`
 • Push notifications and analytics
 • Backend integration
 
-**Pricing:** $8,000 - $25,000
-**Timeline:** 6-10 weeks
-**Includes:** App Store submission + 3 months support
+**What's Included:**
+• App Store submission assistance
+• User-friendly interface design
+• 3 months support after launch
+• Performance monitoring
 
 Want to build your mobile app? Type "agent" to get started!`
   },
@@ -75,9 +79,11 @@ Want to build your mobile app? Type "agent" to get started!`
 • Scalable architecture design
 • Monitoring and security
 
-**Pricing:** $10,000 - $30,000
-**Timeline:** 6-8 weeks
-**Includes:** 24/7 monitoring + ongoing support
+**What's Included:**
+• 24/7 monitoring setup
+• Security best practices
+• Automated backups
+• Ongoing technical support
 
 Ready to move to the cloud? Type "agent" for a consultation!`
   },
@@ -91,9 +97,11 @@ Ready to move to the cloud? Type "agent" for a consultation!`
 • Predictive analytics
 • Computer vision solutions
 
-**Pricing:** $15,000 - $50,000
-**Timeline:** 8-12 weeks
-**Includes:** Model training + deployment + support
+**What's Included:**
+• Model training and optimization
+• Deployment and integration
+• Documentation and training
+• Ongoing model support
 
 Interested in AI solutions? Type "agent" to explore possibilities!`
   },
@@ -107,9 +115,11 @@ Interested in AI solutions? Type "agent" to explore possibilities!`
 • Security training and awareness
 • Incident response planning
 
-**Pricing:** $5,000 - $20,000
-**Timeline:** 4-8 weeks
-**Includes:** Detailed security report + recommendations
+**What's Included:**
+• Detailed security report
+• Actionable recommendations
+• Implementation guidance
+• Follow-up assessments
 
 Need security assessment? Type "agent" to protect your business!`
   },
@@ -123,32 +133,32 @@ Need security assessment? Type "agent" to protect your business!`
 • Cryptocurrency solutions
 • Web3 integration
 
-**Pricing:** $12,000 - $40,000
-**Timeline:** 8-12 weeks
-**Includes:** Security audit + deployment + support
+**What's Included:**
+• Security audit of smart contracts
+• Deployment assistance
+• Technical documentation
+• Ongoing support
 
 Ready for blockchain innovation? Type "agent" to discuss your project!`
   },
   pricing: {
     keywords: ['price', 'cost', 'how much', 'pricing', 'budget', 'pricing information'],
-    response: `💰 **Our Pricing Packages:**
+    response: `💰 **Custom Pricing Information:**
 
-**Basic Package:** $5,000-$15,000
-• 4-6 weeks timeline
-• Perfect for startups and small businesses
-• Includes 3 months free support
+Our pricing is tailored to each project's specific requirements. To get an accurate quote, we need to understand:
 
-**Professional Package:** $15,000-$50,000
-• 6-10 weeks timeline
-• Advanced features and integrations
-• Priority support and maintenance
+• Project scope and complexity
+• Timeline requirements
+• Technical specifications
+• Integration needs
+• Support requirements
 
-**Enterprise Package:** $50,000+
-• 8-12 weeks timeline
-• Custom solutions and scalability
-• Dedicated project manager
+**Next Steps:**
+1. Complete our detailed project proposal form
+2. Schedule a consultation with our team
+3. Receive a custom quote within 24 hours
 
-Ready for a custom quote? Type "agent" to chat with our team!`
+Type "agent" to start the process and get your personalized pricing!`
   },
   timeline: {
     keywords: ['timeline', 'how long', 'duration', 'when', 'time', 'project timeline'],
@@ -181,10 +191,11 @@ Want to discuss your specific timeline? Type "agent" for live chat!`
 • Performance monitoring
 • Security updates
 
-**Ongoing Maintenance Packages:**
-• Basic: $500/month
-• Professional: $1,000/month
-• Enterprise: $2,500/month
+**Ongoing Maintenance Options:**
+• Regular updates and improvements
+• 24/7 monitoring and support
+• Priority technical assistance
+• Custom maintenance plans available
 
 Need more details about support? Type "agent" to speak with our team!`
   }
@@ -502,7 +513,20 @@ export default function CustomLiveChat() {
     // Hide service buttons immediately
     setShowServiceButtons(false);
     
-    // Add user message
+    // Special handling for agent connection
+    if (service === 'agent') {
+      // Add user message for agent request
+      addMessage({
+        text: 'I would like to speak with an agent',
+        sender: 'user'
+      });
+      
+      // Connect to agent immediately
+      connectToAgent();
+      return;
+    }
+    
+    // Add user message for regular services
     addMessage({
       text: service,
       sender: 'user'
