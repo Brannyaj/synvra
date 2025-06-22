@@ -250,47 +250,43 @@ export default function CustomLiveChat() {
     document.head.appendChild(script);
 
     script.onload = () => {
-      // Hide the Crisp chatbox immediately and permanently
-      window.Crisp.chat.hide();
-      window.Crisp.chat.onChatClosed(() => {
-        window.Crisp.chat.hide();
-      });
-
-      // Listen for messages from the agent
-      window.Crisp.message.onMessageReceived((message: any) => {
-        // Ignore messages sent by the user themselves
-        if (message.from === 'user') {
-          return;
-        }
-
-        addMessage({
-          text: message.content,
-          sender: 'agent',
-          agentName: message.user.nickname || 'Support Agent'
-        });
-      });
-      
-      // Listen for when a session is started to get the session_id
-      window.Crisp.chat.onChatStarted(() => {
-        const sessionId = window.Crisp.chat.getSessionId();
-        setChatState(prev => ({...prev, crispSessionId: sessionId}));
-      });
-
-      // Listen for agent joining the chat
-      window.Crisp.message.onMessageComposeSent((message: any) => {
-          if (!chatState.agentJoined) {
-              setChatState(prev => ({
-                ...prev,
-                agentJoined: true,
-                waitingForAgent: false
-              }));
+      // Wait for Crisp to fully load
+      setTimeout(() => {
+        if (window.Crisp) {
+          // Hide the Crisp chatbox immediately and permanently
+          window.Crisp.chat.hide();
+          
+          // Set up event listeners
+          window.Crisp.message.onMessageReceived((message: any) => {
+            console.log('Crisp message received:', message);
+            
+            // Only show agent messages (not user messages)
+            if (message.from === 'operator') {
               addMessage({
-                text: `👋 Hi! An agent from Synvra support has joined the chat.`,
+                text: message.content,
                 sender: 'agent',
-                agentName: message.user.nickname || 'Support Agent'
+                agentName: message.user?.nickname || 'Support Agent'
               });
-          }
-      });
+              
+              // Mark agent as joined if not already
+              if (!chatState.agentJoined) {
+                setChatState(prev => ({
+                  ...prev,
+                  agentJoined: true,
+                  waitingForAgent: false
+                }));
+              }
+            }
+          });
+          
+          // Listen for chat session events
+          window.Crisp.session.onLoaded(() => {
+            console.log('Crisp session loaded');
+            const sessionId = window.Crisp.session.getIdentifier();
+            setChatState(prev => ({...prev, crispSessionId: sessionId}));
+          });
+        }
+      }, 1000);
     };
 
     return () => {
@@ -300,7 +296,7 @@ export default function CustomLiveChat() {
         document.head.removeChild(crispScript);
       }
     };
-  }, [chatState.agentJoined]);
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -365,27 +361,60 @@ export default function CustomLiveChat() {
   };
 
   const connectToAgent = async () => {
+    // Check if Crisp is loaded
+    if (!window.Crisp) {
+      addMessage({
+        text: "Chat system is still loading. Please try again in a moment.",
+        sender: 'bot'
+      });
+      return;
+    }
+
     setChatState(prev => ({ ...prev, waitingForAgent: true }));
+    
     addMessage({
       text: "Connecting you with a live agent... Please wait a moment! 🔄",
       sender: 'bot'
     });
     
-    // Set user info in Crisp, which will start a session if one doesn't exist
-    if (chatState.userName && chatState.userEmail) {
-      window.Crisp.user.setName(chatState.userName);
-      window.Crisp.user.setEmail(chatState.userEmail);
-    }
-    
-    // Send a message to initiate the conversation. Crisp automatically handles session creation.
-    const initialMessage = `Hello! I would like to speak with an agent.`;
-    window.Crisp.message.send('text', initialMessage);
-
-    // Add user's message to the local chat display
-    addMessage({
+    try {
+      // Set user info in Crisp
+      if (chatState.userName && chatState.userEmail) {
+        window.Crisp.user.setNickname(chatState.userName);
+        window.Crisp.user.setEmail(chatState.userEmail);
+      }
+      
+      // Send a message to start the conversation
+      const initialMessage = `Hello! I'm ${chatState.userName || 'a visitor'} and I would like to speak with an agent. My email is ${chatState.userEmail || 'not provided'}.`;
+      
+      // Send message using Crisp API
+      window.Crisp.message.send('text', initialMessage);
+      
+      // Add the message to local chat
+      addMessage({
         text: initialMessage,
-        sender: 'user',
-    });
+        sender: 'user'
+      });
+      
+      // Add confirmation message
+      setTimeout(() => {
+        addMessage({
+          text: "✅ Message sent to our support team! An agent will respond shortly. All messages will appear in this chat window.",
+          sender: 'bot'
+        });
+        
+        // Reset waiting state
+        setChatState(prev => ({ ...prev, waitingForAgent: false }));
+      }, 2000);
+      
+    } catch (error) {
+      console.error('Error connecting to agent:', error);
+      addMessage({
+        text: "There was an issue connecting to an agent. Please try again or contact us at support@synvra.com",
+        sender: 'bot'
+      });
+      setChatState(prev => ({ ...prev, waitingForAgent: false }));
+    }
   };
 
   const sendMessage = async () => {
@@ -405,11 +434,18 @@ export default function CustomLiveChat() {
     // Clear input immediately
     setCurrentMessage('');
 
-    // If a crisp session is active, send the message through the API.
-    // Otherwise, handle it with the bot.
-    if (chatState.crispSessionId) {
-      window.Crisp.message.send('text', userMessage);
-      return;
+    // If Crisp is available and we have a session, send through Crisp
+    if (window.Crisp && chatState.crispSessionId) {
+      try {
+        window.Crisp.message.send('text', userMessage);
+        return; // Don't show automated responses when agent session is active
+      } catch (error) {
+        console.error('Error sending message through Crisp:', error);
+        addMessage({
+          text: "Message may not have been delivered to the agent. Please try again.",
+          sender: 'bot'
+        });
+      }
     }
 
     // Check if user wants to speak with agent
