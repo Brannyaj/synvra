@@ -467,44 +467,23 @@ export default function CustomLiveChat() {
       });
     }
 
-    // Start a chat session WITHOUT showing the widget
+    // Start a chat session by sending an actual message to Tawk.to
     try {
-      // Use Tawk.to's API to start a chat session in the background
-      // The widget will remain completely hidden
+      // Send an initial message to properly start the chat session
+      const initialMessage = `Hello! I'm ${chatState.userName || 'a visitor'} and I would like to speak with an agent about my project. My email is ${chatState.userEmail || 'not provided'}.`;
       
-      // Method 1: Try to start chat using the visitor API
-      if (window.Tawk_API.visitor) {
-        window.Tawk_API.visitor.setName(chatState.userName);
-        window.Tawk_API.visitor.setEmail(chatState.userEmail);
+      // Use Tawk.to's sendChatMessage API to actually start the chat
+      if (window.Tawk_API.sendChatMessage) {
+        window.Tawk_API.sendChatMessage(initialMessage);
+      } else if (window.Tawk_API.addEvent) {
+        // Alternative method using addEvent
+        window.Tawk_API.addEvent('visitor_message', {
+          message: initialMessage,
+          type: 'visitor'
+        });
       }
       
-      // Method 2: Use the onLoad callback to ensure widget stays hidden
-      window.Tawk_API.onLoad = function() {
-        window.Tawk_API.hideWidget(); // Ensure it stays hidden
-        
-        // Try to trigger a chat session through the API
-        setTimeout(() => {
-          try {
-            // Send a system message that will create a chat session
-            const message = `Hello! I'm ${chatState.userName} (${chatState.userEmail}). I would like to speak with an agent about my project.`;
-            
-            // Use the secure method to send message without showing widget
-            if (window.Tawk_API.addEvent) {
-              window.Tawk_API.addEvent('visitor_message', message);
-            }
-            
-            // Alternative: Use the chat started event
-            if (window.Tawk_API.onChatStarted) {
-              window.Tawk_API.onChatStarted();
-            }
-            
-          } catch (error) {
-            console.log('Chat session start attempt:', error);
-          }
-        }, 500);
-      };
-      
-      // Ensure widget is hidden after any operation
+      // Ensure widget stays hidden after sending message
       setTimeout(() => {
         if (window.Tawk_API.hideWidget) {
           window.Tawk_API.hideWidget();
@@ -512,13 +491,13 @@ export default function CustomLiveChat() {
         
         // Add success message
         addMessage({
-          text: "✅ Request sent! An agent will join this conversation shortly. All messages will appear right here in this chat window.",
+          text: "✅ Message sent to agent! You should receive a response shortly. All messages will appear right here in this chat window.",
           sender: 'bot'
         });
-      }, 2000);
+      }, 1000);
 
     } catch (error) {
-      console.error('Error connecting to agent:', error);
+      console.error('Error sending initial message to agent:', error);
       addMessage({
         text: "Connection initiated! If you don't hear from an agent soon, please contact us at support@synvra.com",
         sender: 'bot'
