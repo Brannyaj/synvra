@@ -2,11 +2,12 @@
 
 import { useState, useEffect, useRef } from 'react';
 
-// Add Tawk.to TypeScript declarations
+// Add Crisp Chat TypeScript declarations
 declare global {
   interface Window {
-    Tawk_API?: any;
-    Tawk_LoadStart?: Date;
+    $crisp: any[];
+    CRISP_WEBSITE_ID: string;
+    Crisp: any;
   }
 }
 
@@ -25,6 +26,7 @@ interface ChatState {
   userName: string;
   waitingForAgent: boolean;
   agentJoined: boolean;
+  crispSessionId: string | null;
 }
 
 const AUTOMATED_RESPONSES = {
@@ -216,7 +218,8 @@ export default function CustomLiveChat() {
     userEmail: '',
     userName: '',
     waitingForAgent: false,
-    agentJoined: false
+    agentJoined: false,
+    crispSessionId: null,
   });
 
   const [currentMessage, setCurrentMessage] = useState('');
@@ -226,153 +229,78 @@ export default function CustomLiveChat() {
   const [formEmail, setFormEmail] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [showServiceButtons, setShowServiceButtons] = useState(false);
-  const [tawkLoaded, setTawkLoaded] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Initialize Tawk.to when component mounts
+  // Initialize Crisp Chat when component mounts
   useEffect(() => {
-    // Only load Tawk.to once
-    if (!window.Tawk_API && !document.getElementById('tawk-script')) {
-      // Add CSS to completely hide Tawk.to widget - API only, no visual widget
-      const style = document.createElement('style');
-      style.id = 'tawk-hide-style';
-      style.textContent = `
-        /* COMPLETELY HIDE ALL TAWK.TO VISUAL ELEMENTS - FORCE HIDDEN */
-        #tawk-bubble, 
-        .tawk-chat-panel,
-        .tawk-min-container,
-        .tawk-flex-center,
-        .tawk-min-chat-container,
-        .tawk-chat-container,
-        div[id*="tawk"],
-        iframe[id*="tawk"],
-        .tawk-widget,
-        .tawk-widget-visible,
-        body.tawk-widget-visible #tawk-bubble,
-        body.tawk-widget-visible .tawk-chat-panel,
-        body.tawk-widget-visible .tawk-min-container,
-        body.tawk-widget-visible .tawk-flex-center,
-        body.tawk-widget-visible .tawk-min-chat-container,
-        body.tawk-widget-visible .tawk-chat-container,
-        body.tawk-widget-visible div[id*="tawk"],
-        /* Additional selectors to catch any Tawk.to elements */
-        [id*="tawk"],
-        [class*="tawk"],
-        div[style*="tawk"],
-        iframe[src*="tawk"] {
-          display: none !important;
-          visibility: hidden !important;
-          opacity: 0 !important;
-          position: absolute !important;
-          left: -99999px !important;
-          top: -99999px !important;
-          width: 0 !important;
-          height: 0 !important;
-          z-index: -999999 !important;
-          pointer-events: none !important;
-          transform: scale(0) !important;
-        }
-        
-        /* Override any inline styles that might show the widget */
-        #tawk-bubble[style] { 
-          display: none !important; 
-        }
-      `;
-      document.head.appendChild(style);
-
-      const script = document.createElement('script');
-      script.id = 'tawk-script';
-      script.async = true;
-      script.src = 'https://embed.tawk.to/685817e2d74f68191345b1d5/1iuc1qjl7';
-      script.charset = 'UTF-8';
-      script.setAttribute('crossorigin', '*');
-      
-      // Set up Tawk.to to be completely hidden and use API only
-      window.Tawk_LoadStart = new Date();
-      window.Tawk_API = window.Tawk_API || {};
-      
-      // Aggressive widget hiding - continuously enforce
-      const hideWidget = () => {
-        if (window.Tawk_API && window.Tawk_API.hideWidget) {
-          window.Tawk_API.hideWidget();
-        }
-        // Also hide any DOM elements that might appear
-        const tawkElements = document.querySelectorAll('[id*="tawk"], [class*="tawk"], iframe[src*="tawk"]');
-        tawkElements.forEach(element => {
-          (element as HTMLElement).style.display = 'none';
-          (element as HTMLElement).style.visibility = 'hidden';
-          (element as HTMLElement).style.opacity = '0';
-        });
-      };
-      
-      // Hide widget and set up message listeners
-      window.Tawk_API.onLoad = function() {
-        setTawkLoaded(true);
-        hideWidget();
-        
-        // Set up continuous hiding
-        setInterval(hideWidget, 1000);
-        
-        // Listen for agent messages and display them in our custom chat
-        window.Tawk_API.onChatMessageAgent = function(message: any) {
-          hideWidget(); // Hide widget immediately if it tries to show
-          addMessage({
-            text: message.text || message.message || message,
-            sender: 'agent',
-            agentName: message.author || 'Support Agent'
-          });
-        };
-
-        // Listen for agent status changes
-        window.Tawk_API.onAgentJoinChat = function(data: any) {
-          hideWidget(); // Hide widget immediately if it tries to show
-          setChatState(prev => ({
-            ...prev,
-            agentJoined: true,
-            waitingForAgent: false
-          }));
-          
-          addMessage({
-            text: `👋 Hi! I'm ${data.name || 'Sarah'} from Synvra support. I'm here to help with your project. What can I assist you with?`,
-            sender: 'agent',
-            agentName: data.name || 'Support Agent'
-          });
-        };
-
-        // Listen for agent leaving
-        window.Tawk_API.onAgentLeaveChat = function() {
-          hideWidget(); // Hide widget immediately if it tries to show
-          setChatState(prev => ({
-            ...prev,
-            agentJoined: false,
-            waitingForAgent: false
-          }));
-          
-          addMessage({
-            text: "The agent has left the chat. Thank you for contacting Synvra! Feel free to start a new conversation anytime.",
-            sender: 'bot'
-          });
-        };
-      };
-      
-      script.onload = () => {
-        setTimeout(() => {
-          if (window.Tawk_API) {
-            hideWidget();
-            setTawkLoaded(true);
-            // Start continuous hiding
-            setInterval(hideWidget, 1000);
-          }
-        }, 100);
-      };
-      
-      document.head.appendChild(script);
-    } else if (window.Tawk_API) {
-      setTawkLoaded(true);
-      window.Tawk_API.hideWidget();
+    // Check if the Crisp script has already been added
+    if (window.Crisp) {
+      return;
     }
-  }, []);
+
+    // Set Crisp Website ID
+    window.CRISP_WEBSITE_ID = "2d92f298-8902-4c26-bd93-cfea1ca3cfcb";
+    window.$crisp = [];
+
+    // Load Crisp script
+    const script = document.createElement('script');
+    script.src = "https://client.crisp.chat/l.js";
+    script.async = true;
+    document.head.appendChild(script);
+
+    script.onload = () => {
+      // Hide the Crisp chatbox immediately and permanently
+      window.Crisp.chat.hide();
+      window.Crisp.chat.onChatClosed(() => {
+        window.Crisp.chat.hide();
+      });
+
+      // Listen for messages from the agent
+      window.Crisp.message.onMessageReceived((message: any) => {
+        // Ignore messages sent by the user themselves
+        if (message.from === 'user') {
+          return;
+        }
+
+        addMessage({
+          text: message.content,
+          sender: 'agent',
+          agentName: message.user.nickname || 'Support Agent'
+        });
+      });
+      
+      // Listen for when a session is started to get the session_id
+      window.Crisp.chat.onChatStarted(() => {
+        const sessionId = window.Crisp.chat.getSessionId();
+        setChatState(prev => ({...prev, crispSessionId: sessionId}));
+      });
+
+      // Listen for agent joining the chat
+      window.Crisp.message.onMessageComposeSent((message: any) => {
+          if (!chatState.agentJoined) {
+              setChatState(prev => ({
+                ...prev,
+                agentJoined: true,
+                waitingForAgent: false
+              }));
+              addMessage({
+                text: `👋 Hi! An agent from Synvra support has joined the chat.`,
+                sender: 'agent',
+                agentName: message.user.nickname || 'Support Agent'
+              });
+          }
+      });
+    };
+
+    return () => {
+      // Clean up the script when the component unmounts
+      const crispScript = document.querySelector('script[src="https://client.crisp.chat/l.js"]');
+      if (crispScript) {
+        document.head.removeChild(crispScript);
+      }
+    };
+  }, [chatState.agentJoined]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -437,81 +365,27 @@ export default function CustomLiveChat() {
   };
 
   const connectToAgent = async () => {
-    // Check if Tawk.to is loaded
-    if (!tawkLoaded || !window.Tawk_API) {
-      addMessage({
-        text: "Sorry, our live chat system is still loading. Please try again in a moment or refresh the page.",
-        sender: 'bot'
-      });
-      return;
-    }
-
-    // Set waiting state
     setChatState(prev => ({ ...prev, waitingForAgent: true }));
-
-    // Add connecting message to your custom chat
     addMessage({
       text: "Connecting you with a live agent... Please wait a moment! 🔄",
       sender: 'bot'
     });
-
-    // Set user info in Tawk.to if available
+    
+    // Set user info in Crisp, which will start a session if one doesn't exist
     if (chatState.userName && chatState.userEmail) {
-      window.Tawk_API.setAttributes({
-        name: chatState.userName,
-        email: chatState.userEmail
-      }, function(error: any) {
-        if (error) {
-          console.log('Error setting Tawk.to attributes:', error);
-        }
-      });
-    }
-
-    // Start a chat session by sending an actual message to Tawk.to
-    try {
-      // Send an initial message to properly start the chat session
-      const initialMessage = `Hello! I'm ${chatState.userName || 'a visitor'} and I would like to speak with an agent about my project. My email is ${chatState.userEmail || 'not provided'}.`;
-      
-      // Use the proper Tawk.to API to send message without showing widget
-      if (window.Tawk_API.visitor && window.Tawk_API.visitor.sendMessage) {
-        // This is the correct API method that sends message without showing widget
-        window.Tawk_API.visitor.sendMessage(initialMessage);
-      } else if (window.Tawk_API.sendMessage) {
-        // Alternative method
-        window.Tawk_API.sendMessage(initialMessage);
-      } else {
-        // Fallback: use the onLoad callback to send message when widget is ready
-        window.Tawk_API.onLoad = function() {
-          if (window.Tawk_API.visitor && window.Tawk_API.visitor.sendMessage) {
-            window.Tawk_API.visitor.sendMessage(initialMessage);
-          }
-          // Ensure widget stays hidden
-          if (window.Tawk_API.hideWidget) {
-            window.Tawk_API.hideWidget();
-          }
-        };
-      }
-      
-      // Add success message after a delay
-      setTimeout(() => {
-        addMessage({
-          text: "✅ Message sent to agent! You should receive a response shortly. All messages will appear right here in this chat window.",
-          sender: 'bot'
-        });
-      }, 1500);
-
-    } catch (error) {
-      console.error('Error sending initial message to agent:', error);
-      addMessage({
-        text: "Connection initiated! If you don't hear from an agent soon, please contact us at support@synvra.com",
-        sender: 'bot'
-      });
+      window.Crisp.user.setName(chatState.userName);
+      window.Crisp.user.setEmail(chatState.userEmail);
     }
     
-    // Reset waiting state after a delay
-    setTimeout(() => {
-      setChatState(prev => ({ ...prev, waitingForAgent: false }));
-    }, 4000);
+    // Send a message to initiate the conversation. Crisp automatically handles session creation.
+    const initialMessage = `Hello! I would like to speak with an agent.`;
+    window.Crisp.message.send('text', initialMessage);
+
+    // Add user's message to the local chat display
+    addMessage({
+        text: initialMessage,
+        sender: 'user',
+    });
   };
 
   const sendMessage = async () => {
@@ -522,7 +396,7 @@ export default function CustomLiveChat() {
     // Hide service buttons when user sends a message
     setShowServiceButtons(false);
     
-    // Add user message
+    // Add user message locally
     addMessage({
       text: userMessage,
       sender: 'user'
@@ -531,21 +405,11 @@ export default function CustomLiveChat() {
     // Clear input immediately
     setCurrentMessage('');
 
-    // If agent is connected, send message through Tawk.to API
-    if (chatState.agentJoined && window.Tawk_API) {
-      try {
-        // Send message to agent through Tawk.to's real messaging API
-        if (window.Tawk_API.sendMessage) {
-          window.Tawk_API.sendMessage(userMessage);
-        }
-        return; // Don't show automated responses when agent is connected
-      } catch (error) {
-        console.error('Error sending message to agent:', error);
-        addMessage({
-          text: "Message may not have reached the agent. Please try again or contact us directly.",
-          sender: 'bot'
-        });
-      }
+    // If a crisp session is active, send the message through the API.
+    // Otherwise, handle it with the bot.
+    if (chatState.crispSessionId) {
+      window.Crisp.message.send('text', userMessage);
+      return;
     }
 
     // Check if user wants to speak with agent
@@ -563,7 +427,7 @@ export default function CustomLiveChat() {
     } else {
       // No automated response, suggest agent with typing indicator
       addBotMessageWithTyping(
-        "I'd be happy to help! For more specific questions, type 'agent' to speak with one of our specialists, or ask about:\n\n• Our services\n• Pricing\n• Project timelines\n• Support options",
+        "I'm not sure how to help with that. For more specific questions, type 'agent' to speak with one of our specialists, or ask about our services.",
         1200
       );
     }
@@ -648,7 +512,8 @@ export default function CustomLiveChat() {
       isOpen: false,
       messages: [], // Clear messages for fresh start
       waitingForAgent: false,
-      agentJoined: false
+      agentJoined: false,
+      crispSessionId: null
     }));
     
     // Reset form and states
@@ -664,12 +529,6 @@ export default function CustomLiveChat() {
     
     // Special handling for agent connection
     if (service === 'agent') {
-      // Add user message for agent request
-      addMessage({
-        text: 'I would like to speak with an agent',
-        sender: 'user'
-      });
-      
       // Connect to agent immediately
       connectToAgent();
       return;
