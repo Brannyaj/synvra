@@ -721,16 +721,25 @@ export default function CustomLiveChat() {
           {!showEmailForm && (
             <div className="p-4 border-t bg-white">
               <div className="flex space-x-3 items-end">
-                <div className="flex-1">
+                <div className="flex-1 relative">
                   <input
                     type="text"
                     value={currentMessage}
                     onChange={(e) => setCurrentMessage(e.target.value)}
                     placeholder="Type your message..."
-                    className="w-full p-3 border border-gray-300 rounded-2xl text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-synvra-blue focus:border-transparent transition-all duration-200 resize-none"
+                    className="w-full p-3 pr-12 border border-gray-300 rounded-2xl text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-synvra-blue focus:border-transparent transition-all duration-200 resize-none"
                     onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
                     disabled={isTyping}
                   />
+                  {/* Upload Icon */}
+                  <button
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                    aria-label="Upload file"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                    </svg>
+                  </button>
                 </div>
                 <button
                   onClick={sendMessage}
@@ -740,38 +749,6 @@ export default function CustomLiveChat() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
-                </button>
-              </div>
-              
-              {/* Quick Actions */}
-              <div className="flex flex-wrap gap-2 mt-3">
-                <button 
-                  onClick={() => setCurrentMessage('What services do you offer?')}
-                  className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded-full transition-colors duration-200 disabled:opacity-50"
-                  disabled={isTyping}
-                >
-                  🌐 Services
-                </button>
-                <button 
-                  onClick={() => setCurrentMessage('What are your prices?')}
-                  className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded-full transition-colors duration-200 disabled:opacity-50"
-                  disabled={isTyping}
-                >
-                  💰 Pricing
-                </button>
-                <button 
-                  onClick={() => setCurrentMessage('How long does a project take?')}
-                  className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded-full transition-colors duration-200 disabled:opacity-50"
-                  disabled={isTyping}
-                >
-                  ⏱️ Timeline
-                </button>
-                <button 
-                  onClick={() => setCurrentMessage('agent')}
-                  className="px-3 py-1 bg-green-100 hover:bg-green-200 text-green-700 text-xs rounded-full transition-colors duration-200 disabled:opacity-50"
-                  disabled={isTyping}
-                >
-                  👨‍💼 Talk to Agent
                 </button>
               </div>
             </div>
