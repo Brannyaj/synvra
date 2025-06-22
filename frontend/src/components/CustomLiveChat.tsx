@@ -235,9 +235,76 @@ export default function CustomLiveChat() {
 
   // Initialize Crisp Chat when component mounts
   useEffect(() => {
+    // Add aggressive CSS to hide all Crisp elements
+    const hideAllCrispElements = () => {
+      const style = document.createElement('style');
+      style.textContent = `
+        /* Hide all Crisp chat elements completely */
+        #crisp-chatbox,
+        .crisp-client,
+        .crisp-1190jfw,
+        .crisp-13qutdz,
+        .crisp-1w0z6zg,
+        .crisp-9nk4l5,
+        .crisp-kmc1n0,
+        .crisp-1wc0q5q,
+        .crisp-1xqjb6u,
+        .crisp-1hgzlhk,
+        .crisp-1u1qzm2,
+        .crisp-1r0o8ql,
+        .crisp-1c0i0yj,
+        .crisp-1x7zqzl,
+        .crisp-1h9w9lg,
+        .crisp-1y7j9m4,
+        .crisp-1p0j8zl,
+        .crisp-1k8j9m4,
+        [data-crisp="true"],
+        iframe[src*="crisp"],
+        iframe[src*="client.crisp.chat"],
+        div[class*="crisp"],
+        div[id*="crisp"],
+        .cc-1xqj,
+        .cc-unoo,
+        .cc-kmc1,
+        .cc-9nk4,
+        .cc-1w0z {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          width: 0 !important;
+          height: 0 !important;
+          position: absolute !important;
+          top: -9999px !important;
+          left: -9999px !important;
+          z-index: -1 !important;
+          pointer-events: none !important;
+        }
+        
+        /* Hide any potential floating elements */
+        body > div:not([id]):not([class]) {
+          display: none !important;
+        }
+        
+        /* Ensure our custom chat button stays visible */
+        .fixed.bottom-8.right-8.z-50 {
+          display: block !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+        }
+      `;
+      document.head.appendChild(style);
+    };
+
+    // Apply hiding styles immediately
+    hideAllCrispElements();
+
     // Check if the Crisp script has already been added
     if (window.Crisp) {
       setCrispLoaded(true);
+      // Hide widget immediately if already loaded
+      if (window.Crisp.chat && window.Crisp.chat.hide) {
+        window.Crisp.chat.hide();
+      }
       return;
     }
 
@@ -262,6 +329,16 @@ export default function CustomLiveChat() {
           
           // Hide the Crisp chatbox immediately and permanently
           window.Crisp.chat.hide();
+          
+          // Force hide with multiple methods
+          setTimeout(() => {
+            if (window.Crisp.chat) {
+              window.Crisp.chat.hide();
+              window.Crisp.chat.close();
+            }
+            // Apply hiding styles again after Crisp loads
+            hideAllCrispElements();
+          }, 100);
           
           // Set up event listeners
           window.Crisp.message.onMessageReceived((message: any) => {
@@ -289,6 +366,14 @@ export default function CustomLiveChat() {
             console.log('Crisp session loaded');
             const sessionId = window.Crisp.session.getIdentifier();
             setChatState(prev => ({...prev, crispSessionId: sessionId}));
+            
+            // Hide widget again after session loads
+            setTimeout(() => {
+              if (window.Crisp.chat) {
+                window.Crisp.chat.hide();
+              }
+              hideAllCrispElements();
+            }, 100);
           });
         } else {
           // Check again in 100ms
@@ -308,12 +393,21 @@ export default function CustomLiveChat() {
       });
     };
 
+    // Set up a continuous monitor to hide Crisp elements
+    const hideInterval = setInterval(() => {
+      hideAllCrispElements();
+      if (window.Crisp && window.Crisp.chat && window.Crisp.chat.hide) {
+        window.Crisp.chat.hide();
+      }
+    }, 1000);
+
     return () => {
       // Clean up the script when the component unmounts
       const crispScript = document.querySelector('script[src="https://client.crisp.chat/l.js"]');
       if (crispScript) {
         document.head.removeChild(crispScript);
       }
+      clearInterval(hideInterval);
     };
   }, []);
 
