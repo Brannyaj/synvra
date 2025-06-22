@@ -229,6 +229,7 @@ export default function CustomLiveChat() {
   const [formEmail, setFormEmail] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [showServiceButtons, setShowServiceButtons] = useState(false);
+  const [crispLoaded, setCrispLoaded] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -236,6 +237,7 @@ export default function CustomLiveChat() {
   useEffect(() => {
     // Check if the Crisp script has already been added
     if (window.Crisp) {
+      setCrispLoaded(true);
       return;
     }
 
@@ -250,9 +252,14 @@ export default function CustomLiveChat() {
     document.head.appendChild(script);
 
     script.onload = () => {
-      // Wait for Crisp to fully load
-      setTimeout(() => {
-        if (window.Crisp) {
+      console.log('Crisp script loaded');
+      
+      // Wait for Crisp to fully initialize
+      const checkCrispReady = () => {
+        if (window.Crisp && window.Crisp.chat && window.Crisp.message) {
+          console.log('Crisp fully initialized');
+          setCrispLoaded(true);
+          
           // Hide the Crisp chatbox immediately and permanently
           window.Crisp.chat.hide();
           
@@ -269,13 +276,11 @@ export default function CustomLiveChat() {
               });
               
               // Mark agent as joined if not already
-              if (!chatState.agentJoined) {
-                setChatState(prev => ({
-                  ...prev,
-                  agentJoined: true,
-                  waitingForAgent: false
-                }));
-              }
+              setChatState(prev => ({
+                ...prev,
+                agentJoined: true,
+                waitingForAgent: false
+              }));
             }
           });
           
@@ -285,8 +290,22 @@ export default function CustomLiveChat() {
             const sessionId = window.Crisp.session.getIdentifier();
             setChatState(prev => ({...prev, crispSessionId: sessionId}));
           });
+        } else {
+          // Check again in 100ms
+          setTimeout(checkCrispReady, 100);
         }
-      }, 1000);
+      };
+      
+      // Start checking if Crisp is ready
+      setTimeout(checkCrispReady, 500);
+    };
+
+    script.onerror = () => {
+      console.error('Failed to load Crisp script');
+      addMessage({
+        text: "Chat system failed to load. Please refresh the page or contact us at support@synvra.com",
+        sender: 'bot'
+      });
     };
 
     return () => {
@@ -361,12 +380,24 @@ export default function CustomLiveChat() {
   };
 
   const connectToAgent = async () => {
-    // Check if Crisp is loaded
-    if (!window.Crisp) {
+    // Check if Crisp is fully loaded and ready
+    if (!crispLoaded || !window.Crisp || !window.Crisp.message) {
       addMessage({
-        text: "Chat system is still loading. Please try again in a moment.",
+        text: "Chat system is still initializing... Please wait a moment and try again! 🔄",
         sender: 'bot'
       });
+      
+      // Try to reload Crisp after a delay
+      setTimeout(() => {
+        if (crispLoaded && window.Crisp) {
+          addMessage({
+            text: "✅ Chat system is now ready! Click 'Speak with Agent' to connect.",
+            sender: 'bot'
+          });
+          setShowServiceButtons(true);
+        }
+      }, 3000);
+      
       return;
     }
 
@@ -435,7 +466,7 @@ export default function CustomLiveChat() {
     setCurrentMessage('');
 
     // If Crisp is available and we have a session, send through Crisp
-    if (window.Crisp && chatState.crispSessionId) {
+    if (crispLoaded && window.Crisp && window.Crisp.message && chatState.crispSessionId) {
       try {
         window.Crisp.message.send('text', userMessage);
         return; // Don't show automated responses when agent session is active
