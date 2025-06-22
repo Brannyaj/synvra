@@ -234,7 +234,7 @@ export default function CustomLiveChat() {
   useEffect(() => {
     // Only load Tawk.to once
     if (!window.Tawk_API && !document.getElementById('tawk-script')) {
-      // Add CSS to hide Tawk.to widget completely by default
+      // Add CSS to completely hide Tawk.to widget - we'll use API only
       const style = document.createElement('style');
       style.id = 'tawk-hide-style';
       style.textContent = `
@@ -242,10 +242,15 @@ export default function CustomLiveChat() {
         .tawk-chat-panel,
         .tawk-min-container,
         .tawk-flex-center,
+        .tawk-min-chat-container,
+        .tawk-chat-container,
         div[id*="tawk"] {
           display: none !important;
           visibility: hidden !important;
           opacity: 0 !important;
+          position: absolute !important;
+          left: -9999px !important;
+          top: -9999px !important;
         }
       `;
       document.head.appendChild(style);
@@ -257,25 +262,55 @@ export default function CustomLiveChat() {
       script.charset = 'UTF-8';
       script.setAttribute('crossorigin', '*');
       
-      // Set up Tawk.to to be hidden when it loads
+      // Set up Tawk.to to be completely hidden and use API only
       window.Tawk_LoadStart = new Date();
       window.Tawk_API = window.Tawk_API || {};
       
-      // Hide widget as soon as API is available
+      // Hide widget and set up message listeners
       window.Tawk_API.onLoad = function() {
         setTawkLoaded(true);
         window.Tawk_API.hideWidget();
-        // Keep it hidden with additional CSS
-        const tawkElements = document.querySelectorAll('#tawk-bubble, .tawk-chat-panel, .tawk-min-container, div[id*="tawk"]');
-        tawkElements.forEach(el => {
-          (el as HTMLElement).style.display = 'none';
-          (el as HTMLElement).style.visibility = 'hidden';
-          (el as HTMLElement).style.opacity = '0';
-        });
+        
+        // Listen for agent messages and display them in our custom chat
+        window.Tawk_API.onChatMessageAgent = function(message: any) {
+          addMessage({
+            text: message.text || message.message || message,
+            sender: 'agent',
+            agentName: message.author || 'Support Agent'
+          });
+        };
+
+        // Listen for agent status changes
+        window.Tawk_API.onAgentJoinChat = function(data: any) {
+          setChatState(prev => ({
+            ...prev,
+            agentJoined: true,
+            waitingForAgent: false
+          }));
+          
+          addMessage({
+            text: `👋 Hi! I'm ${data.name || 'Sarah'} from Synvra support. I'm here to help with your project. What can I assist you with?`,
+            sender: 'agent',
+            agentName: data.name || 'Support Agent'
+          });
+        };
+
+        // Listen for agent leaving
+        window.Tawk_API.onAgentLeaveChat = function() {
+          setChatState(prev => ({
+            ...prev,
+            agentJoined: false,
+            waitingForAgent: false
+          }));
+          
+          addMessage({
+            text: "The agent has left the chat. Thank you for contacting Synvra! Feel free to start a new conversation anytime.",
+            sender: 'bot'
+          });
+        };
       };
       
       script.onload = () => {
-        // Double-check hiding after script loads
         setTimeout(() => {
           if (window.Tawk_API) {
             window.Tawk_API.hideWidget();
@@ -363,6 +398,9 @@ export default function CustomLiveChat() {
       return;
     }
 
+    // Set waiting state
+    setChatState(prev => ({ ...prev, waitingForAgent: true }));
+
     // Add connecting message to your custom chat
     addMessage({
       text: "Connecting you with a live agent... Please wait a moment! 🔄",
@@ -381,32 +419,34 @@ export default function CustomLiveChat() {
       });
     }
 
-    // Remove the hiding CSS and show Tawk.to widget
-    setTimeout(() => {
-      // Remove the hiding styles
-      const hideStyle = document.getElementById('tawk-hide-style');
-      if (hideStyle) {
-        hideStyle.remove();
-      }
-
-      // Show and maximize Tawk.to widget
-      window.Tawk_API.showWidget();
-      window.Tawk_API.maximize();
-      
-      // Ensure it's visible by removing any hiding styles
-      const tawkElements = document.querySelectorAll('#tawk-bubble, .tawk-chat-panel, .tawk-min-container, div[id*="tawk"]');
-      tawkElements.forEach(el => {
-        (el as HTMLElement).style.display = '';
-        (el as HTMLElement).style.visibility = '';
-        (el as HTMLElement).style.opacity = '';
+    // Start a chat session in the background (widget stays hidden)
+    try {
+      // Send initial message to trigger agent notification
+      window.Tawk_API.addEvent({
+        event: 'Agent Request',
+        metadata: {
+          userEmail: chatState.userEmail,
+          userName: chatState.userName,
+          message: 'User requested to speak with an agent'
+        }
       });
-      
-      // Add a message to your custom chat
+
+      // Add status message
+      setTimeout(() => {
+        addMessage({
+          text: "✅ Request sent! An agent will join this conversation shortly. You can continue chatting here - no need to switch windows!",
+          sender: 'bot'
+        });
+      }, 1500);
+
+    } catch (error) {
+      console.error('Error connecting to agent:', error);
       addMessage({
-        text: "✅ Live chat opened! You can now speak with our agent in the chat window that just appeared. Feel free to close this window or keep it open for reference.",
+        text: "There was an issue connecting to our live chat. Please try again or contact us directly.",
         sender: 'bot'
       });
-    }, 1000);
+      setChatState(prev => ({ ...prev, waitingForAgent: false }));
+    }
   };
 
   const sendMessage = async () => {
@@ -425,6 +465,24 @@ export default function CustomLiveChat() {
 
     // Clear input immediately
     setCurrentMessage('');
+
+    // If agent is connected, send message through Tawk.to API
+    if (chatState.agentJoined && window.Tawk_API) {
+      try {
+        // Send message to agent through Tawk.to
+        window.Tawk_API.addEvent({
+          event: 'User Message',
+          metadata: {
+            message: userMessage,
+            userEmail: chatState.userEmail,
+            userName: chatState.userName
+          }
+        });
+        return; // Don't show automated responses when agent is connected
+      } catch (error) {
+        console.error('Error sending message to agent:', error);
+      }
+    }
 
     // Check if user wants to speak with agent
     if (handleAgentRequest(userMessage)) {
