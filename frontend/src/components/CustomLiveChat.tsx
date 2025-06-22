@@ -234,19 +234,54 @@ export default function CustomLiveChat() {
   useEffect(() => {
     // Only load Tawk.to once
     if (!window.Tawk_API && !document.getElementById('tawk-script')) {
+      // Add CSS to hide Tawk.to widget completely by default
+      const style = document.createElement('style');
+      style.id = 'tawk-hide-style';
+      style.textContent = `
+        #tawk-bubble, 
+        .tawk-chat-panel,
+        .tawk-min-container,
+        .tawk-flex-center,
+        div[id*="tawk"] {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+        }
+      `;
+      document.head.appendChild(style);
+
       const script = document.createElement('script');
       script.id = 'tawk-script';
       script.async = true;
-      script.src = 'https://embed.tawk.to/685817e2d74f68191345b1d5/1iuc1qjl7'; // Your actual Tawk.to Property ID and Widget ID
+      script.src = 'https://embed.tawk.to/685817e2d74f68191345b1d5/1iuc1qjl7';
       script.charset = 'UTF-8';
       script.setAttribute('crossorigin', '*');
       
-      script.onload = () => {
+      // Set up Tawk.to to be hidden when it loads
+      window.Tawk_LoadStart = new Date();
+      window.Tawk_API = window.Tawk_API || {};
+      
+      // Hide widget as soon as API is available
+      window.Tawk_API.onLoad = function() {
         setTawkLoaded(true);
-        // Hide Tawk.to widget by default - we'll show it only when needed
-        if (window.Tawk_API) {
-          window.Tawk_API.hideWidget();
-        }
+        window.Tawk_API.hideWidget();
+        // Keep it hidden with additional CSS
+        const tawkElements = document.querySelectorAll('#tawk-bubble, .tawk-chat-panel, .tawk-min-container, div[id*="tawk"]');
+        tawkElements.forEach(el => {
+          (el as HTMLElement).style.display = 'none';
+          (el as HTMLElement).style.visibility = 'hidden';
+          (el as HTMLElement).style.opacity = '0';
+        });
+      };
+      
+      script.onload = () => {
+        // Double-check hiding after script loads
+        setTimeout(() => {
+          if (window.Tawk_API) {
+            window.Tawk_API.hideWidget();
+            setTawkLoaded(true);
+          }
+        }, 100);
       };
       
       document.head.appendChild(script);
@@ -346,10 +381,25 @@ export default function CustomLiveChat() {
       });
     }
 
-    // Show Tawk.to widget and maximize it
+    // Remove the hiding CSS and show Tawk.to widget
     setTimeout(() => {
+      // Remove the hiding styles
+      const hideStyle = document.getElementById('tawk-hide-style');
+      if (hideStyle) {
+        hideStyle.remove();
+      }
+
+      // Show and maximize Tawk.to widget
       window.Tawk_API.showWidget();
       window.Tawk_API.maximize();
+      
+      // Ensure it's visible by removing any hiding styles
+      const tawkElements = document.querySelectorAll('#tawk-bubble, .tawk-chat-panel, .tawk-min-container, div[id*="tawk"]');
+      tawkElements.forEach(el => {
+        (el as HTMLElement).style.display = '';
+        (el as HTMLElement).style.visibility = '';
+        (el as HTMLElement).style.opacity = '';
+      });
       
       // Add a message to your custom chat
       addMessage({
