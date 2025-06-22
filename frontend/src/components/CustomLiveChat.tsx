@@ -79,6 +79,8 @@ export default function CustomLiveChat() {
   const [currentMessage, setCurrentMessage] = useState('');
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [formName, setFormName] = useState('');
+  const [formEmail, setFormEmail] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -260,19 +262,27 @@ export default function CustomLiveChat() {
     setCurrentMessage('');
   };
 
-  const handleEmailSubmit = (email: string, name: string) => {
-    setChatState(prev => ({
-      ...prev,
-      userEmail: email,
-      userName: name
-    }));
+  const handleEmailSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     
-    setShowEmailForm(false);
-    
-    addMessage({
-      text: `Hi ${name}! How can I assist you today?`,
-      sender: 'bot'
-    });
+    if (formEmail.trim() && formName.trim()) {
+      setChatState(prev => ({
+        ...prev,
+        userEmail: formEmail.trim(),
+        userName: formName.trim()
+      }));
+      
+      setShowEmailForm(false);
+      
+      addMessage({
+        text: `Hi ${formName.trim()}! How can I assist you today?`,
+        sender: 'bot'
+      });
+      
+      // Clear form
+      setFormName('');
+      setFormEmail('');
+    }
   };
 
   const openChat = () => {
@@ -291,6 +301,11 @@ export default function CustomLiveChat() {
       waitingForAgent: false,
       agentJoined: false
     }));
+    
+    // Reset form
+    setFormName('');
+    setFormEmail('');
+    setShowEmailForm(false);
   };
 
   return (
@@ -388,36 +403,33 @@ export default function CustomLiveChat() {
                 <p className="text-gray-600 text-sm">Start a conversation with our team</p>
               </div>
               
-              <form onSubmit={(e) => {
-                e.preventDefault();
-                const formData = new FormData(e.target as HTMLFormElement);
-                const email = formData.get('email') as string;
-                const name = formData.get('name') as string;
-                if (email && name) {
-                  handleEmailSubmit(email, name);
-                }
-              }} className="space-y-4">
+              <form onSubmit={handleEmailSubmit} className="space-y-4">
                 <div>
                   <input
                     type="text"
-                    name="name"
+                    value={formName}
+                    onChange={(e) => setFormName(e.target.value)}
                     placeholder="Your name"
                     className="w-full p-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-synvra-blue focus:border-transparent transition-all duration-200"
                     required
+                    autoComplete="name"
                   />
                 </div>
                 <div>
                   <input
                     type="email"
-                    name="email"
+                    value={formEmail}
+                    onChange={(e) => setFormEmail(e.target.value)}
                     placeholder="Your email address"
                     className="w-full p-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-synvra-blue focus:border-transparent transition-all duration-200"
                     required
+                    autoComplete="email"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-synvra-blue to-blue-600 hover:from-blue-700 hover:to-blue-800 text-white py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg"
+                  disabled={!formName.trim() || !formEmail.trim()}
+                  className="w-full bg-gradient-to-r from-synvra-blue to-blue-600 hover:from-blue-700 hover:to-blue-800 text-white py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   Start Conversation 🚀
                 </button>
