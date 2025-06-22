@@ -206,7 +206,9 @@ export default function CustomLiveChat() {
   const [formName, setFormName] = useState('');
   const [formEmail, setFormEmail] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [showServiceButtons, setShowServiceButtons] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -285,6 +287,12 @@ export default function CustomLiveChat() {
         text: text,
         sender: 'bot'
       });
+      // Show service buttons again after bot response (except when connecting to agent)
+      if (!text.includes('connecting you with') && !text.includes('connect you with')) {
+        setTimeout(() => {
+          setShowServiceButtons(true);
+        }, 500);
+      }
     }, delay + Math.random() * 500); // Add some randomness to feel more natural
   };
 
@@ -349,6 +357,9 @@ export default function CustomLiveChat() {
     if (!currentMessage.trim()) return;
 
     const userMessage = currentMessage.trim();
+    
+    // Hide service buttons when user sends a message
+    setShowServiceButtons(false);
     
     // Add user message
     addMessage({
@@ -424,12 +435,42 @@ export default function CustomLiveChat() {
             text: `Welcome to Synvra. How can I assist you today?`,
             sender: 'bot'
           });
+          // Show service buttons after welcome message
+          setTimeout(() => {
+            setShowServiceButtons(true);
+          }, 500);
         }, 1500);
       }, 1000);
       
       // Clear form
       setFormName('');
       setFormEmail('');
+    }
+  };
+
+  const handleFileUpload = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Add file upload message
+      addMessage({
+        text: `📎 Uploaded: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`,
+        sender: 'user'
+      });
+
+      // Bot response for file upload
+      setTimeout(() => {
+        addBotMessageWithTyping(
+          `Thank you for uploading "${file.name}"! I've received your file. An agent will review it and get back to you shortly.\n\nIs there anything specific about this file you'd like to discuss? Type "agent" to speak with someone right away!`,
+          1000
+        );
+      }, 500);
+
+      // Reset file input
+      event.target.value = '';
     }
   };
 
@@ -450,10 +491,11 @@ export default function CustomLiveChat() {
       agentJoined: false
     }));
     
-    // Reset form
+    // Reset form and states
     setFormName('');
     setFormEmail('');
     setShowEmailForm(false);
+    setShowServiceButtons(false);
   };
 
   return (
@@ -615,11 +657,10 @@ export default function CustomLiveChat() {
               </div>
             ))}
             
-            {/* Service Selection Buttons - Show after welcome message */}
-            {chatState.messages.length > 0 && 
-             chatState.messages[chatState.messages.length - 1]?.text?.includes('How can I assist you today?') && 
-             !isTyping && (
+            {/* Service Selection Buttons - Show after welcome message or after responses */}
+            {showServiceButtons && !isTyping && !chatState.waitingForAgent && !chatState.agentJoined && (
               <div className="flex flex-col space-y-2 px-4 animate-in slide-in-from-bottom-2 duration-300">
+                <div className="text-xs text-gray-500 mb-2 text-center">Choose a service to learn more:</div>
                 <div className="flex flex-wrap gap-2">
                   <button 
                     onClick={() => setCurrentMessage('Web Development')}
@@ -731,10 +772,20 @@ export default function CustomLiveChat() {
                     onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
                     disabled={isTyping}
                   />
+                  {/* Hidden file input */}
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    className="hidden"
+                    accept=".pdf,.doc,.docx,.txt,.png,.jpg,.jpeg,.gif,.zip,.rar"
+                  />
                   {/* Upload Icon */}
                   <button
+                    onClick={handleFileUpload}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors duration-200"
                     aria-label="Upload file"
+                    disabled={isTyping}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
