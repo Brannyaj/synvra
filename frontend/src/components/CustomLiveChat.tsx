@@ -410,7 +410,7 @@ export default function CustomLiveChat() {
                     value={formName}
                     onChange={(e) => setFormName(e.target.value)}
                     placeholder="Your name"
-                    className="w-full p-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-synvra-blue focus:border-transparent transition-all duration-200"
+                    className="w-full p-3 border border-gray-300 rounded-xl text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-synvra-blue focus:border-transparent transition-all duration-200"
                     required
                     autoComplete="name"
                   />
@@ -421,7 +421,7 @@ export default function CustomLiveChat() {
                     value={formEmail}
                     onChange={(e) => setFormEmail(e.target.value)}
                     placeholder="Your email address"
-                    className="w-full p-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-synvra-blue focus:border-transparent transition-all duration-200"
+                    className="w-full p-3 border border-gray-300 rounded-xl text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-synvra-blue focus:border-transparent transition-all duration-200"
                     required
                     autoComplete="email"
                   />
@@ -495,7 +495,7 @@ export default function CustomLiveChat() {
                     value={currentMessage}
                     onChange={(e) => setCurrentMessage(e.target.value)}
                     placeholder="Type your message..."
-                    className="w-full p-3 border border-gray-300 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-synvra-blue focus:border-transparent transition-all duration-200 resize-none"
+                    className="w-full p-3 border border-gray-300 rounded-2xl text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-synvra-blue focus:border-transparent transition-all duration-200 resize-none"
                     onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
                   />
                 </div>
