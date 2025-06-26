@@ -5,13 +5,6 @@ import Link from 'next/link';
 
 export default function AffiliatePage() {
   const [scrolled, setScrolled] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    website: '',
-    paymentMethod: 'paypal',
-    paymentDetails: ''
-  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,20 +14,6 @@ export default function AffiliatePage() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Submit affiliate application
-    console.log('Affiliate application:', formData);
-    alert('Thank you for your application! We will review it and get back to you within 24 hours.');
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
 
   return (
     <main className="min-h-screen bg-synvra-black">
@@ -62,7 +41,7 @@ export default function AffiliatePage() {
             </h1>
             <p className="text-xl text-synvra-gray-300 max-w-3xl mx-auto">
               Earn 4% commission for every client you refer. Join our affiliate program and 
-              start earning money by promoting our premium web development services.
+              start earning money by promoting our services.
             </p>
           </div>
         </div>
@@ -82,7 +61,7 @@ export default function AffiliatePage() {
               <div className="text-4xl mb-4">💵</div>
               <h3 className="text-xl font-bold mb-4 text-synvra-white">High Commission</h3>
               <p className="text-synvra-gray-300">
-                Earn 4% commission on every deposit payment. That's $1.00 for every $25 deposit!
+                Earn 4% commission on each referral.
               </p>
             </div>
             
@@ -158,98 +137,50 @@ export default function AffiliatePage() {
         </div>
       </section>
 
+      {/* CTA Section */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold text-synvra-white mb-6">Ready to Start Earning?</h2>
+          <p className="text-synvra-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+            Join our affiliate program today and start earning commissions on every successful referral.
+          </p>
+          <Link 
+            href="/affiliate/auth"
+            className="button-primary text-lg px-8 py-4 inline-block"
+          >
+            Join Affiliate Program
+          </Link>
+        </div>
+      </section>
+
       {/* Application Form */}
-      <section className="py-20">
+      <section className="py-20 bg-synvra-white/5 relative overflow-hidden">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-synvra-white">
-                Join Our Program
-              </h2>
-              <p className="text-synvra-gray-300">
-                Fill out the form below to apply for our affiliate program. We'll review your application and get back to you within 24 hours.
+              <h2 className="text-4xl font-bold text-synvra-white mb-6">Apply to Join</h2>
+              <p className="text-synvra-gray-300 text-lg">
+                Fill out the application form to become a Synvra affiliate partner
               </p>
             </div>
-            
-            <form onSubmit={handleSubmit} className="glass-card p-8">
-              <div className="grid md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label className="block text-synvra-white mb-2">Full Name *</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 bg-synvra-white/10 border border-synvra-white/20 rounded-lg text-synvra-white placeholder-synvra-gray-400 focus:outline-none focus:border-synvra-blue"
-                    placeholder="Your full name"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-synvra-white mb-2">Email Address *</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 bg-synvra-white/10 border border-synvra-white/20 rounded-lg text-synvra-white placeholder-synvra-gray-400 focus:outline-none focus:border-synvra-blue"
-                    placeholder="your@email.com"
-                  />
-                </div>
+
+            <div className="glass-card p-8">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-synvra-white mb-4">Ready to Get Started?</h3>
+                <p className="text-synvra-gray-300 mb-8">
+                  Create your account to access your personalized affiliate dashboard and start earning commissions.
+                </p>
+                <Link 
+                  href="/affiliate/auth"
+                  className="button-primary text-lg px-8 py-4 inline-block"
+                >
+                  Sign Up Now
+                </Link>
+                <p className="text-synvra-gray-400 text-sm mt-4">
+                  Already have an account? <Link href="/affiliate/auth" className="text-synvra-blue hover:text-synvra-white">Sign in here</Link>
+                </p>
               </div>
-              
-              <div className="mb-6">
-                <label className="block text-synvra-white mb-2">Website/Social Media (Optional)</label>
-                <input
-                  type="url"
-                  name="website"
-                  value={formData.website}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-synvra-white/10 border border-synvra-white/20 rounded-lg text-synvra-white placeholder-synvra-gray-400 focus:outline-none focus:border-synvra-blue"
-                  placeholder="https://your-website.com"
-                />
-              </div>
-              
-              <div className="grid md:grid-cols-2 gap-6 mb-8">
-                <div>
-                  <label className="block text-synvra-white mb-2">Payment Method *</label>
-                  <select
-                    name="paymentMethod"
-                    value={formData.paymentMethod}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 bg-synvra-white/10 border border-synvra-white/20 rounded-lg text-synvra-white focus:outline-none focus:border-synvra-blue"
-                  >
-                    <option value="paypal">PayPal</option>
-                    <option value="bank">Bank Transfer</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label className="block text-synvra-white mb-2">
-                    {formData.paymentMethod === 'paypal' ? 'PayPal Email' : 'Bank Account Details'} *
-                  </label>
-                  <input
-                    type={formData.paymentMethod === 'paypal' ? 'email' : 'text'}
-                    name="paymentDetails"
-                    value={formData.paymentDetails}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 bg-synvra-white/10 border border-synvra-white/20 rounded-lg text-synvra-white placeholder-synvra-gray-400 focus:outline-none focus:border-synvra-blue"
-                    placeholder={formData.paymentMethod === 'paypal' ? 'paypal@email.com' : 'Account details'}
-                  />
-                </div>
-              </div>
-              
-              <button
-                type="submit"
-                className="w-full button-primary text-lg py-4"
-              >
-                Apply Now
-              </button>
-            </form>
+            </div>
           </div>
         </div>
       </section>
