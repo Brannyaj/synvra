@@ -56,6 +56,9 @@ export default function Home() {
               <Link href="/faq" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">
                 FAQ
               </Link>
+              <Link href="/affiliate" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">
+                Affiliate Program
+              </Link>
               <Link href="/contact" className="text-synvra-gray-300 hover:text-synvra-white transition-colors">
                 Contact
               </Link>
@@ -114,6 +117,9 @@ export default function Home() {
               </Link>
               <Link href="/faq" className="block text-synvra-gray-200 hover:text-synvra-white transition-colors py-2">
                 FAQ
+              </Link>
+              <Link href="/affiliate" className="block text-synvra-gray-200 hover:text-synvra-white transition-colors py-2">
+                Affiliate Program
               </Link>
               <Link href="/contact" className="block text-synvra-gray-200 hover:text-synvra-white transition-colors py-2">
                 Contact
