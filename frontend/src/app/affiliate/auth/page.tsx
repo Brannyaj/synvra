@@ -42,17 +42,10 @@ export default function AffiliateAuth() {
       website: formData.website
     });
     
-    alert('Account created successfully! Your application is pending approval. You will receive an email once approved.');
+    alert('Account created successfully! Redirecting to your dashboard to complete your profile.');
     
-    // Reset form
-    setFormData({
-      ...formData,
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      website: ''
-    });
+    // Redirect to dashboard to complete profile
+    window.location.href = '/affiliate/dashboard';
   };
 
   const handleSignIn = async (e: React.FormEvent) => {
@@ -64,13 +57,10 @@ export default function AffiliateAuth() {
       password: formData.loginPassword
     });
     
-    // Simulate login check
-    if (formData.loginEmail && formData.loginPassword) {
-      // TODO: Check if approved
-      alert('Login successful! Redirecting to dashboard...');
-      // Redirect to dashboard
-      window.location.href = '/affiliate/dashboard';
-    }
+    alert('Signed in successfully! Redirecting to your dashboard.');
+    
+    // Redirect to dashboard
+    window.location.href = '/affiliate/dashboard';
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

@@ -35,7 +35,6 @@ export default function AffiliatePage() {
       <section className="pt-32 pb-20 relative overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <div className="text-6xl mb-6">💰</div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-synvra-white">
               Affiliate Program
             </h1>
