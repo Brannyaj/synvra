@@ -100,7 +100,7 @@ export default function AffiliatePage() {
               </div>
               <h3 className="text-lg font-bold mb-2 text-synvra-white">Sign Up</h3>
               <p className="text-synvra-gray-300">
-                Join our affiliate program with a simple application form.
+                Create your affiliate account and get approved to start earning.
               </p>
             </div>
             
