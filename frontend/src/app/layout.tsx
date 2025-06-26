@@ -131,6 +131,7 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Temporarily disabled FirstPromoter until environment variable is added to Netlify
         <Script
           id="firstpromoter-tracking"
           strategy="afterInteractive"
@@ -146,6 +147,7 @@ export default function RootLayout({
             `,
           }}
         />
+        */}
       </head>
       <body className={inter.className}>
         {children}
