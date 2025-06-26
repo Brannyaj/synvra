@@ -57,6 +57,23 @@ export default function AffiliateDashboard() {
     };
 
     window.addEventListener('scroll', handleScroll);
+    
+    // Load user data from localStorage (from signup)
+    try {
+      const storedUserData = localStorage.getItem('affiliateUserData');
+      if (storedUserData) {
+        const userData = JSON.parse(storedUserData);
+        setProfile(prev => ({
+          ...prev,
+          name: userData.name || '',
+          email: userData.email || '',
+          website: userData.website || ''
+        }));
+      }
+    } catch (error) {
+      console.error('Error loading user data:', error);
+    }
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -85,7 +102,7 @@ export default function AffiliateDashboard() {
   };
 
   const handleProfileSave = () => {
-    if (profile.name && profile.email && profile.bio && profile.experience) {
+    if (profile.name && profile.bio && profile.experience) {
       setProfileComplete(true);
       setShowProfileForm(false);
       
@@ -98,7 +115,7 @@ export default function AffiliateDashboard() {
         alert('Profile saved! Please add your payment method to submit for review.');
       }
     } else {
-      alert('Please fill in all required profile fields.');
+      alert('Please fill in all required profile fields (Bio and Marketing Experience are required).');
     }
   };
 
@@ -190,9 +207,11 @@ export default function AffiliateDashboard() {
                     type="text"
                     value={profile.name}
                     onChange={(e) => setProfile({...profile, name: e.target.value})}
-                    className="w-full px-4 py-3 bg-synvra-white/10 border border-synvra-white/20 rounded-lg text-synvra-white placeholder-synvra-gray-400 focus:outline-none focus:border-synvra-blue"
+                    readOnly
+                    className="w-full px-4 py-3 bg-synvra-white/5 border border-synvra-white/20 rounded-lg text-synvra-gray-300 cursor-not-allowed"
                     placeholder="Your full name"
                   />
+                  <p className="text-xs text-synvra-gray-400 mt-1">From your signup information</p>
                 </div>
                 
                 <div>
@@ -201,9 +220,11 @@ export default function AffiliateDashboard() {
                     type="email"
                     value={profile.email}
                     onChange={(e) => setProfile({...profile, email: e.target.value})}
-                    className="w-full px-4 py-3 bg-synvra-white/10 border border-synvra-white/20 rounded-lg text-synvra-white placeholder-synvra-gray-400 focus:outline-none focus:border-synvra-blue"
+                    readOnly
+                    className="w-full px-4 py-3 bg-synvra-white/5 border border-synvra-white/20 rounded-lg text-synvra-gray-300 cursor-not-allowed"
                     placeholder="your@email.com"
                   />
+                  <p className="text-xs text-synvra-gray-400 mt-1">From your signup information</p>
                 </div>
                 
                 <div>
@@ -375,32 +396,64 @@ export default function AffiliateDashboard() {
                       className="w-full px-4 py-3 bg-synvra-white/10 border border-synvra-white/20 rounded-lg text-synvra-white focus:outline-none focus:border-synvra-blue"
                     >
                       <option value="">Select payment method</option>
-                      <option value="paypal">PayPal</option>
-                      <option value="bank">Bank Transfer</option>
+                      <option value="paypal">PayPal (Global)</option>
+                      <option value="wise">Wise (International Bank Transfer)</option>
+                      <option value="bank">Local Bank Transfer</option>
+                      <option value="crypto">Cryptocurrency (USDC/USDT)</option>
                     </select>
                   </div>
                   
                   <div>
                     <label className="block text-synvra-white mb-2">
-                      {paymentMethod === 'paypal' ? 'PayPal Email' : 'Bank Account Details'}
+                      {paymentMethod === 'paypal' && 'PayPal Email Address'}
+                      {paymentMethod === 'wise' && 'Wise Account Email'}
+                      {paymentMethod === 'bank' && 'Bank Account Details'}
+                      {paymentMethod === 'crypto' && 'Crypto Wallet Address'}
+                      {!paymentMethod && 'Payment Details'}
                     </label>
-                    <input
-                      type={paymentMethod === 'paypal' ? 'email' : 'text'}
-                      value={paymentDetails}
-                      onChange={(e) => setPaymentDetails(e.target.value)}
-                      className="w-full px-4 py-3 bg-synvra-white/10 border border-synvra-white/20 rounded-lg text-synvra-white placeholder-synvra-gray-400 focus:outline-none focus:border-synvra-blue"
-                      placeholder={paymentMethod === 'paypal' ? 'paypal@email.com' : 'Account details'}
-                    />
+                    {paymentMethod === 'bank' ? (
+                      <textarea
+                        value={paymentDetails}
+                        onChange={(e) => setPaymentDetails(e.target.value)}
+                        rows={4}
+                        className="w-full px-4 py-3 bg-synvra-white/10 border border-synvra-white/20 rounded-lg text-synvra-white placeholder-synvra-gray-400 focus:outline-none focus:border-synvra-blue"
+                        placeholder="Bank Name:&#10;Account Number:&#10;Routing/SWIFT Code:&#10;Account Holder Name:&#10;Address:"
+                      />
+                    ) : (
+                      <input
+                        type={paymentMethod === 'paypal' || paymentMethod === 'wise' ? 'email' : 'text'}
+                        value={paymentDetails}
+                        onChange={(e) => setPaymentDetails(e.target.value)}
+                        className="w-full px-4 py-3 bg-synvra-white/10 border border-synvra-white/20 rounded-lg text-synvra-white placeholder-synvra-gray-400 focus:outline-none focus:border-synvra-blue"
+                        placeholder={
+                          paymentMethod === 'paypal' ? 'your-paypal@email.com' :
+                          paymentMethod === 'wise' ? 'your-wise@email.com' :
+                          paymentMethod === 'crypto' ? '0x... or wallet address' :
+                          'Enter payment details'
+                        }
+                      />
+                    )}
                   </div>
+                  
+                  {paymentMethod && (
+                    <div className="bg-synvra-white/5 p-4 rounded-lg">
+                      <div className="text-sm text-synvra-gray-300">
+                        {paymentMethod === 'paypal' && '💡 PayPal is available in 200+ countries and supports multiple currencies.'}
+                        {paymentMethod === 'wise' && '💡 Wise offers low-fee international transfers to 80+ countries.'}
+                        {paymentMethod === 'bank' && '💡 Local bank transfers are available for most countries. Processing may take 3-5 business days.'}
+                        {paymentMethod === 'crypto' && '💡 Crypto payments (USDC/USDT) are instant and available globally. Polygon network for low fees.'}
+                      </div>
+                    </div>
+                  )}
                   
                   <div className="flex space-x-3">
                     <button
                       onClick={handlePaymentSave}
                       className="flex-1 button-primary py-2"
                     >
-                      Save
+                      Save Payment Method
                     </button>
-                    {paymentMethod && (
+                    {paymentComplete && (
                       <button
                         onClick={() => setShowPaymentForm(false)}
                         className="flex-1 bg-synvra-white/10 text-synvra-white py-2 px-4 rounded-lg hover:bg-synvra-white/20 transition-colors"
@@ -413,11 +466,17 @@ export default function AffiliateDashboard() {
               ) : (
                 <div className="space-y-4">
                   <div className="p-4 bg-synvra-white/5 rounded-lg">
-                    <div className="text-synvra-white font-medium">
-                      {paymentMethod === 'paypal' ? 'PayPal' : 'Bank Transfer'}
+                    <div className="text-synvra-white font-medium mb-1">
+                      {paymentMethod === 'paypal' && '💳 PayPal'}
+                      {paymentMethod === 'wise' && '🌍 Wise Transfer'}
+                      {paymentMethod === 'bank' && '🏦 Bank Transfer'}
+                      {paymentMethod === 'crypto' && '₿ Cryptocurrency'}
                     </div>
                     <div className="text-synvra-gray-400 text-sm">
-                      {paymentMethod === 'paypal' ? paymentDetails : '••••••••'}
+                      {paymentMethod === 'paypal' && paymentDetails}
+                      {paymentMethod === 'wise' && paymentDetails}
+                      {paymentMethod === 'bank' && '••••••••'}
+                      {paymentMethod === 'crypto' && `${paymentDetails.slice(0, 6)}...${paymentDetails.slice(-4)}`}
                     </div>
                   </div>
                   <button

@@ -36,11 +36,16 @@ export default function AffiliateAuth() {
     }
 
     // TODO: Submit to backend API
-    console.log('Sign up data:', {
+    const userData = {
       name: formData.name,
       email: formData.email,
       website: formData.website
-    });
+    };
+    
+    console.log('Sign up data:', userData);
+    
+    // Store user data for dashboard auto-fill (temporary solution)
+    localStorage.setItem('affiliateUserData', JSON.stringify(userData));
     
     alert('Account created successfully! Redirecting to your dashboard to complete your profile.');
     
