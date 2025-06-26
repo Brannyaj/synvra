@@ -143,12 +143,14 @@ export default function AffiliatePage() {
           <p className="text-synvra-gray-300 text-lg mb-8 max-w-2xl mx-auto">
             Join our affiliate program today and start earning commissions on every successful referral.
           </p>
-          <Link 
-            href="/affiliate/auth"
+          <a 
+            href="https://synvra.firstpromoter.com"
+            target="_blank"
+            rel="noopener noreferrer"
             className="button-primary text-lg px-8 py-4 inline-block"
           >
             Join Affiliate Program
-          </Link>
+          </a>
         </div>
       </section>
 
