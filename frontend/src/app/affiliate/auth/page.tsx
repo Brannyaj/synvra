@@ -13,8 +13,6 @@ export default function AffiliateAuth() {
     password: '',
     confirmPassword: '',
     website: '',
-    paymentMethod: 'paypal',
-    paymentDetails: '',
     // Sign in fields
     loginEmail: '',
     loginPassword: ''
@@ -41,9 +39,7 @@ export default function AffiliateAuth() {
     console.log('Sign up data:', {
       name: formData.name,
       email: formData.email,
-      website: formData.website,
-      paymentMethod: formData.paymentMethod,
-      paymentDetails: formData.paymentDetails
+      website: formData.website
     });
     
     alert('Account created successfully! Your application is pending approval. You will receive an email once approved.');
@@ -55,8 +51,7 @@ export default function AffiliateAuth() {
       email: '',
       password: '',
       confirmPassword: '',
-      website: '',
-      paymentDetails: ''
+      website: ''
     });
   };
 
@@ -200,35 +195,6 @@ export default function AffiliateAuth() {
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 bg-synvra-white/10 border border-synvra-white/20 rounded-lg text-synvra-white placeholder-synvra-gray-400 focus:outline-none focus:border-synvra-blue"
                       placeholder="https://your-website.com"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-synvra-white mb-2">Payment Method *</label>
-                    <select
-                      name="paymentMethod"
-                      value={formData.paymentMethod}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 bg-synvra-white/10 border border-synvra-white/20 rounded-lg text-synvra-white focus:outline-none focus:border-synvra-blue"
-                    >
-                      <option value="paypal">PayPal</option>
-                      <option value="bank">Bank Transfer</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-synvra-white mb-2">
-                      {formData.paymentMethod === 'paypal' ? 'PayPal Email' : 'Bank Account Details'} *
-                    </label>
-                    <input
-                      type={formData.paymentMethod === 'paypal' ? 'email' : 'text'}
-                      name="paymentDetails"
-                      value={formData.paymentDetails}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 bg-synvra-white/10 border border-synvra-white/20 rounded-lg text-synvra-white placeholder-synvra-gray-400 focus:outline-none focus:border-synvra-blue"
-                      placeholder={formData.paymentMethod === 'paypal' ? 'paypal@email.com' : 'Account details'}
                     />
                   </div>
 

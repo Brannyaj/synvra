@@ -37,7 +37,7 @@ export default function AffiliatePage() {
           <div className="text-center mb-16">
             <div className="text-6xl mb-6">💰</div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-synvra-white">
-              Synvra Affiliate Program
+              Affiliate Program
             </h1>
             <p className="text-xl text-synvra-gray-300 max-w-3xl mx-auto">
               Earn 4% commission for every client you refer. Join our affiliate program and 
@@ -130,7 +130,7 @@ export default function AffiliatePage() {
               </div>
               <h3 className="text-lg font-bold mb-2 text-synvra-white">Earn Money</h3>
               <p className="text-synvra-gray-300">
-                Get paid 4% commission when referred clients pay their deposit.
+                Get paid 4% commission when referred clients purchase our services.
               </p>
             </div>
           </div>
@@ -153,38 +153,6 @@ export default function AffiliatePage() {
         </div>
       </section>
 
-      {/* Application Form */}
-      <section className="py-20 bg-synvra-white/5 relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-synvra-white mb-6">Apply to Join</h2>
-              <p className="text-synvra-gray-300 text-lg">
-                Fill out the application form to become a Synvra affiliate partner
-              </p>
-            </div>
-
-            <div className="glass-card p-8">
-              <div className="text-center">
-                <h3 className="text-2xl font-bold text-synvra-white mb-4">Ready to Get Started?</h3>
-                <p className="text-synvra-gray-300 mb-8">
-                  Create your account to access your personalized affiliate dashboard and start earning commissions.
-                </p>
-                <Link 
-                  href="/affiliate/auth"
-                  className="button-primary text-lg px-8 py-4 inline-block"
-                >
-                  Sign Up Now
-                </Link>
-                <p className="text-synvra-gray-400 text-sm mt-4">
-                  Already have an account? <Link href="/affiliate/auth" className="text-synvra-blue hover:text-synvra-white">Sign in here</Link>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* FAQ Section */}
       <section className="py-20 bg-synvra-white/5">
         <div className="container mx-auto px-4">
@@ -198,9 +166,8 @@ export default function AffiliatePage() {
             <div className="glass-card p-6">
               <h3 className="text-lg font-bold mb-3 text-synvra-white">How much can I earn?</h3>
               <p className="text-synvra-gray-300">
-                You earn 4% commission on every deposit payment. Our minimum project cost is $100, 
-                so the 25% deposit ($25) earns you $1.00 per referral. With 50 referrals per month, 
-                you can earn $50+.
+                You earn 4% commission on every service purchase. Our minimum service cost is $2,000, 
+                so you earn $80 per referral. With 10 referrals per month, you can earn $800+.
               </p>
             </div>
             

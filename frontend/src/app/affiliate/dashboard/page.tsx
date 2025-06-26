@@ -24,6 +24,9 @@ export default function AffiliateDashboard() {
   });
   const [affiliateCode] = useState('SYN-AF-2024-001');
   const [copySuccess, setCopySuccess] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('');
+  const [paymentDetails, setPaymentDetails] = useState('');
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,6 +58,16 @@ export default function AffiliateDashboard() {
       // TODO: Submit payout request to backend
     } else {
       alert('Minimum payout amount is $50. Keep promoting to reach the threshold!');
+    }
+  };
+
+  const handlePaymentSave = () => {
+    if (paymentMethod && paymentDetails) {
+      // TODO: Save to backend
+      alert('Payment method saved successfully!');
+      setShowPaymentForm(false);
+    } else {
+      alert('Please fill in all payment details.');
     }
   };
 
@@ -138,45 +151,118 @@ export default function AffiliateDashboard() {
                   <button
                     onClick={handlePayout}
                     className={`w-full py-3 px-6 rounded-lg font-medium transition-colors ${
-                      stats.availableForPayout >= 50
+                      stats.availableForPayout >= 50 && paymentMethod
                         ? 'button-primary'
                         : 'bg-synvra-white/10 text-synvra-gray-400 cursor-not-allowed'
                     }`}
-                    disabled={stats.availableForPayout < 50}
+                    disabled={stats.availableForPayout < 50 || !paymentMethod}
                   >
                     Request Payout (Min. $50)
                   </button>
+                  {!paymentMethod && (
+                    <p className="text-sm text-synvra-gray-400 mt-2 text-center">
+                      Add payment method first
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
 
             <div className="glass-card p-8">
-              <h3 className="text-2xl font-bold text-synvra-white mb-6">Quick Actions</h3>
-              <div className="space-y-4">
-                <button
-                  onClick={() => copyToClipboard(generateReferralLink(), 'Homepage link')}
-                  className="w-full p-4 bg-synvra-white/10 hover:bg-synvra-white/20 rounded-lg text-left transition-colors"
-                >
-                  <div className="font-medium text-synvra-white">Copy Homepage Link</div>
-                  <div className="text-sm text-synvra-gray-400">Share the main website</div>
-                </button>
-                
-                <button
-                  onClick={() => copyToClipboard(generateReferralLink('/services'), 'Services link')}
-                  className="w-full p-4 bg-synvra-white/10 hover:bg-synvra-white/20 rounded-lg text-left transition-colors"
-                >
-                  <div className="font-medium text-synvra-white">Copy Services Link</div>
-                  <div className="text-sm text-synvra-gray-400">Direct to services page</div>
-                </button>
-                
-                <button
-                  onClick={() => copyToClipboard(generateReferralLink('/contact'), 'Contact link')}
-                  className="w-full p-4 bg-synvra-white/10 hover:bg-synvra-white/20 rounded-lg text-left transition-colors"
-                >
-                  <div className="font-medium text-synvra-white">Copy Contact Link</div>
-                  <div className="text-sm text-synvra-gray-400">Direct to contact form</div>
-                </button>
-              </div>
+              <h3 className="text-2xl font-bold text-synvra-white mb-6">Payment Settings</h3>
+              {!paymentMethod || showPaymentForm ? (
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-synvra-white mb-2">Payment Method</label>
+                    <select
+                      value={paymentMethod}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                      className="w-full px-4 py-3 bg-synvra-white/10 border border-synvra-white/20 rounded-lg text-synvra-white focus:outline-none focus:border-synvra-blue"
+                    >
+                      <option value="">Select payment method</option>
+                      <option value="paypal">PayPal</option>
+                      <option value="bank">Bank Transfer</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-synvra-white mb-2">
+                      {paymentMethod === 'paypal' ? 'PayPal Email' : 'Bank Account Details'}
+                    </label>
+                    <input
+                      type={paymentMethod === 'paypal' ? 'email' : 'text'}
+                      value={paymentDetails}
+                      onChange={(e) => setPaymentDetails(e.target.value)}
+                      className="w-full px-4 py-3 bg-synvra-white/10 border border-synvra-white/20 rounded-lg text-synvra-white placeholder-synvra-gray-400 focus:outline-none focus:border-synvra-blue"
+                      placeholder={paymentMethod === 'paypal' ? 'paypal@email.com' : 'Account details'}
+                    />
+                  </div>
+                  
+                  <div className="flex space-x-3">
+                    <button
+                      onClick={handlePaymentSave}
+                      className="flex-1 button-primary py-2"
+                    >
+                      Save
+                    </button>
+                    {paymentMethod && (
+                      <button
+                        onClick={() => setShowPaymentForm(false)}
+                        className="flex-1 bg-synvra-white/10 text-synvra-white py-2 px-4 rounded-lg hover:bg-synvra-white/20 transition-colors"
+                      >
+                        Cancel
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="p-4 bg-synvra-white/5 rounded-lg">
+                    <div className="text-synvra-white font-medium">
+                      {paymentMethod === 'paypal' ? 'PayPal' : 'Bank Transfer'}
+                    </div>
+                    <div className="text-synvra-gray-400 text-sm">
+                      {paymentMethod === 'paypal' ? paymentDetails : '••••••••'}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setShowPaymentForm(true)}
+                    className="w-full py-2 px-4 bg-synvra-white/10 text-synvra-white rounded-lg hover:bg-synvra-white/20 transition-colors"
+                  >
+                    Update Payment Method
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="glass-card p-8">
+            <h3 className="text-2xl font-bold text-synvra-white mb-6">Quick Actions</h3>
+            <div className="space-y-4">
+              <button
+                onClick={() => copyToClipboard(generateReferralLink(), 'Homepage link')}
+                className="w-full p-4 bg-synvra-white/10 hover:bg-synvra-white/20 rounded-lg text-left transition-colors"
+              >
+                <div className="font-medium text-synvra-white">Copy Homepage Link</div>
+                <div className="text-sm text-synvra-gray-400">Share the main website</div>
+              </button>
+              
+              <button
+                onClick={() => copyToClipboard(generateReferralLink('/services'), 'Services link')}
+                className="w-full p-4 bg-synvra-white/10 hover:bg-synvra-white/20 rounded-lg text-left transition-colors"
+              >
+                <div className="font-medium text-synvra-white">Copy Services Link</div>
+                <div className="text-sm text-synvra-gray-400">Direct to services page</div>
+              </button>
+              
+              <button
+                onClick={() => copyToClipboard(generateReferralLink('/contact'), 'Contact link')}
+                className="w-full p-4 bg-synvra-white/10 hover:bg-synvra-white/20 rounded-lg text-left transition-colors"
+              >
+                <div className="font-medium text-synvra-white">Copy Contact Link</div>
+                <div className="text-sm text-synvra-gray-400">Direct to contact form</div>
+              </button>
             </div>
           </div>
 
