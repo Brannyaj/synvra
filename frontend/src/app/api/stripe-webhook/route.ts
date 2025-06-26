@@ -72,6 +72,15 @@ export async function POST(req: NextRequest) {
         };
       }
 
+      // Track conversion with FirstPromoter
+      try {
+        await trackFirstPromoterConversion(session, clientEmail, fullName);
+        log('FirstPromoter conversion tracked successfully.');
+      } catch (error: any) {
+        log('Warning: Failed to track FirstPromoter conversion (continuing with normal flow)', { error: error.message });
+        // Don't fail the webhook if FirstPromoter tracking fails
+      }
+
       try {
         log('Payment successful. Sending confirmation emails.');
         const amountPaid = (session.amount_total || 0) / 100; // Convert cents to dollars
@@ -151,4 +160,38 @@ async function sendFailureEmail(clientEmail: string, fullName: string | null) {
   };
   await resend.emails.send(emailBody);
   log('Payment failure email sent successfully');
+}
+
+// Function to track conversion with FirstPromoter
+async function trackFirstPromoterConversion(session: Stripe.Checkout.Session, email: string, name: string) {
+  try {
+    const conversionData = {
+      email: email,
+      uid: session.id, // Unique identifier for this conversion
+      amount: (session.amount_total || 0) / 100, // Convert cents to dollars
+      customer_since: new Date().toISOString(),
+      customer_name: name || '',
+      plan: 'Project Deposit', // You can customize this based on your services
+      // Add any other relevant data
+    };
+
+    // Send conversion data to FirstPromoter
+    const response = await fetch(`https://synvra.firstpromoter.com/api/v1/track/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.FIRSTPROMOTER_API_KEY || '', // You'll need to add this to your env
+      },
+      body: JSON.stringify(conversionData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`FirstPromoter API error: ${response.status} ${response.statusText}`);
+    }
+
+    log('FirstPromoter conversion tracked:', { email, amount: conversionData.amount });
+  } catch (error: any) {
+    log('FirstPromoter tracking error:', { error: error.message });
+    throw error; // Re-throw to be caught by the calling function
+  }
 } 
