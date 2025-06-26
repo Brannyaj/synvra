@@ -3,7 +3,10 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script';
 import dynamic from 'next/dynamic';
-import { Cookie } from './components/Cookie';
+
+const Cookie = dynamic(() => import('./components/Cookie'), {
+  ssr: false,
+});
 
 const CustomLiveChat = dynamic(() => import('../components/CustomLiveChat'), {
   ssr: false,
