@@ -74,8 +74,13 @@ export async function POST(req: NextRequest) {
 
       // Track conversion with FirstPromoter
       try {
-        await trackFirstPromoterConversion(session, clientEmail, fullName);
-        log('FirstPromoter conversion tracked successfully.');
+        const referralCode = metadata.referralCode || '';
+        if (referralCode) {
+          await trackFirstPromoterConversion(session, clientEmail, fullName, referralCode);
+          log('FirstPromoter conversion tracked successfully for referral:', referralCode);
+        } else {
+          log('No referral code found, skipping FirstPromoter tracking');
+        }
       } catch (error: any) {
         log('Warning: Failed to track FirstPromoter conversion (continuing with normal flow)', { error: error.message });
         // Don't fail the webhook if FirstPromoter tracking fails
@@ -163,7 +168,7 @@ async function sendFailureEmail(clientEmail: string, fullName: string | null) {
 }
 
 // Function to track conversion with FirstPromoter
-async function trackFirstPromoterConversion(session: Stripe.Checkout.Session, email: string, name: string) {
+async function trackFirstPromoterConversion(session: Stripe.Checkout.Session, email: string, name: string, referralCode: string) {
   try {
     const conversionData = {
       email: email,
@@ -172,6 +177,7 @@ async function trackFirstPromoterConversion(session: Stripe.Checkout.Session, em
       customer_since: new Date().toISOString(),
       customer_name: name || '',
       plan: 'Project Deposit', // You can customize this based on your services
+      referral_code: referralCode,
       // Add any other relevant data
     };
 

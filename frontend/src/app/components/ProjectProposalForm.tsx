@@ -228,6 +228,27 @@ export default function ProjectProposalForm() {
     setSubmitStatus('submitting');
     setSubmitError('');
     try {
+      // Get referral code from localStorage if it exists and is not expired
+      let referralCode = null;
+      try {
+        const storedRef = localStorage.getItem('referralCode');
+        const storedExpiry = localStorage.getItem('referralExpiry');
+        
+        if (storedRef && storedExpiry) {
+          const expiryDate = new Date(storedExpiry);
+          if (new Date() < expiryDate) {
+            referralCode = storedRef;
+            console.log('Using referral code for payment:', referralCode);
+          } else {
+            // Clean up expired referral
+            localStorage.removeItem('referralCode');
+            localStorage.removeItem('referralExpiry');
+          }
+        }
+      } catch (error) {
+        console.error('Error reading referral code:', error);
+      }
+
       // Create Stripe checkout session
       const checkoutResponse = await fetch('/api/create-checkout-session', {
         method: 'POST',
@@ -236,6 +257,7 @@ export default function ProjectProposalForm() {
           amount: calculateDeposit(),
           email: formData.email,
           name: formData.fullName,
+          referralCode: referralCode, // Include referral code
           projectDetails: {
             service: formData.serviceType,
             tier: formData.tier,

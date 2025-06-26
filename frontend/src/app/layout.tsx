@@ -3,12 +3,13 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script';
 import dynamic from 'next/dynamic';
+import { Cookie } from './components/Cookie';
 
-const Cookie = dynamic(() => import('./components/Cookie'), {
+const CustomLiveChat = dynamic(() => import('../components/CustomLiveChat'), {
   ssr: false,
 });
 
-const CustomLiveChat = dynamic(() => import('../components/CustomLiveChat'), {
+const ReferralTracker = dynamic(() => import('./components/ReferralTracker'), {
   ssr: false,
 });
 
@@ -131,28 +132,13 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* Temporarily disabled FirstPromoter until environment variable is added to Netlify
-        <Script
-          id="firstpromoter-tracking"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,p,r,o,m,o,t,e,r){f['FirstPromoterTrackingObject']=m;f[m]=f[m]||function(){
-              (f[m].q=f[m].q||[]).push(arguments)},f[m].l=1*new Date();o=p.createElement(r),
-              t=p.getElementsByTagName(r)[0];o.async=1;o.src='https://synvra.firstpromoter.com/track.js';
-              t.parentNode.insertBefore(o,t)}(window,document,'script',0,'fpr');
-              
-              fpr('init', '${process.env.NEXT_PUBLIC_FIRSTPROMOTER_KEY || 'YOUR_FIRSTPROMOTER_KEY'}');
-              fpr('track', 'Visit');
-            `,
-          }}
-        />
-        */}
+        {/* FirstPromoter: Only tracking conversions via Stripe webhook, not website visits */}
       </head>
       <body className={inter.className}>
         {children}
         <Cookie />
         <CustomLiveChat />
+        <ReferralTracker />
       </body>
     </html>
   );

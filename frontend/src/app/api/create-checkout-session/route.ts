@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(request: Request) {
   try {
-    const { amount, email, name, projectDetails, ...rest } = await request.json();
+    const { amount, email, name, referralCode, projectDetails, ...rest } = await request.json();
 
     // Create a checkout session
     const session = await stripe.checkout.sessions.create({
@@ -30,6 +30,7 @@ export async function POST(request: Request) {
       customer_email: email,
       client_reference_id: name,
       metadata: {
+        referralCode: referralCode || '', // Store referral code in metadata
         projectDetails: JSON.stringify({
           service: projectDetails?.service || '',
           tier: projectDetails?.tier || '',
