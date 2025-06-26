@@ -166,8 +166,8 @@ export default function AffiliatePage() {
             <div className="glass-card p-6">
               <h3 className="text-lg font-bold mb-3 text-synvra-white">How much can I earn?</h3>
               <p className="text-synvra-gray-300">
-                You earn 4% commission on every service purchase. Our minimum service cost is $2,000, 
-                so you earn $80 per referral. With 10 referrals per month, you can earn $800+.
+                You earn 4% commission on every service purchase. Our services start at $2,000 and can range much higher depending on project complexity. 
+                For example, a $2,000 project earns you $80, while a $10,000 project earns you $400. Most affiliates earn $200-$1,000+ per month.
               </p>
             </div>
             
