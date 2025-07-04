@@ -430,9 +430,15 @@ export default function ProjectProposalForm() {
             <p className="text-synvra-green font-medium">
               Required Deposit: $250
             </p>
-            <p className="text-synvra-gray-400 text-sm">
-              Remaining Balance: ${(calculateTotalPrice() - 250).toLocaleString()} (due upon completion)
-            </p>
+            <div className="flex justify-between items-center">
+              <span className="text-gray-600">Remaining Balance:</span>
+              <div className="text-right">
+                <span className="text-lg font-semibold">${(calculateTotalPrice() - 250).toLocaleString()}</span>
+                <div className="text-sm text-blue-600 font-medium">
+                  (Installment plans available)
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -707,8 +713,8 @@ export default function ProjectProposalForm() {
             <p>By proceeding with this project, you agree to the following terms:</p>
             <ul className="list-disc pl-5 space-y-2">
               <li>A $250 deposit is required to begin the project</li>
-              <li>The remaining balance will be due upon project completion</li>
-              <li>Installment payment plans are available for the remaining balance</li>
+              <li>Remaining balance due upon completion (installment plans available)</li>
+              <li>Full refund if not satisfied within 30 days</li>
               <li>Project timeline is subject to change based on requirements and feedback</li>
               <li>All intellectual property rights will be transferred upon final payment</li>
               <li>Synvra reserves the right to use the project in its portfolio</li>
