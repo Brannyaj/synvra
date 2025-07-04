@@ -34,84 +34,84 @@ const services: ServiceOption[] = [
     name: 'Website Development: Platform-Based (GoDaddy, WordPress)',
     basicPrice: 2000,
     complexPrice: 4000,
-    description: 'Platform-based websites using GoDaddy, WordPress, etc.'
+    description: 'Using GoDaddy, WordPress, etc.'
   },
   {
     id: 'website-custom',
     name: 'Website Development: Custom-Coded (From Scratch)',
     basicPrice: 5000,
     complexPrice: 10000,
-    description: 'Fully custom-coded websites built from scratch.'
+    description: 'Built from scratch with custom code'
   },
   {
     id: 'app',
     name: 'App Development',
     basicPrice: 10000,
     complexPrice: 25000,
-    description: 'Basic MVPs to complex apps with chat, payments, maps, etc.'
+    description: 'MVPs to complex apps with advanced features'
   },
   {
     id: 'cloud',
     name: 'Cloud Infrastructure Development',
     basicPrice: 7000,
     complexPrice: 50000,
-    description: 'Standard setup to complex, scalable, secure cloud architecture.'
+    description: 'Scalable cloud architecture & setup'
   },
   {
     id: 'ai-integration',
     name: 'AI Integration (Existing APIs)',
     basicPrice: 50000,
     complexPrice: 50000,
-    description: 'Connecting to AI services (e.g., ChatGPT, Claude), prompt design, and integration with your app or business logic.'
+    description: 'ChatGPT, Claude integration & prompt design'
   },
   {
     id: 'ai-custom',
     name: 'Custom AI Model Development (From Scratch)',
     basicPrice: 75000000,
     complexPrice: 75000000,
-    description: 'Building a custom AI model from scratch, including data pipeline design, training infrastructure, deep learning systems, and full-scale deployment.'
+    description: 'Custom AI models with training & deployment'
   },
   {
     id: 'automation',
     name: 'IT Automation Development',
     basicPrice: 6000,
     complexPrice: 30000,
-    description: 'Simple automation scripts to advanced enterprise automation.'
+    description: 'Scripts to enterprise automation'
   },
   {
     id: 'security',
     name: 'Data Protection & Security Development',
     basicPrice: 7000,
     complexPrice: 40000,
-    description: 'Basic security to full-scale security development.'
+    description: 'Security systems & data protection'
   },
   {
     id: 'iot',
     name: 'Smart Device & IoT Development',
     basicPrice: 10000,
     complexPrice: 60000,
-    description: 'Basic device integration to complex IoT ecosystems.'
+    description: 'Device integration & IoT ecosystems'
   },
   {
     id: 'blockchain',
     name: 'Blockchain & Web3 Development',
     basicPrice: 200000,
     complexPrice: 200000,
-    description: 'Full-scale enterprise blockchain solutions.'
+    description: 'Enterprise blockchain solutions'
   },
   {
     id: 'business',
     name: 'Custom Business Software Development',
     basicPrice: 25000,
     complexPrice: 150000,
-    description: 'Basic tools to complex enterprise systems.'
+    description: 'Business tools & enterprise systems'
   },
   {
     id: 'analytics',
     name: 'Data Analytics & Business Intelligence Development',
     basicPrice: 7000,
     complexPrice: 45000,
-    description: 'Simple dashboards to advanced BI tools.'
+    description: 'Dashboards & BI tools'
   }
 ];
 
