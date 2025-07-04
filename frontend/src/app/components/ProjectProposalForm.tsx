@@ -783,7 +783,6 @@ export default function ProjectProposalForm() {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-synvra-white mb-2">Project Proposal Form</h2>
         <p className="text-synvra-gray-300">Step {currentStep} of {totalSteps}</p>
         <p className="text-synvra-gray-400 text-sm">* Required fields</p>
       </div>
