@@ -712,7 +712,7 @@ export default function ProjectProposalForm() {
           <div className="prose prose-sm text-synvra-gray-300">
             <p>By proceeding with this project, you agree to the following terms:</p>
             <ul className="list-disc pl-5 space-y-2">
-              <li>A $250 deposit is required to begin the project</li>
+              <li>We require a $250 Mandatory initial deposit as commitment</li>
               <li>Remaining balance due upon completion (installment plans available)</li>
               <li>Full refund if not satisfied within 30 days</li>
               <li>Project timeline is subject to change based on requirements and feedback</li>

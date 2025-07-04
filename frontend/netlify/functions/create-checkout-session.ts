@@ -26,7 +26,7 @@ const handler: Handler = async (event) => {
     }
 
     // Format a user-friendly description
-    const desc = `25% deposit for ${projectDetails.name || 'your project'}: ${projectDetails.service.replace('-', ' ')} (${projectDetails.tier}, ${projectDetails.timeline})`;
+    const desc = `$250 mandatory initial deposit for ${projectDetails.name || 'your project'}: ${projectDetails.service.replace('-', ' ')} (${projectDetails.tier}, ${projectDetails.timeline})`;
 
     const session = await stripe.checkout.sessions.create({
       // payment_method_types: ['card'], // Removed to let Stripe show all eligible methods

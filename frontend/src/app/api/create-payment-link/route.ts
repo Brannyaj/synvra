@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     // Create a product first
     const product = await stripe.products.create({
       name: 'Project Deposit',
-      description: `25% deposit for ${projectDetails}`,
+      description: `$250 mandatory initial deposit for ${projectDetails}`,
     });
 
     // Create a price for the product

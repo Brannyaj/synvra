@@ -17,7 +17,7 @@ export async function POST(request: Request) {
             currency: 'usd',
             product_data: {
               name: 'Project Deposit',
-              description: `25% deposit for your project: ${projectDetails?.service || ''} (${projectDetails?.tier || ''}, ${projectDetails?.timeline || ''})`,
+              description: `$250 mandatory initial deposit for your project: ${projectDetails?.service || ''} (${projectDetails?.tier || ''}, ${projectDetails?.timeline || ''})`,
             },
             unit_amount: Math.round(amount * 100), // Convert to cents
           },
