@@ -165,7 +165,7 @@ export default function ProjectProposalForm() {
   };
 
   const calculateDeposit = () => {
-    return calculateTotalPrice() * 0.25;
+    return 250; // Flat $250 deposit fee for all projects
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -428,7 +428,10 @@ export default function ProjectProposalForm() {
               Total Project Cost: ${calculateTotalPrice().toLocaleString()}
             </p>
             <p className="text-synvra-green font-medium">
-              Required Deposit (25%): ${calculateDeposit().toLocaleString()}
+              Required Deposit: $250
+            </p>
+            <p className="text-synvra-gray-400 text-sm">
+              Remaining Balance: ${(calculateTotalPrice() - 250).toLocaleString()} (due upon completion)
             </p>
           </div>
         </div>
@@ -687,8 +690,12 @@ export default function ProjectProposalForm() {
                 <dd className="text-synvra-white">${calculateTotalPrice().toLocaleString()}</dd>
               </div>
               <div className="flex justify-between font-medium">
-                <dt className="text-synvra-green">Required Deposit (25%)</dt>
-                <dd className="text-synvra-green">${calculateDeposit().toLocaleString()}</dd>
+                <dt className="text-synvra-green">Required Deposit</dt>
+                <dd className="text-synvra-green">$250</dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-synvra-gray-300">Remaining Balance</dt>
+                <dd className="text-synvra-gray-300">${(calculateTotalPrice() - 250).toLocaleString()}</dd>
               </div>
             </dl>
           </div>
@@ -699,8 +706,9 @@ export default function ProjectProposalForm() {
           <div className="prose prose-sm text-synvra-gray-300">
             <p>By proceeding with this project, you agree to the following terms:</p>
             <ul className="list-disc pl-5 space-y-2">
-              <li>A 25% deposit is required to begin the project</li>
+              <li>A $250 deposit is required to begin the project</li>
               <li>The remaining balance will be due upon project completion</li>
+              <li>Installment payment plans are available for the remaining balance</li>
               <li>Project timeline is subject to change based on requirements and feedback</li>
               <li>All intellectual property rights will be transferred upon final payment</li>
               <li>Synvra reserves the right to use the project in its portfolio</li>
