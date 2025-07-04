@@ -297,15 +297,15 @@ export default function ProjectProposalForm() {
           name="serviceType"
           value={formData.serviceType}
           onChange={handleInputChange}
-          className={`mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
-            validationErrors.serviceType ? 'border-red-500' : 'border-synvra-blue'
+          className={`mt-1 block w-full rounded-lg border bg-transparent px-3 py-3 text-white placeholder-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 ${
+            validationErrors.serviceType ? 'border-red-500' : 'border-gray-600 hover:border-gray-500'
           }`}
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
+          style={{ backgroundColor: 'transparent' }}
         >
-          <option value="">Select a service</option>
+          <option value="" className="bg-gray-800 text-white">Select a service</option>
           {services.map(service => (
-            <option key={service.id} value={service.id}>
+            <option key={service.id} value={service.id} className="bg-gray-800 text-white">
               {service.name} - {service.description}
             </option>
           ))}
@@ -322,16 +322,16 @@ export default function ProjectProposalForm() {
           name="projectType"
           value={formData.projectType || ''}
           onChange={handleInputChange}
-          className={`mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
-            validationErrors.projectType ? 'border-red-500' : 'border-synvra-blue'
+          className={`mt-1 block w-full rounded-lg border bg-transparent px-3 py-3 text-white placeholder-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 ${
+            validationErrors.projectType ? 'border-red-500' : 'border-gray-600 hover:border-gray-500'
           }`}
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
+          style={{ backgroundColor: 'transparent' }}
         >
-          <option value="">Select project type</option>
-          <option value="New Project">New Project</option>
-          <option value="Existing Project">Existing Project</option>
-          <option value="Maintenance">Maintenance</option>
+          <option value="" className="bg-gray-800 text-white">Select project type</option>
+          <option value="New Project" className="bg-gray-800 text-white">New Project</option>
+          <option value="Existing Project" className="bg-gray-800 text-white">Existing Project</option>
+          <option value="Maintenance" className="bg-gray-800 text-white">Maintenance</option>
         </select>
         {validationErrors.projectType && (
           <p className="mt-1 text-sm text-red-500">{validationErrors.projectType}</p>
@@ -347,15 +347,15 @@ export default function ProjectProposalForm() {
           name="tier"
           value={formData.tier}
           onChange={handleInputChange}
-          className={`mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
-            validationErrors.tier ? 'border-red-500' : 'border-synvra-blue'
+          className={`mt-1 block w-full rounded-lg border bg-transparent px-3 py-3 text-white placeholder-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 ${
+            validationErrors.tier ? 'border-red-500' : 'border-gray-600 hover:border-gray-500'
           }`}
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
+          style={{ backgroundColor: 'transparent' }}
         >
-          <option value="">Select project tier</option>
-          <option value="Basic">Basic</option>
-          <option value="Complex">Complex</option>
+          <option value="" className="bg-gray-800 text-white">Select project tier</option>
+          <option value="Basic" className="bg-gray-800 text-white">Basic</option>
+          <option value="Complex" className="bg-gray-800 text-white">Complex</option>
         </select>
         {validationErrors.tier && (
           <p className="mt-1 text-sm text-red-500">{validationErrors.tier}</p>
@@ -371,16 +371,16 @@ export default function ProjectProposalForm() {
           name="timeline"
           value={formData.timeline}
           onChange={handleInputChange}
-          className={`mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
-            validationErrors.timeline ? 'border-red-500' : 'border-synvra-blue'
+          className={`mt-1 block w-full rounded-lg border bg-transparent px-3 py-3 text-white placeholder-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 ${
+            validationErrors.timeline ? 'border-red-500' : 'border-gray-600 hover:border-gray-500'
           }`}
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
+          style={{ backgroundColor: 'transparent' }}
         >
-          <option value="">Select timeline</option>
-          <option value="Standard">Standard (1x multiplier)</option>
-          <option value="Fast-track">Fast-track (1.25x multiplier)</option>
-          <option value="Urgent">Urgent (1.5x multiplier)</option>
+          <option value="" className="bg-gray-800 text-white">Select timeline</option>
+          <option value="Standard" className="bg-gray-800 text-white">Standard (1x multiplier)</option>
+          <option value="Fast-track" className="bg-gray-800 text-white">Fast-track (1.25x multiplier)</option>
+          <option value="Urgent" className="bg-gray-800 text-white">Urgent (1.5x multiplier)</option>
         </select>
         {validationErrors.timeline && (
           <p className="mt-1 text-sm text-red-500">{validationErrors.timeline}</p>
@@ -398,12 +398,12 @@ export default function ProjectProposalForm() {
           onChange={handleInputChange}
           rows={4}
           minLength={50}
-          className={`mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
-            validationErrors.additionalRequirements ? 'border-red-500' : 'border-synvra-blue'
+          className={`mt-1 block w-full rounded-lg border bg-transparent px-3 py-3 text-white placeholder-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 resize-none ${
+            validationErrors.additionalRequirements ? 'border-red-500' : 'border-gray-600 hover:border-gray-500'
           }`}
           required
           placeholder="Describe what you need built for your business. Include key features, functionality, and specific requirements. Be as detailed as possible to help us understand your vision."
-          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
+          style={{ backgroundColor: 'transparent' }}
         />
         <div className="mt-1 text-sm text-synvra-gray-400 flex justify-between">
           <span>{formData.additionalRequirements.length} / 50 characters minimum</span>
@@ -467,11 +467,11 @@ export default function ProjectProposalForm() {
           name="fullName"
           value={formData.fullName}
           onChange={handleInputChange}
-          className={`mt-1 block w-full rounded-md focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
-            validationErrors.fullName ? 'border-red-500' : 'border-synvra-blue'
+          className={`mt-1 block w-full rounded-lg border bg-transparent px-3 py-3 text-white placeholder-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 ${
+            validationErrors.fullName ? 'border-red-500' : 'border-gray-600 hover:border-gray-500'
           }`}
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
+          style={{ backgroundColor: 'transparent' }}
         />
         {validationErrors.fullName && (
           <p className="mt-1 text-sm text-red-500">{validationErrors.fullName}</p>
@@ -488,11 +488,11 @@ export default function ProjectProposalForm() {
           name="companyName"
           value={formData.companyName}
           onChange={handleInputChange}
-          className={`mt-1 block w-full rounded-md focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
-            validationErrors.companyName ? 'border-red-500' : 'border-synvra-blue'
+          className={`mt-1 block w-full rounded-lg border bg-transparent px-3 py-3 text-white placeholder-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 ${
+            validationErrors.companyName ? 'border-red-500' : 'border-gray-600 hover:border-gray-500'
           }`}
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
+          style={{ backgroundColor: 'transparent' }}
         />
         {validationErrors.companyName && (
           <p className="mt-1 text-sm text-red-500">{validationErrors.companyName}</p>
@@ -509,11 +509,11 @@ export default function ProjectProposalForm() {
           name="email"
           value={formData.email}
           onChange={handleInputChange}
-          className={`mt-1 block w-full rounded-md focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
-            validationErrors.email ? 'border-red-500' : 'border-synvra-blue'
+          className={`mt-1 block w-full rounded-lg border bg-transparent px-3 py-3 text-white placeholder-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 ${
+            validationErrors.email ? 'border-red-500' : 'border-gray-600 hover:border-gray-500'
           }`}
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
+          style={{ backgroundColor: 'transparent' }}
         />
         {validationErrors.email && (
           <p className="mt-1 text-sm text-red-500">{validationErrors.email}</p>
@@ -530,20 +530,28 @@ export default function ProjectProposalForm() {
           onChange={handlePhoneChange}
           inputStyle={{
             width: '100%',
-            height: '40px',
-            backgroundColor: '#0A0F1C',
+            height: '48px',
+            backgroundColor: 'transparent',
             color: '#fff',
-            border: validationErrors.phone ? '1px solid #ef4444' : '1px solid #2563eb',
+            border: validationErrors.phone ? '1px solid #ef4444' : '1px solid #6b7280',
+            borderRadius: '8px',
+            paddingLeft: '48px',
+            fontSize: '16px',
+            transition: 'all 0.2s ease',
           }}
           dropdownStyle={{
-            backgroundColor: '#0A0F1C',
+            backgroundColor: '#1f2937',
             color: '#fff',
+            border: '1px solid #6b7280',
           }}
           buttonStyle={{
-            backgroundColor: '#0A0F1C',
-            borderColor: validationErrors.phone ? '#ef4444' : '#2563eb',
+            backgroundColor: 'transparent',
+            borderColor: validationErrors.phone ? '#ef4444' : '#6b7280',
+            borderRadius: '8px 0 0 8px',
+            transition: 'all 0.2s ease',
           }}
           containerClass="phone-input"
+          inputClass="focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500"
         />
         {validationErrors.phone && (
           <p className="mt-1 text-sm text-red-500">{validationErrors.phone}</p>
@@ -559,18 +567,18 @@ export default function ProjectProposalForm() {
           name="companySize"
           value={formData.companySize}
           onChange={handleInputChange}
-          className={`mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
-            validationErrors.companySize ? 'border-red-500' : 'border-synvra-blue'
+          className={`mt-1 block w-full rounded-lg border bg-transparent px-3 py-3 text-white placeholder-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 ${
+            validationErrors.companySize ? 'border-red-500' : 'border-gray-600 hover:border-gray-500'
           }`}
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
+          style={{ backgroundColor: 'transparent' }}
         >
-          <option value="">Select company size</option>
-          <option value="1-10">1-10 employees</option>
-          <option value="11-50">11-50 employees</option>
-          <option value="51-200">51-200 employees</option>
-          <option value="201-1000">201-1000 employees</option>
-          <option value="1000+">1000+ employees</option>
+          <option value="" className="bg-gray-800 text-white">Select company size</option>
+          <option value="1-10" className="bg-gray-800 text-white">1-10 employees</option>
+          <option value="11-50" className="bg-gray-800 text-white">11-50 employees</option>
+          <option value="51-200" className="bg-gray-800 text-white">51-200 employees</option>
+          <option value="201-1000" className="bg-gray-800 text-white">201-1000 employees</option>
+          <option value="1000+" className="bg-gray-800 text-white">1000+ employees</option>
         </select>
         {validationErrors.companySize && (
           <p className="mt-1 text-sm text-red-500">{validationErrors.companySize}</p>
@@ -586,20 +594,20 @@ export default function ProjectProposalForm() {
           name="industry"
           value={formData.industry}
           onChange={handleInputChange}
-          className={`mt-1 block w-full rounded-md border-gray-700 focus:ring-synvra-blue focus:border-synvra-blue text-white appearance-none placeholder-gray-400 ${
-            validationErrors.industry ? 'border-red-500' : 'border-synvra-blue'
+          className={`mt-1 block w-full rounded-lg border bg-transparent px-3 py-3 text-white placeholder-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 ${
+            validationErrors.industry ? 'border-red-500' : 'border-gray-600 hover:border-gray-500'
           }`}
           required
-          style={{ backgroundColor: '#0A0F1C', color: '#fff', border: '1px solid #2563eb' }}
+          style={{ backgroundColor: 'transparent' }}
         >
-          <option value="">Select industry</option>
-          <option value="Technology">Technology</option>
-          <option value="Finance">Finance</option>
-          <option value="Healthcare">Healthcare</option>
-          <option value="Manufacturing">Manufacturing</option>
-          <option value="Retail">Retail</option>
-          <option value="Education">Education</option>
-          <option value="Other">Other</option>
+          <option value="" className="bg-gray-800 text-white">Select industry</option>
+          <option value="Technology" className="bg-gray-800 text-white">Technology</option>
+          <option value="Finance" className="bg-gray-800 text-white">Finance</option>
+          <option value="Healthcare" className="bg-gray-800 text-white">Healthcare</option>
+          <option value="Manufacturing" className="bg-gray-800 text-white">Manufacturing</option>
+          <option value="Retail" className="bg-gray-800 text-white">Retail</option>
+          <option value="Education" className="bg-gray-800 text-white">Education</option>
+          <option value="Other" className="bg-gray-800 text-white">Other</option>
         </select>
         {validationErrors.industry && (
           <p className="mt-1 text-sm text-red-500">{validationErrors.industry}</p>
