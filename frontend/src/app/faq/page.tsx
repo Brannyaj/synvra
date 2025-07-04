@@ -71,7 +71,7 @@ export default function FAQ() {
         answer: "Yes, we require a $250 deposit as commitment to begin the project development process. This helps us allocate resources and begin work immediately on your project."
       },
       {
-        question: "Why did Synvra change from a 25% deposit to a flat $250 fee?",
+        question: "Why did we change from a 25% deposit to a flat $250 fee?",
         answer: "We reduced our deposit structure from 25% to a flat $250 fee to make our services more accessible to small businesses and startups. This change ensures that businesses of all sizes - whether just getting started or well-established - can access our premium development services. We also offer flexible installment plans to support everyone in their growth journey."
       },
       {
