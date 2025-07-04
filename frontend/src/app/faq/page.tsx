@@ -88,7 +88,7 @@ export default function FAQ() {
       },
       {
         question: "Is there a minimum project size?",
-        answer: "While we can accommodate projects of various sizes, we typically work on projects with a minimum budget of $25,000 to ensure we can deliver the quality our clients expect."
+        answer: "While we can accommodate projects of various sizes, we typically work on projects with a minimum budget of $2,000 to ensure we can deliver the quality our clients expect."
       }
     ],
     support: [
