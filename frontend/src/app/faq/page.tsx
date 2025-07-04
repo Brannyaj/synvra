@@ -75,6 +75,10 @@ export default function FAQ() {
         answer: "We reduced our deposit structure from 25% to a flat $250 fee to make our services more accessible to small businesses and startups. This change ensures that businesses of all sizes - whether just getting started or well-established - can access our premium development services. We also offer flexible installment plans to support everyone in their growth journey."
       },
       {
+        question: "Do you offer installment plans?",
+        answer: "Yes, we offer flexible installment plans specifically designed to support small businesses and startups in accessing our premium services. After the initial $250 deposit, the remaining project balance can be divided into manageable monthly payments. This allows businesses of all sizes to get the high-quality development services they need without the financial burden of large upfront payments."
+      },
+      {
         question: "Are there any hidden costs?",
         answer: "No, we believe in complete transparency. All costs are clearly outlined in the project proposal, and any additional requirements are discussed and approved before implementation."
       },
