@@ -1,8 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import { 
+  trackFormStep, 
+  trackFieldChange, 
+  trackFormError, 
+  trackPayment 
+} from '@/utils/analytics';
 
 interface ServiceOption {
   id: string;
@@ -151,6 +157,11 @@ export default function ProjectProposalForm() {
   const [submitError, setSubmitError] = useState('');
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
+  // Track initial form load
+  useEffect(() => {
+    trackFormStep(1, {}, false);
+  }, []);
+
   const calculateBasePrice = () => {
     const service = services.find(s => s.id === formData.serviceType);
     if (!service) return 0;
@@ -170,10 +181,16 @@ export default function ProjectProposalForm() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
+    const newValue = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+    
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+      [name]: newValue
     }));
+
+    // Track field change
+    trackFieldChange(name, String(newValue));
+
     // Clear validation error when field is changed
     if (validationErrors[name]) {
       setValidationErrors(prev => ({ ...prev, [name]: '' }));
@@ -182,6 +199,10 @@ export default function ProjectProposalForm() {
 
   const handlePhoneChange = (value: string) => {
     setFormData(prev => ({ ...prev, phone: value }));
+    
+    // Track phone field change
+    trackFieldChange('phone', value);
+
     if (validationErrors.phone) {
       setValidationErrors(prev => ({ ...prev, phone: '' }));
     }
@@ -209,25 +230,46 @@ export default function ProjectProposalForm() {
       if (!formData.industry) errors.industry = 'Please select your industry';
     }
 
+    // Track any validation errors
+    Object.entries(errors).forEach(([field, message]) => {
+      trackFormError(field, message);
+    });
+
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
   const nextStep = () => {
     if (validateStep(currentStep)) {
-      setCurrentStep(prev => Math.min(prev + 1, totalSteps));
-      setValidationErrors({}); // Clear validation errors when moving to next step
+      const nextStepNumber = Math.min(currentStep + 1, totalSteps);
+      setCurrentStep(nextStepNumber);
+      
+      // Track successful step completion and next step start
+      trackFormStep(currentStep, formData, true);
+      if (nextStepNumber <= totalSteps) {
+        trackFormStep(nextStepNumber, formData, false);
+      }
+      
+      setValidationErrors({});
     }
   };
 
   const prevStep = () => {
-    setCurrentStep(prev => Math.max(prev - 1, 1));
+    const prevStepNumber = Math.max(currentStep - 1, 1);
+    setCurrentStep(prevStepNumber);
+    
+    // Track step navigation
+    trackFormStep(prevStepNumber, formData, false);
   };
 
   const handleProceedToPayment = async () => {
     setSubmitStatus('submitting');
     setSubmitError('');
+    
     try {
+      // Track payment initiation
+      trackPayment('start', calculateDeposit());
+
       // Get referral code from localStorage if it exists and is not expired
       let referralCode = null;
       try {
@@ -240,7 +282,6 @@ export default function ProjectProposalForm() {
             referralCode = storedRef;
             console.log('Using referral code for payment:', referralCode);
           } else {
-            // Clean up expired referral
             localStorage.removeItem('referralCode');
             localStorage.removeItem('referralExpiry');
           }
@@ -257,7 +298,7 @@ export default function ProjectProposalForm() {
           amount: calculateDeposit(),
           email: formData.email,
           name: formData.fullName,
-          referralCode: referralCode, // Include referral code
+          referralCode: referralCode,
           projectDetails: {
             service: formData.serviceType,
             tier: formData.tier,
@@ -278,11 +319,19 @@ export default function ProjectProposalForm() {
       }
 
       const { url } = await checkoutResponse.json();
+      
+      // Track successful form completion before redirect
+      trackFormStep(currentStep, formData, true);
+      
       window.location.href = url;
     } catch (error) {
       console.error('Error submitting form:', error);
-      setSubmitError(error instanceof Error ? error.message : 'Failed to submit proposal');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to submit proposal';
+      setSubmitError(errorMessage);
       setSubmitStatus('error');
+      
+      // Track payment error
+      trackPayment('error', calculateDeposit(), errorMessage);
     }
   };
 

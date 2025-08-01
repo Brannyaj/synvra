@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import GetStartedButton from '@/app/components/GetStartedButton';
 
 interface ServiceClientProps {
   service: {
@@ -123,7 +124,7 @@ export default function ServiceClient({ service }: ServiceClientProps) {
           <p className="text-xl mb-8 text-synvra-gray-200">
             Let's discuss how our {service.title.toLowerCase()} can help you achieve your goals.
           </p>
-          <Link href="/get-started"><button className="button-primary">Get Started</button></Link>
+          <GetStartedButton source={`service_page_${service.title.toLowerCase().replace(/\s/g, '_')}`} />
         </div>
       </section>
     </main>

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
 import PhotoSlider from './components/PhotoSlider';
+import GetStartedButton from './components/GetStartedButton';
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
@@ -78,7 +79,7 @@ export default function Home() {
                   </Link>
                 </div>
               </div>
-              <Link href="/get-started"><button className="button-primary px-6 py-2">Get Started</button></Link>
+              <GetStartedButton source="homepage_cta" className="text-lg font-medium" />
             </div>
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -136,7 +137,7 @@ export default function Home() {
                   Cookie Policy
                 </Link>
               </div>
-              <Link href="/get-started"><button className="button-primary w-full py-2">Get Started</button></Link>
+              <GetStartedButton source="homepage_services" fullWidth className="py-2" />
             </div>
           </div>
         )}
