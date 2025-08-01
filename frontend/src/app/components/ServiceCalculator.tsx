@@ -118,7 +118,7 @@ export default function ServiceCalculator() {
     baseCost *= timelineMultiplier;
 
     setTotalCost(baseCost);
-    setDeposit(250); // Flat $250 deposit fee for all projects
+    setDeposit(500); // Flat $500 deposit fee for all projects
   };
 
   const handleServiceToggle = (serviceId: string) => {
