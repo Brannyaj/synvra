@@ -263,12 +263,16 @@ export default function ProjectProposalForm() {
   };
 
   const handleProceedToPayment = async () => {
+    console.log('handleProceedToPayment called, termsAccepted:', formData.termsAccepted);
+    
     // Check if terms are accepted before proceeding
     if (!formData.termsAccepted) {
+      console.log('Terms not accepted, showing error');
       setValidationErrors({ termsAccepted: 'You must accept the terms and conditions to proceed' });
       return;
     }
 
+    console.log('Terms accepted, proceeding to payment');
     setSubmitStatus('submitting');
     setSubmitError('');
     
@@ -838,7 +842,7 @@ export default function ProjectProposalForm() {
             className={`px-4 py-2 rounded-md transition-colors ${
               formData.termsAccepted 
                 ? 'bg-synvra-blue text-white hover:bg-synvra-blue-dark' 
-                : 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                : 'bg-gray-500 text-white hover:bg-gray-600'
             }`}
             disabled={submitStatus === 'submitting'}
           >
