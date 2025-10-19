@@ -68,15 +68,15 @@ export default function FAQ() {
       },
       {
         question: "Is a deposit required?",
-        answer: "Yes, we require a $500 deposit as commitment to begin the project development process. This helps us allocate resources and begin work immediately on your project."
+        answer: "Yes, we require a 20% deposit as commitment to begin the project development process. This helps us allocate resources and begin work immediately on your project."
       },
       {
-        question: "Why did we change from a 25% deposit to a flat $500 fee?",
-        answer: "We reduced our deposit structure from 25% to a flat $500 fee to make our services more accessible to small businesses and startups. This change ensures that businesses of all sizes - whether just getting started or well-established - can access our premium services. After the initial $500 deposit, the remaining project balance can be divided into manageable monthly payments. This allows businesses of all sizes to get the high-quality development services they need without the financial burden of a large upfront deposit."
+        question: "Why did we change from a 25% deposit to a 20% deposit?",
+        answer: "We reduced our deposit structure from 25% to 20% to make our services more accessible to small businesses and startups. This change ensures that businesses of all sizes - whether just getting started or well-established - can access our premium services. After the initial 20% deposit, the remaining project balance can be divided into manageable monthly payments. This allows businesses of all sizes to get the high-quality development services they need without the financial burden of a large upfront deposit."
       },
       {
         question: "Do you offer installment plans?",
-        answer: "Yes, we offer flexible installment plans specifically designed to support small businesses and startups in accessing our premium services. After the initial $250 deposit, the remaining project balance can be divided into manageable monthly payments. This allows businesses of all sizes to get the high-quality development services they need without the financial burden of large upfront payments."
+        answer: "Yes, we offer flexible installment plans specifically designed to support small businesses and startups in accessing our premium services. After the initial 20% deposit, the remaining project balance can be divided into manageable monthly payments. This allows businesses of all sizes to get the high-quality development services they need without the financial burden of large upfront payments."
       },
       {
         question: "Are there any hidden costs?",

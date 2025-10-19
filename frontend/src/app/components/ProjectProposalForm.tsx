@@ -176,7 +176,7 @@ export default function ProjectProposalForm() {
   };
 
   const calculateDeposit = () => {
-    return 500; // Flat $500 deposit fee for all projects
+    return Math.round(calculateTotalPrice() * 0.20); // 20% deposit fee
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -476,13 +476,13 @@ export default function ProjectProposalForm() {
             <p className="text-synvra-white font-medium">
               Total Project Cost: ${calculateTotalPrice().toLocaleString()}
             </p>
-            <p className="text-synvra-green font-medium">
-              Required Deposit: $500
-            </p>
+              <p className="text-synvra-green font-medium">
+                Required Deposit: ${calculateDeposit().toLocaleString()}
+              </p>
             <div className="flex justify-between items-center">
               <span className="text-gray-600">Remaining Balance:</span>
               <div className="text-right">
-                <span className="text-lg font-semibold">${(calculateTotalPrice() - 500).toLocaleString()}</span>
+                <span className="text-lg font-semibold">${(calculateTotalPrice() - calculateDeposit()).toLocaleString()}</span>
                 <div className="text-sm text-blue-600 font-medium">
                   (Installment plans available)
                 </div>
@@ -754,11 +754,11 @@ export default function ProjectProposalForm() {
               </div>
               <div className="flex justify-between font-medium">
                 <dt className="text-synvra-green">Required Deposit</dt>
-                <dd className="text-synvra-green">$500</dd>
+                <dd className="text-synvra-green">${calculateDeposit().toLocaleString()}</dd>
               </div>
               <div className="flex justify-between">
                 <dt className="text-synvra-gray-300">Remaining Balance</dt>
-                <dd className="text-synvra-gray-300">${(calculateTotalPrice() - 500).toLocaleString()}</dd>
+                <dd className="text-synvra-gray-300">${(calculateTotalPrice() - calculateDeposit()).toLocaleString()}</dd>
               </div>
             </dl>
           </div>
@@ -769,7 +769,7 @@ export default function ProjectProposalForm() {
           <div className="prose prose-sm text-synvra-gray-300">
             <p>By proceeding with this project, you agree to the following terms:</p>
             <ul className="list-disc pl-5 space-y-2">
-              <li>We require a $500 Mandatory initial deposit as commitment</li>
+              <li>We require a ${calculateDeposit().toLocaleString()} Mandatory initial deposit as commitment</li>
               <li>Remaining balance due upon completion (installment plans available)</li>
               <li>Full refund if not satisfied within 30 days</li>
               <li>Project timeline is subject to change based on requirements and feedback</li>
