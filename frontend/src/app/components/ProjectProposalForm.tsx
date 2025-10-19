@@ -835,8 +835,12 @@ export default function ProjectProposalForm() {
           <button
             type="button"
             onClick={handleProceedToPayment}
-            className="bg-synvra-blue text-white px-4 py-2 rounded-md hover:bg-synvra-blue-dark transition-colors"
-            disabled={!formData.termsAccepted || submitStatus === 'submitting'}
+            className={`px-4 py-2 rounded-md transition-colors ${
+              formData.termsAccepted 
+                ? 'bg-synvra-blue text-white hover:bg-synvra-blue-dark' 
+                : 'bg-gray-400 text-gray-200 cursor-not-allowed'
+            }`}
+            disabled={submitStatus === 'submitting'}
           >
             {submitStatus === 'submitting' ? 'Submitting...' : 'Proceed to Payment'}
           </button>
