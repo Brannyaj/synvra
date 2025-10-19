@@ -779,21 +779,6 @@ export default function ProjectProposalForm() {
           </div>
         </div>
 
-        <div className="flex items-center space-x-3">
-          <input
-            type="checkbox"
-            id="terms"
-            name="termsAccepted"
-            checked={formData.termsAccepted}
-            onChange={handleInputChange}
-            required
-            className="h-4 w-4 rounded border-synvra-white focus:ring-synvra-blue"
-          />
-          <label htmlFor="terms" className="text-sm text-synvra-gray-200">
-            I have read and agree to the terms and conditions
-          </label>
-        </div>
-
         <div className="mb-6">
           <div className="mb-4">
             <label className="font-semibold text-synvra-blue block mb-2">Privacy Policy</label>
@@ -813,6 +798,21 @@ export default function ProjectProposalForm() {
               {`1. Agreement to Terms\nBy accessing and using Synvra's website and services, you agree to be bound by these Terms of Service and all applicable laws and regulations.\n\n2. Services\nSynvra provides software development and technology consulting services, including but not limited to:\nCustom software development\nWeb and mobile application development\nAI and machine learning solutions\nCloud computing and DevOps services\nTechnical consulting and support\n\n3. Intellectual Property\nAll content, features, and functionality of our website, including but not limited to text, graphics, logos, and code, are owned by Synvra and are protected by international copyright, trademark, and other intellectual property laws.\n\n4. User Responsibilities\nWhen using our services, you agree to:\nProvide accurate and complete information\nMaintain the confidentiality of any login credentials\nUse our services in compliance with all applicable laws\nNot engage in any unauthorized use of our services\n\n5. Privacy and Data Protection\nOur collection and use of personal information is governed by our Privacy Policy.\n\n6. Limitation of Liability\nSynvra shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use or inability to use our services.\n\n7. Changes to Terms\nWe reserve the right to modify these terms at any time. We will notify users of any material changes by posting the new terms on this site.\n\n8. Contact Information\nFor any questions about these Terms of Service, please contact us at support@synvra.com`}
             </div>
           </div>
+        </div>
+
+        <div className="flex items-center space-x-3 mb-6">
+          <input
+            type="checkbox"
+            id="terms"
+            name="termsAccepted"
+            checked={formData.termsAccepted}
+            onChange={handleInputChange}
+            required
+            className="h-4 w-4 rounded border-synvra-white focus:ring-synvra-blue"
+          />
+          <label htmlFor="terms" className="text-sm text-synvra-gray-200">
+            I have read and agree to the terms and conditions
+          </label>
         </div>
 
         <div className="flex justify-between">
