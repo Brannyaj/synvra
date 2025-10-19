@@ -263,6 +263,12 @@ export default function ProjectProposalForm() {
   };
 
   const handleProceedToPayment = async () => {
+    // Check if terms are accepted before proceeding
+    if (!formData.termsAccepted) {
+      setValidationErrors({ termsAccepted: 'You must accept the terms and conditions to proceed' });
+      return;
+    }
+
     setSubmitStatus('submitting');
     setSubmitError('');
     
@@ -807,13 +813,15 @@ export default function ProjectProposalForm() {
             name="termsAccepted"
             checked={formData.termsAccepted}
             onChange={handleInputChange}
-            required
             className="h-4 w-4 rounded border-synvra-white focus:ring-synvra-blue"
           />
           <label htmlFor="terms" className="text-sm text-synvra-gray-200">
             I have read and agree to the terms and conditions
           </label>
         </div>
+        {validationErrors.termsAccepted && (
+          <p className="text-sm text-red-500 mb-4">{validationErrors.termsAccepted}</p>
+        )}
 
         <div className="flex justify-between">
           <button
